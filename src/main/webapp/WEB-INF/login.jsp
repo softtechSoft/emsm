@@ -9,9 +9,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>社員ログイン</title>
+<!--
 <script type="text/javascript" src="/testPath.js"></script>
+ -->
 </head>
-<body onload="testPath()">
+<body>
 	<form:form name="theForm" id="theForm" modelAttribute="loginBean"
 		method="post" action="login" >
 		<table bgcolor="lightskyblue" width="480" height="400">

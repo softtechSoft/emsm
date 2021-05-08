@@ -2,18 +2,16 @@ package com.softtech.actionForm;
 
 import java.io.Serializable;
 
-
-
+import javax.validation.constraints.Size;
 
 public class LoginBean implements Serializable {
 
 	// 社員ID
-//	@NotEmpty(message="{login.error.accountId.notEmpty}")
-//    @Email(message="{login.error.accountId.isEmail}")
+	@Size(min=1, max=30,message="入力してください。")
 	private String employeeID;
 
 	//パスワード
-//	@Size(min=2, max=30,message="パスワードを入力してください。")
+	@Size(min=2, max=30,message="パスワードを入力してください。")
 	private String password;
 
 	/**
