@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 public class LoginBean implements Serializable {
 
 	// 社員ID
-	@Size(min=1, max=30,message="入力してください。")
+	@Size(min=2, max=30,message="メールアカウントを入力してください。")
 	private String employeeID;
 
 	//パスワード

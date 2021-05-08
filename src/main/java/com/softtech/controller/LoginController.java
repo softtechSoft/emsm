@@ -54,14 +54,12 @@ public class LoginController {
 			model.addAttribute("errors", result.getFieldErrors());
 			return "login";
 		}
-
-
 		//Login処理
 		boolean rtnbl = loginService.doLogin(loginBean);
 
 		// ログイン成功。
 		if (rtnbl) {
-			return "";
+			return "menu";
 			//　ログイン失敗
 		}else {
 			// エラーメッセージを表示する
