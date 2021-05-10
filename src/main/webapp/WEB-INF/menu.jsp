@@ -1,18 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!DOCTYPE html>
+
 <html>
 <head>
-<meta charset="utf-8">
-<title> Bootjsp.jsp </title>
-<!-- https://blog.csdn.net/weixin_43122090/article/details/103866174  -->
-<!-- URL:http://XXXX/emsm/hello/ -->
-<script type="text/javascript" src="/testPath.js"></script>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> ソフトテク株式会社-社内管理システム </title>
 </head>
 <body>
-<h2>成功、素晴らしい!!!!</h2>
-<input type="button" value="ボタン" onClick="testPath()">
+<h2>社内管理システム MENU</h2>
+<form:form name="theForm" id="theForm" modelAttribute="list" method="post" action="menu" >
+	<table>
+		<tr>
+				<c:forEach items="${list}" var="Ofcfunction">
+				   <!--
+				      <td><c:out value="${Ofcfunction.getFunctionText()}"/></td>
+				      <td><c:out value="${Ofcfunction.getFunctionLink()}"/></td>
+				            -->
+
+				       <td> <input type="button" value="<c:out value='${Ofcfunction.getFunctionText()}'/>" /></td>
+				       <td> <input type="button" value="<c:out value='${Ofcfunction.getFunctionLink()}'/>" /></td>
+				</c:forEach>
+			</tr>
+	</table>
+
+</form:form>
+
 
 </body>
 </html>

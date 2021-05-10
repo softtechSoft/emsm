@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.LoginBean;
+import com.softtech.actionForm.MenuBean;
 import com.softtech.service.LoginService;
 
 /**
@@ -59,6 +60,16 @@ public class LoginController {
 
 		// ログイン成功。
 		if (rtnbl) {
+			List<MenuBean> Ofcfunction = new ArrayList<MenuBean>();
+			MenuBean menuBean1 = new MenuBean();
+			menuBean1.setFunctionText("勤怠情報リスト");
+			menuBean1.setFunctionLink("/workdetaillist");
+			Ofcfunction.add(menuBean1);
+
+			model.addAttribute("list", Ofcfunction);
+
+
+
 			return "menu";
 			//　ログイン失敗
 		}else {
