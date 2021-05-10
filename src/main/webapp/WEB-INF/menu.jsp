@@ -9,6 +9,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> ソフトテク株式会社-社内管理システム </title>
+<script type="text/javascript" >
+function toFunctionJsp(funcLink){
+alert(funcLink);
+
+}
+</script>
+
 </head>
 <body>
 <h2>社内管理システム MENU</h2>
@@ -21,8 +28,7 @@
 				      <td><c:out value="${Ofcfunction.getFunctionLink()}"/></td>
 				            -->
 
-				       <td> <input type="button" value="<c:out value='${Ofcfunction.getFunctionText()}'/>" /></td>
-				       <td> <input type="button" value="<c:out value='${Ofcfunction.getFunctionLink()}'/>" /></td>
+				       <td> <input type="button"  value="<c:out value='${Ofcfunction.getFunctionText()}'/>" onclick="toFunctionJsp('<c:out value='${Ofcfunction.getFunctionLink()}'/>')" /></td>
 				</c:forEach>
 			</tr>
 	</table>

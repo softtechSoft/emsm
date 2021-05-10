@@ -4,6 +4,7 @@ public class MenuBean {
 	String functionText;
 	String functionLink;
 	String displayNo;
+
 	/**
 	 * @return functionText
 	 */
@@ -40,6 +41,7 @@ public class MenuBean {
 	public void setDisplayNo(String displayNo) {
 		this.displayNo = displayNo;
 	}
+
 }
 
 
