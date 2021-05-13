@@ -1,6 +1,5 @@
 package com.softtech.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -47,33 +46,33 @@ public class SalarylistController {
 		salarylistBean2.setMonth(month);
 		model.addAttribute("month",month);
 		// DBから給料情報を取得
-//		List<SalaryInfo> sl= salarylistService.querySalarylist(month);
-//		model.addAttribute("salarydate",sl);
+		List<SalaryInfo> sl= salarylistService.querySalarylist(month);
+		model.addAttribute("salarydate",sl);
 
 
 		//画面初期化
-		List<SalarylistBean> salarylistBean1 = new ArrayList<SalarylistBean>();
-		SalarylistBean slb = new SalarylistBean();
-		slb.setEmployeeID("01");
-		slb.setEmployeeName("晴子");
-		slb.setMonth("202104");
-		slb.setPaymentDate("20210430");
-		slb.setBase("300000");
-		slb.setSum("320000");
-		slb.setRemark("");
-		salarylistBean1.add(slb);
-
-		SalarylistBean slb2 = new SalarylistBean();
-		slb2.setEmployeeID("02");
-		slb2.setEmployeeName("夏子");
-		slb2.setMonth("202105");
-		slb2.setPaymentDate("20210530");
-		slb2.setBase("320000");
-		slb2.setSum("340000");
-		slb2.setRemark("");
-		salarylistBean1.add(slb2);
-
-		model.addAttribute("list", salarylistBean1);
+//		List<SalarylistBean> salarylistBean1 = new ArrayList<SalarylistBean>();
+//		SalarylistBean slb = new SalarylistBean();
+//		slb.setEmployeeID("01");
+//		slb.setEmployeeName("晴子");
+//		slb.setMonth("202104");
+//		slb.setPaymentDate("20210430");
+//		slb.setBase("300000");
+//		slb.setSum("320000");
+//		slb.setRemark("");
+//		salarylistBean1.add(slb);
+//
+//		SalarylistBean slb2 = new SalarylistBean();
+//		slb2.setEmployeeID("02");
+//		slb2.setEmployeeName("夏子");
+//		slb2.setMonth("202105");
+//		slb2.setPaymentDate("20210530");
+//		slb2.setBase("320000");
+//		slb2.setSum("340000");
+//		slb2.setRemark("");
+//		salarylistBean1.add(slb2);
+//
+//		model.addAttribute("list", salarylistBean1);
 
 		return "salarylist";
 	}
@@ -82,10 +81,10 @@ public class SalarylistController {
 	public String SalarylistSubmit(HttpServletResponse response,@Valid @ModelAttribute("salarylistBean") SalarylistBean salarylistBean, SalarylistBean2 salarylistBean2,
 			BindingResult result, Model model) {
 		// NotNullの入力した年月をチェック。
-//		if (result.hasErrors()) {
-//			model.addAttribute("errors", result.getFieldErrors());
-//					return "/ems/salarylist";
-//				 }
+		if (result.hasErrors()) {
+			model.addAttribute("errors", result.getFieldErrors());
+					return "salarylist";
+				 }
         model.addAttribute("month",salarylistBean.getMonth());
 		// 入力した年月を持っち、DBから給料情報を取得
 	     List<SalaryInfo> sl = salarylistService.querySalarylist(salarylistBean.getMonth());
