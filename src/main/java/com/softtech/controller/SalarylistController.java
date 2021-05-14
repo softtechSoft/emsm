@@ -37,7 +37,7 @@ public class SalarylistController {
 	 *       ログイン画面へ遷移する。
 	 * @param  モデル
 //	 */
-	@RequestMapping(value = {"/salarylist"})
+	@RequestMapping(value = "/salarylist")
 	public String home(Model model) {
 		//現在年月取得
 		String month = DateUtil.getNowMonth();

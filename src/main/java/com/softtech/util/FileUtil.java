@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.MimeTypeUtils;
 
+import com.softtech.actionForm.WorkDetail;
 import com.softtech.entity.SalaryInfo;
 
 /**
@@ -84,5 +85,48 @@ public class FileUtil {/**
        }
 
        return true;
+	 }
+	/**
+	 * 機能：勤怠リストダウンロード
+	 *
+	 * @param response レスポンス
+	 * @param workDetailList 対象データ
+	 * @return TRUE:成功、FALSE失敗
+	 *
+	 * @exception なし
+	 * @author @ソフトテク
+	 */
+	public boolean workSheetDownload(HttpServletResponse  response,List<WorkDetail> workDetailList){
+		//エンコーディング設定
+		response.setContentType(MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE + ";charset=Shift-JIS");
+		//ダウンロードファイル名設定
+		response.setHeader("Content-Disposition", "attachment; filename=\"worksheet.csv\"");
+
+		try {
+			PrintWriter pw = response.getWriter();
+			String outputString1 ="社員id,"+"社員氏名," + "対象年月," + "勤怠時間(H)," + "定期券額(円)," +"その他交通費(円）," + "\r\n";
+			pw.print(outputString1);
+			for(WorkDetail wl:workDetailList) {
+            	String employeeID = wl.getEmployeeID();
+                String employeeName = wl.getEmployeeName();
+                String workMonth = wl.getWorkMonth();
+                float workTime = wl.getWorkTime();
+                String transportExpense =  wl.getTransportExpense();
+                String transportExpense2 = transportExpense.replace(",", "");
+                String transport = wl.getTransport();
+                String transport2 = transport.replace(",", "");
+
+
+                String outputString = employeeID + "," + employeeName + "," + workMonth + "," + workTime + "," + transportExpense2 + "," + transport2
+                         + "\r\n";
+                pw.print(outputString);
+            }
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
 	 }
 	}

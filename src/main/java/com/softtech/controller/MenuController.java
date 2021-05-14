@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.MenuBean;
 import com.softtech.service.MenuService;
@@ -19,22 +17,34 @@ import com.softtech.service.MenuService;
  */
 @Controller
 public class MenuController {
-
 	@Autowired
 	MenuService menuService;
-
 	/**
-	 * Menu処理
+	 * Menu画面初期化
 	 *
 	 * @param model　モデル
 	 * @return  遷移先画面
 	 */
-	@RequestMapping(value = "menu",  method = RequestMethod.POST)
-	public String Menu( @ModelAttribute("MenuBean")  Model model) {
-	// 機能リストを取得する
-	List<MenuBean> Ofcfunction = menuService.queryOfcfunction("0");
-	model.addAttribute("list", Ofcfunction);
-	return "/";
+	@RequestMapping(value = "/functionInit")
+	public String menuInit(Model model) {
+	    // 機能リストを取得する
+		List<MenuBean> Ofcfunction = menuService.queryOfcfunction();
+		model.addAttribute("list", Ofcfunction);
+
+		return "functionset";
 	}
 
+	@RequestMapping(value = "/menutest")
+	public String menutest(Model model) {
+	    // 機能リストを取得する
+		List<MenuBean> Ofcfunction = menuService.queryOfcfunction();
+		model.addAttribute("list", Ofcfunction);
+
+		return "menu";
+	}
+	@RequestMapping(value = "/blanktest")
+	public String blanktest(Model model) {
+
+		return "blank";
+	}
 }

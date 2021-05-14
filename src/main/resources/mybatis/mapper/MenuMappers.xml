@@ -10,9 +10,7 @@
 		from
 			ems.ofcfunction
 		where deleteFlg='0'
-		<if test = "authority != 1">
-		 and authority=#{authority}
-		</if>
+		 and authority='1'
 		 order by displayNo
  </select>
 

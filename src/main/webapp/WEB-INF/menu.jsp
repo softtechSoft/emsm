@@ -10,31 +10,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> ソフトテク株式会社-社内管理システム </title>
 <script type="text/javascript" >
-function toFunctionJsp(funcLink){
-alert(funcLink);
-
+function toFunctionJsp(urlLink){
+	window.parent.document.getElementById("bottom").src=urlLink;
 }
 </script>
 
 </head>
-<body>
-<h2>社内管理システム MENU</h2>
+<body style="background: #FF70DB93">
+<h2  style="color: #ffffff">社内管理システム機能画面</h2>
 <form:form name="theForm" id="theForm" modelAttribute="list" method="post" action="menu" >
 	<table>
 		<tr>
-				<c:forEach items="${list}" var="Ofcfunction">
-				   <!--
-				      <td><c:out value="${Ofcfunction.getFunctionText()}"/></td>
-				      <td><c:out value="${Ofcfunction.getFunctionLink()}"/></td>
-				            -->
-
-				       <td> <input type="button"  value="<c:out value='${Ofcfunction.getFunctionText()}'/>" onclick="toFunctionJsp('<c:out value='${Ofcfunction.getFunctionLink()}'/>')" /></td>
+			<c:forEach items="${list}" var="Ofcfunction">
+				<td>
+				<input type="button"  value="<c:out value='${Ofcfunction.getFunctionText()}'/>" onclick="toFunctionJsp('<c:out value='${Ofcfunction.getFunctionLink()}'/>')" /></td>
 				</c:forEach>
 			</tr>
 	</table>
-
 </form:form>
-
-
 </body>
 </html>

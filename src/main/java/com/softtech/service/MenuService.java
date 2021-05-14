@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.softtech.actionForm.MenuBean;
 import com.softtech.entity.Ofcfunction;
 import com.softtech.mappers.MenuMapper;
+import com.softtech.util.DataUtil;
 /**
  * 概要：Menuのservice
  *
@@ -21,9 +22,9 @@ public class MenuService {
 	MenuMapper menumapper;
 
 
-	public List<MenuBean> queryOfcfunction(String string) {
+	public List<MenuBean> queryOfcfunction() {
 		// 機能リストを取得する
-		List<Ofcfunction> Ofcfunction = menumapper.queryOfcfunction("0");
+		List<Ofcfunction> Ofcfunction = menumapper.queryOfcfunction();
 		// 機能リストへ変更する。
 		List<MenuBean> rtn  = menu(Ofcfunction);
 		return  rtn;
@@ -35,7 +36,7 @@ public class MenuService {
 		List<MenuBean> rtn  =new ArrayList<MenuBean>();
 		for(Ofcfunction tt : lst) {
 			MenuBean menuBean = new MenuBean();
-			menuBean.setFunctionText(tt.getFunctionText());
+			menuBean.setFunctionText(DataUtil.functionText(tt.getFunctionText()));
 			menuBean.setFunctionLink(tt.getFunctionLink());
 			menuBean.setDisplayNo(tt.getDisplayNo());
 			rtn.add(menuBean);

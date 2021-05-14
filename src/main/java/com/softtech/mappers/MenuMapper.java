@@ -9,5 +9,5 @@ import com.softtech.entity.Ofcfunction;
 @Mapper
 public interface MenuMapper {
 
-	List<Ofcfunction> queryOfcfunction(String string);
+	List<Ofcfunction> queryOfcfunction();
 }
