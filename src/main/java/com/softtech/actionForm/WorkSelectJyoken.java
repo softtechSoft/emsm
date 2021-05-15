@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class WorkSelectJyoken {
 
 	//対象年月
-	@Size(min=2, max=30,message="月を入力してください。例：202104")
+	@Size(min=2, max=30,message="対象月を入力してください。例：202104")
     private String month;
 	//ダウンロード
 	private boolean downloadFlg;

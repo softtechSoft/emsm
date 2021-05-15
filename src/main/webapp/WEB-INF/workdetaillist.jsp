@@ -27,13 +27,16 @@ function toDownLoadDataJsp(){
 <h2>勤怠リスト</h2>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="selectjyolken" action="workdetaillist" >
     <p>
-      <b>対象年月:<input id="month"name="month" type="text" value="${month}">
-          <c:forEach items="${errors}" var="error">
-						<spring:message message="${error}" />
-					</c:forEach>
+      <b>対象年月:<input id="month"name="month" type="text" value="${month}"/>
          <input type="button" name="search" value="検索" onclick="toSearchJsp();" />
          <input type="hidden" id="downloadFlg"name="downloadFlg"/>
          <input type="button" name="downLoad" value="ダウンロード"onclick="toDownLoadDataJsp()" />
+          <p style="color: red;">
+          <c:forEach items="${errors}" var="error">
+						<spring:message message="${error}" />
+					</c:forEach>
+
+		</p>
        </b>
     </p>
 
