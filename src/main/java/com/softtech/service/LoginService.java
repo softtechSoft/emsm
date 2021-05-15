@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.LoginBean;
+import com.softtech.common.LoginEmployee;
 import com.softtech.entity.LoginEntity;
 import com.softtech.mappers.LoginMappers;
 
@@ -21,25 +22,23 @@ public class LoginService {
 		 * @author Softtech
 		 */
 		public boolean doLogin(LoginBean loginBean) {
-			//　社員情報を取得する
+			// 社員情報を取得する
+			LoginEmployee em = new LoginEmployee();
+			// アカウント
+			em.setMailAdress(loginBean.getEmployeeID());
+			// パスワード
+			em.setPassword(loginBean.getPassword());
+
 			LoginEntity employeeID = new LoginEntity();
-			employeeID = loginMappers.getOldPassword(loginBean.getEmployeeID());
+			employeeID = loginMappers.getOldPassword(em);
 
-
-			   if(employeeID !=null) {
-		           if(employeeID.getPassword() != null) {
-		        	   // ログイン画面に入力したパスワードとDBに登録したパスワードと一致する場合、ログイン成功。
-		        	   if( employeeID.getPassword().equals(loginBean.getPassword())) {
-		        		     return true;
-		        	   } else {
-		        		   return false;
-		        	   }
-		           } else {
-		        	   return false;
-		           }
-			   } else {
-				   return false;
-			   }
+			//ログイン成功
+		   if(employeeID !=null) {
+	           return true;
+	         //ログイン失敗
+		   } else {
+			   return false;
+		   }
 		}
 
 

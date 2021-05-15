@@ -2,8 +2,8 @@ package com.softtech.mappers;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.softtech.common.LoginEmployee;
 import com.softtech.entity.LoginEntity;
-
 /**
  *社員情報DAO
  *
@@ -13,7 +13,6 @@ import com.softtech.entity.LoginEntity;
 public interface LoginMappers {
 	LoginEntity getMailAdress(String mailAdress);
 
-	LoginEntity getOldPassword(String string);
-
+	LoginEntity getOldPassword(LoginEmployee em);
 
 }
