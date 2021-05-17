@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.softtech.actionForm.SalarylistBean;
 import com.softtech.actionForm.SalarylistBean2;
 import com.softtech.entity.SalaryInfo;
 import com.softtech.service.SalarylistService;
@@ -37,17 +35,14 @@ public class SalarylistController {
 	 *       ログイン画面へ遷移する。
 	 * @param  モデル
 //	 */
-	@RequestMapping(value = "/salarylist")
+	@RequestMapping(value = {"/salarylist"})
 	public String home(Model model) {
 		//現在年月取得
 		String month = DateUtil.getNowMonth();
-		//検索条件初期化
-		SalarylistBean2 salarylistBean2 = new SalarylistBean2();
-		salarylistBean2.setMonth(month);
 		model.addAttribute("month",month);
 		// DBから給料情報を取得
 		List<SalaryInfo> sl= salarylistService.querySalarylist(month);
-		model.addAttribute("salarydate",sl);
+		model.addAttribute("list",sl);
 
 
 		//画面初期化
@@ -78,16 +73,16 @@ public class SalarylistController {
 	}
 
 	@RequestMapping(value = "salarylist", method = RequestMethod.POST)
-	public String SalarylistSubmit(HttpServletResponse response,@Valid @ModelAttribute("salarylistBean") SalarylistBean salarylistBean, SalarylistBean2 salarylistBean2,
+	public String SalarylistSubmit(HttpServletResponse response, @Valid SalarylistBean2 salarylistBean2,
 			BindingResult result, Model model) {
 		// NotNullの入力した年月をチェック。
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getFieldErrors());
 					return "salarylist";
 				 }
-        model.addAttribute("month",salarylistBean.getMonth());
+        model.addAttribute("month",salarylistBean2.getMonth());
 		// 入力した年月を持っち、DBから給料情報を取得
-	     List<SalaryInfo> sl = salarylistService.querySalarylist(salarylistBean.getMonth());
+	     List<SalaryInfo> sl = salarylistService.querySalarylist(salarylistBean2.getMonth());
 
 		// データダウンロード場合
 		if(salarylistBean2.getDownloadFlg()){
@@ -97,15 +92,10 @@ public class SalarylistController {
 				 // エラーメッセージを設定して、画面表示
 			 }else {
 				 //画面表示用データを設定する。
-				 model.addAttribute("selectjyoken", salarylistBean2);
-//					//エンコーディング設定
-//					response.setContentType(MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE + ";charset=Shift-JIS");
-//					//ダウンロードファイル名設定
-//					response.setHeader("Content-Disposition", "attachment; filename=\"worksheet.csv\"");
+//				 model.addAttribute("month", salarylistBean2.getMonth());
 			 }
 			 // 検索する場合
 		 } else {
-			     model.addAttribute("selectjyoken", salarylistBean2);
 			     model.addAttribute("list", sl);
 
 		 }

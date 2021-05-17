@@ -3,7 +3,6 @@ package com.softtech.entity;
 public class SalaryInfo {
 	private String employeeName = "0";
 	private String employeeID = "0";
-	private String address = "0";
 	private String month = "0";
 	private String paymentDate = "0";
 	private String base = "0";
@@ -12,7 +11,7 @@ public class SalaryInfo {
 	private String transportExpense = "0";
 	private String allowancePlus = "0";
 	private String allowanceReduce = "0";
-	private String allowanceReason = "0";
+	private String allowanceReason = " ";
 	private String welfarePensionSelf = "0";
 	private String welfareHealthSelf = "0";
 	private String eplyInsSelf = "0";
@@ -186,14 +185,6 @@ public class SalaryInfo {
 
 	public void setSum(String sum) {
 		this.sum = String.format("%,d", Integer.parseInt(sum));
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public String getRemark() {

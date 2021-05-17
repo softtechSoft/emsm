@@ -43,7 +43,6 @@ function toDownLoadDataJsp(){
     </p>
 
 	<table border="1"class="salrylist-table">
-
 		<tr>
 		    <th rowspan="3" width="3000">社員ID</th>
             <th width="4000">社員氏名</th>
@@ -58,7 +57,6 @@ function toDownLoadDataJsp(){
              <th width="5000">手当加算(単位:円)</th>
         </tr>
         <tr>
-
             <th width="5000">手当減算(単位:円)</th>
             <th width="3000">手当理由</th>
             <th width="1700">厚生年金控除個人(単位:円)</th>
@@ -71,7 +69,6 @@ function toDownLoadDataJsp(){
             <th width="1700">雇用保拠出金（会社)(単位:円)</th>
         </tr>
         <tr>
-
             <th width="1700">労災保険（会社負担のみ）(単位:円)</th>
             <th width="500">源泉控除(単位:円)</th>
             <th width="500">住民税控除(単位:円)</th>
@@ -83,7 +80,9 @@ function toDownLoadDataJsp(){
 		</tr>
 		<c:forEach items="${list}" var="salarylist" varStatus="status" >
 
-        <tr <c:if test="${status.count%2==0}">bgcolor="#B0E0E6"</c:if>>
+        <tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
+            <c:if test="${status.count%2!=0}"> style="background-color:#ffff00"</c:if>>
+
 				<td rowspan="3"><c:out value="${salarylist.getEmployeeID()}"/></td>
 				<td><c:out value="${salarylist.getEmployeeName()}"/></td>
 				<td><c:out value="${salarylist.getMonth()}"/></td>
@@ -95,8 +94,9 @@ function toDownLoadDataJsp(){
                 <td><c:out value="${salarylist.getShortageReduce()}"/></td>
                 <td><c:out value="${salarylist.getTransportExpense()}"/></td>
                 <td><c:out value="${salarylist.getAllowancePlus()}"/></td>
-            </tr>
-            <tr<c:if test="${status.count%2==0}">bgcolor="#B0E0E6"</c:if>>
+       </tr>
+           <tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
+                <c:if test="${status.count%2!=0}"> style="background-color:#ffff00"</c:if>>
 
                 <td><c:out value="${salarylist.getAllowanceReduce()}"/></td>
                 <td><c:out value="${salarylist.getAllowanceReason()}"/></td>
@@ -108,8 +108,9 @@ function toDownLoadDataJsp(){
                 <td><c:out value="${salarylist.getEplyInsSelf()}"/></td>
                 <td><c:out value="${salarylist.getEplyInsComp()}"/></td>
                 <td><c:out value="${salarylist.getEplyInsWithdraw()}"/></td>
-             </tr>
-             <tr<c:if test="${status.count%2==0}">bgcolor="#B0E0E6"</c:if>>
+       </tr>
+            <tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
+                <c:if test="${status.count%2!=0}"> style="background-color:#ffff00"</c:if>>
 
                 <td><c:out value="${salarylist.getWkAcccpsIns()}"/></td>
                 <td><c:out value="${salarylist.getWithholdingTax()}"/></td>

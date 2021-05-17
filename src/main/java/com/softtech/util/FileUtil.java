@@ -45,35 +45,56 @@ public class FileUtil {/**
         String month = wl.getMonth();
         String paymentDate = wl.getPaymentDate();
         String base = wl.getBase();
+        String base1 = base.replace(",", "");
         String overTime = wl.getOverTime();
         String shortage = wl.getShortage();
         String overTimePlus = wl.getOverTimePlus();
+        String overTimePlus1 = overTimePlus.replace(",", "");
         String shortageReduce = wl.getShortageReduce();
+        String shortageReduce1 = shortageReduce.replace(",", "");
         String transportExpense = wl.getTransportExpense();
+        String transportExpense1 = transportExpense.replace(",", "");
         String allowancePlus = wl.getAllowancePlus();
+        String allowancePlus1 = allowancePlus.replace(",", "");
         String allowanceReduce = wl.getAllowanceReduce();
+        String allowanceReduce1 = allowanceReduce.replace(",", "");
         String allowanceReason = wl.getAllowanceReason();
         String welfarePensionSelf = wl.getWelfarePensionSelf();
+        String welfarePensionSelf1 = welfarePensionSelf.replace(",", "");
         String welfareHealthSelf = wl.getWelfareHealthSelf();
+        String welfareHealthSelf1 = welfareHealthSelf.replace(",", "");
         String welfarePensionComp = wl.getWelfarePensionComp();
+        String welfarePensionComp1 = welfarePensionComp.replace(",", "");
         String welfareHealthComp = wl.getWelfareHealthComp();
+        String welfareHealthComp1 = welfareHealthComp.replace(",", "");
         String welfareBaby = wl.getWelfareBaby();
+        String welfareBaby1 = welfareBaby.replace(",", "");
         String eplyInsSelf = wl.getEplyInsSelf();
+        String eplyInsSelf1 = eplyInsSelf.replace(",", "");
         String eplyInsComp = wl.getEplyInsComp();
+        String eplyInsComp1 = eplyInsComp.replace(",", "");
         String eplyInsWithdraw = wl.getEplyInsWithdraw();
+        String eplyInsWithdraw1 = eplyInsWithdraw.replace(",", "");
         String wkAcccpsIns = wl.getWkAcccpsIns();
+        String wkAcccpsIns1 = wkAcccpsIns.replace(",", "");
         String withholdingTax = wl.getWithholdingTax();
+        String withholdingTax1 = withholdingTax.replace(",", "");
         String municipalTax = wl.getMunicipalTax();
+        String municipalTax1 = municipalTax.replace(",", "");
         String rental = wl.getRental();
+        String rental1 = rental.replace(",", "");
         String rentalMgmtFee = wl.getRentalMgmtFee();
+        String rentalMgmtFee1 = rentalMgmtFee.replace(",", "");
         String totalFee = wl.getTotalFee();
+        String totalFee1 = totalFee.replace(",", "");
         String remark = wl.getRemark();
         String sum = wl.getSum();
+        String sum1 = sum.replace(",", "");
 
 
 
 
-        String outputString = employeeID + "," + employeeName + "," + month + "," + paymentDate + "," + base + "."+ overTime+ "," +shortage+ "," +overTimePlus+ "," +shortageReduce+ "," +transportExpense+ "," +allowancePlus+ "," +allowanceReduce+ "," +allowanceReason+ "," +welfarePensionSelf+ "," +welfareHealthSelf+ "," +welfarePensionComp+ "," +welfareHealthComp+ "," +welfareBaby+ "," +eplyInsSelf+ "," +eplyInsComp+ "," +eplyInsWithdraw+ "," +wkAcccpsIns+ "," +withholdingTax+ "," +municipalTax+ "," +rental+ "," +rentalMgmtFee+ "," +sum+ "," +totalFee+ "," +remark+ ","
+        String outputString = employeeID + "," + employeeName + "," + month + "," + paymentDate + "," + base1 + "."+ overTime+ "," +shortage+ "," +overTimePlus1+ "," +shortageReduce1+ "," +transportExpense1+ "," +allowancePlus1+ "," +allowanceReduce1+ "," +allowanceReason+ "," +welfarePensionSelf1+ "," +welfareHealthSelf1+ "," +welfarePensionComp1+ "," +welfareHealthComp1+ "," +welfareBaby1+ "," +eplyInsSelf1+ "," +eplyInsComp1+ "," +eplyInsWithdraw1+ "," +wkAcccpsIns1+ "," +withholdingTax1+ "," +municipalTax1+ "," +rental1+ "," +rentalMgmtFee1+ "," +sum1+ "," +totalFee1+ "," +remark+ ","
         		+ "," + "\r\n";
 
                pw.print(outputString);
