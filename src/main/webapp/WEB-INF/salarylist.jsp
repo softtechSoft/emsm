@@ -34,12 +34,17 @@ function toDownLoadDataJsp(){
          <input style="border-radius: 3px" type="submit" name="downLoad"id="downLoad_btn" value="ダウンロード">
          -->
          <input type="button" name="search" value="検索" onclick="toSearchJsp();" />
-             <c:forEach items="${errors}" var="error">
-					<spring:message message="${error}" />
-		     </c:forEach>
+
          <input type="hidden" id="downloadFlg"name="downloadFlg"/>
          <input type="button" name="downLoad" value="ダウンロード"onclick="toDownLoadDataJsp()" />
+
        </b>
+       <p style="color: red;">
+          <c:forEach items="${errors}" var="error">
+						<spring:message message="${error}" />
+					</c:forEach>
+
+		</p>
     </p>
 
 	<table border="1"class="salrylist-table">
@@ -51,37 +56,39 @@ function toDownLoadDataJsp(){
             <th width="5000">基本給(単位:円)</th>
             <th width="3000">残業時間</th>
             <th width="3000">不足時間</th>
-            <th width="5000">残業加算(単位:円)</th>
-            <th width="5000">稼働不足減(単位:円)</th>
-            <th width="5000">交通費(単位:円)</th>
-             <th width="5000">手当加算(単位:円)</th>
-        </tr>
-        <tr>
-            <th width="5000">手当減算(単位:円)</th>
+            <th width="500">残業加算(単位:円)</th>
+            <th width="500">稼働不足減(単位:円)</th>
+            <th width="500">交通費(単位:円)</th>
+            <th width="500">手当加算(単位:円)</th>
+            <th width="500">手当減算(単位:円)</th>
             <th width="3000">手当理由</th>
-            <th width="1700">厚生年金控除個人(単位:円)</th>
-            <th width="1700">厚生健康控除個人(単位:円)</th>
-            <th width="1700">厚生年金控除会社(単位:円)</th>
-            <th width="1700">厚生健康控除会社(単位:円)</th>
-            <th width="1700">厚生控除子育(会社)(単位:円)</th>
-            <th width="1700">雇用保険個人負担(単位:円)</th>
-            <th width="1700">雇用保険会社負担(単位:円)</th>
-            <th width="1700">雇用保拠出金（会社)(単位:円)</th>
+            <th width="700">厚生年金控除個人(単位:円)</th>
         </tr>
         <tr>
-            <th width="1700">労災保険（会社負担のみ）(単位:円)</th>
-            <th width="500">源泉控除(単位:円)</th>
-            <th width="500">住民税控除(単位:円)</th>
-            <th width="500">社宅家賃控除(単位:円)</th>
+
+            <th width="700">厚生健康控除個人(単位:円)</th>
+            <th width="700">厚生年金控除会社(単位:円)</th>
+            <th width="700">厚生健康控除会社(単位:円)</th>
+            <th width="700">厚生控除子育(会社)(単位:円)</th>
+            <th width="700">雇用保険個人負担(単位:円)</th>
+            <th width="700">雇用保険会社負担(単位:円)</th>
+            <th width="700">雇用保拠出金（会社)(単位:円)</th>
+             <th width="700">労災保険（会社負担のみ）(単位:円)</th>
+            <th width="700">源泉控除(単位:円)</th>
+            <th width="700">住民税控除(単位:円)</th>
+            <th width="700">社宅家賃控除(単位:円)</th>
             <th width="700">社宅共益費控除(単位:円)</th>
             <th width="200">総額(単位:円)</th>
+        </tr>
+        <tr>
+
             <th width="500">総費用(単位:円)</th>
-            <th colspan="3"width="500">備考</th>
+            <th colspan="12"width="5000">備考</th>
 		</tr>
 		<c:forEach items="${list}" var="salarylist" varStatus="status" >
 
-        <tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
-            <c:if test="${status.count%2!=0}"> style="background-color:#ffff00"</c:if>>
+        <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
+            <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
 
 				<td rowspan="3"><c:out value="${salarylist.getEmployeeID()}"/></td>
 				<td><c:out value="${salarylist.getEmployeeName()}"/></td>
@@ -94,13 +101,14 @@ function toDownLoadDataJsp(){
                 <td><c:out value="${salarylist.getShortageReduce()}"/></td>
                 <td><c:out value="${salarylist.getTransportExpense()}"/></td>
                 <td><c:out value="${salarylist.getAllowancePlus()}"/></td>
-       </tr>
-           <tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
-                <c:if test="${status.count%2!=0}"> style="background-color:#ffff00"</c:if>>
-
                 <td><c:out value="${salarylist.getAllowanceReduce()}"/></td>
                 <td><c:out value="${salarylist.getAllowanceReason()}"/></td>
                 <td><c:out value="${salarylist.getWelfarePensionSelf()}"/></td>
+       </tr>
+           <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
+                <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
+
+
                 <td><c:out value="${salarylist.getWelfareHealthSelf()}"/></td>
                 <td><c:out value="${salarylist.getWelfarePensionComp()}"/></td>
                 <td><c:out value="${salarylist.getWelfareHealthComp()}"/></td>
@@ -108,18 +116,19 @@ function toDownLoadDataJsp(){
                 <td><c:out value="${salarylist.getEplyInsSelf()}"/></td>
                 <td><c:out value="${salarylist.getEplyInsComp()}"/></td>
                 <td><c:out value="${salarylist.getEplyInsWithdraw()}"/></td>
-       </tr>
-            <tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
-                <c:if test="${status.count%2!=0}"> style="background-color:#ffff00"</c:if>>
-
                 <td><c:out value="${salarylist.getWkAcccpsIns()}"/></td>
                 <td><c:out value="${salarylist.getWithholdingTax()}"/></td>
                 <td><c:out value="${salarylist.getMunicipalTax()}"/></td>
                 <td><c:out value="${salarylist.getRental()}"/></td>
                 <td><c:out value="${salarylist.getRentalMgmtFee()}"/></td>
                 <td><c:out value="${salarylist.getSum()}"/></td>
+       </tr>
+            <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
+                <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
+
+
                 <td><c:out value="${salarylist.getTotalFee()}"/></td>
-				<td colspan="3"><c:out value="${salarylist.getRemark()}"/></td>
+				<td colspan="12"><c:out value="${salarylist.getRemark()}"/></td>
 			</tr>
 		</c:forEach>
 	</table>

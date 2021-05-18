@@ -94,7 +94,7 @@ public class FileUtil {/**
 
 
 
-        String outputString = employeeID + "," + employeeName + "," + month + "," + paymentDate + "," + base1 + "."+ overTime+ "," +shortage+ "," +overTimePlus1+ "," +shortageReduce1+ "," +transportExpense1+ "," +allowancePlus1+ "," +allowanceReduce1+ "," +allowanceReason+ "," +welfarePensionSelf1+ "," +welfareHealthSelf1+ "," +welfarePensionComp1+ "," +welfareHealthComp1+ "," +welfareBaby1+ "," +eplyInsSelf1+ "," +eplyInsComp1+ "," +eplyInsWithdraw1+ "," +wkAcccpsIns1+ "," +withholdingTax1+ "," +municipalTax1+ "," +rental1+ "," +rentalMgmtFee1+ "," +sum1+ "," +totalFee1+ "," +remark+ ","
+        String outputString = employeeID + "," + employeeName + "," + month + "," + paymentDate + "," + base1 + ","+ overTime+ "," +shortage+ "," +overTimePlus1+ "," +shortageReduce1+ "," +transportExpense1+ "," +allowancePlus1+ "," +allowanceReduce1+ "," +allowanceReason+ "," +welfarePensionSelf1+ "," +welfareHealthSelf1+ "," +welfarePensionComp1+ "," +welfareHealthComp1+ "," +welfareBaby1+ "," +eplyInsSelf1+ "," +eplyInsComp1+ "," +eplyInsWithdraw1+ "," +wkAcccpsIns1+ "," +withholdingTax1+ "," +municipalTax1+ "," +rental1+ "," +rentalMgmtFee1+ "," +sum1+ "," +totalFee1+ "," +remark+ ","
         		+ "," + "\r\n";
 
                pw.print(outputString);
