@@ -49,40 +49,40 @@ function toDownLoadDataJsp(){
 
 	<table border="1"class="salrylist-table">
 		<tr>
-		    <th rowspan="3" width="3000">社員ID</th>
-            <th width="4000">社員氏名</th>
-            <th width="3000">対象年月</th>
-            <th width="3000">支払日</th>
-            <th width="5000">基本給(単位:円)</th>
-            <th width="3000">残業時間</th>
-            <th width="3000">不足時間</th>
-            <th width="500">残業加算(単位:円)</th>
-            <th width="500">稼働不足減(単位:円)</th>
-            <th width="500">交通費(単位:円)</th>
-            <th width="500">手当加算(単位:円)</th>
-            <th width="500">手当減算(単位:円)</th>
-            <th width="3000">手当理由</th>
-            <th width="700">厚生年金控除個人(単位:円)</th>
+		    <th rowspan="3" width="200">社員ID</th>
+            <th width="100">社員氏名</th>
+            <th width="100">対象年月</th>
+            <th width="100">支払日</th>
+            <th width="100">基本給(円)</th>
+            <th width="50">残業時間</th>
+            <th width="50">不足時間</th>
+            <th width="200">残業加算(円)</th>
+            <th width="200">稼働不足減(円)</th>
+            <th width="200">交通費(円)</th>
+            <th width="200">手当加算(円)</th>
+            <th width="200">手当減算(円)</th>
+            <th width="1000">手当理由</th>
+            <th width="200">厚生年金控除個人(円)</th>
         </tr>
         <tr>
 
-            <th width="700">厚生健康控除個人(単位:円)</th>
-            <th width="700">厚生年金控除会社(単位:円)</th>
-            <th width="700">厚生健康控除会社(単位:円)</th>
-            <th width="700">厚生控除子育(会社)(単位:円)</th>
-            <th width="700">雇用保険個人負担(単位:円)</th>
-            <th width="700">雇用保険会社負担(単位:円)</th>
-            <th width="700">雇用保拠出金（会社)(単位:円)</th>
-             <th width="700">労災保険（会社負担のみ）(単位:円)</th>
-            <th width="700">源泉控除(単位:円)</th>
-            <th width="700">住民税控除(単位:円)</th>
-            <th width="700">社宅家賃控除(単位:円)</th>
-            <th width="700">社宅共益費控除(単位:円)</th>
-            <th width="200">総額(単位:円)</th>
+            <th width="100">厚生健康控除個人(円)</th>
+            <th width="100">厚生年金控除会社(円)</th>
+            <th width="100">厚生健康控除会社(円)</th>
+            <th width="100">厚生控除子育(会社)(円)</th>
+            <th width="50">雇用保険個人負担(円)</th>
+            <th width="50">雇用保険会社負担(円)</th>
+            <th width="200">雇用保拠出金（会社)(円)</th>
+             <th width="200">労災保険（会社負担のみ）(円)</th>
+            <th width="200">源泉控除(円)</th>
+            <th width="200">住民税控除(円)</th>
+            <th width="200">社宅家賃控除(円)</th>
+            <th width="500">社宅共益費控除(円)</th>
+            <th width="200">総額(円)</th>
         </tr>
         <tr>
 
-            <th width="500">総費用(単位:円)</th>
+            <th width="100">総費用(円)</th>
             <th colspan="12"width="5000">備考</th>
 		</tr>
 		<c:forEach items="${list}" var="salarylist" varStatus="status" >

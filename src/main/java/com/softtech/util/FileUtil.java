@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.MimeTypeUtils;
 
 import com.softtech.actionForm.WorkDetail;
+import com.softtech.entity.ClaimInfo;
 import com.softtech.entity.SalaryInfo;
 
 /**
@@ -139,6 +140,71 @@ public class FileUtil {/**
 
 
                 String outputString = employeeID + "," + employeeName + "," + workMonth + "," + workTime + "," + transportExpense2 + "," + transport2
+                         + "\r\n";
+                pw.print(outputString);
+            }
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+	 }
+	/**
+	 * 機能：請求リストダウンロード
+	 *
+	 * @param response レスポンス
+	 * @param ClaimList 対象データ
+	 * @return TRUE:成功、FALSE失敗
+	 *
+	 * @exception なし
+	 * @author @ソフトテク
+	 */
+	public boolean claimDownload(HttpServletResponse  response, List<ClaimInfo> cl2){
+		//エンコーディング設定
+		response.setContentType(MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE + ";charset=Shift-JIS");
+		//ダウンロードファイル名設定
+		response.setHeader("Content-Disposition", "attachment; filename=\"worksheet.csv\"");
+
+		try {
+			PrintWriter pw = response.getWriter();
+			String outputString1 ="請求ID,"+"契約ID,"+"取引先名称," + "請求月," + "社員氏名," + "稼働時間," +"単価," + "過稼働時間,"+"加算額," + "不足稼働時間,"+ "減算額（円),"+ "交通費（円）,"+ "出張旅費(円）,"+ "消費税率,"+ "消費税,"
+					+ "合計,"+ "特別請求,"+ "請求ステータス,"+"\r\n";
+			pw.print(outputString1);
+			for(ClaimInfo cl:cl2) {
+				String claimID=cl.getClaimID();
+				String contractID=cl.getContractID();
+				String companyName=cl.getCompanyName();
+				String claimMonth=cl.getClaimMonth();
+				String employeeName=cl.getEmployeeName();
+				String workTime=cl.getWorkTime();
+				String price=cl.getPrice();
+				String price1 = price.replace(",", "");
+				String exceTime=cl.getExceTime();
+				String addpayOff=cl.getAddpayOff();
+				String addpayOff1 = addpayOff.replace(",", "");
+				String deficiTime=cl.getDeficiTime();
+				String minusPayOff=cl.getMinusPayOff();
+				String minusPayOff1 = minusPayOff.replace(",", "");
+				String transport=cl.getTransport();
+				String transport1 = transport.replace(",", "");
+				String businessTrip=cl.getBusinessTrip();
+				String businessTrip1 = businessTrip.replace(",", "");
+				String taxRate=cl.getTaxRate();
+				String consumpTax=cl.getConsumpTax();
+				String consumpTax1 = consumpTax.replace(",", "");
+				String sum=cl.getSum();
+				String sum1 = sum.replace(",", "");
+				String specialClaim=cl.getSpecialClaim();
+				String claimStatus=cl.getClaimStatus() ;
+
+
+                String outputString = claimID + "," + contractID + ","  + companyName + ","+ claimMonth + "," + employeeName + "," + workTime + "," + price1 + "," +
+                		exceTime+ "," +addpayOff1+ "," +deficiTime+ "," +minusPayOff1+ "," +transport1+ "," + businessTrip1+ "," +taxRate+ "," +consumpTax1+ "," +
+                		sum1+ "," +specialClaim+ "," +claimStatus
+
+
                          + "\r\n";
                 pw.print(outputString);
             }
