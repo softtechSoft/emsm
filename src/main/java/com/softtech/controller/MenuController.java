@@ -27,23 +27,20 @@ public class MenuController {
 	 */
 	@RequestMapping(value = "/functionInit")
 	public String menuInit(Model model) {
-	    // 機能リストを取得する
-		List<MenuBean> Ofcfunction = menuService.queryOfcfunction();
-		model.addAttribute("list", Ofcfunction);
 
 		return "functionset";
 	}
 
-	@RequestMapping(value = "/menutest")
-	public String menutest(Model model) {
+	@RequestMapping(value = "/menu")
+	public String menu(Model model) {
 	    // 機能リストを取得する
 		List<MenuBean> Ofcfunction = menuService.queryOfcfunction();
 		model.addAttribute("list", Ofcfunction);
 
 		return "menu";
 	}
-	@RequestMapping(value = "/blanktest")
-	public String blanktest(Model model) {
+	@RequestMapping(value = "/blank")
+	public String blank(Model model) {
 
 		return "blank";
 	}

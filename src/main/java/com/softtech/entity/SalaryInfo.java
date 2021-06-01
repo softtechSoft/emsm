@@ -30,6 +30,9 @@ public class SalaryInfo {
 	private String welfareHealthComp = "0";
 	private String overTime = "0";
 	private String shortage = "0";
+	private String address = "0";
+	private String welfareSelf = "0";
+	private String welfareComp = "0";
 
 
 	public String getEmployeeName() {
@@ -53,7 +56,7 @@ public class SalaryInfo {
 	}
 
 	public void setMonth(String month) {
-		this.month = String.format("%s/%s", month.substring(0, 4), month.substring(4, 6));
+		this.month = String.format( "%s/%s",month.substring(0, 4), month.substring(4, 6));
 	}
 
 	public String getPaymentDate() {
@@ -263,6 +266,48 @@ public class SalaryInfo {
 
 	public void setShortage(String shortage) {
 		this.shortage = shortage;
+	}
+
+	/**
+	 * @return address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address セットする address
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return welfareSelf
+	 */
+	public String getWelfareSelf() {
+		return welfareSelf;
+	}
+
+	/**
+	 * @param welfareSelf セットする welfareSelf
+	 */
+	public void setWelfareSelf(String welfareSelf) {
+		this.welfareSelf = welfareSelf;
+	}
+
+	/**
+	 * @return welfareComp
+	 */
+	public String getWelfareComp() {
+		return welfareComp;
+	}
+
+	/**
+	 * @param welfareComp セットする welfareComp
+	 */
+	public void setWelfareComp(String welfareComp) {
+		this.welfareComp = welfareComp;
 	}
 
 }

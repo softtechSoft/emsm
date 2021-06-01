@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.SalarylistBean2;
+import com.softtech.common.SalaryInfocommom;
 import com.softtech.entity.SalaryInfo;
+import com.softtech.service.SalaryInfoService;
 import com.softtech.service.SalarylistService;
 import com.softtech.util.DateUtil;
 import com.softtech.util.FileUtil;
@@ -29,6 +31,8 @@ public class SalarylistController {
 
 	@Autowired
 	SalarylistService salarylistService;
+	@Autowired
+	SalaryInfoService salaryInfoService;
 
 	/**
 	 *    ログイン画面初期処理
@@ -74,7 +78,7 @@ public class SalarylistController {
 
 	@RequestMapping(value = "salarylist", method = RequestMethod.POST)
 	public String SalarylistSubmit(HttpServletResponse response, @Valid SalarylistBean2 salarylistBean2,
-			BindingResult result, Model model) {
+			BindingResult result,SalaryInfo salaryInfo, Model model) {
 		// NotNullの入力した年月をチェック。
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getFieldErrors());
@@ -85,7 +89,7 @@ public class SalarylistController {
 	     List<SalaryInfo> sl = salarylistService.querySalarylist(salarylistBean2.getMonth());
 
 		// データダウンロード場合
-		if(salarylistBean2.getDownloadFlg()){
+		if(salarylistBean2.getDownloadFlg()==2){
 			 FileUtil ft = new FileUtil();
 			 boolean rtn = ft.salaryDownload(response,sl);
 			 if(!rtn) {
@@ -95,9 +99,22 @@ public class SalarylistController {
 //				 model.addAttribute("month", salarylistBean2.getMonth());
 			 }
 			 // 検索する場合
-		 } else {
+		 } else if(salarylistBean2.getDownloadFlg()==1){
 			     model.addAttribute("list", sl);
-
+			  // 給料作成場合
+		 }else if(salarylistBean2.getDownloadFlg()==3) {
+			 SalaryInfocommom em = new SalaryInfocommom();
+				//社員ID
+				em.setEmployeeID(salarylistBean2.getEmployeeIDFlg());
+				//対象年月と対象年月YYYY/MM→yyyymmに変換
+				em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
+				// DBから給料作成情報を取得
+				List<SalaryInfo> ss= salaryInfoService.querySalaryInfo(em);
+				String cc = "作成";
+				model.addAttribute("month", salarylistBean2.getMonth());
+				model.addAttribute("salaryInfo",ss);
+				model.addAttribute("button",cc);
+		        return "salaryInfo";
 		 }
 		return "salarylist";
 	}

@@ -6,10 +6,12 @@
 <mapper namespace="com.softtech.mappers.LoginMappers">
 
 <!-- ログイン者IDとパスワードを取得-->
-<select id="getOldPassword" parameterType="String" resultType="com.softtech.entity.LoginEntity">
-        SELECT employeeID,password
+<select id="getOldPassword" parameterType="com.softtech.common.LoginEmployee" resultType="com.softtech.entity.LoginEntity">
+        SELECT *
         FROM employee
-        WHERE mailAdress = #{mailAdress}
+        WHERE status = '0'
+		and mailAdress = #{mailAdress}
+		and password = md5(#{password})
  </select>
 
 

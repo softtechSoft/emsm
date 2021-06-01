@@ -5,8 +5,8 @@
 <html>
 <div style="width:700;heigt:1000">
 <frameset rows="15%,*">
-  <frame id="top" src="/menutest">
-  <frame id="bottom" src="/blanktest">
+  <frame id="top" src="/menu">
+  <frame id="bottom" src="/blank">
 </frameset>
 </div>
 </html>

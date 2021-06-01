@@ -14,12 +14,19 @@
 <script type="text/javascript" >
 function toSearchJsp(){
 	var downloadFlg =document.getElementById('downloadFlg');
-	downloadFlg.value=false;
+	downloadFlg.value= 1;
 	document.theForm.submit();
 }
 function toDownLoadDataJsp(){
 	var downloadFlg =document.getElementById('downloadFlg');
-	downloadFlg.value=true;
+	downloadFlg.value= 2;
+	document.theForm.submit();
+}
+function tosalaryInfoJsp(salaryInfoID){
+	var EmployeeIDFlg =document.getElementById('EmployeeIDFlg');
+	var downloadFlg =document.getElementById('downloadFlg');
+	downloadFlg.value= 3;
+	EmployeeIDFlg.value= salaryInfoID;
 	document.theForm.submit();
 }
 
@@ -34,7 +41,7 @@ function toDownLoadDataJsp(){
          <input style="border-radius: 3px" type="submit" name="downLoad"id="downLoad_btn" value="ダウンロード">
          -->
          <input type="button" name="search" value="検索" onclick="toSearchJsp();" />
-
+         <input type="hidden" id="EmployeeIDFlg"name="EmployeeIDFlg"/>
          <input type="hidden" id="downloadFlg"name="downloadFlg"/>
          <input type="button" name="downLoad" value="ダウンロード"onclick="toDownLoadDataJsp()" />
 
@@ -90,7 +97,7 @@ function toDownLoadDataJsp(){
         <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
             <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
 
-				<td rowspan="3"><c:out value="${salarylist.getEmployeeID()}"/></td>
+				<td rowspan="3"><input type="button"  value="<c:out value="${salarylist.getEmployeeID()}"/>"onclick="tosalaryInfoJsp('${salarylist.getEmployeeID()}')" /></td>
 				<td><c:out value="${salarylist.getEmployeeName()}"/></td>
 				<td><c:out value="${salarylist.getMonth()}"/></td>
 				<td><c:out value="${salarylist.getPaymentDate()}"/></td>
