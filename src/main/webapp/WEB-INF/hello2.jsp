@@ -11,8 +11,7 @@
 
 </head>
 <body>
-<h2>Hello World!!!!</h2>
-<h2>新規追加</h2>
+<h2>更新</h2>
 <input type="button" value="ボタン" onClick="testPath()">
 
 </body>

@@ -9,7 +9,9 @@ public class SalarylistBean2 {
 
 		//ダウンロード
 		private int downloadFlg;
+		private String b;
 		private String loadFlg;
+		private String cFlg;
 		private String EmployeeMonthFlg;
 		private String EmployeeIDFlg;
 		private String employeeName = "0";
@@ -547,6 +549,34 @@ public class SalarylistBean2 {
 			 */
 			public void setLoadFlg(String loadFlg) {
 				this.loadFlg = loadFlg;
+			}
+
+			/**
+			 * @return cFlg
+			 */
+			public String getcFlg() {
+				return cFlg;
+			}
+
+			/**
+			 * @param cFlg セットする cFlg
+			 */
+			public void setcFlg(String cFlg) {
+				this.cFlg = cFlg;
+			}
+
+			/**
+			 * @return b
+			 */
+			public String getB() {
+				return b;
+			}
+
+			/**
+			 * @param b セットする b
+			 */
+			public void setB(String b) {
+				this.b = b;
 			}
 }
 

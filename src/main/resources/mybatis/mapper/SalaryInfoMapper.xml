@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.SalaryInfoMapper">
+	<!--給料作成情報を取得する。inner join-->
+	<select id="getSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfocommom" resultType="com.softtech.entity.SalaryInfo">
+		select ss.*,
+		       ee.employeeID,
+		       ee.employeeName,
+		       ee.address
+		from employee ee,salaryinfo ss
+		where ee.employeeID=#{employeeID}
+		AND   ss.employeeID=#{employeeID}
+		AND   ss.month=#{month}
+		AND   ee.employeeID=ss.employeeID
+	</select>
+	<!--社員情報を取得する。inner join-->
+	<select id="getSalaryInfoDetail1" parameterType="string" resultType="com.softtech.entity.SalaryInfo">
+		SELECT *
+        FROM employee
+        WHERE employeeID=#{employeeID}
+
+	</select>
+</mapper>
