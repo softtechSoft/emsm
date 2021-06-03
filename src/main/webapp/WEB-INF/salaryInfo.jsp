@@ -15,6 +15,8 @@
 </style>
 <script type="text/javascript" >
 function tosalaryInfoJsp(salaryInfoID){
+	var Make =document.getElementById('Make');
+	Make.value= "2";
 	var loadFlg =document.getElementById('loadFlg');
 	loadFlg.value= "1";
 	var EmployeeIDFlg =document.getElementById('EmployeeIDFlg');
@@ -24,8 +26,8 @@ function tosalaryInfoJsp(salaryInfoID){
 function load(){
 
 	var loadFlg =document.getElementById('loadFlg').value;
-	if(loadFlg == "") {
 		document.getElementById('month').readOnly=true;
+	if(loadFlg == "") {
 		document.getElementById('Base').readOnly=true;
 		document.getElementById('PaymentDate').readOnly=true;
 		document.getElementById('OverTime').readOnly=true;
@@ -52,18 +54,12 @@ function load(){
 		document.getElementById('Remark').readOnly=true;
 	  }
 }
-function tocJsp(){
-	var c =document.getElementById('c').value;
-	var b =document.getElementById('b');
-	if(c == "新規追加") {
-		b.value= "新規追加";
-		document.theForm.submit();
-
-	}else if (c == "更新"){
-		b.value= "更新";
-		document.theForm.submit();
-
-	}
+function doRegist(){
+	var Make =document.getElementById('Make');
+	Make.value= "1";
+	var MakeDistinction =document.getElementById('MakeDistinction').value;
+	var EmployeeIDb =document.getElementById('EmployeeIDb').value;
+	document.theForm.submit();
 }
 </script>
 </head >
@@ -71,11 +67,13 @@ function tocJsp(){
 <h2>社員給料作成</h2>
 <div id="main"  >
 <div class="ctbox">
-<form:form name="theForm" id="theForm"  method="post" modelAttribute="salaryInfo2" action="salaryInfo" >
+<!--  SalaryInfoController.javaと通信モデル：SalarylistBean2-->
+<form:form name="theForm" id="theForm"  method="post" modelAttribute="SalarylistBean2" action="salaryInfo" >
 			<input type="hidden" id="EmployeeIDFlg" name="EmployeeIDFlg"/>
 			<input type="hidden" id="loadFlg" name="loadFlg" value="${loadFlg}"/>
-			<input type="hidden" id="c" name="c" value="${cFlg}"/>
-			<input type="hidden" id="b" name="b" />
+			<input type="hidden" id="MakeDistinction" name="MakeDistinction" value="${MakeDistinction}" />
+			<input type="hidden" id="EmployeeIDb" name="EmployeeIDb" value="${EmployeeIDb}"/>
+			<input type="hidden" id="Make" name="Make" />
 
 <table  bgcolor="white">
 	<c:forEach items="${salaryInfo}" var="salaryInfo" >
@@ -87,6 +85,7 @@ function tocJsp(){
 	<tr style="background-color:#bfe1ff">
 	<td>社員ID：</td>
 	<td><c:out value="${salaryInfo.getEmployeeID()}"/></td>
+
 	</tr>
 	<tr style="background-color:#dcfeeb">
 	<td>氏名：</td>
@@ -199,7 +198,7 @@ function tocJsp(){
 	<tr>
 	<td></td>
 	<td style="text-align: right;">
-	<input type="button" name="search" value="登録"  onclick="tocJsp()"/></td>
+	<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
 	</tr>
 	</c:forEach>
 </table>

@@ -23,4 +23,30 @@
         WHERE employeeID=#{employeeID}
 
 	</select>
+	<!--給料情報を作成する。inner join-->
+	<select id="setSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfocommom">
+		insert into
+			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
+			transportExpense,allowancePlus,allowanceReduce,allowanceReason,welfareSelf,welfareComp,welfareBaby,eplyInsSelf,
+			eplyInsComp,eplyInsWithdraw,wkAcccpsIns,withholdingTax,municipalTax,rental,rentalMgmtFee,sum,totalFee,remark)
+		values(#{employeeID},#{month},#{paymentDate},#{base},#{overTime},#{shortage},#{overTimePlus},#{shortageReduce},
+			#{transportExpense},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfareSelf},#{welfareComp},#{welfareBaby},
+			#{eplyInsSelf},#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},
+			#{sum},#{totalFee},#{remark})
+
+	</select>
+		<!--給料情報を更新する。inner join-->
+	<select id="setSalaryInfoDetail1" parameterType="com.softtech.common.SalaryInfocommom">
+		update  ems.salaryinfo set paymentDate = #{paymentDate},base = #{base},
+				overTime = #{overTime},shortage = #{shortage},overTimePlus = #{overTimePlus},
+				shortageReduce = #{shortageReduce},transportExpense = #{transportExpense},allowancePlus = #{allowancePlus},
+				allowanceReduce = #{allowanceReduce},allowanceReason = #{allowanceReason},welfareSelf = #{welfareSelf},
+				welfareComp = #{welfareComp},welfareBaby = #{welfareBaby},eplyInsSelf = #{eplyInsSelf},
+				eplyInsComp = #{eplyInsComp},eplyInsWithdraw = #{eplyInsWithdraw},wkAcccpsIns = #{wkAcccpsIns},
+				withholdingTax = #{withholdingTax},municipalTax = #{municipalTax},rental = #{rental},
+				rentalMgmtFee = #{rentalMgmtFee},sum = #{sum},totalFee = #{totalFee},remark = #{remark}
+		where employeeID =#{employeeID}
+		AND   month=#{month}
+
+	</select>
 </mapper>

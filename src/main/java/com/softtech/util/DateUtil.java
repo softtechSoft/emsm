@@ -42,7 +42,10 @@ public class DateUtil {
 		// YYYY/MM→yyyymmに変換
 		return month.replace("/", "");
 	}
-
+	public static String chgMonthToYM1(String month) {
+		// YYYY/MM→yyyymmに変換
+		return month.replace(",", "");
+	}
 	/**
 	 * 機能：float→Stringに変換
 	 *

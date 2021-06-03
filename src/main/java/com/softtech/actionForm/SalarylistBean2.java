@@ -9,7 +9,9 @@ public class SalarylistBean2 {
 
 		//ダウンロード
 		private int downloadFlg;
-		private String b;
+		private String EmployeeIDb;
+		private String MakeDistinction;
+		private String Make;
 		private String loadFlg;
 		private String cFlg;
 		private String EmployeeMonthFlg;
@@ -564,20 +566,49 @@ public class SalarylistBean2 {
 			public void setcFlg(String cFlg) {
 				this.cFlg = cFlg;
 			}
-
 			/**
-			 * @return b
+			 * @return make
 			 */
-			public String getB() {
-				return b;
+			public String getMake() {
+				return Make;
 			}
 
 			/**
-			 * @param b セットする b
+			 * @param make セットする make
 			 */
-			public void setB(String b) {
-				this.b = b;
+			public void setMake(String make) {
+				Make = make;
 			}
+
+			/**
+			 * @return makeDistinction
+			 */
+			public String getMakeDistinction() {
+				return MakeDistinction;
+			}
+
+			/**
+			 * @param makeDistinction セットする makeDistinction
+			 */
+			public void setMakeDistinction(String makeDistinction) {
+				MakeDistinction = makeDistinction;
+			}
+
+			/**
+			 * @return employeeIDb
+			 */
+			public String getEmployeeIDb() {
+				return EmployeeIDb;
+			}
+
+			/**
+			 * @param employeeIDb セットする employeeIDb
+			 */
+			public void setEmployeeIDb(String employeeIDb) {
+				EmployeeIDb = employeeIDb;
+			}
+
+
 }
 
 

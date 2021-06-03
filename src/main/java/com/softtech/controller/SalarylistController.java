@@ -110,8 +110,10 @@ public class SalarylistController {
 				em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
 				// DBから給料作成情報を取得
 				List<SalaryInfo> ss= salaryInfoService.querySalaryInfo(em);
+				String s = salarylistBean2.getMonth();
+				String ret = s.substring(0,4)+"/"+s.substring(4,6);
 				String cc = "作成";
-				model.addAttribute("month", salarylistBean2.getMonth());
+				model.addAttribute("month", ret);
 				model.addAttribute("salaryInfo",ss);
 				model.addAttribute("button",cc);
 		        return "salaryInfo";

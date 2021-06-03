@@ -9,9 +9,6 @@ public class SalaryInfocommom {
 	private static final long serialVersionUID = 1L;
 	private String employeeID;
 	private String month;
-	/**
-	 * @return employeeID
-	 */
 	public String getEmployeeID() {
 		return employeeID;
 	}
@@ -33,5 +30,6 @@ public class SalaryInfocommom {
 	public void setMonth(String month) {
 		this.month = month;
 	}
+
 
 }

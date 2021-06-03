@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.common.SalaryInfocommom;
+import com.softtech.common.SalaryInfocommom2;
 import com.softtech.entity.SalaryInfo;
 import com.softtech.mappers.SalaryInfoMapper;
 
@@ -28,6 +29,14 @@ public class SalaryInfoService {
 		// 社員情報を取得する
 		List<SalaryInfo> salaryInfo1= salaryInfoMapper.getSalaryInfoDetail1( id );
 		return  salaryInfo1;
+	}
+	public  void querySalaryInfo2(SalaryInfocommom2 am) {
+		// 給料作成情報を作成する
+		 salaryInfoMapper.setSalaryInfoDetail(am);
+	}
+	public  void querySalaryInfo3(SalaryInfocommom2 lm) {
+		// 給料作成情報を更新する
+		 salaryInfoMapper.setSalaryInfoDetail1(lm);
 	}
 
 

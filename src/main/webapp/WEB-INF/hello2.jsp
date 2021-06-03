@@ -11,8 +11,7 @@
 
 </head>
 <body>
-<h2>更新</h2>
-<input type="button" value="ボタン" onClick="testPath()">
+<h2>給料更新成功</h2>
 
 </body>
 </html>
