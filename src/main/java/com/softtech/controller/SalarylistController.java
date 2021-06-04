@@ -78,7 +78,7 @@ public class SalarylistController {
 
 	@RequestMapping(value = "salarylist", method = RequestMethod.POST)
 	public String SalarylistSubmit(HttpServletResponse response, @Valid SalarylistBean2 salarylistBean2,
-			BindingResult result,SalaryInfo salaryInfo, Model model) {
+			BindingResult result, Model model) {
 		// NotNullの入力した年月をチェック。
 		if (result.hasErrors()) {
 			model.addAttribute("errors", result.getFieldErrors());

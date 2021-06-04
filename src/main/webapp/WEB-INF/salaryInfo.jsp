@@ -54,11 +54,12 @@ function load(){
 		document.getElementById('Remark').readOnly=true;
 	  }
 }
-function doRegist(){
+function doRegist(salaryInfoid){
 	var Make =document.getElementById('Make');
 	Make.value= "1";
 	var MakeDistinction =document.getElementById('MakeDistinction').value;
-	var EmployeeIDb =document.getElementById('EmployeeIDb').value;
+	var EmployeeIDb =document.getElementById('EmployeeIDb');
+	EmployeeIDb.value=salaryInfoid;
 	document.theForm.submit();
 }
 </script>
@@ -68,13 +69,17 @@ function doRegist(){
 <div id="main"  >
 <div class="ctbox">
 <!--  SalaryInfoController.javaと通信モデル：SalarylistBean2-->
-<form:form name="theForm" id="theForm"  method="post" modelAttribute="SalarylistBean2" action="salaryInfo" >
+<form:form name="theForm" id="theForm"  method="post" modelAttribute="SalarylistBean3" action="salaryInfo" >
 			<input type="hidden" id="EmployeeIDFlg" name="EmployeeIDFlg"/>
 			<input type="hidden" id="loadFlg" name="loadFlg" value="${loadFlg}"/>
 			<input type="hidden" id="MakeDistinction" name="MakeDistinction" value="${MakeDistinction}" />
 			<input type="hidden" id="EmployeeIDb" name="EmployeeIDb" value="${EmployeeIDb}"/>
 			<input type="hidden" id="Make" name="Make" />
-
+			<p style="color: red;">
+            <c:forEach  items="${errors}" var="error">
+						<spring:message message="${error}" /><br/>
+			</c:forEach>
+			</p>
 <table  bgcolor="white">
 	<c:forEach items="${salaryInfo}" var="salaryInfo" >
 	<tr>
@@ -198,7 +203,7 @@ function doRegist(){
 	<tr>
 	<td></td>
 	<td style="text-align: right;">
-	<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
+	<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist('${salaryInfo.getEmployeeID()}')" /></td>
 	</tr>
 	</c:forEach>
 </table>
