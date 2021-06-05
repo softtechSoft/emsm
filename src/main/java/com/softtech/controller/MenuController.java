@@ -1,6 +1,9 @@
 package com.softtech.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,19 @@ public class MenuController {
 	 * @return  遷移先画面
 	 */
 	@RequestMapping(value = "/functionInit")
-	public String menuInit(Model model) {
+	public String menuInit(HttpServletRequest request,Model model) {
+		System.out.println("************** in emsm *************");
+		String employeeID="";
+		Map<String, String[]> map = request.getParameterMap();
+		for (Map.Entry<String, String[]> entry : map.entrySet()) {
+
+			//ログインID取得
+			if (entry.getKey().equals("employeeID") ) {
+				employeeID = entry.getValue()[0];
+				break;
+			}
+		}
+		System.out.println(employeeID);
 
 		return "functionset";
 	}
