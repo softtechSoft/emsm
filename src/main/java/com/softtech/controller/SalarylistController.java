@@ -35,10 +35,10 @@ public class SalarylistController {
 	SalaryInfoService salaryInfoService;
 
 	/**
-	 *    ログイン画面初期処理
-	 *       ログイン画面へ遷移する。
+	 *    給料リスト画面初期処理
+	 *    給料リスト画面へ遷移する。
 	 * @param  モデル
-//	 */
+	 */
 	@RequestMapping(value = {"/salarylist"})
 	public String home(Model model) {
 		//現在年月取得
@@ -47,35 +47,13 @@ public class SalarylistController {
 		// DBから給料情報を取得
 		List<SalaryInfo> sl= salarylistService.querySalarylist(month);
 		model.addAttribute("list",sl);
-
-
-		//画面初期化
-//		List<SalarylistBean> salarylistBean1 = new ArrayList<SalarylistBean>();
-//		SalarylistBean slb = new SalarylistBean();
-//		slb.setEmployeeID("01");
-//		slb.setEmployeeName("晴子");
-//		slb.setMonth("202104");
-//		slb.setPaymentDate("20210430");
-//		slb.setBase("300000");
-//		slb.setSum("320000");
-//		slb.setRemark("");
-//		salarylistBean1.add(slb);
-//
-//		SalarylistBean slb2 = new SalarylistBean();
-//		slb2.setEmployeeID("02");
-//		slb2.setEmployeeName("夏子");
-//		slb2.setMonth("202105");
-//		slb2.setPaymentDate("20210530");
-//		slb2.setBase("320000");
-//		slb2.setSum("340000");
-//		slb2.setRemark("");
-//		salarylistBean1.add(slb2);
-//
-//		model.addAttribute("list", salarylistBean1);
-
 		return "salarylist";
 	}
-
+	/**
+	 *   給料リスト処理。
+	 *   給料リスト処理。
+	 * @param  モデル
+	 */
 	@RequestMapping(value = "salarylist", method = RequestMethod.POST)
 	public String SalarylistSubmit(HttpServletResponse response, @Valid SalarylistBean2 salarylistBean2,
 			BindingResult result, Model model) {
@@ -101,22 +79,23 @@ public class SalarylistController {
 			 // 検索する場合
 		 } else if(salarylistBean2.getDownloadFlg()==1){
 			     model.addAttribute("list", sl);
-			  // 給料作成場合
+		 // 画面の給料リスト中の社員IDを押す時。
 		 }else if(salarylistBean2.getDownloadFlg()==3) {
 			 SalaryInfocommom em = new SalaryInfocommom();
-				//社員ID
-				em.setEmployeeID(salarylistBean2.getEmployeeIDFlg());
-				//対象年月と対象年月YYYY/MM→yyyymmに変換
-				em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
-				// DBから給料作成情報を取得
-				List<SalaryInfo> ss= salaryInfoService.querySalaryInfo(em);
-				String s = salarylistBean2.getMonth();
-				String ret = s.substring(0,4)+"/"+s.substring(4,6);
-				String cc = "作成";
-				model.addAttribute("month", ret);
-				model.addAttribute("salaryInfo",ss);
-				model.addAttribute("button",cc);
-		        return "salaryInfo";
+			//社員ID
+			em.setEmployeeID(salarylistBean2.getEmployeeIDFlg());
+			//対象年月と対象年月YYYY/MM→yyyymmに変換
+			em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
+			// DBから社員IDの対象年月の給料情報を取得
+			List<SalaryInfo> ss= salaryInfoService.querySalaryInfo(em);
+			String s = salarylistBean2.getMonth();
+			String ret = s.substring(0,4)+"/"+s.substring(4,6);
+			//画面初期の時、作成ボタンの名称が”作成”とする。
+			String cc = "作成";
+			model.addAttribute("month", ret);
+			model.addAttribute("salaryInfo",ss);
+			model.addAttribute("button",cc);
+		    return "salaryInfo";
 		 }
 		return "salarylist";
 	}

@@ -2,7 +2,7 @@ package com.softtech.actionForm;
 
 import javax.validation.constraints.Size;
 
-public class SalarylistBean3 {
+public class SalarylistBean3  {
 	//対象年月
 		@Size(min=2, max=30,message="対象月を入力してください。例：202104")
 		private String month ;
@@ -10,47 +10,49 @@ public class SalarylistBean3 {
 		//ダウンロード
 		private int downloadFlg;
 		private String EmployeeIDb;
+		private String Nameb;
+		private String Addressb;
 		private String MakeDistinction;
 		private String Make;
 		private String loadFlg;
 		private String cFlg;
 		private String EmployeeMonthFlg;
 		private String EmployeeIDFlg;
-		private String employeeName = "0";
-		private String employeeID = "0";
+		private String employeeName ;
+		private String employeeID ;
 		@Size(min=2, max=30,message="支払日を入力してください。例：2021/08/15")
-		private String paymentDate = "0";
+		private String paymentDate ;
 		@Size(min=1, max=30,message="基本給を入力してください。例：60000")
-		private String base = "0";
-		private String overTimePlus = "0";
-		private String shortageReduce = "0";
-		private String transportExpense = "0";
-		private String allowancePlus = "0";
-		private String allowanceReduce = "0";
-		private String allowanceReason = " ";
-		private String welfarePensionSelf = "0";
-		private String welfareHealthSelf = "0";
-		private String eplyInsSelf = "0";
-		private String withholdingTax = "0";
-		private String municipalTax = "0";
-		private String rental = "0";
-		private String rentalMgmtFee = "0";
+		private String base ;
+		private String overTimePlus ;
+		private String shortageReduce ;
+		private String transportExpense ;
+		private String allowancePlus ;
+		private String allowanceReduce;
+		private String allowanceReason ;
+		private String welfarePensionSelf;
+		private String welfareHealthSelf;
+		private String eplyInsSelf;
+		private String withholdingTax;
+		private String municipalTax;
+		private String rental;
+		private String rentalMgmtFee;
 		@Size(min=1, max=30,message="総額を入力してください。例：60000")
-		private String sum = "0";
-		private String remark = " ";
+		private String sum;
+		private String remark;
 		@Size(min=1, max=30,message="総費用を入力してください。例：60000")
-		private String totalFee = "0";
-		private String wkAcccpsIns = "0";
-		private String eplyInsWithdraw = "0";
-		private String eplyInsComp = "0";
-		private String welfareBaby = "0";
-		private String welfarePensionComp = "0";
-		private String welfareHealthComp = "0";
-		private String overTime = "0";
-		private String shortage = "0";
-		private String address = "0";
-		private String welfareSelf = "0";
-		private String welfareComp = "0";
+		private String totalFee;
+		private String wkAcccpsIns;
+		private String eplyInsWithdraw;
+		private String eplyInsComp;
+		private String welfareBaby;
+		private String welfarePensionComp;
+		private String welfareHealthComp;
+		private String overTime;
+		private String shortage;
+		private String address;
+		private String welfareSelf;
+		private String welfareComp;
 
 			/**
 			 * @return month
@@ -610,6 +612,34 @@ public class SalarylistBean3 {
 			 */
 			public void setEmployeeIDb(String employeeIDb) {
 				EmployeeIDb = employeeIDb;
+			}
+
+			/**
+			 * @return nameb
+			 */
+			public String getNameb() {
+				return Nameb;
+			}
+
+			/**
+			 * @param nameb セットする nameb
+			 */
+			public void setNameb(String nameb) {
+				Nameb = nameb;
+			}
+
+			/**
+			 * @return addressb
+			 */
+			public String getAddressb() {
+				return Addressb;
+			}
+
+			/**
+			 * @param addressb セットする addressb
+			 */
+			public void setAddressb(String addressb) {
+				Addressb = addressb;
 			}
 
 

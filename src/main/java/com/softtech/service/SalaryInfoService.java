@@ -17,7 +17,7 @@ import com.softtech.mappers.SalaryInfoMapper;
  * 作成日：2021/05/25
  */
 @Service
-public class SalaryInfoService {
+public class SalaryInfoService { 
 	@Autowired
 	SalaryInfoMapper salaryInfoMapper;
 	public List<SalaryInfo> querySalaryInfo(SalaryInfocommom em) {
@@ -25,16 +25,11 @@ public class SalaryInfoService {
 		List<SalaryInfo> salaryInfo= salaryInfoMapper.getSalaryInfoDetail(em);
 		return  salaryInfo;
 	}
-	public List<SalaryInfo> querySalaryInfo1(String id) {
-		// 社員情報を取得する
-		List<SalaryInfo> salaryInfo1= salaryInfoMapper.getSalaryInfoDetail1( id );
-		return  salaryInfo1;
-	}
-	public  void querySalaryInfo2(SalaryInfocommom2 am) {
+	public  void setSalaryInfo2(SalaryInfocommom2 am) {
 		// 給料作成情報を作成する
 		 salaryInfoMapper.setSalaryInfoDetail(am);
 	}
-	public  void querySalaryInfo3(SalaryInfocommom2 lm) {
+	public  void setSalaryInfo3(SalaryInfocommom2 lm) {
 		// 給料作成情報を更新する
 		 salaryInfoMapper.setSalaryInfoDetail1(lm);
 	}

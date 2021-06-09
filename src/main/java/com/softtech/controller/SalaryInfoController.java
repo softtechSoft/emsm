@@ -1,6 +1,10 @@
 package com.softtech.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -32,18 +36,35 @@ public class SalaryInfoController {
 	@Autowired
 	SalaryInfoService salaryInfoService;
 
+	/**
+	 *   給料作成処理。
+	 *   給料作成処理。
+	 * @param  モデル
+	 * @throws ParseException
+	 */
 	@RequestMapping(value = "salaryInfo", method = RequestMethod.POST )
 	public String toWorkDetailList(HttpServletResponse response,@Valid @ModelAttribute("SalarylistBean3") SalarylistBean3 salarylistBean3,
-			BindingResult result, Model model) {
+			BindingResult result, Model model) throws ParseException {
+		//作成ボタンを押す。
 		if(salarylistBean3.getMake().equals("2")) {
-		    // 作成ボタンをおした、inputが可入力。
+		    // 作成ボタンをおした、inputが可入力になります。
 			model.addAttribute("loadFlg", salarylistBean3.getLoadFlg());
 			SalaryInfocommom em = new SalaryInfocommom();
 		 	// 対象年月+1をする。
-		    int a = Integer.parseInt(DateUtil.chgMonthToYM(salarylistBean3.getMonth()))+1;
-		    String s=String.valueOf(a);
+			String month= DateUtil.chgMonthToYM(salarylistBean3.getMonth());
+			SimpleDateFormat ft = new SimpleDateFormat("yyyyMM");
+			// 対象年月string型-->date型。
+			Date date = ft.parse(month);
+			Calendar time = Calendar.getInstance();
+			time.setTime(date);
+	        //日期加1个月
+			time.add(Calendar.MONTH,1);
+	        Date dt1=time.getTime();
+	        SimpleDateFormat f = new SimpleDateFormat("yyyyMM");
+	        // 対象年月date型-->string型。
+	        String s = f.format(dt1);
 			//社員ID
-			em.setEmployeeID(salarylistBean3.getEmployeeIDFlg());
+			em.setEmployeeID(salarylistBean3.getEmployeeIDb());
 			//対象年月
 			em.setMonth(s);
 			// DBから給料作成情報を取得
@@ -51,18 +72,56 @@ public class SalaryInfoController {
 			String ret = s.substring(0,4)+"/"+s.substring(4,6);
 			model.addAttribute("month", ret);
 			if(null == ss || ss.size() ==0) {
+				//作成ボタン用
 				String cc = "作成";
+
 				model.addAttribute("button",cc);
-				//作成場合
-				List<SalaryInfo> dd= salaryInfoService.querySalaryInfo1(salarylistBean3.getEmployeeIDFlg());
-				model.addAttribute("salaryInfo",dd);
+				//作成場合、画面側の情報を取得。
+				List<SalarylistBean3> rt =new ArrayList<SalarylistBean3>();
+				SalarylistBean3 salarylistBean5 =new SalarylistBean3();
+				salarylistBean5.setEmployeeID(salarylistBean3.getEmployeeIDb());
+				salarylistBean5.setAddress(salarylistBean3.getAddressb());
+				salarylistBean5.setEmployeeName(salarylistBean3.getNameb());
+				salarylistBean5.setPaymentDate(salarylistBean3.getPaymentDate());
+				salarylistBean5.setBase(salarylistBean3.getBase());
+				salarylistBean5.setOverTimePlus(salarylistBean3.getOverTimePlus());
+				salarylistBean5.setShortageReduce(salarylistBean3.getShortageReduce());
+				salarylistBean5.setTransportExpense(salarylistBean3.getTransportExpense());
+				salarylistBean5.setAllowancePlus(salarylistBean3.getAllowancePlus());
+				salarylistBean5.setAllowanceReduce(salarylistBean3.getAllowanceReduce());
+				salarylistBean5.setAllowanceReason(salarylistBean3.getAllowanceReason());
+				salarylistBean5.setWelfarePensionSelf(salarylistBean3.getWelfarePensionSelf());
+				salarylistBean5.setWelfareHealthSelf(salarylistBean3.getWelfareHealthSelf());
+				salarylistBean5.setEplyInsSelf(salarylistBean3.getEplyInsSelf());
+				salarylistBean5.setWithholdingTax(salarylistBean3.getWithholdingTax());
+				salarylistBean5.setMunicipalTax(salarylistBean3.getMunicipalTax());
+				salarylistBean5.setRental(salarylistBean3.getRental());
+				salarylistBean5.setRentalMgmtFee(salarylistBean3.getRentalMgmtFee());
+				salarylistBean5.setSum(salarylistBean3.getSum());
+				salarylistBean5.setRemark(salarylistBean3.getRemark());
+				salarylistBean5.setTotalFee(salarylistBean3.getTotalFee());
+				salarylistBean5.setWkAcccpsIns(salarylistBean3.getWkAcccpsIns());
+				salarylistBean5.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
+				salarylistBean5.setEplyInsComp(salarylistBean3.getEplyInsComp());
+				salarylistBean5.setWelfareBaby(salarylistBean3.getWelfareBaby());
+				salarylistBean5.setWelfarePensionComp(salarylistBean3.getWelfarePensionComp());
+				salarylistBean5.setWelfareHealthComp(salarylistBean3.getWelfareHealthComp());
+				salarylistBean5.setOverTime(salarylistBean3.getOverTime());
+				salarylistBean5.setShortage(salarylistBean3.getShortage());
+				salarylistBean5.setWelfareSelf(salarylistBean3.getWelfareSelf());
+				salarylistBean5.setWelfareComp(salarylistBean3.getWelfareComp());
+				rt.add(salarylistBean5);
+				model.addAttribute("salaryInfo",rt);
+				//登録ボタンを押す時、作成と更新を分ける用。
 				String k="1";
 				model.addAttribute("MakeDistinction",k);
 			}else {
+				//変更ボタン用
 				String bb = "変更";
 				model.addAttribute("button",bb);
 				//変更場合
 				model.addAttribute("salaryInfo",ss);
+				//登録ボタンを押す時、作成と更新を分ける用。
 				String o="2";
 				model.addAttribute("MakeDistinction",o);
 			}
@@ -85,15 +144,11 @@ public class SalaryInfoController {
 				model.addAttribute("month", ret);
 				//エラー処理用リスト
 				List<SalarylistBean3> rtn =new ArrayList<SalarylistBean3>();
-				//作成場合.社員情報リスト
-				List<SalaryInfo> dd= salaryInfoService.querySalaryInfo1(salarylistBean3.getEmployeeIDb());
+				//エラー処理時、画面から入力した情報
 				SalarylistBean3 salarylistBean4=new SalarylistBean3();
-				for(SalaryInfo wk : dd) {
-					salarylistBean4.setEmployeeID(wk.getEmployeeID());
-					salarylistBean4.setMonth((wk.getMonth()));
-					salarylistBean4.setAddress((wk.getAddress()));
-				}
-					//作成場合.画面から入力した情報
+					salarylistBean4.setEmployeeID(salarylistBean3.getEmployeeIDb());
+					salarylistBean4.setAddress(salarylistBean3.getAddressb());
+					salarylistBean4.setEmployeeName(salarylistBean3.getNameb());
 					salarylistBean4.setPaymentDate(salarylistBean3.getPaymentDate());
 					salarylistBean4.setBase(salarylistBean3.getBase());
 					salarylistBean4.setOverTimePlus(salarylistBean3.getOverTimePlus());
@@ -123,18 +178,22 @@ public class SalaryInfoController {
 					salarylistBean4.setWelfareSelf(salarylistBean3.getWelfareSelf());
 					salarylistBean4.setWelfareComp(salarylistBean3.getWelfareComp());
 					rtn.add(salarylistBean4);
-					//作成場合
+				 //作成場合
 				if(null == ss || ss.size() ==0) {
+					//作成ボタン用
 					String cc = "作成";
 					model.addAttribute("button",cc);
 					model.addAttribute("salaryInfo",rtn);
+					//登録ボタンを押す時、作成と更新を分ける用。
 					String k="1";
 					model.addAttribute("MakeDistinction",k);
 					//変更場合
 				}else {
+					//変更ボタン用
 					String bb = "変更";
 					model.addAttribute("button",bb);
 					model.addAttribute("salaryInfo",rtn);
+					//登録ボタンを押す時、作成と更新を分ける用。
 					String o="2";
 					model.addAttribute("MakeDistinction",o);
 				}
@@ -173,7 +232,8 @@ public class SalaryInfoController {
 				am.setWelfareSelf(salarylistBean3.getWelfareSelf());
 				am.setWelfareComp(salarylistBean3.getWelfareComp());
 				// DBまで給料作成情報を作成。
-			    salaryInfoService.querySalaryInfo2(am);
+			    salaryInfoService.setSalaryInfo2(am);
+			    //作成成功後、画面の表示。
 			    return "hello3";
 			    //登録ボタンを押す時.変更場合
 			}else if(salarylistBean3.getMakeDistinction().equals("2")) {
@@ -209,15 +269,12 @@ public class SalaryInfoController {
 					lm.setWelfareSelf(salarylistBean3.getWelfareSelf());
 					lm.setWelfareComp(salarylistBean3.getWelfareComp());
 					// DBまで給料作成情報を更新。
-				    salaryInfoService.querySalaryInfo3(lm);
+				    salaryInfoService.setSalaryInfo3(lm);
+				    //更新成功後、画面の表示。
 				    return "hello2";
 
 				}
 		}
-
-					//社員IDがクライアント側へ渡す。
-					String bb =salarylistBean3.getEmployeeIDFlg();
-					model.addAttribute("EmployeeIDb",bb);
 					return "salaryInfo";
 	}
 }

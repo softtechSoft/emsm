@@ -11,18 +11,21 @@
 <title> ソフトテク株式会社-社内管理システム </title>
 <style>
 #main{ width:1500px; float:left; padding:10px 0;border:1px }
-.ctbox{ margin:0 auto; width:350px;}
 </style>
 <script type="text/javascript" >
-function tosalaryInfoJsp(salaryInfoID){
+//作成ボタンをクリック時。
+function tosalaryInfoJsp(){
+	//作成ボタンをクリック時、作成と登録を判断するデータ
 	var Make =document.getElementById('Make');
 	Make.value= "2";
+	//input入力できるかどうか、判断用データ
 	var loadFlg =document.getElementById('loadFlg');
 	loadFlg.value= "1";
-	var EmployeeIDFlg =document.getElementById('EmployeeIDFlg');
-	EmployeeIDFlg.value= salaryInfoID;
+	//社員IDを転送するデータ
+	var EmployeeIDb =document.getElementById('EmployeeIDb').value;
 	document.theForm.submit();
 }
+//画面初期の時、input不可入力
 function load(){
 
 	var loadFlg =document.getElementById('loadFlg').value;
@@ -54,12 +57,19 @@ function load(){
 		document.getElementById('Remark').readOnly=true;
 	  }
 }
-function doRegist(salaryInfoid){
+//登録ボタンをクリック時。
+function doRegist(){
+	//登録ボタンをクリック時、作成と登録を判断するデータ
 	var Make =document.getElementById('Make');
 	Make.value= "1";
+	//作成と更新を判断するデータ
 	var MakeDistinction =document.getElementById('MakeDistinction').value;
-	var EmployeeIDb =document.getElementById('EmployeeIDb');
-	EmployeeIDb.value=salaryInfoid;
+	//社員IDを転送するデータ
+	var EmployeeIDb =document.getElementById('EmployeeIDb').value;
+	//社員氏名を転送するデータ
+	var Nameb =document.getElementById('Nameb').value;
+	//社員住所を転送するデータ
+	var Addressb =document.getElementById('Addressb').value;
 	document.theForm.submit();
 }
 </script>
@@ -70,35 +80,45 @@ function doRegist(salaryInfoid){
 <div class="ctbox">
 <!--  SalaryInfoController.javaと通信モデル：SalarylistBean2-->
 <form:form name="theForm" id="theForm"  method="post" modelAttribute="SalarylistBean3" action="salaryInfo" >
-			<input type="hidden" id="EmployeeIDFlg" name="EmployeeIDFlg"/>
-			<input type="hidden" id="loadFlg" name="loadFlg" value="${loadFlg}"/>
-			<input type="hidden" id="MakeDistinction" name="MakeDistinction" value="${MakeDistinction}" />
-			<input type="hidden" id="EmployeeIDb" name="EmployeeIDb" value="${EmployeeIDb}"/>
+			<!-- 作成ボタンと登録ボタンを分かれる。-->
 			<input type="hidden" id="Make" name="Make" />
+			<!--input入力できるかどうか、判断用データ -->
+			<input type="hidden" id="loadFlg" name="loadFlg" value="${loadFlg}"/>
+			<!-- 登録ボタンをクリック時、作成と登録を判断する為に-->
+			<input type="hidden" id="MakeDistinction" name="MakeDistinction" value="${MakeDistinction}" />
+			<!--エラーメッセージを表示する為に-->
 			<p style="color: red;">
             <c:forEach  items="${errors}" var="error">
 						<spring:message message="${error}" /><br/>
 			</c:forEach>
 			</p>
-<table  bgcolor="white">
+<table  bgcolor="white"; width:100%;>
 	<c:forEach items="${salaryInfo}" var="salaryInfo" >
 	<tr>
 	<td></td>
 	<td style="text-align: right;">
-	<input type="button" id="search" name="search"  value="${button}" onclick="tosalaryInfoJsp('${salaryInfo.getEmployeeID()}')" /></td>
+	<input type="button" id="search" name="search"  value="${button}" onclick="tosalaryInfoJsp()" /></td>
 	</tr>
 	<tr style="background-color:#bfe1ff">
 	<td>社員ID：</td>
-	<td><c:out value="${salaryInfo.getEmployeeID()}"/></td>
-
+	<td><c:out value="${salaryInfo.getEmployeeID()}"/>
+	<!--社員idを転送 -->
+	<input type="hidden" id="EmployeeIDb" name="EmployeeIDb" value="<c:out value="${salaryInfo.getEmployeeID()}"/>"/>
+	</td>
 	</tr>
 	<tr style="background-color:#dcfeeb">
 	<td>氏名：</td>
-	<td><c:out value="${salaryInfo.getEmployeeName()}"/></td>
+	<td><c:out value="${salaryInfo.getEmployeeName()}"/>
+	<!--社員氏名を転送 -->
+	<input type="hidden" id="Nameb" name="Nameb" value="<c:out value="${salaryInfo.getEmployeeName()}"/>"/>
+	</td>
 	</tr>
 	<tr  style="background-color:#bfe1ff">
 	<td>住所：</td>
-	<td><c:out value="${salaryInfo.getAddress()}"/></td>
+	<td><c:out value="${salaryInfo.getAddress()}"/>
+	<!--社員住所を転送 -->
+	<input type="hidden" id="Addressb" name="Addressb" value="<c:out value="${salaryInfo.getAddress()}"/>"/>
+	</td>
 	</tr>
 	<tr style="background-color:#dcfeeb">
 	<td>対象月：</td>
@@ -203,7 +223,7 @@ function doRegist(salaryInfoid){
 	<tr>
 	<td></td>
 	<td style="text-align: right;">
-	<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist('${salaryInfo.getEmployeeID()}')" /></td>
+	<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
 	</tr>
 	</c:forEach>
 </table>

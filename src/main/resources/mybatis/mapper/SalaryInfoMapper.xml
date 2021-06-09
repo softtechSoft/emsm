@@ -35,7 +35,7 @@
 			#{sum},#{totalFee},#{remark})
 
 	</select>
-		<!--給料情報を更新する。inner join-->
+	<!--給料情報を更新する。inner join-->
 	<select id="setSalaryInfoDetail1" parameterType="com.softtech.common.SalaryInfocommom">
 		update  ems.salaryinfo set paymentDate = #{paymentDate},base = #{base},
 				overTime = #{overTime},shortage = #{shortage},overTimePlus = #{overTimePlus},
