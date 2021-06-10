@@ -86,12 +86,61 @@ function doRegist(){
 			<input type="hidden" id="loadFlg" name="loadFlg" value="${loadFlg}"/>
 			<!-- 登録ボタンをクリック時、作成と登録を判断する為に-->
 			<input type="hidden" id="MakeDistinction" name="MakeDistinction" value="${MakeDistinction}" />
-			<!--エラーメッセージを表示する為に-->
+			<!--nullエラーメッセージを表示する為に-->
 			<p style="color: red;">
             <c:forEach  items="${errors}" var="error">
 						<spring:message message="${error}" /><br/>
 			</c:forEach>
 			</p>
+			<!--支払日が通常の日付以外の時-->
+			<p style="color: red;"><c:out value="${paymentDateisDate}"/></p>
+			<!--支払日が過去日の時-->
+			<p style="color: red;"><c:out value="${paymentDateisLess}"/></p>
+			<!--数字以外のエラーメッセージを表示する為に-->
+			<!--基本給-->
+			<p style="color: red;"><c:out value="${basenumber}"/></p>
+			<!--支払日-->
+			<p style="color: red;"><c:out value="${paymentDatenumber}"/></p>
+			<!--残業時間-->
+			<p style="color: red;"><c:out value="${overTimenumber}"/></p>
+			<!--不足時間-->
+			<p style="color: red;"><c:out value="${shortagenumber}"/></p>
+			<!--残業加算-->
+			<p style="color: red;"><c:out value="${overTimePlusnumber}"/></p>
+			<!--稼働不足減-->
+			<p style="color: red;"><c:out value="${shortageReducenumber}"/></p>
+			<!--交通費-->
+			<p style="color: red;"><c:out value="${transportExpensenumber}"/></p>
+			<!--手当加算-->
+			<p style="color: red;"><c:out value="${allowancePlusnumber}"/></p>
+			<!--手当減算-->
+			<p style="color: red;"><c:out value="${allowanceReducenumber}"/></p>
+			<!--厚生控除個人-->
+			<p style="color: red;"><c:out value="${welfareSelfnumber}"/></p>
+			<!--厚生控除会社-->
+			<p style="color: red;"><c:out value="${welfareCompnumber}"/></p>
+			<!--厚生控除子育(会社）-->
+			<p style="color: red;"><c:out value="${welfareBabynumber}"/></p>
+			<!--雇用保険個人負担-->
+			<p style="color: red;"><c:out value="${eplyInsSelfnumber}"/></p>
+			<!--雇用保険会社負担-->
+			<p style="color: red;"><c:out value="${eplyInsCompnumber}"/></p>
+			<!--雇用保拠出金（会社)-->
+			<p style="color: red;"><c:out value="${eplyInsWithdrawnumber}"/></p>
+			<!--労災保険（会社負担のみ）-->
+			<p style="color: red;"><c:out value="${wkAcccpsInsnumber}"/></p>
+			<!--源泉控除-->
+			<p style="color: red;"><c:out value="${withholdingTaxnumber}"/></p>
+			<!--住民税控除-->
+			<p style="color: red;"><c:out value="${municipalTaxnumber}"/></p>
+			<!--社宅家賃控除-->
+			<p style="color: red;"><c:out value="${rentalnumber}"/></p>
+			<!--社宅共益費控除-->
+			<p style="color: red;"><c:out value="${rentalMgmtFeenumber}"/></p>
+			<!--総額-->
+			<p style="color: red;"><c:out value="${sumnumber}"/></p>
+			<!--総費用-->
+			<p style="color: red;"><c:out value="${totalFeenumber}"/></p>
 <table  bgcolor="white"; width:100%;>
 	<c:forEach items="${salaryInfo}" var="salaryInfo" >
 	<tr>

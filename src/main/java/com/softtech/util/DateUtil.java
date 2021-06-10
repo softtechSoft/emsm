@@ -3,6 +3,9 @@ package com.softtech.util;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -58,4 +61,49 @@ public class DateUtil {
 		DecimalFormat df = new DecimalFormat("#,###.00");
 		return df.format(getTransportExpense1);
 		}
+	/**
+	 * 機能：数字チェック。
+	 * @return tureとfalse
+	 * @exception なし
+	 * @author 馬@ソフトテク
+	 */
+	public static boolean isNumeric(String str){
+		  for (int i = str.length();--i>=0;){
+		   if (!Character.isDigit(str.charAt(i))){
+		    return true;
+		   }
+		  }
+		  return false;
+		}
+	 /**
+     * 過去日チェック。
+     * @param
+     *  "yyyy-MM-dd
+     * * @author 馬@ソフトテク
+     * */
+    public static boolean isLessThanNow(final String dateStr) {
+        final String[] date = dateStr.split("/");
+        return LocalDate.now().isAfter(
+                LocalDate.of(
+                        Integer.parseInt(date[0]),
+                        Integer.parseInt(date[1]),
+                        Integer.parseInt(date[2])
+                )
+        );
+    }
+    /**
+     * 通常以外の日付チェック
+     * @param
+     *  "yyyy-MM-dd"
+     * @author 馬@ソフトテク
+     * */
+    public static boolean isDate(final String dateStr) {
+        final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        try {
+            dateFormat.parse(dateStr);
+            return true;
+        } catch (DateTimeException e) {
+            return false;
+        }
+    }
 }
