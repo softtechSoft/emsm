@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.softtech.actionForm.SalarylistBean3;
+import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.common.SalaryInfocommom;
 import com.softtech.common.SalaryInfocommom2;
 import com.softtech.entity.SalaryInfo;
@@ -39,11 +39,12 @@ public class SalaryInfoController {
 	/**
 	 *   給料作成処理。
 	 *
-	 * @param  モデル
+	 * @param  salarylistBean3 画面入力値
+	 *
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "salaryInfo", method = RequestMethod.POST )
-	public String toWorkDetailList(HttpServletResponse response,@Valid @ModelAttribute("SalarylistBean3") SalarylistBean3 salarylistBean3,
+	public String toWorkDetailList(HttpServletResponse response,@Valid @ModelAttribute("SalarylistBean3") SalaryInfoBean salarylistBean3,
 			BindingResult result, Model model) throws ParseException {
 		//作成ボタンを押す。
 		if(salarylistBean3.getMake().equals("2")) {
@@ -76,8 +77,8 @@ public class SalaryInfoController {
 				String cc = "作成";
 				model.addAttribute("button",cc);
 				//作成場合、画面側の情報を取得。
-				List<SalarylistBean3> rt =new ArrayList<SalarylistBean3>();
-				SalarylistBean3 salarylistBean5 =new SalarylistBean3();
+				List<SalaryInfoBean> rt =new ArrayList<SalaryInfoBean>();
+				SalaryInfoBean salarylistBean5 =new SalaryInfoBean();
 				salarylistBean5.setEmployeeID(salarylistBean3.getEmployeeIDb());
 				salarylistBean5.setAddress(salarylistBean3.getAddressb());
 				salarylistBean5.setEmployeeName(salarylistBean3.getNameb());
@@ -138,9 +139,9 @@ public class SalaryInfoController {
 			String ret = u.substring(0,4)+"/"+u.substring(4,6);
 			model.addAttribute("month", ret);
 			//エラー処理用リスト
-			List<SalarylistBean3> rtn =new ArrayList<SalarylistBean3>();
+			List<SalaryInfoBean> rtn =new ArrayList<SalaryInfoBean>();
 			//エラー処理時、画面から入力した情報
-			SalarylistBean3 salarylistBean4=new SalarylistBean3();
+			SalaryInfoBean salarylistBean4=new SalaryInfoBean();
 				salarylistBean4.setEmployeeID(salarylistBean3.getEmployeeIDb());
 				salarylistBean4.setAddress(salarylistBean3.getAddressb());
 				salarylistBean4.setEmployeeName(salarylistBean3.getNameb());
