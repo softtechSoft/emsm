@@ -6,7 +6,7 @@ public class SalarylistBean3  {
 	//対象年月
 		@Size(min=2, max=30,message="対象月を入力してください。例：202104")
 		private String month ;
-
+//45658451
 		//ダウンロード
 		private int downloadFlg;
 		private String EmployeeIDb;
