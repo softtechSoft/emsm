@@ -40,8 +40,12 @@ public class SalaryInfoBean {
 	private String overTimePlus ;
 	//不足減
 	private String shortageReduce ;
+	//残業時間
+	private String overTime;
 	//交通費
 	private String transportExpense ;
+	//不足時間
+	private String shortage;
 	//手当加算
 	private String allowancePlus ;
 	//手当減
@@ -54,6 +58,8 @@ public class SalaryInfoBean {
 	private String welfareHealthSelf;
 	//雇用保険個人負担
 	private String eplyInsSelf;
+	//労災保険（会社負担のみ）
+	private String wkAcccpsIns;
 	//源泉控除
 	private String withholdingTax;
 	//住民税控除
@@ -71,14 +77,11 @@ public class SalaryInfoBean {
 	@Size(min=1, max=30,message="総費用を入力してください。例：60000")
 	private String totalFee;
 
-	private String wkAcccpsIns;
 	private String eplyInsWithdraw;
 	private String eplyInsComp;
 	private String welfareBaby;
 	private String welfarePensionComp;
 	private String welfareHealthComp;
-	private String overTime;
-	private String shortage;
 	private String address;
 	private String welfareSelf;
 	private String welfareComp;
