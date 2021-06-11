@@ -2,7 +2,7 @@ package com.softtech.actionForm;
 
 import javax.validation.constraints.Size;
 
-////123456
+////123456ｄｄｄｄｄ
 
 public class SalarylistBean3  {
 	//対象年月
