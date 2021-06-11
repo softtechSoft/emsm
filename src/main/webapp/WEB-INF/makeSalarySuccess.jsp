@@ -4,10 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title> Bootjsp.jsp </title>
-<!-- https://blog.csdn.net/weixin_43122090/article/details/103866174  -->
-<!-- URL:http://XXXX/emsm/hello/ -->
-<script type="text/javascript" src="/testPath.js"></script>
+<title> ソフトテク社内管理システム </title>
 
 </head>
 <body>
