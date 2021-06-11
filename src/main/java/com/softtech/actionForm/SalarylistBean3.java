@@ -1,12 +1,12 @@
 package com.softtech.actionForm;
 
 import javax.validation.constraints.Size;
-
+// 郭　競合テスト１
 public class SalarylistBean3  {
 	//対象年月
 		@Size(min=2, max=30,message="対象月を入力してください。例：202104")
 		private String month ;
-
+//　郭　競合テスト２
 		//ダウンロード
 		private int downloadFlg;
 		private String EmployeeIDb;
