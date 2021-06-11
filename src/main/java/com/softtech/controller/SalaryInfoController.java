@@ -38,7 +38,7 @@ public class SalaryInfoController {
 
 	/**
 	 *   給料作成処理。
-	 *
+	 *123
 	 * @param  salarylistBean3 画面入力値
 	 *
 	 * @throws ParseException
