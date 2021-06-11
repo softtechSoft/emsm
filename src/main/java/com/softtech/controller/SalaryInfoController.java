@@ -38,7 +38,7 @@ public class SalaryInfoController {
 
 	/**
 	 *   給料作成処理。
-	 *123
+	 *
 	 * @param  モデル
 	 * @throws ParseException
 	 */
