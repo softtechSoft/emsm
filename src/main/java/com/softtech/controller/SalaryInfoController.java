@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,7 +39,7 @@ public class SalaryInfoController {
 
 	/**
 	 *   給料作成処理。
-	 *123
+	 *
 	 * @param  salarylistBean3 画面入力値
 	 *
 	 * @throws ParseException
@@ -174,6 +175,8 @@ public class SalaryInfoController {
 				salarylistBean4.setWelfareSelf(salarylistBean3.getWelfareSelf());
 				salarylistBean4.setWelfareComp(salarylistBean3.getWelfareComp());
 				rtn.add(salarylistBean4);
+			// エラーチェック用リスト
+			List<FieldError> errorlst = new ArrayList<FieldError>();
 			// エラーチェック用
 			boolean number =true ;
 			// 支払日が過去日チェック用
@@ -229,7 +232,8 @@ public class SalaryInfoController {
 			// 基本給数字チェック。
 			if(base) {
 				number = false;
-				model.addAttribute("basenumber", "基本給が数字を入力してください。例：60,000");
+				FieldError err1 = new FieldError("", "", "基本給が数字を入力してください。例：60,000");
+				errorlst.add(err1);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -253,7 +257,8 @@ public class SalaryInfoController {
 			// 残業時間数字チェック。
 			if(overTime) {
 				number = false;
-				model.addAttribute("overTimenumber", "残業時間が数字を入力してください。例：20");
+				FieldError err2 = new FieldError("", "", "残業時間が数字を入力してください。例：20");
+				errorlst.add(err2);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -277,7 +282,8 @@ public class SalaryInfoController {
 			// 不足時間数字チェック。
 			if(shortage) {
 				number = false;
-				model.addAttribute("shortagenumber", "不足時間が数字を入力してください。例：20");
+				FieldError err3= new FieldError("", "", "不足時間が数字を入力してください。例：20");
+				errorlst.add(err3);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -301,7 +307,8 @@ public class SalaryInfoController {
 			// 残業加算数字チェック。
 			if(overTimePlus) {
 				number = false;
-				model.addAttribute("overTimePlusnumber", "残業加算が数字を入力してください。例：20");
+				FieldError err4= new FieldError("", "", "残業加算が数字を入力してください。例：20");
+				errorlst.add(err4);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -325,7 +332,8 @@ public class SalaryInfoController {
 			// 稼働不足減数字チェック。
 			if(shortageReduce) {
 				number = false;
-				model.addAttribute("shortageReducenumber", "稼働不足減が数字を入力してください。例：20");
+				FieldError err5= new FieldError("", "", "稼働不足減が数字を入力してください。例：20");
+				errorlst.add(err5);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -349,7 +357,8 @@ public class SalaryInfoController {
 			// 交通費数字チェック
 			if(transportExpense) {
 				number = false;
-				model.addAttribute("transportExpensenumber", "交通費が数字を入力してください。例：2000");
+				FieldError err6= new FieldError("", "", "交通費が数字を入力してください。例：2000");
+				errorlst.add(err6);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -373,7 +382,8 @@ public class SalaryInfoController {
 			// 手当加算数字チェック
 			if(allowancePlus) {
 				number = false;
-				model.addAttribute("allowancePlusnumber", "手当加算が数字を入力してください。例：2000");
+				FieldError err7= new FieldError("", "", "手当加算が数字を入力してください。例：2000");
+				errorlst.add(err7);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -397,7 +407,8 @@ public class SalaryInfoController {
 			// 手当減算数字チェック
 			if(allowanceReduce) {
 				number = false;
-				model.addAttribute("allowanceReducenumber", "手当減算が数字を入力してください。例：2000");
+				FieldError err8= new FieldError("", "", "手当減算が数字を入力してください。例：2000");
+				errorlst.add(err8);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -421,7 +432,8 @@ public class SalaryInfoController {
 			// 厚生控除個人数字チェック
 			if(welfareSelf) {
 				number = false;
-				model.addAttribute("welfareSelfnumber", "厚生控除個人が数字を入力してください。例：2000");
+				FieldError err9= new FieldError("", "", "厚生控除個人が数字を入力してください。例：2000");
+				errorlst.add(err9);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -445,7 +457,8 @@ public class SalaryInfoController {
 			// 厚生控除会社数字チェック
 			if(welfareComp) {
 				number = false;
-				model.addAttribute("welfareCompnumber", "厚生控除会社が数字を入力してください。例：2000");
+				FieldError err10= new FieldError("", "", "厚生控除会社が数字を入力してください。例：2000");
+				errorlst.add(err10);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -469,7 +482,8 @@ public class SalaryInfoController {
 			// 厚生控除子育(会社)数字チェック
 			if(welfareBaby) {
 				number = false;
-				model.addAttribute("welfareBabynumber", "厚生控除子育(会社)が数字を入力してください。例：2000");
+				FieldError err11= new FieldError("", "", "厚生控除子育(会社)が数字を入力してください。例：2000");
+				errorlst.add(err11);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -493,7 +507,8 @@ public class SalaryInfoController {
 			// 雇用保険個人負担数字チェック
 			if(eplyInsSelf) {
 				number = false;
-				model.addAttribute("eplyInsSelfnumber", "雇用保険個人負担が数字を入力してください。例：2000");
+				FieldError err12= new FieldError("", "", "雇用保険個人負担が数字を入力してください。例：2000");
+				errorlst.add(err12);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -517,7 +532,8 @@ public class SalaryInfoController {
 			// 雇用保険会社負担数字チェック
 			if(eplyInsComp) {
 				number = false;
-				model.addAttribute("eplyInsCompnumber", "雇用保険会社負担が数字を入力してください。例：2000");
+				FieldError err13= new FieldError("", "", "雇用保険会社負担が数字を入力してください。例：2000");
+				errorlst.add(err13);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -541,7 +557,8 @@ public class SalaryInfoController {
 			// 雇用保拠出金（会社)数字チェック
 			if(eplyInsWithdraw) {
 				number = false;
-				model.addAttribute("eplyInsWithdrawnumber", "雇用保拠出金（会社)が数字を入力してください。例：2000");
+				FieldError err14= new FieldError("", "", "雇用保拠出金（会社)が数字を入力してください。例：2000");
+				errorlst.add(err14);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -565,7 +582,8 @@ public class SalaryInfoController {
 			// 労災保険（会社負担のみ）数字チェック
 			if(wkAcccpsIns) {
 				number = false;
-				model.addAttribute("wkAcccpsInsnumber", "労災保険（会社負担のみ）が数字を入力してください。例：2000");
+				FieldError err15= new FieldError("", "", "労災保険（会社負担のみ）が数字を入力してください。例：2000");
+				errorlst.add(err15);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -589,7 +607,8 @@ public class SalaryInfoController {
 			// 源泉控除数字チェック
 			if(withholdingTax) {
 				number = false;
-				model.addAttribute("withholdingTaxnumber", "源泉控除が数字を入力してください。例：2000");
+				FieldError err16= new FieldError("", "", "源泉控除が数字を入力してください。例：2000");
+				errorlst.add(err16);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -613,7 +632,8 @@ public class SalaryInfoController {
 			// 住民税控除数字チェック
 			if(municipalTax) {
 				number = false;
-				model.addAttribute("municipalTaxnumber", "住民税控除が数字を入力してください。例：2000");
+				FieldError err17= new FieldError("", "", "住民税控除が数字を入力してください。例：2000");
+				errorlst.add(err17);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -637,7 +657,8 @@ public class SalaryInfoController {
 			// 社宅家賃控除数字チェック
 			if(rental) {
 				number = false;
-				model.addAttribute("rentalnumber", "社宅家賃控除が数字を入力してください。例：2000");
+				FieldError err18= new FieldError("", "", "社宅家賃控除が数字を入力してください。例：2000");
+				errorlst.add(err18);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -660,8 +681,9 @@ public class SalaryInfoController {
 			}
 			// 社宅共益費控除数字チェック
 			if(rentalMgmtFee) {
-				number = false;
-				model.addAttribute("rentalMgmtFeenumber", "社宅共益費控除が数字を入力してください。例：2000");
+				number = false;;
+				FieldError err19= new FieldError("", "", "社宅共益費控除が数字を入力してください。例：2000");
+				errorlst.add(err19);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -685,7 +707,8 @@ public class SalaryInfoController {
 			//総費用数字チェック
 			if(totalFee) {
 				number = false;
-				model.addAttribute("totalFeenumber", "総費用が数字を入力してください。例：60,000");
+				FieldError err20= new FieldError("", "", "総費用が数字を入力してください。例：60,000");
+				errorlst.add(err20);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -709,7 +732,8 @@ public class SalaryInfoController {
 			//総額数字チェック
 			if(sum) {
 				number = false;
-				model.addAttribute("sumnumber", "総額が数字を入力してください。例：60,000");
+				FieldError err21= new FieldError("", "", "総額が数字を入力してください。例：60,000");
+				errorlst.add(err21);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -734,7 +758,7 @@ public class SalaryInfoController {
 			if (result.hasErrors()) {
 				number = false;
 				//エラーメッセージ。
-				model.addAttribute("errors", result.getFieldErrors());
+				errorlst.addAll(result.getFieldErrors());
 				 //作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -760,7 +784,8 @@ public class SalaryInfoController {
 				// 支払日が過去日チェック用
 				date = false ;
 				number = false;
-				model.addAttribute("paymentDatenumber", "支払日が数字を入力してください。例：2021/06/15");
+				FieldError err22= new FieldError("", "", "支払日が数字を入力してください。例：2021/06/15");
+				errorlst.add(err22);
 				//作成場合
 				if(null == ss || ss.size() ==0) {
 					//作成ボタン用
@@ -786,7 +811,8 @@ public class SalaryInfoController {
 				if(isdate==false) {
 					dateless = false;
 					number = false;
-					model.addAttribute("paymentDateisDate", "支払日がを通常の日付を入力してください、例：”2021/06/30”");
+					FieldError err23= new FieldError("", "", "支払日がを通常の日付を入力してください、例：”2021/06/30”");
+					errorlst.add(err23);
 					//作成場合
 					if(null == ss || ss.size() ==0) {
 						//作成ボタン用
@@ -811,7 +837,8 @@ public class SalaryInfoController {
 					// 支払日が過去日チェック。
 					if(DateUtil.isLessThanNow(salarylistBean3.getPaymentDate())) {
 						number = false;
-						model.addAttribute("paymentDateisLess", "支払日がを未来の日付を入力してください");
+						FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
+						errorlst.add(err24);
 						//作成場合
 						if(null == ss || ss.size() ==0) {
 							//作成ボタン用
@@ -911,7 +938,8 @@ public class SalaryInfoController {
 					    return "updateSalarySuccess";
 
 					}
-			}
+			}		//エラーメッセージ
+					model.addAttribute("errors", errorlst);
 		}
 					return "salaryInfo";
 	}

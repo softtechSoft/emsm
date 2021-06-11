@@ -9,10 +9,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> ソフトテク株式会社-社内管理システム </title>
-<style>
-#main{ width:1500px; float:left; padding:10px 0;border:1px }
-</style>
-
 <script type="text/javascript" >
 
 //作成処理
@@ -25,9 +21,6 @@ function doMake(){
 	//画面入力可に設定
 	var loadFlg =document.getElementById('loadFlg');
 	loadFlg.value= "1";
-
-	//社員IDを転送するデータ
-	//var EmployeeIDb =document.getElementById('EmployeeIDb').value;
 
 	document.theForm.submit();
 }
@@ -70,18 +63,10 @@ function init(){
 
 //登録処理
 function doRegist(){
+
 	//登録処理に設定する。1:登録処理、2:作成処理
 	var Make =document.getElementById('Make');
 	Make.value= "1";
-
-	//作成と更新を判断するデータ
-	//var MakeDistinction =document.getElementById('MakeDistinction').value;
-	//社員IDを転送するデータ
-	//var EmployeeIDb =document.getElementById('EmployeeIDb').value;
-	//社員氏名を転送するデータ
-	//var Nameb =document.getElementById('Nameb').value;
-	//社員住所を転送するデータ
-	//var Addressb =document.getElementById('Addressb').value;
 
 	document.theForm.submit();
 }
@@ -90,8 +75,6 @@ function doRegist(){
 <body onload="init()">
 
 <h2>社員給料作成</h2>
-<div id="main"  > <!-- 必要ですか？？？ -->
-<div class="ctbox"><!-- 必要ですか？？？ -->
 
 <form:form name="theForm" id="theForm"  method="post" modelAttribute="SalarylistBean3" action="salaryInfo" >
 	<!-- 作成ボタンと登録ボタンを分かれる。-->
@@ -245,7 +228,5 @@ function doRegist(){
 		</c:forEach>
 	</table>
 </form:form>
-</div>
-</div>
 </body>
 </html>
