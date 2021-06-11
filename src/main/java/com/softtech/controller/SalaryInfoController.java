@@ -105,8 +105,6 @@ public class SalaryInfoController {
 				salarylistBean5.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
 				salarylistBean5.setEplyInsComp(salarylistBean3.getEplyInsComp());
 				salarylistBean5.setWelfareBaby(salarylistBean3.getWelfareBaby());
-				salarylistBean5.setWelfarePensionComp(salarylistBean3.getWelfarePensionComp());
-				salarylistBean5.setWelfareHealthComp(salarylistBean3.getWelfareHealthComp());
 				salarylistBean5.setOverTime(salarylistBean3.getOverTime());
 				salarylistBean5.setShortage(salarylistBean3.getShortage());
 				salarylistBean5.setWelfareSelf(salarylistBean3.getWelfareSelf());
@@ -168,8 +166,6 @@ public class SalaryInfoController {
 				salarylistBean4.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
 				salarylistBean4.setEplyInsComp(salarylistBean3.getEplyInsComp());
 				salarylistBean4.setWelfareBaby(salarylistBean3.getWelfareBaby());
-				salarylistBean4.setWelfarePensionComp(salarylistBean3.getWelfarePensionComp());
-				salarylistBean4.setWelfareHealthComp(salarylistBean3.getWelfareHealthComp());
 				salarylistBean4.setOverTime(salarylistBean3.getOverTime());
 				salarylistBean4.setShortage(salarylistBean3.getShortage());
 				salarylistBean4.setWelfareSelf(salarylistBean3.getWelfareSelf());
@@ -889,8 +885,6 @@ public class SalaryInfoController {
 					am.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
 					am.setEplyInsComp(salarylistBean3.getEplyInsComp());
 					am.setWelfareBaby(salarylistBean3.getWelfareBaby());
-					am.setWelfarePensionComp(salarylistBean3.getWelfarePensionComp());
-					am.setWelfareHealthComp(salarylistBean3.getWelfareHealthComp());
 					am.setOverTime(salarylistBean3.getOverTime());
 					am.setShortage(salarylistBean3.getShortage());
 					am.setWelfareSelf(salarylistBean3.getWelfareSelf());
@@ -926,8 +920,6 @@ public class SalaryInfoController {
 						lm.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
 						lm.setEplyInsComp(salarylistBean3.getEplyInsComp());
 						lm.setWelfareBaby(salarylistBean3.getWelfareBaby());
-						lm.setWelfarePensionComp(salarylistBean3.getWelfarePensionComp());
-						lm.setWelfareHealthComp(salarylistBean3.getWelfareHealthComp());
 						lm.setOverTime(salarylistBean3.getOverTime());
 						lm.setShortage(salarylistBean3.getShortage());
 						lm.setWelfareSelf(salarylistBean3.getWelfareSelf());
