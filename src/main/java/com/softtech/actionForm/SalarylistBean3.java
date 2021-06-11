@@ -11,6 +11,8 @@ public class SalarylistBean3  {
 //　郭　競合テスト２
 		//ダウンロード
 		private int downloadFlg;
+
+//　同じ行でないない修正
 		private String EmployeeIDb;
 		private String Nameb;
 		private String Addressb;
