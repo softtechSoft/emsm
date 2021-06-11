@@ -31,6 +31,8 @@ public class SalaryInfoBean {
 	private String employeeName ;
 	//社員氏ID
 	private String employeeID ;
+	//社員住所
+	private String address;
 	//支払日
 	private String paymentDate ;
 	//基本給
@@ -52,14 +54,24 @@ public class SalaryInfoBean {
 	private String allowanceReduce;
 	//手当理由
 	private String allowanceReason ;
+	//厚生控除個人
+	private String welfareSelf;
+	//厚生控除会社
+	private String welfareComp;
 	//厚生年金控除個人
 	private String welfarePensionSelf;
 	//厚生健康控除個人
 	private String welfareHealthSelf;
 	//雇用保険個人負担
 	private String eplyInsSelf;
+	//厚生控除子育(会社）
+	private String welfareBaby;
 	//労災保険（会社負担のみ）
 	private String wkAcccpsIns;
+	//雇用保険会社負担
+	private String eplyInsComp;
+	//雇用保拠出金（会社)
+	private String eplyInsWithdraw;
 	//源泉控除
 	private String withholdingTax;
 	//住民税控除
@@ -76,15 +88,6 @@ public class SalaryInfoBean {
 	//総費用
 	@Size(min=1, max=30,message="総費用を入力してください。例：60000")
 	private String totalFee;
-
-	private String eplyInsWithdraw;
-	private String eplyInsComp;
-	private String welfareBaby;
-	private String welfarePensionComp;
-	private String welfareHealthComp;
-	private String address;
-	private String welfareSelf;
-	private String welfareComp;
 
 	/**
 	 * @return month
@@ -449,35 +452,6 @@ public class SalaryInfoBean {
 	public void setWelfareBaby(String welfareBaby) {
 		this.welfareBaby = welfareBaby;
 	}
-
-	/**
-	 * @return welfarePensionComp
-	 */
-	public String getWelfarePensionComp() {
-		return welfarePensionComp;
-	}
-
-	/**
-	 * @param welfarePensionComp セットする welfarePensionComp
-	 */
-	public void setWelfarePensionComp(String welfarePensionComp) {
-		this.welfarePensionComp = welfarePensionComp;
-	}
-
-	/**
-	 * @return welfareHealthComp
-	 */
-	public String getWelfareHealthComp() {
-		return welfareHealthComp;
-	}
-
-	/**
-	 * @param welfareHealthComp セットする welfareHealthComp
-	 */
-	public void setWelfareHealthComp(String welfareHealthComp) {
-		this.welfareHealthComp = welfareHealthComp;
-	}
-
 	/**
 	 * @return overTime
 	 */
