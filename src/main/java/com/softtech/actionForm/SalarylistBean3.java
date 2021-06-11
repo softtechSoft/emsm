@@ -1,7 +1,9 @@
 package com.softtech.actionForm;
 
 import javax.validation.constraints.Size;
-// 郭　競合テスト１
+
+////554654654
+
 public class SalarylistBean3  {
 	//対象年月
 		@Size(min=2, max=30,message="対象月を入力してください。例：202104")

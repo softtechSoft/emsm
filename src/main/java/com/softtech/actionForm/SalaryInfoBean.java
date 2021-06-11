@@ -21,18 +21,12 @@ public class SalaryInfoBean {
 	private String Nameb;
 	//社員住所
 	private String Addressb;
-	//？
+	//登録ボタンをクリック時、作成と登録を判断する用変数
 	private String MakeDistinction;
-	//？
+	//作成処理の設定用変数
 	private String Make;
-	//？
+	//画面入力可に設定用変数
 	private String loadFlg;
-	//？
-	private String cFlg;
-	//？
-	private String EmployeeMonthFlg;
-	//？
-	private String EmployeeIDFlg;
 	//社員氏名
 	private String employeeName ;
 	//社員氏ID
@@ -101,21 +95,6 @@ public class SalaryInfoBean {
 	 */
 	public void setMonth(String month) {
 		this.month = month;
-	}
-
-
-	/**
-	 * @return employeeIDFlg
-	 */
-	public String getEmployeeIDFlg() {
-		return EmployeeIDFlg;
-	}
-
-	/**
-	 * @param employeeIDFlg セットする employeeIDFlg
-	 */
-	public void setEmployeeIDFlg(String employeeIDFlg) {
-		EmployeeIDFlg = employeeIDFlg;
 	}
 
 	/**
@@ -567,20 +546,6 @@ public class SalaryInfoBean {
 	}
 
 	/**
-	 * @return employeeMonthFlg
-	 */
-	public String getEmployeeMonthFlg() {
-		return EmployeeMonthFlg;
-	}
-
-	/**
-	 * @param employeeMonthFlg セットする employeeMonthFlg
-	 */
-	public void setEmployeeMonthFlg(String employeeMonthFlg) {
-		EmployeeMonthFlg = employeeMonthFlg;
-	}
-
-	/**
 	 * @return loadFlg
 	 */
 	public String getLoadFlg() {
@@ -592,20 +557,6 @@ public class SalaryInfoBean {
 	 */
 	public void setLoadFlg(String loadFlg) {
 		this.loadFlg = loadFlg;
-	}
-
-	/**
-	 * @return cFlg
-	 */
-	public String getcFlg() {
-		return cFlg;
-	}
-
-	/**
-	 * @param cFlg セットする cFlg
-	 */
-	public void setcFlg(String cFlg) {
-		this.cFlg = cFlg;
 	}
 	/**
 	 * @return make
