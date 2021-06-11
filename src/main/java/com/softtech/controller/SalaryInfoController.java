@@ -870,7 +870,7 @@ public class SalaryInfoController {
 					// DBまで給料作成情報を作成。
 				    salaryInfoService.setSalaryInfo2(am);
 				    //作成成功後、画面の表示。
-				    return "hello3";
+				    return "makeSalarySuccess";
 				    //登録ボタンを押す時.変更場合
 				}else if(salarylistBean3.getMakeDistinction().equals("2")) {
 						SalaryInfocommom2 lm = new SalaryInfocommom2();
@@ -907,7 +907,7 @@ public class SalaryInfoController {
 						// DBまで給料作成情報を更新。
 					    salaryInfoService.setSalaryInfo3(lm);
 					    //更新成功後、画面の表示。
-					    return "hello2";
+					    return "updateSalarySuccess";
 
 					}
 			}
