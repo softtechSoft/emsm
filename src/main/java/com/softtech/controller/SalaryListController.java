@@ -12,8 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.SalarylistBean2;
-import com.softtech.common.SalaryInfocommom;
+import com.softtech.common.SalaryInfoRecord;
 import com.softtech.entity.SalaryInfo;
 import com.softtech.service.SalaryInfoService;
 import com.softtech.service.SalarylistService;
@@ -27,7 +28,7 @@ import com.softtech.util.FileUtil;
  */
 @Controller
 //@RequestMapping("/emsm")
-public class SalarylistController {
+public class SalaryListController {
 
 	@Autowired
 	SalarylistService salarylistService;
@@ -81,20 +82,15 @@ public class SalarylistController {
 			     model.addAttribute("list", sl);
 		 // 画面の給料リスト中の社員IDを押す時。
 		 }else if(salarylistBean2.getDownloadFlg()==3) {
-			 SalaryInfocommom em = new SalaryInfocommom();
+			 SalaryInfoRecord em = new SalaryInfoRecord();
 			//社員ID
 			em.setEmployeeID(salarylistBean2.getEmployeeIDFlg());
 			//対象年月と対象年月YYYY/MM→yyyymmに変換
 			em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
 			// DBから社員IDの対象年月の給料情報を取得
-			List<SalaryInfo> ss= salaryInfoService.querySalaryInfo(em);
-			String s = salarylistBean2.getMonth();
-			String ret = s.substring(0,4)+"/"+s.substring(4,6);
-			//画面初期の時、作成ボタンの名称が”作成”とする。
-			String cc = "作成";
-			model.addAttribute("month", ret);
-			model.addAttribute("salaryInfo",ss);
-			model.addAttribute("button",cc);
+			SalaryInfoBean salaryInfoBean = salaryInfoService.querySalaryInfo(em);
+			model.addAttribute("salaryInfoBean",salaryInfoBean);
+			model.addAttribute("gamenMode","0");
 		    return "salaryInfo";
 		 }
 		return "salarylist";

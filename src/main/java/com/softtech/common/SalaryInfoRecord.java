@@ -5,40 +5,40 @@ package com.softtech.common;
  * 作成者：ソフトテク
  * 作成日：2021/5/15
  */
-public class SalaryInfocommom2 {
+public class SalaryInfoRecord {
 	private static final long serialVersionUID = 1L;
 	private String employeeID;
 	private String month;
-	private String employeeName = "0";
-	private String paymentDate = "0";
-	private String base = "0";
-	private String overTimePlus = "0";
-	private String shortageReduce = "0";
-	private String transportExpense = "0";
-	private String allowancePlus = "0";
-	private String allowanceReduce = "0";
-	private String allowanceReason = " ";
-	private String welfarePensionSelf = "0";
-	private String welfareHealthSelf = "0";
-	private String eplyInsSelf = "0";
-	private String withholdingTax = "0";
-	private String municipalTax = "0";
-	private String rental = "0";
-	private String rentalMgmtFee = "0";
-	private String sum = "0";
-	private String remark = " ";
-	private String totalFee = "0";
-	private String wkAcccpsIns = "0";
-	private String eplyInsWithdraw = "0";
-	private String eplyInsComp = "0";
-	private String welfareBaby = "0";
-	private String welfarePensionComp = "0";
-	private String welfareHealthComp = "0";
-	private String overTime = "0";
-	private String shortage = "0";
-	private String address = "0";
-	private String welfareSelf = "0";
-	private String welfareComp = "0";
+	private String employeeName ;
+	private String paymentDate ;
+	private int base ;
+	private int overTimePlus ;
+	private int shortageReduce ;
+	private int transportExpense;
+	private int allowancePlus ;
+	private int allowanceReduce;
+	private String allowanceReason;
+	private int welfarePensionSelf ;
+	private int welfareHealthSelf ;
+	private int eplyInsSelf ;
+	private int withholdingTax ;
+	private int municipalTax ;
+	private int rental ;
+	private int rentalMgmtFee ;
+	private int sum ;
+	private String remark ;
+	private int totalFee ;
+	private int wkAcccpsIns ;
+	private int eplyInsWithdraw ;
+	private int eplyInsComp ;
+	private int welfareBaby ;
+	private int welfarePensionComp ;
+	private int welfareHealthComp ;
+	private int overTime ;
+	private int shortage ;
+	private String address ;
+	private int welfareSelf ;
+	private int welfareComp ;
 	/**
 	 * @return employeeID
 	 */
@@ -90,73 +90,73 @@ public class SalaryInfocommom2 {
 	/**
 	 * @return base
 	 */
-	public String getBase() {
+	public int getBase() {
 		return base;
 	}
 	/**
 	 * @param base セットする base
 	 */
-	public void setBase(String base) {
+	public void setBase(int base) {
 		this.base = base;
 	}
 	/**
 	 * @return overTimePlus
 	 */
-	public String getOverTimePlus() {
+	public int getOverTimePlus() {
 		return overTimePlus;
 	}
 	/**
 	 * @param overTimePlus セットする overTimePlus
 	 */
-	public void setOverTimePlus(String overTimePlus) {
+	public void setOverTimePlus(int overTimePlus) {
 		this.overTimePlus = overTimePlus;
 	}
 	/**
 	 * @return shortageReduce
 	 */
-	public String getShortageReduce() {
+	public int getShortageReduce() {
 		return shortageReduce;
 	}
 	/**
 	 * @param shortageReduce セットする shortageReduce
 	 */
-	public void setShortageReduce(String shortageReduce) {
+	public void setShortageReduce(int shortageReduce) {
 		this.shortageReduce = shortageReduce;
 	}
 	/**
 	 * @return transportExpense
 	 */
-	public String getTransportExpense() {
+	public int getTransportExpense() {
 		return transportExpense;
 	}
 	/**
 	 * @param transportExpense セットする transportExpense
 	 */
-	public void setTransportExpense(String transportExpense) {
+	public void setTransportExpense(int transportExpense) {
 		this.transportExpense = transportExpense;
 	}
 	/**
 	 * @return allowancePlus
 	 */
-	public String getAllowancePlus() {
+	public int getAllowancePlus() {
 		return allowancePlus;
 	}
 	/**
 	 * @param allowancePlus セットする allowancePlus
 	 */
-	public void setAllowancePlus(String allowancePlus) {
+	public void setAllowancePlus(int allowancePlus) {
 		this.allowancePlus = allowancePlus;
 	}
 	/**
 	 * @return allowanceReduce
 	 */
-	public String getAllowanceReduce() {
+	public int getAllowanceReduce() {
 		return allowanceReduce;
 	}
 	/**
 	 * @param allowanceReduce セットする allowanceReduce
 	 */
-	public void setAllowanceReduce(String allowanceReduce) {
+	public void setAllowanceReduce(int allowanceReduce) {
 		this.allowanceReduce = allowanceReduce;
 	}
 	/**
@@ -174,97 +174,97 @@ public class SalaryInfocommom2 {
 	/**
 	 * @return welfarePensionSelf
 	 */
-	public String getWelfarePensionSelf() {
+	public int getWelfarePensionSelf() {
 		return welfarePensionSelf;
 	}
 	/**
 	 * @param welfarePensionSelf セットする welfarePensionSelf
 	 */
-	public void setWelfarePensionSelf(String welfarePensionSelf) {
+	public void setWelfarePensionSelf(int welfarePensionSelf) {
 		this.welfarePensionSelf = welfarePensionSelf;
 	}
 	/**
 	 * @return welfareHealthSelf
 	 */
-	public String getWelfareHealthSelf() {
+	public int getWelfareHealthSelf() {
 		return welfareHealthSelf;
 	}
 	/**
 	 * @param welfareHealthSelf セットする welfareHealthSelf
 	 */
-	public void setWelfareHealthSelf(String welfareHealthSelf) {
+	public void setWelfareHealthSelf(int welfareHealthSelf) {
 		this.welfareHealthSelf = welfareHealthSelf;
 	}
 	/**
 	 * @return eplyInsSelf
 	 */
-	public String getEplyInsSelf() {
+	public int getEplyInsSelf() {
 		return eplyInsSelf;
 	}
 	/**
 	 * @param eplyInsSelf セットする eplyInsSelf
 	 */
-	public void setEplyInsSelf(String eplyInsSelf) {
+	public void setEplyInsSelf(int eplyInsSelf) {
 		this.eplyInsSelf = eplyInsSelf;
 	}
 	/**
 	 * @return withholdingTax
 	 */
-	public String getWithholdingTax() {
+	public int getWithholdingTax() {
 		return withholdingTax;
 	}
 	/**
 	 * @param withholdingTax セットする withholdingTax
 	 */
-	public void setWithholdingTax(String withholdingTax) {
+	public void setWithholdingTax(int withholdingTax) {
 		this.withholdingTax = withholdingTax;
 	}
 	/**
 	 * @return municipalTax
 	 */
-	public String getMunicipalTax() {
+	public int getMunicipalTax() {
 		return municipalTax;
 	}
 	/**
 	 * @param municipalTax セットする municipalTax
 	 */
-	public void setMunicipalTax(String municipalTax) {
+	public void setMunicipalTax(int municipalTax) {
 		this.municipalTax = municipalTax;
 	}
 	/**
 	 * @return rental
 	 */
-	public String getRental() {
+	public int getRental() {
 		return rental;
 	}
 	/**
 	 * @param rental セットする rental
 	 */
-	public void setRental(String rental) {
+	public void setRental(int rental) {
 		this.rental = rental;
 	}
 	/**
 	 * @return rentalMgmtFee
 	 */
-	public String getRentalMgmtFee() {
+	public int getRentalMgmtFee() {
 		return rentalMgmtFee;
 	}
 	/**
 	 * @param rentalMgmtFee セットする rentalMgmtFee
 	 */
-	public void setRentalMgmtFee(String rentalMgmtFee) {
+	public void setRentalMgmtFee(int rentalMgmtFee) {
 		this.rentalMgmtFee = rentalMgmtFee;
 	}
 	/**
 	 * @return sum
 	 */
-	public String getSum() {
+	public int getSum() {
 		return sum;
 	}
 	/**
 	 * @param sum セットする sum
 	 */
-	public void setSum(String sum) {
+	public void setSum(int sum) {
 		this.sum = sum;
 	}
 	/**
@@ -282,109 +282,109 @@ public class SalaryInfocommom2 {
 	/**
 	 * @return totalFee
 	 */
-	public String getTotalFee() {
+	public int getTotalFee() {
 		return totalFee;
 	}
 	/**
 	 * @param totalFee セットする totalFee
 	 */
-	public void setTotalFee(String totalFee) {
+	public void setTotalFee(int totalFee) {
 		this.totalFee = totalFee;
 	}
 	/**
 	 * @return wkAcccpsIns
 	 */
-	public String getWkAcccpsIns() {
+	public int getWkAcccpsIns() {
 		return wkAcccpsIns;
 	}
 	/**
 	 * @param wkAcccpsIns セットする wkAcccpsIns
 	 */
-	public void setWkAcccpsIns(String wkAcccpsIns) {
+	public void setWkAcccpsIns(int wkAcccpsIns) {
 		this.wkAcccpsIns = wkAcccpsIns;
 	}
 	/**
 	 * @return eplyInsWithdraw
 	 */
-	public String getEplyInsWithdraw() {
+	public int getEplyInsWithdraw() {
 		return eplyInsWithdraw;
 	}
 	/**
 	 * @param eplyInsWithdraw セットする eplyInsWithdraw
 	 */
-	public void setEplyInsWithdraw(String eplyInsWithdraw) {
+	public void setEplyInsWithdraw(int eplyInsWithdraw) {
 		this.eplyInsWithdraw = eplyInsWithdraw;
 	}
 	/**
 	 * @return eplyInsComp
 	 */
-	public String getEplyInsComp() {
+	public int getEplyInsComp() {
 		return eplyInsComp;
 	}
 	/**
 	 * @param eplyInsComp セットする eplyInsComp
 	 */
-	public void setEplyInsComp(String eplyInsComp) {
+	public void setEplyInsComp(int eplyInsComp) {
 		this.eplyInsComp = eplyInsComp;
 	}
 	/**
 	 * @return welfareBaby
 	 */
-	public String getWelfareBaby() {
+	public int getWelfareBaby() {
 		return welfareBaby;
 	}
 	/**
 	 * @param welfareBaby セットする welfareBaby
 	 */
-	public void setWelfareBaby(String welfareBaby) {
+	public void setWelfareBaby(int welfareBaby) {
 		this.welfareBaby = welfareBaby;
 	}
 	/**
 	 * @return welfarePensionComp
 	 */
-	public String getWelfarePensionComp() {
+	public int getWelfarePensionComp() {
 		return welfarePensionComp;
 	}
 	/**
 	 * @param welfarePensionComp セットする welfarePensionComp
 	 */
-	public void setWelfarePensionComp(String welfarePensionComp) {
+	public void setWelfarePensionComp(int welfarePensionComp) {
 		this.welfarePensionComp = welfarePensionComp;
 	}
 	/**
 	 * @return welfareHealthComp
 	 */
-	public String getWelfareHealthComp() {
+	public int getWelfareHealthComp() {
 		return welfareHealthComp;
 	}
 	/**
 	 * @param welfareHealthComp セットする welfareHealthComp
 	 */
-	public void setWelfareHealthComp(String welfareHealthComp) {
+	public void setWelfareHealthComp(int welfareHealthComp) {
 		this.welfareHealthComp = welfareHealthComp;
 	}
 	/**
 	 * @return overTime
 	 */
-	public String getOverTime() {
+	public int getOverTime() {
 		return overTime;
 	}
 	/**
 	 * @param overTime セットする overTime
 	 */
-	public void setOverTime(String overTime) {
+	public void setOverTime(int overTime) {
 		this.overTime = overTime;
 	}
 	/**
 	 * @return shortage
 	 */
-	public String getShortage() {
+	public int getShortage() {
 		return shortage;
 	}
 	/**
 	 * @param shortage セットする shortage
 	 */
-	public void setShortage(String shortage) {
+	public void setShortage(int shortage) {
 		this.shortage = shortage;
 	}
 	/**
@@ -402,32 +402,26 @@ public class SalaryInfocommom2 {
 	/**
 	 * @return welfareSelf
 	 */
-	public String getWelfareSelf() {
+	public int getWelfareSelf() {
 		return welfareSelf;
 	}
 	/**
 	 * @param welfareSelf セットする welfareSelf
 	 */
-	public void setWelfareSelf(String welfareSelf) {
+	public void setWelfareSelf(int welfareSelf) {
 		this.welfareSelf = welfareSelf;
 	}
 	/**
 	 * @return welfareComp
 	 */
-	public String getWelfareComp() {
+	public int getWelfareComp() {
 		return welfareComp;
 	}
 	/**
 	 * @param welfareComp セットする welfareComp
 	 */
-	public void setWelfareComp(String welfareComp) {
+	public void setWelfareComp(int welfareComp) {
 		this.welfareComp = welfareComp;
-	}
-	/**
-	 * @return serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 }

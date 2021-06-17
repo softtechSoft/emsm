@@ -5,7 +5,7 @@
 
 <mapper namespace="com.softtech.mappers.SalaryInfoMapper">
 	<!--給料作成情報を取得する。inner join-->
-	<select id="getSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfocommom" resultType="com.softtech.entity.SalaryInfo">
+	<select id="getSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfoRecord" resultType="com.softtech.entity.SalaryInfo">
 		select ss.*,
 		       ee.employeeID,
 		       ee.employeeName,
@@ -16,15 +16,8 @@
 		AND   ss.month=#{month}
 		AND   ee.employeeID=ss.employeeID
 	</select>
-	<!--社員情報を取得する。inner join-->
-	<select id="getSalaryInfoDetail1" parameterType="string" resultType="com.softtech.entity.SalaryInfo">
-		SELECT *
-        FROM employee
-        WHERE employeeID=#{employeeID}
-
-	</select>
 	<!--給料情報を作成する。inner join-->
-	<select id="setSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfocommom">
+	<select id="setSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfoRecord">
 		insert into
 			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
 			transportExpense,allowancePlus,allowanceReduce,allowanceReason,welfareSelf,welfareComp,welfareBaby,eplyInsSelf,
@@ -36,7 +29,7 @@
 
 	</select>
 	<!--給料情報を更新する。inner join-->
-	<select id="setSalaryInfoDetail1" parameterType="com.softtech.common.SalaryInfocommom">
+	<select id="setSalaryInfoDetail1" parameterType="com.softtech.common.SalaryInfoRecord">
 		update  ems.salaryinfo set paymentDate = #{paymentDate},base = #{base},
 				overTime = #{overTime},shortage = #{shortage},overTimePlus = #{overTimePlus},
 				shortageReduce = #{shortageReduce},transportExpense = #{transportExpense},allowancePlus = #{allowancePlus},

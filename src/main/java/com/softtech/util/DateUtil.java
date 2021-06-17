@@ -2,14 +2,16 @@
 package com.softtech.util;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 概要：対象月処理機能
+ * 概要：データ処理機能
  *
  * 作成者：馬@ソフトテク
  * 作成日：2021/4/10
@@ -105,5 +107,43 @@ public class DateUtil {
         } catch (DateTimeException e) {
             return false;
         }
+    }
+    /**
+     * 対象年月+1
+     * @param
+     * @author 馬@ソフトテク
+     * @throws ParseException
+     * */
+    public static String monthplus(String month) throws ParseException {
+    	SimpleDateFormat ft = new SimpleDateFormat("yyyyMM");
+		// 対象年月string型-->date型。
+		Date date = ft.parse(month);
+		Calendar time = Calendar.getInstance();
+		time.setTime(date);
+        //対象年月+1
+		time.add(Calendar.MONTH,1);
+        Date dt1=time.getTime();
+        SimpleDateFormat f = new SimpleDateFormat("yyyyMM");
+        // 対象年月date型-->string型。
+        String s = f.format(dt1);
+    	return s;
+    }
+    /**
+     * 対象年月"/"を追加
+     * @param
+     * @author 馬@ソフトテク
+     * */
+    public static String modifymonth(String month){
+    	String month1 = month.substring(0,4)+"/"+month.substring(4,6);
+    	return month1;
+
+    }
+    public static boolean isNow(String day) {
+        //当前时间
+        Date now = new Date();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd");
+        //获取今天的日期
+        String nowDay = sf.format(now);
+        return day.equals(nowDay);
     }
 }

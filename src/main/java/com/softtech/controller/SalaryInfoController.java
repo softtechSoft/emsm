@@ -1,10 +1,7 @@
 package com.softtech.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,15 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.SalaryInfoBean;
-import com.softtech.common.SalaryInfocommom;
-import com.softtech.common.SalaryInfocommom2;
-import com.softtech.entity.SalaryInfo;
+import com.softtech.common.SalaryInfoRecord;
 import com.softtech.service.SalaryInfoService;
 import com.softtech.util.DateUtil;
 
 /**
  * 概要：給料作成機能
- *
  * 作成者：馬@ソフトテク
  * 作成日：2021/6/02
  */
@@ -36,141 +30,58 @@ import com.softtech.util.DateUtil;
 public class SalaryInfoController {
 	@Autowired
 	SalaryInfoService salaryInfoService;
-
 	/**
 	 *   給料作成処理。
-	 *
-	 * @param  salarylistBean3 画面入力値
-	 *
+	 * @param  salaryInfoBean 画面入力値
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "salaryInfo", method = RequestMethod.POST )
-	public String toWorkDetailList(HttpServletResponse response,@Valid @ModelAttribute("SalarylistBean3") SalaryInfoBean salarylistBean3,
+	public String toWorkDetailList(HttpServletResponse response,@Valid @ModelAttribute("SalaryInfoBean") SalaryInfoBean salaryInfoBean,
 			BindingResult result, Model model) throws ParseException {
 		//作成ボタンを押す。
-		if(salarylistBean3.getMake().equals("2")) {
-		    // 作成ボタンをおした、inputが可入力になります。
-			model.addAttribute("loadFlg", salarylistBean3.getLoadFlg());
-			SalaryInfocommom em = new SalaryInfocommom();
+		if(salaryInfoBean.getMake().equals("2")) {
+
+			SalaryInfoRecord em = new SalaryInfoRecord();
 		 	// 対象年月+1をする。
-			String month= DateUtil.chgMonthToYM(salarylistBean3.getMonth());
-			SimpleDateFormat ft = new SimpleDateFormat("yyyyMM");
-			// 対象年月string型-->date型。
-			Date date = ft.parse(month);
-			Calendar time = Calendar.getInstance();
-			time.setTime(date);
-	        //日期加1个月
-			time.add(Calendar.MONTH,1);
-	        Date dt1=time.getTime();
-	        SimpleDateFormat f = new SimpleDateFormat("yyyyMM");
-	        // 対象年月date型-->string型。
-	        String s = f.format(dt1);
+			String month= DateUtil.monthplus(DateUtil.chgMonthToYM(salaryInfoBean.getMonth()));
+			//作成場合、対象年月+1後、クライアント側へ渡す。
+			salaryInfoBean.setMonth(DateUtil.modifymonth(month));
+			em.setMonth(month);
 			//社員ID
-			em.setEmployeeID(salarylistBean3.getEmployeeIDb());
-			//対象年月
-			em.setMonth(s);
-			// DBから給料作成情報を取得
-			List<SalaryInfo> ss= salaryInfoService.querySalaryInfo(em);
-			String ret = s.substring(0,4)+"/"+s.substring(4,6);
-			model.addAttribute("month", ret);
-			if(null == ss || ss.size() ==0) {
-				//作成ボタン用
-				String cc = "作成";
-				model.addAttribute("button",cc);
-				//作成場合、画面側の情報を取得。
-				List<SalaryInfoBean> rt =new ArrayList<SalaryInfoBean>();
-				SalaryInfoBean salarylistBean5 =new SalaryInfoBean();
-				salarylistBean5.setEmployeeID(salarylistBean3.getEmployeeIDb());
-				salarylistBean5.setAddress(salarylistBean3.getAddressb());
-				salarylistBean5.setEmployeeName(salarylistBean3.getNameb());
-				salarylistBean5.setPaymentDate(salarylistBean3.getPaymentDate());
-				salarylistBean5.setBase(salarylistBean3.getBase());
-				salarylistBean5.setOverTimePlus(salarylistBean3.getOverTimePlus());
-				salarylistBean5.setShortageReduce(salarylistBean3.getShortageReduce());
-				salarylistBean5.setTransportExpense(salarylistBean3.getTransportExpense());
-				salarylistBean5.setAllowancePlus(salarylistBean3.getAllowancePlus());
-				salarylistBean5.setAllowanceReduce(salarylistBean3.getAllowanceReduce());
-				salarylistBean5.setAllowanceReason(salarylistBean3.getAllowanceReason());
-				salarylistBean5.setWelfarePensionSelf(salarylistBean3.getWelfarePensionSelf());
-				salarylistBean5.setWelfareHealthSelf(salarylistBean3.getWelfareHealthSelf());
-				salarylistBean5.setEplyInsSelf(salarylistBean3.getEplyInsSelf());
-				salarylistBean5.setWithholdingTax(salarylistBean3.getWithholdingTax());
-				salarylistBean5.setMunicipalTax(salarylistBean3.getMunicipalTax());
-				salarylistBean5.setRental(salarylistBean3.getRental());
-				salarylistBean5.setRentalMgmtFee(salarylistBean3.getRentalMgmtFee());
-				salarylistBean5.setSum(salarylistBean3.getSum());
-				salarylistBean5.setRemark(salarylistBean3.getRemark());
-				salarylistBean5.setTotalFee(salarylistBean3.getTotalFee());
-				salarylistBean5.setWkAcccpsIns(salarylistBean3.getWkAcccpsIns());
-				salarylistBean5.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
-				salarylistBean5.setEplyInsComp(salarylistBean3.getEplyInsComp());
-				salarylistBean5.setWelfareBaby(salarylistBean3.getWelfareBaby());
-				salarylistBean5.setOverTime(salarylistBean3.getOverTime());
-				salarylistBean5.setShortage(salarylistBean3.getShortage());
-				salarylistBean5.setWelfareSelf(salarylistBean3.getWelfareSelf());
-				salarylistBean5.setWelfareComp(salarylistBean3.getWelfareComp());
-				rt.add(salarylistBean5);
-				model.addAttribute("salaryInfo",rt);
-				//登録ボタンを押す時、作成と更新を分ける用。
-				String k="1";
-				model.addAttribute("MakeDistinction",k);
+			em.setEmployeeID(salaryInfoBean.getEmployeeID());
+			// DBから次月給料情報を取得
+			SalaryInfoBean salaryInfoRecordss= salaryInfoService.querySalaryInfo(em);
+
+			//給料新規作成
+			if(null == salaryInfoRecordss) {
+				// 作成ボタンをおした、inputが可入力になります。0：入力不可、1：入力可。
+				model.addAttribute("gamenMode", "1");
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
+			//給料更新
 			}else {
+				//次月給料情報から支払日を取得
+				String paymentDate=salaryInfoRecordss.getPaymentDate();
+				//支払日は過去日付が、本日の場合、変更不可にする。
+				if(DateUtil.isLessThanNow(paymentDate)||DateUtil.isNow(DateUtil.chgMonthToYM(paymentDate))) {
+					//変更不可にする。
+					model.addAttribute("gamenMode","0");
+					model.addAttribute("salaryInfoBean",salaryInfoRecordss);
+				//将来日付の場合、変更する。
+				}else {
 				//変更ボタン用
-				String bb = "変更";
-				model.addAttribute("button",bb);
+				model.addAttribute("gamenMode","2");
 				//変更場合
-				model.addAttribute("salaryInfo",ss);
-				//登録ボタンを押す時、作成と更新を分ける用。
-				String o="2";
-				model.addAttribute("MakeDistinction",o);
+				model.addAttribute("salaryInfoBean",salaryInfoRecordss);
+				}
 			}
-			//登録ボタンを押す
-		}else if(salarylistBean3.getMake().equals("1")) {
-			// 作成ボタンをおした、inputが可入力。
-			model.addAttribute("loadFlg", salarylistBean3.getLoadFlg());
-			SalaryInfocommom sm = new SalaryInfocommom();
+		 //登録ボタンを押す
+		}else if(salaryInfoBean.getMake().equals("1")) {
+			SalaryInfoRecord sm = new SalaryInfoRecord();
 			//社員ID
-			sm.setEmployeeID(salarylistBean3.getEmployeeIDb());
+			sm.setEmployeeID(salaryInfoBean.getEmployeeID());
 			//対象年月
-			sm.setMonth(DateUtil.chgMonthToYM(salarylistBean3.getMonth()));
-			List<SalaryInfo> ss= salaryInfoService.querySalaryInfo(sm);
-			String u=DateUtil.chgMonthToYM(salarylistBean3.getMonth());
-			String ret = u.substring(0,4)+"/"+u.substring(4,6);
-			model.addAttribute("month", ret);
-			//エラー処理用リスト
-			List<SalaryInfoBean> rtn =new ArrayList<SalaryInfoBean>();
-			//エラー処理時、画面から入力した情報
-			SalaryInfoBean salarylistBean4=new SalaryInfoBean();
-				salarylistBean4.setEmployeeID(salarylistBean3.getEmployeeIDb());
-				salarylistBean4.setAddress(salarylistBean3.getAddressb());
-				salarylistBean4.setEmployeeName(salarylistBean3.getNameb());
-				salarylistBean4.setPaymentDate(salarylistBean3.getPaymentDate());
-				salarylistBean4.setBase(salarylistBean3.getBase());
-				salarylistBean4.setOverTimePlus(salarylistBean3.getOverTimePlus());
-				salarylistBean4.setShortageReduce(salarylistBean3.getShortageReduce());
-				salarylistBean4.setTransportExpense(salarylistBean3.getTransportExpense());
-				salarylistBean4.setAllowancePlus(salarylistBean3.getAllowancePlus());
-				salarylistBean4.setAllowanceReduce(salarylistBean3.getAllowanceReduce());
-				salarylistBean4.setAllowanceReason(salarylistBean3.getAllowanceReason());
-				salarylistBean4.setWelfarePensionSelf(salarylistBean3.getWelfarePensionSelf());
-				salarylistBean4.setWelfareHealthSelf(salarylistBean3.getWelfareHealthSelf());
-				salarylistBean4.setEplyInsSelf(salarylistBean3.getEplyInsSelf());
-				salarylistBean4.setWithholdingTax(salarylistBean3.getWithholdingTax());
-				salarylistBean4.setMunicipalTax(salarylistBean3.getMunicipalTax());
-				salarylistBean4.setRental(salarylistBean3.getRental());
-				salarylistBean4.setRentalMgmtFee(salarylistBean3.getRentalMgmtFee());
-				salarylistBean4.setSum(salarylistBean3.getSum());
-				salarylistBean4.setRemark(salarylistBean3.getRemark());
-				salarylistBean4.setTotalFee(salarylistBean3.getTotalFee());
-				salarylistBean4.setWkAcccpsIns(salarylistBean3.getWkAcccpsIns());
-				salarylistBean4.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
-				salarylistBean4.setEplyInsComp(salarylistBean3.getEplyInsComp());
-				salarylistBean4.setWelfareBaby(salarylistBean3.getWelfareBaby());
-				salarylistBean4.setOverTime(salarylistBean3.getOverTime());
-				salarylistBean4.setShortage(salarylistBean3.getShortage());
-				salarylistBean4.setWelfareSelf(salarylistBean3.getWelfareSelf());
-				salarylistBean4.setWelfareComp(salarylistBean3.getWelfareComp());
-				rtn.add(salarylistBean4);
+			sm.setMonth(DateUtil.chgMonthToYM(salaryInfoBean.getMonth()));
+			SalaryInfoBean salaryInfoRecords= salaryInfoService.querySalaryInfo(sm);
 			// エラーチェック用リスト
 			List<FieldError> errorlst = new ArrayList<FieldError>();
 			// エラーチェック用
@@ -180,600 +91,204 @@ public class SalaryInfoController {
 			// 支払日が通常以外の日付チェック用
 			boolean date = true ;
 			// 支払日が通常以外の日付チェック
-			boolean isdate =DateUtil.isDate(salarylistBean3.getPaymentDate());
+			boolean isdate =DateUtil.isDate(salaryInfoBean.getPaymentDate());
 			// 基本給数字チェック。
-			boolean base = DateUtil.isNumeric(DateUtil.chgMonthToYM1(salarylistBean3.getBase()));
+			boolean base = DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getBase()));
 			// 支払日数字チェック。
-			boolean paymentDate = DateUtil.isNumeric(DateUtil.chgMonthToYM(salarylistBean3.getPaymentDate()));
+			boolean paymentDate = DateUtil.isNumeric(DateUtil.chgMonthToYM(salaryInfoBean.getPaymentDate()));
 			// 残業時間数字チェック。
-			boolean overTime = DateUtil.isNumeric(salarylistBean3.getOverTime());
+			boolean overTime = DateUtil.isNumeric(salaryInfoBean.getOverTime());
 			// 不足時間数字チェック。
-			boolean shortage = DateUtil.isNumeric(salarylistBean3.getShortage());
+			boolean shortage = DateUtil.isNumeric(salaryInfoBean.getShortage());
 			// 残業加算数字チェック。
-			boolean overTimePlus = DateUtil.isNumeric(salarylistBean3.getOverTimePlus());
+			boolean overTimePlus = DateUtil.isNumeric(salaryInfoBean.getOverTimePlus());
 			// 稼働不足減数字チェック。
-			boolean shortageReduce = DateUtil.isNumeric(salarylistBean3.getShortageReduce());
+			boolean shortageReduce = DateUtil.isNumeric(salaryInfoBean.getShortageReduce());
 			// 交通費数字チェック
-			boolean transportExpense = DateUtil.isNumeric(salarylistBean3.getTransportExpense());
+			boolean transportExpense = DateUtil.isNumeric(salaryInfoBean.getTransportExpense());
 			// 手当加算数字チェック
-			boolean allowancePlus = DateUtil.isNumeric(salarylistBean3.getAllowancePlus());
+			boolean allowancePlus = DateUtil.isNumeric(salaryInfoBean.getAllowancePlus());
 			// 手当減算数字チェック
-			boolean allowanceReduce = DateUtil.isNumeric(salarylistBean3.getAllowanceReduce());
+			boolean allowanceReduce = DateUtil.isNumeric(salaryInfoBean.getAllowanceReduce());
 			// 厚生控除個人数字チェック
-			boolean welfareSelf = DateUtil.isNumeric(salarylistBean3.getWelfareSelf());
+			boolean welfareSelf = DateUtil.isNumeric(salaryInfoBean.getWelfareSelf());
 			// 厚生控除会社数字チェック
-			boolean welfareComp = DateUtil.isNumeric(salarylistBean3.getWelfareComp());
+			boolean welfareComp = DateUtil.isNumeric(salaryInfoBean.getWelfareComp());
 			// 厚生控除子育(会社)数字チェック
-			boolean welfareBaby = DateUtil.isNumeric(salarylistBean3.getWelfareBaby());
+			boolean welfareBaby = DateUtil.isNumeric(salaryInfoBean.getWelfareBaby());
 			// 雇用保険個人負担数字チェック
-			boolean eplyInsSelf = DateUtil.isNumeric(salarylistBean3.getEplyInsSelf());
+			boolean eplyInsSelf = DateUtil.isNumeric(salaryInfoBean.getEplyInsSelf());
 			// 雇用保険会社負担数字チェック
-			boolean eplyInsComp = DateUtil.isNumeric(salarylistBean3.getEplyInsComp());
+			boolean eplyInsComp = DateUtil.isNumeric(salaryInfoBean.getEplyInsComp());
 			// 雇用保拠出金（会社)数字チェック
-			boolean eplyInsWithdraw = DateUtil.isNumeric(salarylistBean3.getEplyInsWithdraw());
+			boolean eplyInsWithdraw = DateUtil.isNumeric(salaryInfoBean.getEplyInsWithdraw());
 			// 労災保険（会社負担のみ）数字チェック
-			boolean wkAcccpsIns = DateUtil.isNumeric(salarylistBean3.getWkAcccpsIns());
+			boolean wkAcccpsIns = DateUtil.isNumeric(salaryInfoBean.getWkAcccpsIns());
 			// 源泉控除数字チェック
-			boolean withholdingTax = DateUtil.isNumeric(salarylistBean3.getWithholdingTax());
+			boolean withholdingTax = DateUtil.isNumeric(salaryInfoBean.getWithholdingTax());
 			// 住民税控除数字チェック
-			boolean municipalTax = DateUtil.isNumeric(salarylistBean3.getMunicipalTax());
+			boolean municipalTax = DateUtil.isNumeric(salaryInfoBean.getMunicipalTax());
 			// 社宅家賃控除数字チェック
-			boolean rental = DateUtil.isNumeric(salarylistBean3.getRental());
+			boolean rental = DateUtil.isNumeric(salaryInfoBean.getRental());
 			// 社宅共益費控除数字チェック
-			boolean rentalMgmtFee = DateUtil.isNumeric(salarylistBean3.getRentalMgmtFee());
+			boolean rentalMgmtFee = DateUtil.isNumeric(salaryInfoBean.getRentalMgmtFee());
 			//総額数字チェック
-			boolean sum = DateUtil.isNumeric(DateUtil.chgMonthToYM1(salarylistBean3.getSum()));
+			boolean sum = DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getSum()));
 			//総費用数字チェック
-			boolean totalFee = DateUtil.isNumeric(DateUtil.chgMonthToYM1(salarylistBean3.getTotalFee()));
+			boolean totalFee = DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getTotalFee()));
 			// 基本給数字チェック。
 			if(base) {
 				number = false;
 				FieldError err1 = new FieldError("", "", "基本給が数字を入力してください。例：60,000");
 				errorlst.add(err1);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-					//変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+			    model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 残業時間数字チェック。
 			if(overTime) {
 				number = false;
 				FieldError err2 = new FieldError("", "", "残業時間が数字を入力してください。例：20");
 				errorlst.add(err2);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 不足時間数字チェック。
 			if(shortage) {
 				number = false;
 				FieldError err3= new FieldError("", "", "不足時間が数字を入力してください。例：20");
 				errorlst.add(err3);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 残業加算数字チェック。
 			if(overTimePlus) {
 				number = false;
 				FieldError err4= new FieldError("", "", "残業加算が数字を入力してください。例：20");
 				errorlst.add(err4);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 稼働不足減数字チェック。
 			if(shortageReduce) {
 				number = false;
 				FieldError err5= new FieldError("", "", "稼働不足減が数字を入力してください。例：20");
 				errorlst.add(err5);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 交通費数字チェック
 			if(transportExpense) {
 				number = false;
 				FieldError err6= new FieldError("", "", "交通費が数字を入力してください。例：2000");
 				errorlst.add(err6);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 手当加算数字チェック
 			if(allowancePlus) {
 				number = false;
 				FieldError err7= new FieldError("", "", "手当加算が数字を入力してください。例：2000");
 				errorlst.add(err7);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 手当減算数字チェック
 			if(allowanceReduce) {
 				number = false;
 				FieldError err8= new FieldError("", "", "手当減算が数字を入力してください。例：2000");
 				errorlst.add(err8);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 厚生控除個人数字チェック
 			if(welfareSelf) {
 				number = false;
 				FieldError err9= new FieldError("", "", "厚生控除個人が数字を入力してください。例：2000");
 				errorlst.add(err9);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 厚生控除会社数字チェック
 			if(welfareComp) {
 				number = false;
 				FieldError err10= new FieldError("", "", "厚生控除会社が数字を入力してください。例：2000");
 				errorlst.add(err10);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 厚生控除子育(会社)数字チェック
 			if(welfareBaby) {
 				number = false;
 				FieldError err11= new FieldError("", "", "厚生控除子育(会社)が数字を入力してください。例：2000");
 				errorlst.add(err11);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 雇用保険個人負担数字チェック
 			if(eplyInsSelf) {
 				number = false;
 				FieldError err12= new FieldError("", "", "雇用保険個人負担が数字を入力してください。例：2000");
 				errorlst.add(err12);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 雇用保険会社負担数字チェック
 			if(eplyInsComp) {
 				number = false;
 				FieldError err13= new FieldError("", "", "雇用保険会社負担が数字を入力してください。例：2000");
 				errorlst.add(err13);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 雇用保拠出金（会社)数字チェック
 			if(eplyInsWithdraw) {
 				number = false;
 				FieldError err14= new FieldError("", "", "雇用保拠出金（会社)が数字を入力してください。例：2000");
 				errorlst.add(err14);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 労災保険（会社負担のみ）数字チェック
 			if(wkAcccpsIns) {
 				number = false;
 				FieldError err15= new FieldError("", "", "労災保険（会社負担のみ）が数字を入力してください。例：2000");
 				errorlst.add(err15);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 源泉控除数字チェック
 			if(withholdingTax) {
 				number = false;
 				FieldError err16= new FieldError("", "", "源泉控除が数字を入力してください。例：2000");
 				errorlst.add(err16);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 住民税控除数字チェック
 			if(municipalTax) {
 				number = false;
 				FieldError err17= new FieldError("", "", "住民税控除が数字を入力してください。例：2000");
 				errorlst.add(err17);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 社宅家賃控除数字チェック
 			if(rental) {
 				number = false;
 				FieldError err18= new FieldError("", "", "社宅家賃控除が数字を入力してください。例：2000");
 				errorlst.add(err18);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// 社宅共益費控除数字チェック
 			if(rentalMgmtFee) {
 				number = false;;
 				FieldError err19= new FieldError("", "", "社宅共益費控除が数字を入力してください。例：2000");
 				errorlst.add(err19);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			//総費用数字チェック
 			if(totalFee) {
 				number = false;
 				FieldError err20= new FieldError("", "", "総費用が数字を入力してください。例：60,000");
 				errorlst.add(err20);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			//総額数字チェック
 			if(sum) {
 				number = false;
 				FieldError err21= new FieldError("", "", "総額が数字を入力してください。例：60,000");
 				errorlst.add(err21);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-				    //変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			// NotNullチェック。
 			if (result.hasErrors()) {
 				number = false;
 				//エラーメッセージ。
 				errorlst.addAll(result.getFieldErrors());
-				 //作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-					//変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			 }
 			// 支払日数字チェック。
 			if(paymentDate) {
@@ -782,25 +297,7 @@ public class SalaryInfoController {
 				number = false;
 				FieldError err22= new FieldError("", "", "支払日が数字を入力してください。例：2021/06/15");
 				errorlst.add(err22);
-				//作成場合
-				if(null == ss || ss.size() ==0) {
-					//作成ボタン用
-					String cc = "作成";
-					model.addAttribute("button",cc);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String k="1";
-					model.addAttribute("MakeDistinction",k);
-					//変更場合
-				}else {
-					//変更ボタン用
-					String bb = "変更";
-					model.addAttribute("button",bb);
-					model.addAttribute("salaryInfo",rtn);
-					//登録ボタンを押す時、作成と更新を分ける用。
-					String o="2";
-					model.addAttribute("MakeDistinction",o);
-				}
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
 			}
 			if(date) {
 				// 支払日が通常の日付チェック
@@ -809,126 +306,31 @@ public class SalaryInfoController {
 					number = false;
 					FieldError err23= new FieldError("", "", "支払日がを通常の日付を入力してください、例：”2021/06/30”");
 					errorlst.add(err23);
-					//作成場合
-					if(null == ss || ss.size() ==0) {
-						//作成ボタン用
-						String cc = "作成";
-						model.addAttribute("button",cc);
-						model.addAttribute("salaryInfo",rtn);
-						//登録ボタンを押す時、作成と更新を分ける用。
-						String k="1";
-						model.addAttribute("MakeDistinction",k);
-						//変更場合
-					}else {
-						//変更ボタン用
-						String bb = "変更";
-						model.addAttribute("button",bb);
-						model.addAttribute("salaryInfo",rtn);
-						//登録ボタンを押す時、作成と更新を分ける用。
-						String o="2";
-						model.addAttribute("MakeDistinction",o);
-					}
+					model.addAttribute("salaryInfoBean",salaryInfoBean);
 				}
 				if (dateless) {
 					// 支払日が過去日チェック。
-					if(DateUtil.isLessThanNow(salarylistBean3.getPaymentDate())) {
+					if(DateUtil.isLessThanNow(salaryInfoBean.getPaymentDate())) {
 						number = false;
 						FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
 						errorlst.add(err24);
-						//作成場合
-						if(null == ss || ss.size() ==0) {
-							//作成ボタン用
-							String cc = "作成";
-							model.addAttribute("button",cc);
-							model.addAttribute("salaryInfo",rtn);
-							//登録ボタンを押す時、作成と更新を分ける用。
-							String k="1";
-							model.addAttribute("MakeDistinction",k);
-							//変更場合
-						}else {
-							//変更ボタン用
-							String bb = "変更";
-							model.addAttribute("button",bb);
-							model.addAttribute("salaryInfo",rtn);
-							//登録ボタンを押す時、作成と更新を分ける用。
-							String o="2";
-							model.addAttribute("MakeDistinction",o);
-						}
+						model.addAttribute("salaryInfoBean",salaryInfoBean);
 					}
 				}
 			}
 			if(number) {
 				//登録ボタンを押す時.作成場合
-				if(salarylistBean3.getMakeDistinction().equals("1") ) {
-					SalaryInfocommom2 am = new SalaryInfocommom2();
-					am.setEmployeeID(salarylistBean3.getEmployeeIDb());
-					am.setMonth(DateUtil.chgMonthToYM(salarylistBean3.getMonth()));
-					am.setPaymentDate(DateUtil.chgMonthToYM(salarylistBean3.getPaymentDate()));
-					am.setBase(DateUtil.chgMonthToYM1(salarylistBean3.getBase()));
-					am.setOverTimePlus(salarylistBean3.getOverTimePlus());
-					am.setShortageReduce(salarylistBean3.getShortageReduce());
-					am.setTransportExpense(salarylistBean3.getTransportExpense());
-					am.setAllowancePlus(salarylistBean3.getAllowancePlus());
-					am.setAllowanceReduce(salarylistBean3.getAllowanceReduce());
-					am.setAllowanceReason(salarylistBean3.getAllowanceReason());
-					am.setWelfarePensionSelf(salarylistBean3.getWelfarePensionSelf());
-					am.setWelfareHealthSelf(salarylistBean3.getWelfareHealthSelf());
-					am.setEplyInsSelf(salarylistBean3.getEplyInsSelf());
-					am.setWithholdingTax(salarylistBean3.getWithholdingTax());
-					am.setMunicipalTax(salarylistBean3.getMunicipalTax());
-					am.setRental(salarylistBean3.getRental());
-					am.setRentalMgmtFee(salarylistBean3.getRentalMgmtFee());
-					am.setSum(DateUtil.chgMonthToYM1(salarylistBean3.getSum()));
-					am.setRemark(salarylistBean3.getRemark());
-					am.setTotalFee(DateUtil.chgMonthToYM1(salarylistBean3.getTotalFee()));
-					am.setWkAcccpsIns(salarylistBean3.getWkAcccpsIns());
-					am.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
-					am.setEplyInsComp(salarylistBean3.getEplyInsComp());
-					am.setWelfareBaby(salarylistBean3.getWelfareBaby());
-					am.setOverTime(salarylistBean3.getOverTime());
-					am.setShortage(salarylistBean3.getShortage());
-					am.setWelfareSelf(salarylistBean3.getWelfareSelf());
-					am.setWelfareComp(salarylistBean3.getWelfareComp());
+				if(salaryInfoRecords == null) {
 					// DBまで給料作成情報を作成。
-				    salaryInfoService.setSalaryInfo2(am);
+				    salaryInfoService.setSalaryInfo2(salaryInfoService.queryRegister(salaryInfoBean));
 				    //作成成功後、画面の表示。
 				    return "makeSalarySuccess";
-				    //登録ボタンを押す時.変更場合
-				}else if(salarylistBean3.getMakeDistinction().equals("2")) {
-						SalaryInfocommom2 lm = new SalaryInfocommom2();
-						lm.setEmployeeID(salarylistBean3.getEmployeeIDb());
-						lm.setMonth(DateUtil.chgMonthToYM(salarylistBean3.getMonth()));
-						lm.setPaymentDate(DateUtil.chgMonthToYM(salarylistBean3.getPaymentDate()));
-						lm.setBase(DateUtil.chgMonthToYM1(salarylistBean3.getBase()));
-						lm.setOverTimePlus(salarylistBean3.getOverTimePlus());
-						lm.setShortageReduce(salarylistBean3.getShortageReduce());
-						lm.setTransportExpense(salarylistBean3.getTransportExpense());
-						lm.setAllowancePlus(salarylistBean3.getAllowancePlus());
-						lm.setAllowanceReduce(salarylistBean3.getAllowanceReduce());
-						lm.setAllowanceReason(salarylistBean3.getAllowanceReason());
-						lm.setWelfarePensionSelf(salarylistBean3.getWelfarePensionSelf());
-						lm.setWelfareHealthSelf(salarylistBean3.getWelfareHealthSelf());
-						lm.setEplyInsSelf(salarylistBean3.getEplyInsSelf());
-						lm.setWithholdingTax(salarylistBean3.getWithholdingTax());
-						lm.setMunicipalTax(salarylistBean3.getMunicipalTax());
-						lm.setRental(salarylistBean3.getRental());
-						lm.setRentalMgmtFee(salarylistBean3.getRentalMgmtFee());
-						lm.setSum(DateUtil.chgMonthToYM1(salarylistBean3.getSum()));
-						lm.setRemark(salarylistBean3.getRemark());
-						lm.setTotalFee(DateUtil.chgMonthToYM1(salarylistBean3.getTotalFee()));
-						lm.setWkAcccpsIns(salarylistBean3.getWkAcccpsIns());
-						lm.setEplyInsWithdraw(salarylistBean3.getEplyInsWithdraw());
-						lm.setEplyInsComp(salarylistBean3.getEplyInsComp());
-						lm.setWelfareBaby(salarylistBean3.getWelfareBaby());
-						lm.setOverTime(salarylistBean3.getOverTime());
-						lm.setShortage(salarylistBean3.getShortage());
-						lm.setWelfareSelf(salarylistBean3.getWelfareSelf());
-						lm.setWelfareComp(salarylistBean3.getWelfareComp());
-						// DBまで給料作成情報を更新。
-					    salaryInfoService.setSalaryInfo3(lm);
-					    //更新成功後、画面の表示。
-					    return "updateSalarySuccess";
-
+				//登録ボタンを押す時.変更場合
+				}else{
+					// DBまで給料作成情報を更新。
+					salaryInfoService.setSalaryInfo3(salaryInfoService.queryRegister(salaryInfoBean));
+					//更新成功後、画面の表示。
+					return "updateSalarySuccess";
 					}
 			}		//エラーメッセージ
 					model.addAttribute("errors", errorlst);

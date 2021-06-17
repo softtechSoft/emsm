@@ -15,12 +15,8 @@
 function doMake(){
 
 	//作成処理の設定。1:登録処理、2:作成処理
-	var Make =document.getElementById("Make");
-	Make.value= "2";
-
-	//画面入力可に設定
-	var loadFlg =document.getElementById('loadFlg');
-	loadFlg.value= "1";
+	var make =document.getElementById("make");
+	make.value= "2";
 
 	document.theForm.submit();
 }
@@ -28,45 +24,52 @@ function doMake(){
 //画面のonLoad処理
 function init(){
 
-	//対象年月変更不可に設定。（これはいいのか？？？？？？）
+	//対象年月変更不可に設定。
 	document.getElementById('month').readOnly=true;
-
-	var loadFlg =document.getElementById('loadFlg').value;
+    //input入力判断用
+	var gamenMode =document.getElementById('gamenMode').value;
 	//初期表示に、全項目変更不可に設定。
-	if(loadFlg == "") {
-		document.getElementById('Base').readOnly=true;
-		document.getElementById('PaymentDate').readOnly=true;
-		document.getElementById('OverTime').readOnly=true;
-		document.getElementById('Shortage').readOnly=true;
-		document.getElementById('OverTimePlus').readOnly=true;
-		document.getElementById('ShortageReduce').readOnly=true;
-		document.getElementById('TransportExpense').readOnly=true;
-		document.getElementById('AllowancePlus').readOnly=true;
-		document.getElementById('AllowanceReduce').readOnly=true;
-		document.getElementById('AllowanceReason').readOnly=true;
-		document.getElementById('WelfareSelf').readOnly=true;
-		document.getElementById('WelfareComp').readOnly=true;
-		document.getElementById('WelfareBaby').readOnly=true;
-		document.getElementById('EplyInsSelf').readOnly=true;
-		document.getElementById('EplyInsComp').readOnly=true;
-		document.getElementById('EplyInsWithdraw').readOnly=true;
-		document.getElementById('WkAcccpsIns').readOnly=true;
-		document.getElementById('WithholdingTax').readOnly=true;
-		document.getElementById('MunicipalTax').readOnly=true;
-		document.getElementById('Rental').readOnly=true;
-		document.getElementById('RentalMgmtFee').readOnly=true;
-		document.getElementById('Sum').readOnly=true;
-		document.getElementById('TotalFee').readOnly=true;
-		document.getElementById('Remark').readOnly=true;
+	if(gamenMode == "0") {
+		document.getElementById('base').readOnly=true;
+		document.getElementById('paymentDate').readOnly=true;
+		document.getElementById('overTime').readOnly=true;
+		document.getElementById('shortage').readOnly=true;
+		document.getElementById('overTimePlus').readOnly=true;
+		document.getElementById('shortageReduce').readOnly=true;
+		document.getElementById('transportExpense').readOnly=true;
+		document.getElementById('allowancePlus').readOnly=true;
+		document.getElementById('allowanceReduce').readOnly=true;
+		document.getElementById('allowanceReason').readOnly=true;
+		document.getElementById('welfareSelf').readOnly=true;
+		document.getElementById('welfareComp').readOnly=true;
+		document.getElementById('welfareBaby').readOnly=true;
+		document.getElementById('eplyInsSelf').readOnly=true;
+		document.getElementById('eplyInsComp').readOnly=true;
+		document.getElementById('eplyInsWithdraw').readOnly=true;
+		document.getElementById('wkAcccpsIns').readOnly=true;
+		document.getElementById('withholdingTax').readOnly=true;
+		document.getElementById('municipalTax').readOnly=true;
+		document.getElementById('rental').readOnly=true;
+		document.getElementById('rentalMgmtFee').readOnly=true;
+		document.getElementById('sum').readOnly=true;
+		document.getElementById('totalFee').readOnly=true;
+		document.getElementById('remark').readOnly=true;
+		//初期画面の登録ボタン使用禁止
+		document.getElementById("Registration").disabled=true;
 	  }
+	//gamenMode 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新。
+	if(gamenMode=="2"){
+		//作成ボタンと変更ボタンの変更
+		document.getElementById('makeSalary').value="変更";
+	}
 }
 
 //登録処理
 function doRegist(){
 
 	//登録処理に設定する。1:登録処理、2:作成処理
-	var Make =document.getElementById('Make');
-	Make.value= "1";
+	var make =document.getElementById('make');
+	make.value= "1";
 
 	document.theForm.submit();
 }
@@ -76,14 +79,11 @@ function doRegist(){
 
 <h2>社員給料作成</h2>
 
-<form:form name="theForm" id="theForm"  method="post" modelAttribute="SalarylistBean3" action="salaryInfo" >
+<form:form name="theForm" id="theForm"  method="post" modelAttribute="salaryInfoBean" action="salaryInfo" >
 	<!-- 作成ボタンと登録ボタンを分かれる。-->
-	<input type="hidden" id="Make" name="Make" />
+	<input type="hidden" id="make" name="make" />
 	<!--input入力できるかどうか、判断用データ -->
-	<input type="hidden" id="loadFlg" name="loadFlg" value="${loadFlg}"/>
-	<!-- 登録ボタンをクリック時、作成と登録を判断する為に-->
-	<input type="hidden" id="MakeDistinction" name="MakeDistinction" value="${MakeDistinction}" />
-
+	<input type="hidden" id="gamenMode" name="gamenMode" value="${gamenMode}"/>
 	<!--エラーメッセージ-->
 	<p style="color: red;">
     	<c:forEach  items="${errors}" var="error">
@@ -92,140 +92,137 @@ function doRegist(){
 	</p>
 
 	<table  bgcolor="white"; width:100%;>
-		<!-- modelAttribute との関係？？？ -->
-		<c:forEach items="${salaryInfo}" var="salaryInfo" >
 			<tr>
 			<td></td>
 			<td style="text-align: right;">
-			<input type="button" id="makeSalary" name="makeSalary"  value="${button}" onclick="doMake()" /></td>
+			<input type="button" id="makeSalary" name="makeSalary"  value="作成" onclick="doMake()" /></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>社員ID：</td>
-			<td><c:out value="${salaryInfo.getEmployeeID()}"/>
+			<td>${salaryInfoBean.employeeID}
 			<!--社員idを転送 -->
-			<input type="hidden" id="EmployeeIDb" name="EmployeeIDb" value="<c:out value="${salaryInfo.getEmployeeID()}"/>"/>
+			<input type="hidden" id="employeeID" name="employeeID" value="${salaryInfoBean.employeeID}"/>
 			</td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>氏名：</td>
-			<td><c:out value="${salaryInfo.getEmployeeName()}"/>
+			<td>${salaryInfoBean.employeeName}
 			<!--社員氏名を転送 -->
-			<input type="hidden" id="Nameb" name="Nameb" value="<c:out value="${salaryInfo.getEmployeeName()}"/>"/>
+			<input type="hidden" id="employeeName" name="employeeName" value="${salaryInfoBean.employeeName}"/>
 			</td>
 			</tr>
 			<tr  style="background-color:#bfe1ff">
 			<td>住所：</td>
-			<td><c:out value="${salaryInfo.getAddress()}"/>
+			<td>${salaryInfoBean.address}
 			<!--社員住所を転送 -->
-			<input type="hidden" id="Addressb" name="Addressb" value="<c:out value="${salaryInfo.getAddress()}"/>"/>
+			<input type="hidden" id="address" name="address" value="${salaryInfoBean.address}"/>
 			</td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>対象月：</td>
-			<td><input id="month"name="month" type="text" value="${month}"></td>
+			<td><input id="month"name="month" type="text" value="${salaryInfoBean.month}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>基本給：</td>
-			<td><input id="Base"name="Base" type="text" value="<c:out value="${salaryInfo.getBase()}"/>"></td>
+			<td><input id="base"name="base" type="text" value="${salaryInfoBean.base}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>支払日：</td>
-			<td><input id="PaymentDate"name="PaymentDate" type="text"  value="<c:out value="${salaryInfo.getPaymentDate()}"/>"></td>
+			<td><input id="paymentDate"name="paymentDate" type="text"  value="${salaryInfoBean.paymentDate}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>残業時間：</td>
-			<td><input id="OverTime"name="OverTime" type="text"  value="<c:out value="${salaryInfo.getOverTime()}"/>"></td>
+			<td><input id="overTime"name="overTime" type="text"  value="${salaryInfoBean.overTime}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>不足時間：</td>
-			<td><input id="Shortage"name="Shortage" type="text"  value="<c:out value="${salaryInfo.getShortage()}"/>"></td>
+			<td><input id="shortage"name="shortage" type="text"  value="${salaryInfoBean.shortage}"></td>
 			</tr>
 			<tr  style="background-color:#bfe1ff">
 			<td>残業加算：</td>
-			<td><input id="OverTimePlus"name="OverTimePlus" type="text"  value="<c:out value="${salaryInfo.getOverTimePlus()}"/>"></td>
+			<td><input id="overTimePlus"name="overTimePlus" type="text"  value="${salaryInfoBean.overTimePlus}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>稼働不足減：</td>
-			<td><input id="ShortageReduce"name="ShortageReduce" type="text"  value="<c:out value="${salaryInfo.getShortageReduce()}"/>"></td>
+			<td><input id="shortageReduce"name="shortageReduce" type="text"  value="${salaryInfoBean.shortageReduce}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>交通費：</td>
-			<td><input id="TransportExpense"name="TransportExpense"   type="text" value="<c:out value="${salaryInfo.getTransportExpense()}"/>"></td>
+			<td><input id="transportExpense"name="transportExpense"   type="text" value="${salaryInfoBean.transportExpense}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>手当加算：</td>
-			<td><input id="AllowancePlus"name="AllowancePlus" type="text"  value="<c:out value="${salaryInfo.getAllowancePlus()}"/>"></td>
+			<td><input id="allowancePlus"name="allowancePlus" type="text"  value="${salaryInfoBean.allowancePlus}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>手当減算：</td>
-			<td><input id="AllowanceReduce"name="AllowanceReduce" type="text"  value="<c:out value="${salaryInfo.getAllowanceReduce()}"/>"></td>
+			<td><input id="allowanceReduce"name="allowanceReduce" type="text"  value="${salaryInfoBean.allowanceReduce}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>手当理由：</td>
-			<td><input id="AllowanceReason"name="AllowanceReason"  type="text"  value="<c:out value="${salaryInfo.getAllowanceReason()}"/>"></td>
+			<td><input id="allowanceReason"name="allowanceReason"  type="text"  value="${salaryInfoBean.allowanceReason}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>厚生控除個人：</td>
-			<td><input id="WelfareSelf"name="WelfareSelf" type="text"   value="<c:out value="${salaryInfo.getWelfareSelf()}"/>"></td>
+			<td><input id="welfareSelf"name="welfareSelf" type="text"   value="${salaryInfoBean.welfareSelf}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>厚生控除会社：</td>
-			<td><input id="WelfareComp"name="WelfareComp" type="text"  value="<c:out value="${salaryInfo.getWelfareComp()}"/>"></td>
+			<td><input id="welfareComp"name="welfareComp" type="text"  value="${salaryInfoBean.welfareComp}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>厚生控除子育(会社）：</td>
-			<td><input id="WelfareBaby"name="WelfareBaby" type="text"  value="<c:out value="${salaryInfo.getWelfareBaby()}"/>"></td>
+			<td><input id="welfareBaby"name="welfareBaby" type="text"  value="${salaryInfoBean.welfareBaby}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>雇用保険個人負担：</td>
-			<td><input id="EplyInsSelf"name="EplyInsSelf" type="text"  value="<c:out value="${salaryInfo.getEplyInsSelf()}"/>"></td>
+			<td><input id="eplyInsSelf"name="eplyInsSelf" type="text"  value="${salaryInfoBean.eplyInsSelf}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>雇用保険会社負担：</td>
-			<td><input id="EplyInsComp"name="EplyInsComp" type="text" value="<c:out value="${salaryInfo.getEplyInsComp()}"/>"></td>
+			<td><input id="eplyInsComp"name="eplyInsComp" type="text" value="${salaryInfoBean.eplyInsComp}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>雇用保拠出金（会社)：</td>
-			<td><input id="EplyInsWithdraw"name="EplyInsWithdraw" type="text"  value="<c:out value="${salaryInfo.getEplyInsWithdraw()}"/>"></td>
+			<td><input id="eplyInsWithdraw"name="eplyInsWithdraw" type="text"  value="${salaryInfoBean.eplyInsWithdraw}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>労災保険（会社負担のみ）：</td>
-			<td><input id="WkAcccpsIns"name="WkAcccpsIns" type="text"  value="<c:out value="${salaryInfo.getWkAcccpsIns()}"/>"></td>
+			<td><input id="wkAcccpsIns"name="wkAcccpsIns" type="text"  value="${salaryInfoBean.wkAcccpsIns}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>源泉控除：</td>
-			<td><input id="WithholdingTax"name="WithholdingTax" type="text"  value="<c:out value="${salaryInfo.getWithholdingTax()}"/>"></td>
+			<td><input id="withholdingTax"name="withholdingTax" type="text"  value="${salaryInfoBean.withholdingTax}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>住民税控除：</td>
-			<td><input id="MunicipalTax"name="MunicipalTax" type="text"  value="<c:out value="${salaryInfo.getMunicipalTax()}"/>"></td>
+			<td><input id="municipalTax"name="municipalTax" type="text"  value="${salaryInfoBean.municipalTax}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>社宅家賃控除：</td>
-			<td><input id="Rental"name="Rental" type="text"  value="<c:out value="${salaryInfo.getRental()}"/>"></td>
+			<td><input id="rental"name="rental" type="text"  value="${salaryInfoBean.rental}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>社宅共益費控除：</td>
-			<td><input id="RentalMgmtFee"name="RentalMgmtFee" type="text"  value="<c:out value="${salaryInfo.getRentalMgmtFee()}"/>"></td>
+			<td><input id="rentalMgmtFee"name="rentalMgmtFee" type="text"  value="${salaryInfoBean.rentalMgmtFee}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>総額：</td>
-			<td><input id="Sum"name="Sum" type="text"  value="<c:out value="${salaryInfo.getSum()}"/>"></td>
+			<td><input id="sum"name="sum" type="text"  value="${salaryInfoBean.sum}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>総費用：</td>
-			<td><input id="TotalFee"name="TotalFee" type="text"  value="<c:out value="${salaryInfo.getTotalFee()}"/>"></td>
+			<td><input id="totalFee"name="totalFee" type="text"  value="${salaryInfoBean.totalFee}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>備考：</td>
-			<td><input id="Remark"name="Remark" type="text"  value="<c:out value="${salaryInfo.getRemark()}"/>"></td>
+			<td><input id="remark"name="remark" type="text"  value="${salaryInfoBean.remark}"></td>
 			</tr>
 			<tr>
 			<td></td>
 			<td style="text-align: right;">
 			<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
 			</tr>
-		</c:forEach>
 	</table>
 </form:form>
 </body>

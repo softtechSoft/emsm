@@ -13,20 +13,10 @@ public class SalaryInfoBean {
 	//対象年月
 	@Size(min=2, max=30,message="対象月を入力してください。例：202104")
 	private String month ;
-	//ダウンロードフラグ
-	private int downloadFlg;
-	//社員ID
-	private String EmployeeIDb;
-	//社員氏名
-	private String Nameb;
-	//社員住所
-	private String Addressb;
-	//登録ボタンをクリック時、作成と登録を判断する用変数
-	private String MakeDistinction;
 	//作成処理の設定用変数
-	private String Make;
+	private String make;
 	//画面入力可に設定用変数
-	private String loadFlg;
+	private String gamenMode;
 	//社員氏名
 	private String employeeName ;
 	//社員氏ID
@@ -102,21 +92,6 @@ public class SalaryInfoBean {
 	public void setMonth(String month) {
 		this.month = month;
 	}
-
-	/**
-	 * @return downloadFlg
-	 */
-	public int getDownloadFlg() {
-		return downloadFlg;
-	}
-
-	/**
-	 * @param downloadFlg セットする downloadFlg
-	 */
-	public void setDownloadFlg(int downloadFlg) {
-		this.downloadFlg = downloadFlg;
-	}
-
 	/**
 	 * @return employeeName
 	 */
@@ -522,89 +497,32 @@ public class SalaryInfoBean {
 		this.welfareComp = welfareComp;
 	}
 
-	/**
-	 * @return loadFlg
-	 */
-	public String getLoadFlg() {
-		return loadFlg;
-	}
 
-	/**
-	 * @param loadFlg セットする loadFlg
-	 */
-	public void setLoadFlg(String loadFlg) {
-		this.loadFlg = loadFlg;
-	}
 	/**
 	 * @return make
 	 */
 	public String getMake() {
-		return Make;
+		return make;
 	}
 
 	/**
 	 * @param make セットする make
 	 */
 	public void setMake(String make) {
-		Make = make;
+		this.make = make;
 	}
 
 	/**
-	 * @return makeDistinction
+	 * @return gamenMode
 	 */
-	public String getMakeDistinction() {
-		return MakeDistinction;
+	public String getGamenMode() {
+		return gamenMode;
 	}
 
 	/**
-	 * @param makeDistinction セットする makeDistinction
+	 * @param gamenMode セットする gamenMode
 	 */
-	public void setMakeDistinction(String makeDistinction) {
-		MakeDistinction = makeDistinction;
+	public void setGamenMode(String gamenMode) {
+		this.gamenMode = gamenMode;
 	}
-
-	/**
-	 * @return employeeIDb
-	 */
-	public String getEmployeeIDb() {
-		return EmployeeIDb;
-	}
-
-	/**
-	 * @param employeeIDb セットする employeeIDb
-	 */
-	public void setEmployeeIDb(String employeeIDb) {
-		EmployeeIDb = employeeIDb;
-	}
-
-	/**
-	 * @return nameb
-	 */
-	public String getNameb() {
-		return Nameb;
-	}
-
-	/**
-	 * @param nameb セットする nameb
-	 */
-	public void setNameb(String nameb) {
-		Nameb = nameb;
-	}
-
-	/**
-	 * @return addressb
-	 */
-	public String getAddressb() {
-		return Addressb;
-	}
-
-	/**
-	 * @param addressb セットする addressb
-	 */
-	public void setAddressb(String addressb) {
-		Addressb = addressb;
-	}
-
-
-
 }
