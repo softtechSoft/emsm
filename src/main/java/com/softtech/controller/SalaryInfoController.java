@@ -38,14 +38,13 @@ public class SalaryInfoController {
 	@RequestMapping(value = "salaryInfo", method = RequestMethod.POST )
 	public String toWorkDetailList(HttpServletResponse response,@Valid @ModelAttribute("SalaryInfoBean") SalaryInfoBean salaryInfoBean,
 			BindingResult result, Model model) throws ParseException {
-		//作成ボタンを押す。
-		if(salaryInfoBean.getMake().equals("2")) {
+		//作成ボタンを押す。（１：登録ボタン、２：作成ボタン）
+		if("2".equals(salaryInfoBean.getMake())) {
 
 			SalaryInfoRecord em = new SalaryInfoRecord();
+
 		 	// 対象年月+1をする。
 			String month= DateUtil.monthplus(DateUtil.chgMonthToYM(salaryInfoBean.getMonth()));
-			//作成場合、対象年月+1後、クライアント側へ渡す。
-			salaryInfoBean.setMonth(DateUtil.modifymonth(month));
 			em.setMonth(month);
 			//社員ID
 			em.setEmployeeID(salaryInfoBean.getEmployeeID());
@@ -54,34 +53,47 @@ public class SalaryInfoController {
 
 			//給料新規作成
 			if(null == salaryInfoRecordss) {
-				// 作成ボタンをおした、inputが可入力になります。0：入力不可、1：入力可。
+				// 画面モードに新規作成を設定すい（ 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新）
 				model.addAttribute("gamenMode", "1");
+
+				//作成場合、対象年月+1後、クライアント側へ渡す。
+				salaryInfoBean.setMonth(DateUtil.modifymonth(month));
 				model.addAttribute("salaryInfoBean",salaryInfoBean);
+
 			//給料更新
 			}else {
 				//次月給料情報から支払日を取得
 				String paymentDate=salaryInfoRecordss.getPaymentDate();
-				//支払日は過去日付が、本日の場合、変更不可にする。
-				if(DateUtil.isLessThanNow(paymentDate)||DateUtil.isNow(DateUtil.chgMonthToYM(paymentDate))) {
+
+				//支払日は過去日付か、本日かの場合、変更不可にする。
+				if(DateUtil.isLessThanNow(paymentDate)
+						|| DateUtil.isNow(DateUtil.chgMonthToYM(paymentDate))) {
 					//変更不可にする。
 					model.addAttribute("gamenMode","0");
-					model.addAttribute("salaryInfoBean",salaryInfoRecordss);
 				//将来日付の場合、変更する。
 				}else {
-				//変更ボタン用
-				model.addAttribute("gamenMode","2");
-				//変更場合
-				model.addAttribute("salaryInfoBean",salaryInfoRecordss);
+					//変更ボタン用
+					model.addAttribute("gamenMode","2");
 				}
+				model.addAttribute("salaryInfoBean",salaryInfoRecordss);
 			}
-		 //登録ボタンを押す
-		}else if(salaryInfoBean.getMake().equals("1")) {
+
+		//登録ボタンを押す
+		}else if("1".equals(salaryInfoBean.getMake())) {
+			// ①Ｖａｌｉｄａｔｉｏｎチェックエラーの場合、エラーを画面へ渡す、処理終了。
+			//②他のエラーチェック、（全部でOK）例：Service
+
+
+
+
+
 			SalaryInfoRecord sm = new SalaryInfoRecord();
 			//社員ID
 			sm.setEmployeeID(salaryInfoBean.getEmployeeID());
 			//対象年月
 			sm.setMonth(DateUtil.chgMonthToYM(salaryInfoBean.getMonth()));
 			SalaryInfoBean salaryInfoRecords= salaryInfoService.querySalaryInfo(sm);
+
 			// エラーチェック用リスト
 			List<FieldError> errorlst = new ArrayList<FieldError>();
 			// エラーチェック用
@@ -318,6 +330,7 @@ public class SalaryInfoController {
 					}
 				}
 			}
+
 			if(number) {
 				//登録ボタンを押す時.作成場合
 				if(salaryInfoRecords == null) {

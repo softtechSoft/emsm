@@ -26,7 +26,7 @@ function init(){
 
 	//対象年月変更不可に設定。
 	document.getElementById('month').readOnly=true;
-    //input入力判断用
+    //input入力判断用: 0:画面初期表示、１：給料データ新規作成、２：給料データ更新
 	var gamenMode =document.getElementById('gamenMode').value;
 	//初期表示に、全項目変更不可に設定。
 	if(gamenMode == "0") {
@@ -57,7 +57,7 @@ function init(){
 		//初期画面の登録ボタン使用禁止
 		document.getElementById("Registration").disabled=true;
 	  }
-	//gamenMode 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新。
+	//画面モード 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新。
 	if(gamenMode=="2"){
 		//作成ボタンと変更ボタンの変更
 		document.getElementById('makeSalary').value="変更";
