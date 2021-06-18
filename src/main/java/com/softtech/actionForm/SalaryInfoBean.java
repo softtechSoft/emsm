@@ -24,6 +24,7 @@ public class SalaryInfoBean {
 	//社員住所
 	private String address;
 	//支払日
+	@Size(min=1, max=30,message="支払日を入力してください。例：2021/06/15")
 	private String paymentDate ;
 	//基本給
 	@Size(min=1, max=30,message="基本給を入力してください。例：60000")

@@ -182,11 +182,12 @@ public class SalaryInfoService {
 			errorlst.add(err23);
 		}
 
-		// 支払日が過去日チェック。（TODO:用改善　→　対象年月の次月の日付である事）
-//		if(DateUtil.isLessThanNow(salaryInfoBean.getPaymentDate())) {
-//			FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
-//			errorlst.add(err24);
-//		}
+		// 支払日が過去日チェック。
+		if(DateUtil.isLessThanNow(salaryInfoBean.getPaymentDate())
+				|| DateUtil.isNow(DateUtil.chgMonthToYM(salaryInfoBean.getPaymentDate()))) {
+			FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
+			errorlst.add(err24);
+		}
 
 		return errorlst;
 	}
