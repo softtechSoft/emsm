@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.common.SalaryInfoRecord;
+import com.softtech.entity.SalaryInfo;
 import com.softtech.service.SalaryInfoService;
 import com.softtech.util.DateUtil;
 
 /**
  * 概要：給料作成機能
+ *
  * 作成者：馬@ソフトテク
  * 作成日：2021/6/02
  */
@@ -30,16 +31,18 @@ import com.softtech.util.DateUtil;
 public class SalaryInfoController {
 	@Autowired
 	SalaryInfoService salaryInfoService;
-	/**
-	 *   給料作成処理。
+
+	/*
+	 * 機能概要： 給料データの作成処理。
+	 *
 	 * @param  salaryInfoBean 画面入力値
 	 * @throws ParseException
 	 */
 	@RequestMapping(value = "salaryInfo", method = RequestMethod.POST )
-	public String toWorkDetailList(HttpServletResponse response,@Valid @ModelAttribute("SalaryInfoBean") SalaryInfoBean salaryInfoBean,
-			BindingResult result, Model model) throws ParseException {
-		//作成ボタンを押す。（１：登録ボタン、２：作成ボタン）
-		if("2".equals(salaryInfoBean.getMake())) {
+	public String toWorkDetailList(@Valid @ModelAttribute("SalaryInfoBean") SalaryInfoBean salaryInfoBean,
+									BindingResult result, Model model) throws ParseException {
+		//作成ボタンを押す。（１：作成ボタン、２：登録ボタン）
+		if("1".equals(salaryInfoBean.getMake())) {
 
 			SalaryInfoRecord em = new SalaryInfoRecord();
 
@@ -49,80 +52,84 @@ public class SalaryInfoController {
 			//社員ID
 			em.setEmployeeID(salaryInfoBean.getEmployeeID());
 			// DBから次月給料情報を取得
-			SalaryInfoBean salaryInfoRecordss= salaryInfoService.querySalaryInfo(em);
+			SalaryInfo salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 
-			//給料新規作成
-			if(null == salaryInfoRecordss) {
-				// 画面モードに新規作成を設定すい（ 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新）
-				model.addAttribute("gamenMode", "1");
-
+			//次月のデータまだ存在していない場合、給料新規作成
+			if(null == salaryInfoDB) {
 				//作成場合、対象年月+1後、クライアント側へ渡す。
 				salaryInfoBean.setMonth(DateUtil.modifymonth(month));
+				// 画面モードに新規作成を設定する。（ 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新）
+				salaryInfoBean.setGamenMode("1");
 				model.addAttribute("salaryInfoBean",salaryInfoBean);
+				return "salaryInfo";
 
-			//給料更新
+			//既に存在する場合、給料更新をする
 			}else {
-				//次月給料情報から支払日を取得
-				String paymentDate=salaryInfoRecordss.getPaymentDate();
+				// DBデータを画面用Beanに変更
+				SalaryInfoBean salaryInfoGamen = salaryInfoService.transferToGamen(salaryInfoDB);
+
+				//支払日を取得
+				String paymentDate=salaryInfoGamen.getPaymentDate();
 
 				//支払日は過去日付か、本日かの場合、変更不可にする。
 				if(DateUtil.isLessThanNow(paymentDate)
 						|| DateUtil.isNow(DateUtil.chgMonthToYM(paymentDate))) {
-					//変更不可にする。
-					model.addAttribute("gamenMode","0");
+
+					//変更不可のため、画面初期モードに設定。
+					salaryInfoGamen.setGamenMode("0");
 				//将来日付の場合、変更する。
 				}else {
-					//変更ボタン用
-					model.addAttribute("gamenMode","2");
+					//変更モードに設定
+					salaryInfoGamen.setGamenMode("2");
 				}
-				model.addAttribute("salaryInfoBean",salaryInfoRecordss);
+				model.addAttribute("salaryInfoBean",salaryInfoGamen);
+
+				return "salaryInfo";
 			}
 
 		//登録ボタンを押す
-		}else if("1".equals(salaryInfoBean.getMake())) {
-			//画面モードに新規作成を設定すい（ 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新）
-			model.addAttribute("gamenMode",salaryInfoBean.getGamenMode());
+		}else if("2".equals(salaryInfoBean.getMake())) {
 
-			// エラーチェック用Flg;
-			boolean errorJudge =false ;
-			// エラーチェック用リスト
-			List<FieldError> errorlst = new ArrayList<FieldError>();
-			// NotNullチェック
+			// 必須チェック
 			if (result.hasErrors()) {
-				// エラーチェック用Flg;
-			    errorJudge =true ;
+			    // エラーチェック用リスト
+				List<FieldError> errorlst = new ArrayList<FieldError>();
+
 				//エラーメッセージ。
 				errorlst.addAll(result.getFieldErrors());
+				//エラーメッセージ
+				model.addAttribute("errors", errorlst);
 				model.addAttribute("salaryInfoBean",salaryInfoBean);
+
+				return "salaryInfo";
 			 }
 
-			//Not数字チェック
-			if(salaryInfoService.queryError(salaryInfoBean)!=null && !salaryInfoService.queryError(salaryInfoBean).isEmpty()) {
-				// エラーチェック用Flg;
-			    errorJudge =true ;
-				//エラーメッセージ。
-				errorlst.addAll(salaryInfoService.queryError(salaryInfoBean));
+			//その他チェック
+			List<FieldError> fieldErrors = salaryInfoService.checkData(salaryInfoBean);
+			// エラーがある場合
+			if(fieldErrors.size()>0) {
+				model.addAttribute("errors", fieldErrors);
 				model.addAttribute("salaryInfoBean",salaryInfoBean);
+
+				return "salaryInfo";
 			}
-			if(errorJudge) {
-			//エラーメッセージ
-			model.addAttribute("errors", errorlst);
-			}else {
-				//登録ボタンを押す時.作成場合
-				if("1".equals(salaryInfoBean.getGamenMode())) {
-					// DBまで給料作成情報を作成。
-					salaryInfoService.setSalaryInfo2(salaryInfoService.queryRegister(salaryInfoBean));
-					//作成成功後、画面の表示。
-					return "makeSalarySuccess";
-				//登録ボタンを押す時.変更場合
-				}else if("2".equals(salaryInfoBean.getGamenMode())){
-					// DBまで給料作成情報を更新。
-					salaryInfoService.setSalaryInfo3(salaryInfoService.queryRegister(salaryInfoBean));
-					//更新成功後、画面の表示。
-					return "updateSalarySuccess";
-					}
+
+			//給料新規作成処理
+			if("1".equals(salaryInfoBean.getGamenMode())) {
+				// 給料情報作成
+				salaryInfoService.insertSalaryInfo(salaryInfoService.transferToDB(salaryInfoBean));
+				//作成成功後、画面の表示。
+				return "makeSalarySuccess";
+
+			//給料変更処理
+			}else if("2".equals(salaryInfoBean.getGamenMode())){
+				// 給料情報更新
+				salaryInfoService.updateSalaryInfo(salaryInfoService.transferToDB(salaryInfoBean));
+				//更新成功後、画面の表示。
+				return "updateSalarySuccess";
 				}
 			}
+
 		return "salaryInfo";
 	}
 }

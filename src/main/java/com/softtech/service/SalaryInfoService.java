@@ -23,14 +23,182 @@ import com.softtech.util.DateUtil;
 public class SalaryInfoService {
 	@Autowired
 	SalaryInfoMapper salaryInfoMapper;
-	//給料作成情報の取得
-	public SalaryInfoBean querySalaryInfo(SalaryInfoRecord em) {
+
+	/*
+	 * 機能概要： 給料情報を検索
+	 *			条件：年月、社員ID
+	 *
+	 * @param  em 検索パラメータ
+	 * @return 給料情報
+	 */
+	public SalaryInfo querySalaryInfo(SalaryInfoRecord em) {
 		// DBから給料作成情報を取得する
 		SalaryInfo salaryInfo= salaryInfoMapper.getSalaryInfoDetail(em);
 		if(salaryInfo==null) {
 			return null;
 		}
-		//DBから取得したデータを給料作成へ変換する
+		return salaryInfo;
+	}
+
+	/*
+	 * 機能概要： 給料情報DBへ新規追加
+	 *
+	 * @param  em 新規追加データ
+	 * @return
+	 */
+	public  void insertSalaryInfo(SalaryInfoRecord am) {
+		 salaryInfoMapper.insertSalaryInfo(am);
+	}
+	/*
+	 * 機能概要： 給料情報DBへ更新
+	 *
+	 * @param  lm 更新データ
+	 * @return
+	 */
+	public  void updateSalaryInfo(SalaryInfoRecord lm) {
+		 salaryInfoMapper.updateSalaryInfo(lm);
+	}
+
+	/*
+	 * 機能概要： データチェック
+	 *
+	 * @param  チェック対象データ
+	 * @return エラーリスト
+	 */
+	public List<FieldError>  checkData(SalaryInfoBean salaryInfoBean) {
+
+		// エラーチェック用リスト
+		List<FieldError> errorlst = new ArrayList<FieldError>();
+		// 基本給数字チェック。
+		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getBase()))) {
+			FieldError err1 = new FieldError("", "", "基本給が数字を入力してください。例：60,000");
+			errorlst.add(err1);
+		}
+		// 残業時間数字チェック。
+		if(DateUtil.isNumeric(salaryInfoBean.getOverTime())) {
+			FieldError err2 = new FieldError("", "", "残業時間が数字を入力してください。例：20");
+			errorlst.add(err2);
+		}
+		// 不足時間数字チェック。
+		if(DateUtil.isNumeric(salaryInfoBean.getShortage())) {
+			FieldError err3= new FieldError("", "", "不足時間が数字を入力してください。例：20");
+			errorlst.add(err3);
+		}
+		// 残業加算数字チェック。
+		if(DateUtil.isNumeric(salaryInfoBean.getOverTimePlus())) {;
+			FieldError err4= new FieldError("", "", "残業加算が数字を入力してください。例：20");
+			errorlst.add(err4);
+		}
+		// 稼働不足減数字チェック。
+		if(DateUtil.isNumeric(salaryInfoBean.getShortageReduce())) {
+			FieldError err5= new FieldError("", "", "稼働不足減が数字を入力してください。例：20");
+			errorlst.add(err5);
+		}
+		// 交通費数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getTransportExpense())) {
+			FieldError err6= new FieldError("", "", "交通費が数字を入力してください。例：2000");
+			errorlst.add(err6);
+		}
+		// 手当加算数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getAllowancePlus())) {
+			FieldError err7= new FieldError("", "", "手当加算が数字を入力してください。例：2000");
+			errorlst.add(err7);
+		}
+		// 手当減算数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getAllowanceReduce())) {
+			FieldError err8= new FieldError("", "", "手当減算が数字を入力してください。例：2000");
+			errorlst.add(err8);
+		}
+		// 厚生控除個人数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getWelfareSelf())) {
+			FieldError err9= new FieldError("", "", "厚生控除個人が数字を入力してください。例：2000");
+			errorlst.add(err9);
+		}
+		// 厚生控除会社数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getWelfareComp())) {
+			FieldError err10= new FieldError("", "", "厚生控除会社が数字を入力してください。例：2000");
+			errorlst.add(err10);
+		}
+		// 厚生控除子育(会社)数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getWelfareBaby())) {
+			FieldError err11= new FieldError("", "", "厚生控除子育(会社)が数字を入力してください。例：2000");
+			errorlst.add(err11);
+		}
+		// 雇用保険個人負担数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getEplyInsSelf())) {
+			FieldError err12= new FieldError("", "", "雇用保険個人負担が数字を入力してください。例：2000");
+			errorlst.add(err12);
+		}
+		// 雇用保険会社負担数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getEplyInsComp())) {
+			FieldError err13= new FieldError("", "", "雇用保険会社負担が数字を入力してください。例：2000");
+			errorlst.add(err13);
+		}
+		// 雇用保拠出金（会社)数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getEplyInsWithdraw())) {
+			FieldError err14= new FieldError("", "", "雇用保拠出金（会社)が数字を入力してください。例：2000");
+			errorlst.add(err14);
+		}
+		// 労災保険（会社負担のみ）数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getWkAcccpsIns())) {
+			FieldError err15= new FieldError("", "", "労災保険（会社負担のみ）が数字を入力してください。例：2000");
+			errorlst.add(err15);
+		}
+		// 源泉控除数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getWithholdingTax())) {
+			FieldError err16= new FieldError("", "", "源泉控除が数字を入力してください。例：2000");
+			errorlst.add(err16);
+		}
+		// 住民税控除数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getMunicipalTax())) {
+			FieldError err17= new FieldError("", "", "住民税控除が数字を入力してください。例：2000");
+			errorlst.add(err17);
+		}
+		// 社宅家賃控除数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getRental())) {
+			FieldError err18= new FieldError("", "", "社宅家賃控除が数字を入力してください。例：2000");
+			errorlst.add(err18);
+		}
+		// 社宅共益費控除数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getRentalMgmtFee())) {
+			FieldError err19= new FieldError("", "", "社宅共益費控除が数字を入力してください。例：2000");
+			errorlst.add(err19);
+		}
+		//総費用数字チェック
+		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getTotalFee()))) {
+			FieldError err20= new FieldError("", "", "総費用が数字を入力してください。例：60,000");
+			errorlst.add(err20);
+		}
+		//総額数字チェック
+		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getSum()))) {
+			FieldError err21= new FieldError("", "", "総額が数字を入力してください。例：60,000");
+			errorlst.add(err21);
+		}
+
+		// 支払日が通常の日付チェック
+		if(DateUtil.isDate(salaryInfoBean.getPaymentDate())==false) {
+
+			FieldError err23= new FieldError("", "", "支払日がを通常の日付を入力してください、例：”2021/06/30”");
+			errorlst.add(err23);
+		}
+
+		// 支払日が過去日チェック。（TODO:用改善　→　対象年月の次月の日付である事）
+//		if(DateUtil.isLessThanNow(salaryInfoBean.getPaymentDate())) {
+//			FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
+//			errorlst.add(err24);
+//		}
+
+		return errorlst;
+	}
+	/*
+	 * 機能概要： DBデータから画面データ用変換
+	 *
+	 * @param  salaryInfo DBデータ
+	 * @return DB登録用Entity
+	 */
+	public SalaryInfoBean transferToGamen(SalaryInfo salaryInfo) {
+
+		//DBから取得したデータを画面データへ変換する
 		SalaryInfoBean salaryInfoBean = new SalaryInfoBean();
 		//社員ID
 		salaryInfoBean.setEmployeeID(salaryInfo.getEmployeeID());
@@ -88,18 +256,16 @@ public class SalaryInfoService {
 		salaryInfoBean.setTotalFee(salaryInfo.getTotalFee());
 		//備考
 		salaryInfoBean.setRemark(salaryInfo.getRemark());
-		return  salaryInfoBean;
+
+		return salaryInfoBean;
 	}
-	// 給料作成情報の作成
-	public  void setSalaryInfo2(SalaryInfoRecord am) {
-		 salaryInfoMapper.setSalaryInfoDetail(am);
-	}
-	// 給料作成情報の更新
-	public  void setSalaryInfo3(SalaryInfoRecord lm) {
-		 salaryInfoMapper.setSalaryInfoDetail1(lm);
-	}
-	//登録用情報
-	public SalaryInfoRecord  queryRegister(SalaryInfoBean salaryInfoBean) {
+	/*
+	 * 機能概要： 画面データからDB用変換
+	 *
+	 * @param  salaryInfoBean 画面入力値
+	 * @return DB登録用Entity
+	 */
+	public SalaryInfoRecord  transferToDB(SalaryInfoBean salaryInfoBean) {
 		//登録用情報
 		SalaryInfoRecord am = new SalaryInfoRecord();
 		//社員ID
@@ -209,143 +375,5 @@ public class SalaryInfoService {
 		//厚生控除会社
 		am.setWelfareComp(Integer.parseInt(salaryInfoBean.getWelfareComp()));
 		return am;
-	}
-	//エラーチェック用
-	public List<FieldError>  queryError(SalaryInfoBean salaryInfoBean) {
-		// エラーチェック用リスト
-		List<FieldError> errorlst = new ArrayList<FieldError>();
-		// 基本給数字チェック。
-		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getBase()))) {
-			FieldError err1 = new FieldError("", "", "基本給が数字を入力してください。例：60,000");
-			errorlst.add(err1);
-		}
-		// 残業時間数字チェック。
-		if(DateUtil.isNumeric(salaryInfoBean.getOverTime())) {
-			FieldError err2 = new FieldError("", "", "残業時間が数字を入力してください。例：20");
-			errorlst.add(err2);
-		}
-		// 不足時間数字チェック。
-		if(DateUtil.isNumeric(salaryInfoBean.getShortage())) {
-			FieldError err3= new FieldError("", "", "不足時間が数字を入力してください。例：20");
-			errorlst.add(err3);
-		}
-		// 残業加算数字チェック。
-		if(DateUtil.isNumeric(salaryInfoBean.getOverTimePlus())) {;
-			FieldError err4= new FieldError("", "", "残業加算が数字を入力してください。例：20");
-			errorlst.add(err4);
-		}
-		// 稼働不足減数字チェック。
-		if(DateUtil.isNumeric(salaryInfoBean.getShortageReduce())) {
-			FieldError err5= new FieldError("", "", "稼働不足減が数字を入力してください。例：20");
-			errorlst.add(err5);
-		}
-		// 交通費数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getTransportExpense())) {
-			FieldError err6= new FieldError("", "", "交通費が数字を入力してください。例：2000");
-			errorlst.add(err6);
-		}
-		// 手当加算数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getAllowancePlus())) {
-			FieldError err7= new FieldError("", "", "手当加算が数字を入力してください。例：2000");
-			errorlst.add(err7);
-		}
-		// 手当減算数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getAllowanceReduce())) {
-			FieldError err8= new FieldError("", "", "手当減算が数字を入力してください。例：2000");
-			errorlst.add(err8);
-		}
-		// 厚生控除個人数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getWelfareSelf())) {
-			FieldError err9= new FieldError("", "", "厚生控除個人が数字を入力してください。例：2000");
-			errorlst.add(err9);
-		}
-		// 厚生控除会社数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getWelfareComp())) {
-			FieldError err10= new FieldError("", "", "厚生控除会社が数字を入力してください。例：2000");
-			errorlst.add(err10);
-		}
-		// 厚生控除子育(会社)数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getWelfareBaby())) {
-			FieldError err11= new FieldError("", "", "厚生控除子育(会社)が数字を入力してください。例：2000");
-			errorlst.add(err11);
-		}
-		// 雇用保険個人負担数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getEplyInsSelf())) {
-			FieldError err12= new FieldError("", "", "雇用保険個人負担が数字を入力してください。例：2000");
-			errorlst.add(err12);
-		}
-		// 雇用保険会社負担数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getEplyInsComp())) {
-			FieldError err13= new FieldError("", "", "雇用保険会社負担が数字を入力してください。例：2000");
-			errorlst.add(err13);
-		}
-		// 雇用保拠出金（会社)数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getEplyInsWithdraw())) {
-			FieldError err14= new FieldError("", "", "雇用保拠出金（会社)が数字を入力してください。例：2000");
-			errorlst.add(err14);
-		}
-		// 労災保険（会社負担のみ）数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getWkAcccpsIns())) {
-			FieldError err15= new FieldError("", "", "労災保険（会社負担のみ）が数字を入力してください。例：2000");
-			errorlst.add(err15);
-		}
-		// 源泉控除数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getWithholdingTax())) {
-			FieldError err16= new FieldError("", "", "源泉控除が数字を入力してください。例：2000");
-			errorlst.add(err16);
-		}
-		// 住民税控除数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getMunicipalTax())) {
-			FieldError err17= new FieldError("", "", "住民税控除が数字を入力してください。例：2000");
-			errorlst.add(err17);
-		}
-		// 社宅家賃控除数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getRental())) {
-			FieldError err18= new FieldError("", "", "社宅家賃控除が数字を入力してください。例：2000");
-			errorlst.add(err18);
-		}
-		// 社宅共益費控除数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getRentalMgmtFee())) {
-			FieldError err19= new FieldError("", "", "社宅共益費控除が数字を入力してください。例：2000");
-			errorlst.add(err19);
-		}
-		//総費用数字チェック
-		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getTotalFee()))) {
-			FieldError err20= new FieldError("", "", "総費用が数字を入力してください。例：60,000");
-			errorlst.add(err20);
-		}
-		//総額数字チェック
-		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getSum()))) {
-			FieldError err21= new FieldError("", "", "総額が数字を入力してください。例：60,000");
-			errorlst.add(err21);
-		}
-		// 支払日が過去日チェック用
-		boolean dateless = true ;
-		// 支払日が通常以外の日付チェック用
-		boolean date = true ;
-		// 支払日数字チェック。
-		if(DateUtil.isNumeric(DateUtil.chgMonthToYM(salaryInfoBean.getPaymentDate()))) {
-			// 支払日が過去日チェック用
-			date = false ;
-			FieldError err22= new FieldError("", "", "支払日が数字を入力してください。例：2021/06/15");
-			errorlst.add(err22);
-		}
-		if(date) {
-			// 支払日が通常の日付チェック
-			if(DateUtil.isDate(salaryInfoBean.getPaymentDate())==false) {
-				dateless = false;
-				FieldError err23= new FieldError("", "", "支払日がを通常の日付を入力してください、例：”2021/06/30”");
-				errorlst.add(err23);
-			}
-			if (dateless) {
-				// 支払日が過去日チェック。
-				if(DateUtil.isLessThanNow(salaryInfoBean.getPaymentDate())) {
-					FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
-					errorlst.add(err24);
-				}
-			}
-		}
-
-		return errorlst;
 	}
 }

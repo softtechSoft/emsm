@@ -8,7 +8,7 @@ import com.softtech.entity.SalaryInfo;
 @Mapper
 public interface SalaryInfoMapper {
 	SalaryInfo getSalaryInfoDetail(SalaryInfoRecord em);
-	SalaryInfoRecord setSalaryInfoDetail(SalaryInfoRecord am);
-	SalaryInfoRecord setSalaryInfoDetail1(SalaryInfoRecord lm);
+	SalaryInfoRecord insertSalaryInfo(SalaryInfoRecord am);
+	SalaryInfoRecord updateSalaryInfo(SalaryInfoRecord lm);
 
 }

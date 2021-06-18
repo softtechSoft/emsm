@@ -4,7 +4,7 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.SalaryInfoMapper">
-	<!--給料作成情報を取得する。inner join-->
+	<!--給料作成情報を取得する。-->
 	<select id="getSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfoRecord" resultType="com.softtech.entity.SalaryInfo">
 		select ss.*,
 		       ee.employeeID,
@@ -16,8 +16,8 @@
 		AND   ss.month=#{month}
 		AND   ee.employeeID=ss.employeeID
 	</select>
-	<!--給料情報を作成する。inner join-->
-	<select id="setSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfoRecord">
+	<!--給料情報を作成する。-->
+	<select id="insertSalaryInfo" parameterType="com.softtech.common.SalaryInfoRecord">
 		insert into
 			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
 			transportExpense,allowancePlus,allowanceReduce,allowanceReason,welfareSelf,welfareComp,welfareBaby,eplyInsSelf,
@@ -28,8 +28,8 @@
 			#{sum},#{totalFee},#{remark})
 
 	</select>
-	<!--給料情報を更新する。inner join-->
-	<select id="setSalaryInfoDetail1" parameterType="com.softtech.common.SalaryInfoRecord">
+	<!--給料情報を更新する。-->
+	<select id="updateSalaryInfo" parameterType="com.softtech.common.SalaryInfoRecord">
 		update  ems.salaryinfo set paymentDate = #{paymentDate},base = #{base},
 				overTime = #{overTime},shortage = #{shortage},overTimePlus = #{overTimePlus},
 				shortageReduce = #{shortageReduce},transportExpense = #{transportExpense},allowancePlus = #{allowancePlus},

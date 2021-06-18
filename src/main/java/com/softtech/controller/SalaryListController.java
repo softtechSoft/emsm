@@ -88,9 +88,12 @@ public class SalaryListController {
 			//対象年月と対象年月YYYY/MM→yyyymmに変換
 			em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
 			// DBから社員IDの対象年月の給料情報を取得
-			SalaryInfoBean salaryInfoBean = salaryInfoService.querySalaryInfo(em);
+			SalaryInfo salaryInfoDB= salaryInfoService.querySalaryInfo(em);
+			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
+			// 初期モードに設定
+			salaryInfoBean.setGamenMode("0");
 			model.addAttribute("salaryInfoBean",salaryInfoBean);
-			model.addAttribute("gamenMode","0");
+
 		    return "salaryInfo";
 		 }
 		return "salarylist";

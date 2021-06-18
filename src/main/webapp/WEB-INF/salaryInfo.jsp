@@ -14,9 +14,9 @@
 //作成処理
 function doMake(){
 
-	//作成処理の設定。1:登録処理、2:作成処理
+	//作成処理の設定。1:作成処理、2:登録処理
 	var make =document.getElementById("make");
-	make.value= "2";
+	make.value= "1";
 
 	document.theForm.submit();
 }
@@ -67,9 +67,9 @@ function init(){
 //登録処理
 function doRegist(){
 
-	//登録処理に設定する。1:登録処理、2:作成処理
+	//登録処理に設定する。1:作成処理、2:登録処理
 	var make =document.getElementById('make');
-	make.value= "1";
+	make.value= "2";
 
 	document.theForm.submit();
 }
@@ -83,7 +83,7 @@ function doRegist(){
 	<!-- 作成ボタンと登録ボタンを分かれる。-->
 	<input type="hidden" id="make" name="make" />
 	<!--input入力できるかどうか、判断用データ -->
-	<input type="hidden" id="gamenMode" name="gamenMode" value="${gamenMode}"/>
+	<input type="hidden" id="gamenMode" name="gamenMode" value="${salaryInfoBean.gamenMode}"/>
 	<!--エラーメッセージ-->
 	<p style="color: red;">
     	<c:forEach  items="${errors}" var="error">
