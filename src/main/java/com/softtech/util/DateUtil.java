@@ -138,6 +138,11 @@ public class DateUtil {
     	return month1;
 
     }
+    /**
+     * 支払日と現在時間判断
+     * @param
+     * @author 馬@ソフトテク
+     * */
     public static boolean isNow(String day) {
         //当前时间
         Date now = new Date();
