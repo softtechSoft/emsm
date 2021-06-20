@@ -95,7 +95,7 @@ public class SalaryInfoService {
 			errorlst.add(err5);
 		}
 		// 交通費数字チェック
-		if(DateUtil.isNumeric(salaryInfoBean.getTransportExpense())) {
+		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getTransportExpense()))) {
 			FieldError err6= new FieldError("", "", "交通費が数字を入力してください。例：2000");
 			errorlst.add(err6);
 		}
@@ -176,19 +176,21 @@ public class SalaryInfoService {
 		}
 
 		// 支払日が通常の日付チェック
+		boolean payment=true;
 		if(DateUtil.isDate(salaryInfoBean.getPaymentDate())==false) {
-
+			payment=false;
 			FieldError err23= new FieldError("", "", "支払日がを通常の日付を入力してください、例：”2021/06/30”");
 			errorlst.add(err23);
 		}
 
 		// 支払日が過去日チェック。
-		if(DateUtil.isLessThanNow(salaryInfoBean.getPaymentDate())
-				|| DateUtil.isNow(DateUtil.chgMonthToYM(salaryInfoBean.getPaymentDate()))) {
-			FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
-			errorlst.add(err24);
+		if(payment){
+			if(DateUtil.isLessThanNow(salaryInfoBean.getPaymentDate())
+					|| DateUtil.isNow(DateUtil.chgMonthToYM(salaryInfoBean.getPaymentDate()))) {
+				FieldError err24= new FieldError("", "", "支払日がを未来の日付を入力してください");
+				errorlst.add(err24);
+			}
 		}
-
 		return errorlst;
 	}
 	/*
@@ -291,7 +293,7 @@ public class SalaryInfoService {
 	     	salaryInfoBean.setTransportExpense("0") ;
 		}
 		//交通費
-		am.setTransportExpense(Integer.parseInt(salaryInfoBean.getTransportExpense()));
+		am.setTransportExpense(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getTransportExpense())));
 		if(salaryInfoBean.getAllowancePlus().length()==0) {
 	     	salaryInfoBean.setAllowancePlus("0") ;
 		}
