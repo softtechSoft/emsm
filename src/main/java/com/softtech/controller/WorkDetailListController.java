@@ -52,7 +52,7 @@ public class WorkDetailListController {
 		if (result.hasErrors()) {
 		model.addAttribute("errors", result.getFieldErrors());
 		return "workdetaillist";
-	}
+		}
 
 		// 入力した年月を持っち、DBから勤怠情報を取得
 	     List<WorkDetail> workDetailList1 = workDetailListService.queryWorkDetail(selectjyolken.getMonth());

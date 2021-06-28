@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.MimeTypeUtils;
 
+import com.softtech.actionForm.WelfareBean;
 import com.softtech.actionForm.WorkDetail;
 import com.softtech.entity.ClaimInfo;
 import com.softtech.entity.SalaryInfo;
@@ -205,6 +206,60 @@ public class FileUtil {/**
                 		sum1+ "," +specialClaim+ "," +claimStatus
 
 
+                         + "\r\n";
+                pw.print(outputString);
+            }
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+	 }
+	/**
+	 * 機能：福祉控除リストダウンロード
+	 *
+	 * @param response レスポンス
+	 * @param workDetailList 対象データ
+	 * @return TRUE:成功、FALSE失敗
+	 *
+	 * @exception なし
+	 * @author @ソフトテク
+	 */
+	public boolean welfareDownload(HttpServletResponse  response,List<WelfareBean> welfareBeanList){
+		//エンコーディング設定
+		response.setContentType(MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE + ";charset=Shift-JIS");
+		//ダウンロードファイル名設定
+		response.setHeader("Content-Disposition", "attachment; filename=\"welfareSheet.csv\"");
+
+		try {
+			PrintWriter pw = response.getWriter();
+			String outputString1 ="社員id,"+"社員氏名," + "控除開始日," + "厚生控除会社," + "厚生控除子育(会社),"
+			+"雇用保険会社負担,"+"雇用保拠出金（会社),"+"源泉控除,"+"住民税控除,"+"社宅家賃控除,"+"社宅管理費控除,"
+			+"控除ステータス,"+"作成日,"+"更新日,"+ "\r\n";
+			pw.print(outputString1);
+			for(WelfareBean wl:welfareBeanList) {
+            	String employeeID = wl.getEmployeeID();
+                String employeeName = wl.getEmployeeName();
+                String startDate = wl.getStartDate();
+                String welfareComp = wl.getWelfareComp();
+                String welfareBaby = wl.getWelfareBaby();
+                String eplyInsComp = wl.getEplyInsComp();
+                String eplyInsWithdraw = wl.getEplyInsWithdraw();
+                String withholdingTax = wl.getWithholdingTax();
+                String municipalTax = wl.getMunicipalTax();
+                String rental = wl.getRental();
+                String rentalMgmtFee = wl.getRentalMgmtFee();
+                String status = wl.getStatus();
+                String insertDate = wl.getInsertDate();
+                String updateDate = wl.getUpdateDate();
+
+
+
+                String outputString = employeeID + "," + employeeName + "," + startDate + "," + welfareComp + "," + welfareBaby + ","
+                + eplyInsComp+ "," + eplyInsWithdraw + "," + withholdingTax + "," + municipalTax + "," + rental
+                + "," + rentalMgmtFee + "," + status + "," + insertDate + "," + updateDate
                          + "\r\n";
                 pw.print(outputString);
             }
