@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.WelfareBean;
+import com.softtech.entity.Employee;
 import com.softtech.entity.WelfareInfo;
 import com.softtech.mappers.WelfareListMapper;
+import com.softtech.util.DateUtil;
 
 /**
  * 概要：福祉控除リストリストのservice
@@ -43,11 +45,63 @@ public class WelfareListService {
 	 * @return 福祉控除情報
 	 */
 	public List<WelfareBean>  queryWelfareDate() {
-		// DBから福祉控除情報を取得する
+		// DBから福祉情報を取得する
 		List<WelfareInfo> welfareInfo= welfareListMapper.getWelfare();
-		//DBから取得したデータを画面データへ変換する
-		List<WelfareBean> rtn  = welfareer(welfareInfo);
-		return  rtn;
+		// DBから社員情報を取得する
+		List<Employee> employee= welfareListMapper.getEmployee();
+		//福祉リストを作成
+		List<WelfareBean> rtn  =new ArrayList<WelfareBean>();
+		for(Employee wk : employee) {
+			WelfareBean welfareBean= new WelfareBean();
+			//社員ID
+			welfareBean.setEmployeeID(wk.getEmployeeID());
+			//社員氏名
+			welfareBean.setEmployeeName(wk.getEmployeeName());
+			for(WelfareInfo ww : welfareInfo) {
+				if(wk.getEmployeeID().equals(ww.getEmployeeID())) {
+					//控除開始日
+					welfareBean.setStartDate(DateUtil.modifymonth1(ww.getStartDate()));
+					//厚生年金控除個人
+					welfareBean.setWelfarePensionSelf(Integer.toString(ww.getWelfarePensionSelf()));
+					//厚生年金控除会社
+					welfareBean.setWelfarePensionComp(Integer.toString(ww.getWelfarePensionComp()));
+					//厚生健康控除会社
+					welfareBean.setWelfareHealthComp(Integer.toString(ww.getWelfareHealthComp()));
+					//厚生健康控除個人
+					welfareBean.setWelfareHealthSelf(Integer.toString(ww.getWelfareHealthSelf()));
+					//厚生控除子育(会社)
+					welfareBean.setWelfareBaby(Integer.toString(ww.getWelfareBaby()));
+					//雇用保険個人負担
+					welfareBean.setEplyInsSelf(Integer.toString(ww.getEplyInsSelf()));
+					//雇用保険会社負担
+					welfareBean.setEplyInsComp(Integer.toString(ww.getEplyInsComp()));
+					//雇用保拠出金（会社)
+					welfareBean.setEplyInsWithdraw(Integer.toString(ww.getEplyInsWithdraw()));
+					//労災保険（会社負担のみ）
+					welfareBean.setWkAcccpsIns(Integer.toString(ww.getWkAcccpsIns()));
+					//源泉控除
+					welfareBean.setWithholdingTax(Integer.toString(ww.getWithholdingTax()));
+					//住民税控除
+					welfareBean.setMunicipalTax(Integer.toString(ww.getMunicipalTax()));
+					//社宅家賃控除
+					welfareBean.setRental(Integer.toString(ww.getRental()));
+					//社宅管理費控除
+					welfareBean.setRentalMgmtFee(Integer.toString(ww.getRentalMgmtFee()));
+					//控除ステータス
+					welfareBean.setStatus(ww.getStatus());
+					//作成日
+					welfareBean.setInsertDate(DateUtil.modifymonth1(ww.getInsertDate()));
+					//作成者
+					welfareBean.setInsertEmployee(ww.getInsertEmployee());
+					//更新日
+					welfareBean.setUpdateDate(DateUtil.modifymonth1(ww.getUpdateDate()));
+					//更新者
+					welfareBean.setUpdateEmployee(ww.getUpdateEmployee());
+				}
+			}
+			rtn.add(welfareBean);
+		}
+			return rtn;
 	}
 	/**
 	 * 機能：DBから取得したデータを福祉控除情報へ変換する。
@@ -67,15 +121,25 @@ public class WelfareListService {
 		//社員氏名
 		welfareBean.setEmployeeName(ww.getEmployeeName());
 		//控除開始日
-		welfareBean.setStartDate(ww.getStartDate());
-		//厚生控除会社
-		welfareBean.setWelfareComp(Integer.toString(ww.getWelfareComp()));
+		welfareBean.setStartDate(DateUtil.modifymonth1(ww.getStartDate()));
+		//厚生年金控除個人
+		welfareBean.setWelfarePensionSelf(Integer.toString(ww.getWelfarePensionSelf()));
+		//厚生年金控除会社
+		welfareBean.setWelfarePensionComp(Integer.toString(ww.getWelfarePensionComp()));
+		//厚生健康控除会社
+		welfareBean.setWelfareHealthComp(Integer.toString(ww.getWelfareHealthComp()));
+		//厚生健康控除個人
+		welfareBean.setWelfareHealthSelf(Integer.toString(ww.getWelfareHealthSelf()));
 		//厚生控除子育(会社)
 		welfareBean.setWelfareBaby(Integer.toString(ww.getWelfareBaby()));
+		//雇用保険個人負担
+		welfareBean.setEplyInsSelf(Integer.toString(ww.getEplyInsSelf()));
 		//雇用保険会社負担
 		welfareBean.setEplyInsComp(Integer.toString(ww.getEplyInsComp()));
 		//雇用保拠出金（会社)
 		welfareBean.setEplyInsWithdraw(Integer.toString(ww.getEplyInsWithdraw()));
+		//労災保険（会社負担のみ）
+		welfareBean.setWkAcccpsIns(Integer.toString(ww.getWkAcccpsIns()));
 		//源泉控除
 		welfareBean.setWithholdingTax(Integer.toString(ww.getWithholdingTax()));
 		//住民税控除
@@ -87,9 +151,13 @@ public class WelfareListService {
 		//控除ステータス
 		welfareBean.setStatus(ww.getStatus());
 		//作成日
-		welfareBean.setInsertDate(ww.getInsertDate());
+		welfareBean.setInsertDate(DateUtil.modifymonth1(ww.getInsertDate()));
+		//作成者
+		welfareBean.setInsertEmployee(ww.getInsertEmployee());
 		//更新日
-		welfareBean.setUpdateDate(ww.getUpdateDate());
+		welfareBean.setUpdateDate(DateUtil.modifymonth1(ww.getUpdateDate()));
+		//更新者
+		welfareBean.setUpdateEmployee(ww.getUpdateEmployee());
 		rtn.add(welfareBean);
 		}
 		return rtn;

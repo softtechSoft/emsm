@@ -139,6 +139,16 @@ public class DateUtil {
 
     }
     /**
+     * 対象年月日"/"を追加
+     * @param
+     * @author 馬@ソフトテク
+     * */
+    public static String modifymonth1(String month){
+    	String month1 = month.substring(0,4)+"/"+month.substring(4,6)+"/"+month.substring(6,8);
+    	return month1;
+
+    }
+    /**
      * 支払日と現在時間判断
      * @param
      * @author 馬@ソフトテク

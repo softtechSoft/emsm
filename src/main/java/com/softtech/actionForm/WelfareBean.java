@@ -12,14 +12,24 @@ public class WelfareBean {
 	 private String employeeName;
 	 //控除開始日
 	 private String startDate;
-	 //厚生控除会社
-	 private String welfareComp;
+	 //厚生年金控除個人
+	 private String welfarePensionSelf;
+	 //厚生年金控除会社
+	 private String welfarePensionComp;
+	 //厚生健康控除会社
+	 private String welfareHealthComp;
+	 //厚生健康控除個人
+	 private String welfareHealthSelf;
 	 //厚生控除子育(会社)
 	 private String welfareBaby;
+	 //雇用保険個人負担
+	 private String eplyInsSelf;
 	 //雇用保険会社負担
 	 private String eplyInsComp;
 	 //雇用保拠出金（会社)
 	 private String eplyInsWithdraw;
+	 //労災保険（会社負担のみ）
+	 private String wkAcccpsIns;
 	 //源泉控除
 	 private String withholdingTax;
 	 //住民税控除
@@ -32,8 +42,12 @@ public class WelfareBean {
 	 private String status;
 	 //作成日
 	 private String insertDate;
+	 //作成者
+	 private String insertEmployee;
 	 //更新日
 	 private String updateDate;
+	 //更新者
+	 private String updateEmployee;
 	/**
 	 * @return wholeFlg
 	 */
@@ -83,16 +97,52 @@ public class WelfareBean {
 		this.startDate = startDate;
 	}
 	/**
-	 * @return welfareComp
+	 * @return welfarePensionSelf
 	 */
-	public String getWelfareComp() {
-		return welfareComp;
+	public String getWelfarePensionSelf() {
+		return welfarePensionSelf;
 	}
 	/**
-	 * @param welfareComp セットする welfareComp
+	 * @param welfarePensionSelf セットする welfarePensionSelf
 	 */
-	public void setWelfareComp(String welfareComp) {
-		this.welfareComp = welfareComp;
+	public void setWelfarePensionSelf(String welfarePensionSelf) {
+		this.welfarePensionSelf = welfarePensionSelf;
+	}
+	/**
+	 * @return welfarePensionComp
+	 */
+	public String getWelfarePensionComp() {
+		return welfarePensionComp;
+	}
+	/**
+	 * @param welfarePensionComp セットする welfarePensionComp
+	 */
+	public void setWelfarePensionComp(String welfarePensionComp) {
+		this.welfarePensionComp = welfarePensionComp;
+	}
+	/**
+	 * @return welfareHealthComp
+	 */
+	public String getWelfareHealthComp() {
+		return welfareHealthComp;
+	}
+	/**
+	 * @param welfareHealthComp セットする welfareHealthComp
+	 */
+	public void setWelfareHealthComp(String welfareHealthComp) {
+		this.welfareHealthComp = welfareHealthComp;
+	}
+	/**
+	 * @return welfareHealthSelf
+	 */
+	public String getWelfareHealthSelf() {
+		return welfareHealthSelf;
+	}
+	/**
+	 * @param welfareHealthSelf セットする welfareHealthSelf
+	 */
+	public void setWelfareHealthSelf(String welfareHealthSelf) {
+		this.welfareHealthSelf = welfareHealthSelf;
 	}
 	/**
 	 * @return welfareBaby
@@ -105,6 +155,18 @@ public class WelfareBean {
 	 */
 	public void setWelfareBaby(String welfareBaby) {
 		this.welfareBaby = welfareBaby;
+	}
+	/**
+	 * @return eplyInsSelf
+	 */
+	public String getEplyInsSelf() {
+		return eplyInsSelf;
+	}
+	/**
+	 * @param eplyInsSelf セットする eplyInsSelf
+	 */
+	public void setEplyInsSelf(String eplyInsSelf) {
+		this.eplyInsSelf = eplyInsSelf;
 	}
 	/**
 	 * @return eplyInsComp
@@ -129,6 +191,18 @@ public class WelfareBean {
 	 */
 	public void setEplyInsWithdraw(String eplyInsWithdraw) {
 		this.eplyInsWithdraw = eplyInsWithdraw;
+	}
+	/**
+	 * @return wkAcccpsIns
+	 */
+	public String getWkAcccpsIns() {
+		return wkAcccpsIns;
+	}
+	/**
+	 * @param wkAcccpsIns セットする wkAcccpsIns
+	 */
+	public void setWkAcccpsIns(String wkAcccpsIns) {
+		this.wkAcccpsIns = wkAcccpsIns;
 	}
 	/**
 	 * @return withholdingTax
@@ -203,6 +277,18 @@ public class WelfareBean {
 		this.insertDate = insertDate;
 	}
 	/**
+	 * @return insertEmployee
+	 */
+	public String getInsertEmployee() {
+		return insertEmployee;
+	}
+	/**
+	 * @param insertEmployee セットする insertEmployee
+	 */
+	public void setInsertEmployee(String insertEmployee) {
+		this.insertEmployee = insertEmployee;
+	}
+	/**
 	 * @return updateDate
 	 */
 	public String getUpdateDate() {
@@ -213,6 +299,18 @@ public class WelfareBean {
 	 */
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+	/**
+	 * @return updateEmployee
+	 */
+	public String getUpdateEmployee() {
+		return updateEmployee;
+	}
+	/**
+	 * @param updateEmployee セットする updateEmployee
+	 */
+	public void setUpdateEmployee(String updateEmployee) {
+		this.updateEmployee = updateEmployee;
 	}
 
 }

@@ -235,31 +235,42 @@ public class FileUtil {/**
 
 		try {
 			PrintWriter pw = response.getWriter();
-			String outputString1 ="社員id,"+"社員氏名," + "控除開始日," + "厚生控除会社," + "厚生控除子育(会社),"
-			+"雇用保険会社負担,"+"雇用保拠出金（会社),"+"源泉控除,"+"住民税控除,"+"社宅家賃控除,"+"社宅管理費控除,"
-			+"控除ステータス,"+"作成日,"+"更新日,"+ "\r\n";
+			String outputString1 ="社員id,"+"社員氏名," + "控除開始日,"  + "厚生年金控除個人,"
+					+ "厚生年金控除会社," + "厚生健康控除会社," + "厚生健康控除個人," + "厚生控除子育(会社),"
+					+ "雇用保険個人負担," + "雇用保険会社負担,"+ "雇用保拠出金（会社),"+ "労災保険（会社負担のみ）,"
+					+"源泉控除,"+"住民税控除,"+"社宅家賃控除,"+"社宅管理費控除,"
+					+"控除ステータス,"+"作成日,"+"作成者,"+"更新日,"+"更新者,"+ "\r\n";
 			pw.print(outputString1);
 			for(WelfareBean wl:welfareBeanList) {
             	String employeeID = wl.getEmployeeID();
                 String employeeName = wl.getEmployeeName();
                 String startDate = wl.getStartDate();
-                String welfareComp = wl.getWelfareComp();
+                String welfarePensionSelf = wl.getWelfarePensionSelf();
+                String welfarePensionComp = wl.getWelfarePensionComp();
+                String welfareHealthComp = wl.getWelfareHealthComp();
+                String welfareHealthSelf = wl.getWelfareHealthSelf();
                 String welfareBaby = wl.getWelfareBaby();
+                String eplyInsSelf = wl.getEplyInsSelf();
                 String eplyInsComp = wl.getEplyInsComp();
                 String eplyInsWithdraw = wl.getEplyInsWithdraw();
+                String wkAcccpsIns = wl.getWkAcccpsIns();
                 String withholdingTax = wl.getWithholdingTax();
                 String municipalTax = wl.getMunicipalTax();
                 String rental = wl.getRental();
                 String rentalMgmtFee = wl.getRentalMgmtFee();
                 String status = wl.getStatus();
                 String insertDate = wl.getInsertDate();
+                String insertEmployee = wl.getInsertEmployee();
                 String updateDate = wl.getUpdateDate();
+                String updateEmployee = wl.getUpdateEmployee();
 
 
 
-                String outputString = employeeID + "," + employeeName + "," + startDate + "," + welfareComp + "," + welfareBaby + ","
-                + eplyInsComp+ "," + eplyInsWithdraw + "," + withholdingTax + "," + municipalTax + "," + rental
-                + "," + rentalMgmtFee + "," + status + "," + insertDate + "," + updateDate
+                String outputString = employeeID + "," + employeeName + "," + startDate + "," + welfarePensionSelf
+                		+ "," + welfarePensionComp + "," + welfareHealthComp + "," + welfareHealthSelf + "," + welfareBaby + "," + eplyInsSelf
+                		+ "," + eplyInsComp + "," + eplyInsWithdraw + "," + wkAcccpsIns
+                		+ "," + withholdingTax + "," + municipalTax + "," + rental
+                + "," + rentalMgmtFee + "," + status + "," + insertDate + ","+ insertEmployee + "," + updateDate+ "," +updateEmployee
                          + "\r\n";
                 pw.print(outputString);
             }

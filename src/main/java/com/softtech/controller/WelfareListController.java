@@ -47,7 +47,7 @@ public class WelfareListController {
 	@RequestMapping(value = "welfarelist", method = RequestMethod.POST)
 	public String WorkDetailSubmit(HttpServletResponse response,@Valid @ModelAttribute("welfareBean") WelfareBean welfareBean,
 			BindingResult result,Model model) {
-			// NotNullの入力した年月をチェック。
+			// NotNullの入力した社員IDをチェック。
 			if (result.hasErrors()) {
 				model.addAttribute("errors", result.getFieldErrors());
 				return "welfarelist";
@@ -70,7 +70,7 @@ public class WelfareListController {
 					 model.addAttribute("employeeID", welfareBean.getEmployeeID());
 				 }
 			}
-			//作成場合
+			//更新場合
 			if("3".equals(welfareBean.getWholeFlg())) {
 
 			}

@@ -18,4 +18,10 @@
 
  </select>
 
+ <!--社員情報を取得する。inner join-->
+	<select id="getEmployee"  resultType="com.softtech.entity.Employee">
+     select employeeID,
+     		employeeName
+	 from employee
+  </select>
 </mapper>

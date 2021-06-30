@@ -7,14 +7,24 @@ public class WelfareInfo {
 	 private String employeeName;
 	 //控除開始日
 	 private String startDate;
-	 //厚生控除会社
-	 private int welfareComp;
+	 //厚生年金控除個人
+	 private int welfarePensionSelf;
+	 //厚生年金控除会社
+	 private int welfarePensionComp;
+	 //厚生健康控除会社
+	 private int welfareHealthComp;
+	 //厚生健康控除個人
+	 private int welfareHealthSelf;
 	 //厚生控除子育(会社)
 	 private int welfareBaby;
+	 //雇用保険個人負担
+	 private int eplyInsSelf;
 	 //雇用保険会社負担
 	 private int eplyInsComp;
 	 //雇用保拠出金（会社)
 	 private int eplyInsWithdraw;
+	 //労災保険（会社負担のみ）
+	 private int wkAcccpsIns;
 	 //源泉控除
 	 private int withholdingTax;
 	 //住民税控除
@@ -27,8 +37,12 @@ public class WelfareInfo {
 	 private String status;
 	 //作成日
 	 private String insertDate;
+	 //作成者
+	 private String insertEmployee;
 	 //更新日
 	 private String updateDate;
+	 //更新者
+	 private String updateEmployee;
 	/**
 	 * @return employeeID
 	 */
@@ -66,16 +80,52 @@ public class WelfareInfo {
 		this.startDate = startDate;
 	}
 	/**
-	 * @return welfareComp
+	 * @return welfarePensionSelf
 	 */
-	public int getWelfareComp() {
-		return welfareComp;
+	public int getWelfarePensionSelf() {
+		return welfarePensionSelf;
 	}
 	/**
-	 * @param welfareComp セットする welfareComp
+	 * @param welfarePensionSelf セットする welfarePensionSelf
 	 */
-	public void setWelfareComp(int welfareComp) {
-		this.welfareComp = welfareComp;
+	public void setWelfarePensionSelf(int welfarePensionSelf) {
+		this.welfarePensionSelf = welfarePensionSelf;
+	}
+	/**
+	 * @return welfarePensionComp
+	 */
+	public int getWelfarePensionComp() {
+		return welfarePensionComp;
+	}
+	/**
+	 * @param welfarePensionComp セットする welfarePensionComp
+	 */
+	public void setWelfarePensionComp(int welfarePensionComp) {
+		this.welfarePensionComp = welfarePensionComp;
+	}
+	/**
+	 * @return welfareHealthComp
+	 */
+	public int getWelfareHealthComp() {
+		return welfareHealthComp;
+	}
+	/**
+	 * @param welfareHealthComp セットする welfareHealthComp
+	 */
+	public void setWelfareHealthComp(int welfareHealthComp) {
+		this.welfareHealthComp = welfareHealthComp;
+	}
+	/**
+	 * @return welfareHealthSelf
+	 */
+	public int getWelfareHealthSelf() {
+		return welfareHealthSelf;
+	}
+	/**
+	 * @param welfareHealthSelf セットする welfareHealthSelf
+	 */
+	public void setWelfareHealthSelf(int welfareHealthSelf) {
+		this.welfareHealthSelf = welfareHealthSelf;
 	}
 	/**
 	 * @return welfareBaby
@@ -88,6 +138,18 @@ public class WelfareInfo {
 	 */
 	public void setWelfareBaby(int welfareBaby) {
 		this.welfareBaby = welfareBaby;
+	}
+	/**
+	 * @return eplyInsSelf
+	 */
+	public int getEplyInsSelf() {
+		return eplyInsSelf;
+	}
+	/**
+	 * @param eplyInsSelf セットする eplyInsSelf
+	 */
+	public void setEplyInsSelf(int eplyInsSelf) {
+		this.eplyInsSelf = eplyInsSelf;
 	}
 	/**
 	 * @return eplyInsComp
@@ -112,6 +174,18 @@ public class WelfareInfo {
 	 */
 	public void setEplyInsWithdraw(int eplyInsWithdraw) {
 		this.eplyInsWithdraw = eplyInsWithdraw;
+	}
+	/**
+	 * @return wkAcccpsIns
+	 */
+	public int getWkAcccpsIns() {
+		return wkAcccpsIns;
+	}
+	/**
+	 * @param wkAcccpsIns セットする wkAcccpsIns
+	 */
+	public void setWkAcccpsIns(int wkAcccpsIns) {
+		this.wkAcccpsIns = wkAcccpsIns;
 	}
 	/**
 	 * @return withholdingTax
@@ -186,6 +260,18 @@ public class WelfareInfo {
 		this.insertDate = insertDate;
 	}
 	/**
+	 * @return insertEmployee
+	 */
+	public String getInsertEmployee() {
+		return insertEmployee;
+	}
+	/**
+	 * @param insertEmployee セットする insertEmployee
+	 */
+	public void setInsertEmployee(String insertEmployee) {
+		this.insertEmployee = insertEmployee;
+	}
+	/**
 	 * @return updateDate
 	 */
 	public String getUpdateDate() {
@@ -196,6 +282,18 @@ public class WelfareInfo {
 	 */
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+	/**
+	 * @return updateEmployee
+	 */
+	public String getUpdateEmployee() {
+		return updateEmployee;
+	}
+	/**
+	 * @param updateEmployee セットする updateEmployee
+	 */
+	public void setUpdateEmployee(String updateEmployee) {
+		this.updateEmployee = updateEmployee;
 	}
 
 }
