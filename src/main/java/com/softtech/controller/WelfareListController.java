@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.WelfareBean;
+import com.softtech.service.WelfareInfoService;
 import com.softtech.service.WelfareListService;
 import com.softtech.util.FileUtil;
 
@@ -27,6 +28,8 @@ import com.softtech.util.FileUtil;
 public class WelfareListController {
 	@Autowired
 	WelfareListService welfareListService;
+	@Autowired
+	WelfareInfoService welfareInfoService;
 	/**
 	 * 機能：初期画面を表示
 	 * @return  welfarelist
@@ -50,7 +53,6 @@ public class WelfareListController {
 			// NotNullの入力した社員IDをチェック。
 			if (result.hasErrors()) {
 				model.addAttribute("errors", result.getFieldErrors());
-				return "welfarelist";
 			}
 			// 入力した社員IDを持っち、DBから福祉控除情報を取得
 			List<WelfareBean> welfareBeanList = welfareListService.queryWelfare(welfareBean.getEmployeeID());
@@ -70,9 +72,36 @@ public class WelfareListController {
 					 model.addAttribute("employeeID", welfareBean.getEmployeeID());
 				 }
 			}
-			//更新場合
+			//福祉情報を作成と更新場合
 			if("3".equals(welfareBean.getWholeFlg())) {
+				// DBから福祉情報を取得
+				List<WelfareBean> welfareList = welfareListService.queryWelfare(welfareBean.getMakeEmployeeID());
+				//福祉情報作成場合
+				if(null == welfareList|| welfareList.size() ==0) {
 
+					// DBから給作成用社員情報を取得する
+					WelfareBean welfareEmployee=welfareInfoService.queryEmployee(welfareBean.getMakeEmployeeID());
+					model.addAttribute("welfare",welfareEmployee);
+
+				//福祉情報更新場合
+				}else {
+					String startDate = welfareBean.getStartDate();
+					if(startDate == null || startDate.length()==0) {
+						return "welfareInfo";
+					}
+
+					WelfareBean welfareBeanDB=null;
+					for(WelfareBean weBean:welfareList) {
+						if (startDate.equals(weBean.getStartDate()))
+						{
+							welfareBeanDB = weBean;
+							break;
+						}
+
+					}
+					model.addAttribute("welfare",welfareBeanDB);
+				}
+				return "welfareInfo";
 			}
 			return "welfarelist";
 	}

@@ -3,8 +3,12 @@ package com.softtech.actionForm;
 import javax.validation.constraints.Size;
 
 public class WelfareBean {
-	 //区別用変数
+	 //福祉情報リストの区別用変数
 	 private String wholeFlg;
+	 //社員IDを押す時、社員IDを転送用
+	 private String makeEmployeeID;
+	 //福祉情報作成の区別用変数
+	 private String gamenMode;
 	 //社員ID
 	 @Size(min=2, max=30,message="社員IDを入力してください。例：E001")
 	 private String employeeID;
@@ -12,6 +16,8 @@ public class WelfareBean {
 	 private String employeeName;
 	 //控除開始日
 	 private String startDate;
+	 //基本給
+	 private String base;
 	 //厚生年金控除個人
 	 private String welfarePensionSelf;
 	 //厚生年金控除会社
@@ -311,6 +317,42 @@ public class WelfareBean {
 	 */
 	public void setUpdateEmployee(String updateEmployee) {
 		this.updateEmployee = updateEmployee;
+	}
+	/**
+	 * @return makeEmployeeID
+	 */
+	public String getMakeEmployeeID() {
+		return makeEmployeeID;
+	}
+	/**
+	 * @param makeEmployeeID セットする makeEmployeeID
+	 */
+	public void setMakeEmployeeID(String makeEmployeeID) {
+		this.makeEmployeeID = makeEmployeeID;
+	}
+	/**
+	 * @return gamenMode
+	 */
+	public String getGamenMode() {
+		return gamenMode;
+	}
+	/**
+	 * @param gamenMode セットする gamenMode
+	 */
+	public void setGamenMode(String gamenMode) {
+		this.gamenMode = gamenMode;
+	}
+	/**
+	 * @return base
+	 */
+	public String getBase() {
+		return base;
+	}
+	/**
+	 * @param base セットする base
+	 */
+	public void setBase(String base) {
+		this.base = base;
 	}
 
 }

@@ -61,6 +61,8 @@ public class WelfareListService {
 				if(wk.getEmployeeID().equals(ww.getEmployeeID())) {
 					//控除開始日
 					welfareBean.setStartDate(DateUtil.modifymonth1(ww.getStartDate()));
+					//基本給
+					welfareBean.setBase(Integer.toString(ww.getBase()));
 					//厚生年金控除個人
 					welfareBean.setWelfarePensionSelf(Integer.toString(ww.getWelfarePensionSelf()));
 					//厚生年金控除会社
@@ -122,6 +124,8 @@ public class WelfareListService {
 		welfareBean.setEmployeeName(ww.getEmployeeName());
 		//控除開始日
 		welfareBean.setStartDate(DateUtil.modifymonth1(ww.getStartDate()));
+		//基本給
+		welfareBean.setBase(Integer.toString(ww.getBase()));
 		//厚生年金控除個人
 		welfareBean.setWelfarePensionSelf(Integer.toString(ww.getWelfarePensionSelf()));
 		//厚生年金控除会社

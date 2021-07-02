@@ -1,12 +1,16 @@
 package com.softtech.entity;
 
 public class WelfareInfo {
+	 //福祉情報作成の区別用変数
+	 private String gamenMode;
 	 //社員ID
 	 private String employeeID;
 	 //社員氏名
 	 private String employeeName;
 	 //控除開始日
 	 private String startDate;
+	 //基本給
+	 private int base;
 	 //厚生年金控除個人
 	 private int welfarePensionSelf;
 	 //厚生年金控除会社
@@ -294,6 +298,30 @@ public class WelfareInfo {
 	 */
 	public void setUpdateEmployee(String updateEmployee) {
 		this.updateEmployee = updateEmployee;
+	}
+	/**
+	 * @return gamenMode
+	 */
+	public String getGamenMode() {
+		return gamenMode;
+	}
+	/**
+	 * @param gamenMode セットする gamenMode
+	 */
+	public void setGamenMode(String gamenMode) {
+		this.gamenMode = gamenMode;
+	}
+	/**
+	 * @return base
+	 */
+	public int getBase() {
+		return base;
+	}
+	/**
+	 * @param base セットする base
+	 */
+	public void setBase(int base) {
+		this.base = base;
 	}
 
 }
