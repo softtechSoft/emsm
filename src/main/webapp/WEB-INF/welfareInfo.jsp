@@ -12,6 +12,14 @@
 <script type="text/javascript" >
 //登録処理
 function doRegist(){
+	var gamenMode =document.getElementById('gamenMode');
+	gamenMode.value="1";
+	document.theForm.submit();
+}
+//計算処理
+function doCalculation(){
+	var gamenMode =document.getElementById('gamenMode');
+	gamenMode.value="2";
 	document.theForm.submit();
 }
 </script>
@@ -19,7 +27,15 @@ function doRegist(){
 <body>
 <h2>福祉情報作成</h2>
 <form:form name="theForm" id="theForm"  method="post" modelAttribute="welfare" action="welfareInfo" >
-<table  bgcolor="white"; width:100%;>
+
+		 <!--判断用データ  1：登録、2：計算.-->
+         <input type="hidden" id="gamenMode"name="gamenMode"/>
+<table  bgcolor="white"; width:100%; height:100%;>
+			<tr>
+			<td></td>
+			<td style="text-align: right;">
+			<input type="button" id="calculation" name="calculation" value="計算"  onclick="doCalculation()" /></td>
+			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>社員ID：</td>
 			<td>${welfare.employeeID}
@@ -69,7 +85,7 @@ function doRegist(){
 			<td><input id="eplyInsComp"name="eplyInsComp" type="text"  value="${welfare.eplyInsComp}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>雇用保拠出金（会社)：</td>
+			<td>一般拠出金（会社のみ)：</td>
 			<td><input id="eplyInsWithdraw"name="eplyInsWithdraw" type="text"  value="${welfare.eplyInsWithdraw}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">

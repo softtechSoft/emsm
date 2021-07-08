@@ -18,5 +18,8 @@ public class DataUtil {
 		// &#xe666;&emsp;社員情報管理→社員情報管理に変換
 		return function.substring(function.lastIndexOf(";")+1);
 	}
-
+	public static String functionText1(String sb) {
+		String str = sb.substring(0, sb.indexOf("."));
+		return str;
+	}
 }

@@ -41,6 +41,18 @@ public class LoginService {
 		   }
 		}
 
+		public LoginEntity qureyEmployee(LoginBean loginBean) {
+			// 社員情報を取得する
+			LoginEmployee em = new LoginEmployee();
+			// アカウント
+			em.setMailAdress(loginBean.getEmployeeID());
+			// パスワード
+			em.setPassword(loginBean.getPassword());
 
+			LoginEntity employee = new LoginEntity();
+			employee = loginMappers.getOldPassword(em);
+			return employee;
+
+		}
 
 }

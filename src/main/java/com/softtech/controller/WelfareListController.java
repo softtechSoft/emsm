@@ -3,6 +3,7 @@ package com.softtech.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.softtech.actionForm.WelfareBean;
 import com.softtech.service.WelfareInfoService;
 import com.softtech.service.WelfareListService;
+import com.softtech.util.DataUtil;
+import com.softtech.util.DateUtil;
 import com.softtech.util.FileUtil;
 
 /**
@@ -49,7 +52,7 @@ public class WelfareListController {
 	 */
 	@RequestMapping(value = "welfarelist", method = RequestMethod.POST)
 	public String WorkDetailSubmit(HttpServletResponse response,@Valid @ModelAttribute("welfareBean") WelfareBean welfareBean,
-			BindingResult result,Model model) {
+			BindingResult result,HttpSession session,Model model) {
 			// NotNullの入力した社員IDをチェック。
 			if (result.hasErrors()) {
 				model.addAttribute("errors", result.getFieldErrors());
@@ -74,6 +77,8 @@ public class WelfareListController {
 			}
 			//福祉情報を作成と更新場合
 			if("3".equals(welfareBean.getWholeFlg())) {
+				//ログインから作成者と更新者を取得
+				String loginUserName=String.valueOf(session.getAttribute("loginUserName"));
 				// DBから福祉情報を取得
 				List<WelfareBean> welfareList = welfareListService.queryWelfare(welfareBean.getMakeEmployeeID());
 				//福祉情報作成場合
@@ -81,6 +86,16 @@ public class WelfareListController {
 
 					// DBから給作成用社員情報を取得する
 					WelfareBean welfareEmployee=welfareInfoService.queryEmployee(welfareBean.getMakeEmployeeID());
+					//作成者
+					welfareEmployee.setInsertEmployee(loginUserName);
+					//更新者
+					welfareEmployee.setUpdateEmployee(loginUserName);
+					//作成日
+					welfareEmployee.setInsertDate(DateUtil.modifymonth1(DateUtil.getNowMonth1()));
+					//更新日
+					welfareEmployee.setUpdateDate(DateUtil.modifymonth1(DateUtil.getNowMonth1()));
+					//控除ステータス
+					welfareEmployee.setStatus("1");
 					model.addAttribute("welfare",welfareEmployee);
 
 				//福祉情報更新場合
@@ -97,8 +112,25 @@ public class WelfareListController {
 							welfareBeanDB = weBean;
 							break;
 						}
-
 					}
+					//雇用保険個人負担
+					welfareBeanDB.setEplyInsSelf(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.003))));
+					//雇用保険会社負担
+					welfareBeanDB.setEplyInsComp(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.006))));
+					//一般拠出金（会社のみ)
+					welfareBeanDB.setEplyInsWithdraw(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.00002))));
+					//労災保険（会社負担のみ）
+					welfareBeanDB.setWkAcccpsIns(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.003))));
+					//作成者
+					welfareBeanDB.setInsertEmployee(loginUserName);
+					//更新者
+					welfareBeanDB.setUpdateEmployee(loginUserName);
+					//作成日
+					welfareBeanDB.setInsertDate(DateUtil.modifymonth1(DateUtil.getNowMonth1()));
+					//更新日
+					welfareBeanDB.setUpdateDate(DateUtil.modifymonth1(DateUtil.getNowMonth1()));
+					//控除ステータス
+					welfareBeanDB.setStatus("1");
 					model.addAttribute("welfare",welfareBeanDB);
 				}
 				return "welfareInfo";

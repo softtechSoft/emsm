@@ -1,5 +1,6 @@
 package com.softtech.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ public class WelfareInfoController {
 	 */
 	@RequestMapping(value = "welfareInfo", method = RequestMethod.POST )
 	public String toWorkDetailList(@Valid @ModelAttribute("welfare") WelfareBean welfareBean,
-			BindingResult result, Model model) {
+			BindingResult result,HttpSession session, Model model) {
 			//福祉情報登録
-			welfareInfoService.makeWelfare(welfareInfoService.changeWelfare(welfareBean));
+			welfareInfoService.makeWelfare(welfareInfoService.changeWelfare(welfareBean,session));
 		return "makeWelfareSuccess";
 	}
 }

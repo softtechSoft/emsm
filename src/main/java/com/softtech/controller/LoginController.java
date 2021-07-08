@@ -3,6 +3,7 @@ package com.softtech.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.LoginBean;
+import com.softtech.entity.LoginEntity;
 import com.softtech.service.LoginService;
 
 /**
@@ -47,7 +49,7 @@ public class LoginController {
 	 * @return  遷移先画面
 	 */
 	@RequestMapping(value = "login", params = "login", method = RequestMethod.POST)
-	public String login(@Valid @ModelAttribute("loginBean") LoginBean loginBean,
+	public String login(@Valid @ModelAttribute("loginBean") LoginBean loginBean,HttpSession session,
 			BindingResult result, Model model) {
 		// 入力にエラーある場合、画面にエラーを表示する。
 		if (result.hasErrors()) {
@@ -59,6 +61,11 @@ public class LoginController {
 
 		// ログイン成功。
 		if (rtnbl) {
+			LoginEntity userEmployee=loginService.qureyEmployee(loginBean);
+			session.setAttribute("loginUserName",userEmployee.getEmployeeName());
+			session.setAttribute("loginUserID",userEmployee.getEmployeeID());
+
+
 			// Menu画面初期化遷移
 			return "redirect:/functionInit";
 

@@ -35,6 +35,15 @@ public class DateUtil {
 		 b = a.format(dNow);
 		return b;
 	}
+	public static String getNowMonth1() {
+		// YYYY/MM→yyyymmに変換
+		// 現在月生成
+		String b;
+		Date dNow = new Date( );
+		SimpleDateFormat a = new SimpleDateFormat ("yyyyMMdd");
+		 b = a.format(dNow);
+		return b;
+	}
 	/**
 	 * 機能：YYYY/MMからYYYMMに変更
 	 *
@@ -61,6 +70,10 @@ public class DateUtil {
 	 */
 	public static String formatTosepara(float getTransportExpense1) {
 		DecimalFormat df = new DecimalFormat("#,###.00");
+		return df.format(getTransportExpense1);
+		}
+	public static String formatTosepara1(float getTransportExpense1) {
+		DecimalFormat df = new DecimalFormat("#,###");
 		return df.format(getTransportExpense1);
 		}
 	/**

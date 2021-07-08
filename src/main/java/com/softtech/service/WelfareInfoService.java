@@ -1,5 +1,7 @@
 package com.softtech.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,9 @@ public class WelfareInfoService {
 	 * @param  画面からのデータ
 	 * @return 変更後の福祉情報
 	 */
-	public WelfareInfo changeWelfare(WelfareBean welfareBean) {
+	public WelfareInfo changeWelfare(WelfareBean welfareBean,HttpSession session) {
+		//ログインの社員ID
+		String loginUserID=String.valueOf(session.getAttribute("loginUserID"));
 		WelfareInfo welfareInfo= new WelfareInfo();
 		//社員ID
 		welfareInfo.setEmployeeID(welfareBean.getEmployeeID());
@@ -80,11 +84,11 @@ public class WelfareInfoService {
 		//作成日
 		welfareInfo.setInsertDate(DateUtil.chgMonthToYM(welfareBean.getInsertDate()));
 		//作成者
-		welfareInfo.setInsertEmployee(welfareBean.getInsertEmployee());
+		welfareInfo.setInsertEmployee(loginUserID);
 		//更新日
 		welfareInfo.setUpdateDate(DateUtil.chgMonthToYM(welfareBean.getUpdateDate()));
 		//更新者
-		welfareInfo.setUpdateEmployee(welfareBean.getUpdateEmployee());
+		welfareInfo.setUpdateEmployee(loginUserID);
 		return welfareInfo;
 	}
 	/*
