@@ -11,6 +11,10 @@ public class LoginEmployee {
 	private String password;
 	//メールアドレス
 	private String mailAdress;
+	//ユーザID
+	private String employeeID;
+	//ステータス
+	private String status;
 
 	/**
 	 * @return password
@@ -35,6 +39,30 @@ public class LoginEmployee {
 	 */
 	public void setMailAdress(String mailAdress) {
 		this.mailAdress = mailAdress;
+	}
+	/**
+	 * @return employeeID
+	 */
+	public String getEmployeeID() {
+		return employeeID;
+	}
+	/**
+	 * @param employeeID セットする employeeID
+	 */
+	public void setEmployeeID(String employeeID) {
+		this.employeeID = employeeID;
+	}
+	/**
+	 * @return status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status セットする status
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

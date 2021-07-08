@@ -11,8 +11,7 @@ import com.softtech.entity.LoginEntity;
  */
 @Mapper
 public interface LoginMappers {
-	LoginEntity getMailAdress(String mailAdress);
-
+	//LoginEntity getMailAdress(String mailAdress);
 	LoginEntity getOldPassword(LoginEmployee em);
-
+	LoginEntity getEmployeeByID(LoginEmployee em);
 }

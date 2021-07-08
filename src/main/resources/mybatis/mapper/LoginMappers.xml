@@ -14,12 +14,12 @@
 		and password = md5(#{password})
  </select>
 
-
-
-
-
-
-
-
+<!-- ログイン者IDより、ユーザ情報取得-->
+<select id="getEmployeeByID" parameterType="com.softtech.common.LoginEmployee" resultType="com.softtech.entity.LoginEntity">
+        SELECT *
+        FROM employee
+        WHERE status = #{status}
+		and employeeID = #{employeeID}
+ </select>
 
 </mapper>
