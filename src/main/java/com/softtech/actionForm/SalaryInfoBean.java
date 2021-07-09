@@ -45,14 +45,16 @@ public class SalaryInfoBean {
 	private String allowanceReduce;
 	//手当理由
 	private String allowanceReason ;
+
 	//厚生控除個人
-	private String welfareSelf;
-	//厚生控除会社
-	private String welfareComp;
-	//厚生年金控除個人
 	private String welfarePensionSelf;
 	//厚生健康控除個人
 	private String welfareHealthSelf;
+	//厚生年金控除会社
+	private String welfarePensionComp;
+	//厚生健康控除会社
+	private String welfareHealthComp;
+
 	//雇用保険個人負担
 	private String eplyInsSelf;
 	//厚生控除子育(会社）
@@ -470,33 +472,6 @@ public class SalaryInfoBean {
 		this.address = address;
 	}
 
-	/**
-	 * @return welfareSelf
-	 */
-	public String getWelfareSelf() {
-		return welfareSelf;
-	}
-
-	/**
-	 * @param welfareSelf セットする welfareSelf
-	 */
-	public void setWelfareSelf(String welfareSelf) {
-		this.welfareSelf = welfareSelf;
-	}
-
-	/**
-	 * @return welfareComp
-	 */
-	public String getWelfareComp() {
-		return welfareComp;
-	}
-
-	/**
-	 * @param welfareComp セットする welfareComp
-	 */
-	public void setWelfareComp(String welfareComp) {
-		this.welfareComp = welfareComp;
-	}
 
 
 	/**
@@ -525,5 +500,33 @@ public class SalaryInfoBean {
 	 */
 	public void setGamenMode(String gamenMode) {
 		this.gamenMode = gamenMode;
+	}
+
+	/**
+	 * @return welfarePensionComp
+	 */
+	public String getWelfarePensionComp() {
+		return welfarePensionComp;
+	}
+
+	/**
+	 * @param welfarePensionComp セットする welfarePensionComp
+	 */
+	public void setWelfarePensionComp(String welfarePensionComp) {
+		this.welfarePensionComp = welfarePensionComp;
+	}
+
+	/**
+	 * @return welfareHealthComp
+	 */
+	public String getWelfareHealthComp() {
+		return welfareHealthComp;
+	}
+
+	/**
+	 * @param welfareHealthComp セットする welfareHealthComp
+	 */
+	public void setWelfareHealthComp(String welfareHealthComp) {
+		this.welfareHealthComp = welfareHealthComp;
 	}
 }

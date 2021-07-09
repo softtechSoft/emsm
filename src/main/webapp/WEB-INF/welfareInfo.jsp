@@ -22,6 +22,15 @@ function doCalculation(){
 	gamenMode.value="2";
 	document.theForm.submit();
 }
+//jsp計算処理
+function myFunction(){
+	var base =document.getElementById('base').value;
+	document.getElementById('eplyInsSelf').value= Math.ceil(base * 0.003);
+	document.getElementById('eplyInsComp').value= Math.ceil(base * 0.006);
+	document.getElementById('eplyInsWithdraw').value= Math.ceil(base * 0.00002);
+	document.getElementById('wkAcccpsIns').value=Math.ceil(base * 0.003);
+	document.theForm.submit();
+}
 </script>
 </head >
 <body>
@@ -46,6 +55,8 @@ function doCalculation(){
 			<tr style="background-color:#bfe1ff">
 			<td>氏名：</td>
 			<td>${welfare.employeeName}
+			<!--社員氏名を転送 -->
+			<input type="hidden" id="employeeName" name="employeeName" value="${welfare.employeeName}"/>
 			</td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
@@ -54,7 +65,7 @@ function doCalculation(){
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>基本給：</td>
-			<td><input id="base"name="base" type="text"  value="${welfare.base}"></td>
+			<td><input id="base"name="base" type="text"  value="${welfare.base}" onchange="myFunction()"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>厚生年金控除個人：</td>

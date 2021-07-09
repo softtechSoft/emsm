@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.WelfareBean;
 import com.softtech.service.WelfareInfoService;
+import com.softtech.util.DataUtil;
+import com.softtech.util.DateUtil;
 
 /**
  * 概要：福祉情報作成機能
@@ -32,8 +34,25 @@ public class WelfareInfoController {
 	@RequestMapping(value = "welfareInfo", method = RequestMethod.POST )
 	public String toWorkDetailList(@Valid @ModelAttribute("welfare") WelfareBean welfareBean,
 			BindingResult result,HttpSession session, Model model) {
+		if("1".equals(welfareBean.getGamenMode())) {
 			//福祉情報登録
 			welfareInfoService.makeWelfare(welfareInfoService.changeWelfare(welfareBean,session));
 		return "makeWelfareSuccess";
+		}
+		//福祉情報計算
+		if("2".equals(welfareBean.getGamenMode())) {
+			//雇用保険個人負担
+			welfareBean.setEplyInsSelf(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getBase()))*0.003)))));
+			//雇用保険会社負担
+			welfareBean.setEplyInsComp(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getBase()))*0.006)))));
+			//一般拠出金（会社のみ)
+			welfareBean.setEplyInsWithdraw(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getBase()))*0.00002)))));
+			//労災保険（会社負担のみ）
+			welfareBean.setWkAcccpsIns(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getBase()))*0.003)))));
+
+			model.addAttribute("welfare",welfareBean);
+
+		}
+		return "welfareInfo";
 	}
 }

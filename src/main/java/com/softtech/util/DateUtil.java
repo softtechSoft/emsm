@@ -76,6 +76,7 @@ public class DateUtil {
 		DecimalFormat df = new DecimalFormat("#,###");
 		return df.format(getTransportExpense1);
 		}
+
 	/**
 	 * 機能：数字チェック。
 	 * @return tureとfalse
@@ -159,7 +160,6 @@ public class DateUtil {
     public static String modifymonth1(String month){
     	String month1 = month.substring(0,4)+"/"+month.substring(4,6)+"/"+month.substring(6,8);
     	return month1;
-
     }
     /**
      * 支払日と現在時間判断
@@ -174,4 +174,16 @@ public class DateUtil {
         String nowDay = sf.format(now);
         return day.equals(nowDay);
     }
+    public static String ma(String a) {
+        // 创建一个空的StringBuilder对象
+        StringBuilder str = new StringBuilder();
+        str.append(a);
+
+        int last = str.length();
+        for(int i = last - 3; i > 0; i-=3) {
+            str.insert(i,',');
+        }
+        return str.toString();
+    }
+
 }

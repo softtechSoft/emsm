@@ -64,13 +64,13 @@ public class WelfareInfoService {
 		//厚生控除子育(会社)
 		welfareInfo.setWelfareBaby(Integer.parseInt(welfareBean.getWelfareBaby()));
 		//雇用保険個人負担
-		welfareInfo.setEplyInsSelf(Integer.parseInt(welfareBean.getEplyInsSelf()));
+		welfareInfo.setEplyInsSelf(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getEplyInsSelf())));
 		//雇用保険会社負担
-		welfareInfo.setEplyInsComp(Integer.parseInt(welfareBean.getEplyInsComp()));
+		welfareInfo.setEplyInsComp(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getEplyInsComp())));
 		//雇用保拠出金（会社)
-		welfareInfo.setEplyInsWithdraw(Integer.parseInt(welfareBean.getEplyInsWithdraw()));
+		welfareInfo.setEplyInsWithdraw(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getEplyInsWithdraw())));
 		//労災保険（会社負担のみ）
-		welfareInfo.setWkAcccpsIns(Integer.parseInt(welfareBean.getWkAcccpsIns()));
+		welfareInfo.setWkAcccpsIns(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getWkAcccpsIns())));
 		//源泉控除
 		welfareInfo.setWithholdingTax(Integer.parseInt(welfareBean.getWithholdingTax()));
 		//住民税控除

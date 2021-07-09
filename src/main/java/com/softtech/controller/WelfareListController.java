@@ -114,13 +114,13 @@ public class WelfareListController {
 						}
 					}
 					//雇用保険個人負担
-					welfareBeanDB.setEplyInsSelf(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.003))));
+					welfareBeanDB.setEplyInsSelf(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.003)))));
 					//雇用保険会社負担
-					welfareBeanDB.setEplyInsComp(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.006))));
+					welfareBeanDB.setEplyInsComp(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.006)))));
 					//一般拠出金（会社のみ)
-					welfareBeanDB.setEplyInsWithdraw(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.00002))));
+					welfareBeanDB.setEplyInsWithdraw(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.00002)))));
 					//労災保険（会社負担のみ）
-					welfareBeanDB.setWkAcccpsIns(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.003))));
+					welfareBeanDB.setWkAcccpsIns(DateUtil.ma(DataUtil.functionText1(String.valueOf(Math.ceil(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBeanDB.getBase()))*0.003)))));
 					//作成者
 					welfareBeanDB.setInsertEmployee(loginUserName);
 					//更新者

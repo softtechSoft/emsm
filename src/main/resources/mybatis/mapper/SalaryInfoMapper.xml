@@ -4,7 +4,7 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.SalaryInfoMapper">
-	<!--給料作成情報を取得する。-->
+	<!--給料作成情報を取得する。給料情報-->
 	<select id="getSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfoRecord" resultType="com.softtech.entity.SalaryInfo">
 		select ss.*,
 		       ee.employeeID,
@@ -16,14 +16,21 @@
 		AND   ss.month=#{month}
 		AND   ee.employeeID=ss.employeeID
 	</select>
+	<!--給料作成情報を取得する。福祉情報-->
+	<select id="getWelfareInfoDetail" parameterType="String" resultType="com.softtech.entity.WelfareInfo">
+		select *
+		from welfareinfo
+		where  status='1'
+		and  employeeID=#{employeeID}
+	</select>
 	<!--給料情報を作成する。-->
 	<select id="insertSalaryInfo" parameterType="com.softtech.common.SalaryInfoRecord">
 		insert into
 			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
-			transportExpense,allowancePlus,allowanceReduce,allowanceReason,welfareSelf,welfareComp,welfareBaby,eplyInsSelf,
+			transportExpense,allowancePlus,allowanceReduce,allowanceReason,welfarePensionSelf,welfareHealthSelf,welfarePensionComp,welfareHealthComp,welfareBaby,eplyInsSelf,
 			eplyInsComp,eplyInsWithdraw,wkAcccpsIns,withholdingTax,municipalTax,rental,rentalMgmtFee,sum,totalFee,remark)
 		values(#{employeeID},#{month},#{paymentDate},#{base},#{overTime},#{shortage},#{overTimePlus},#{shortageReduce},
-			#{transportExpense},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfareSelf},#{welfareComp},#{welfareBaby},
+			#{transportExpense},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfarePensionSelf},#{welfareHealthSelf},#{welfarePensionComp},#{welfareHealthComp},#{welfareBaby},
 			#{eplyInsSelf},#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},
 			#{sum},#{totalFee},#{remark})
 
@@ -33,8 +40,8 @@
 		update  ems.salaryinfo set paymentDate = #{paymentDate},base = #{base},
 				overTime = #{overTime},shortage = #{shortage},overTimePlus = #{overTimePlus},
 				shortageReduce = #{shortageReduce},transportExpense = #{transportExpense},allowancePlus = #{allowancePlus},
-				allowanceReduce = #{allowanceReduce},allowanceReason = #{allowanceReason},welfareSelf = #{welfareSelf},
-				welfareComp = #{welfareComp},welfareBaby = #{welfareBaby},eplyInsSelf = #{eplyInsSelf},
+				allowanceReduce = #{allowanceReduce},allowanceReason = #{allowanceReason},welfarePensionSelf = #{welfarePensionSelf},
+				welfareHealthSelf = #{welfareHealthSelf},welfarePensionComp = #{welfarePensionComp},welfareHealthComp = #{welfareHealthComp},welfareBaby = #{welfareBaby},eplyInsSelf = #{eplyInsSelf},
 				eplyInsComp = #{eplyInsComp},eplyInsWithdraw = #{eplyInsWithdraw},wkAcccpsIns = #{wkAcccpsIns},
 				withholdingTax = #{withholdingTax},municipalTax = #{municipalTax},rental = #{rental},
 				rentalMgmtFee = #{rentalMgmtFee},sum = #{sum},totalFee = #{totalFee},remark = #{remark}

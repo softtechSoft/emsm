@@ -40,8 +40,10 @@ function init(){
 		document.getElementById('allowancePlus').readOnly=true;
 		document.getElementById('allowanceReduce').readOnly=true;
 		document.getElementById('allowanceReason').readOnly=true;
-		document.getElementById('welfareSelf').readOnly=true;
-		document.getElementById('welfareComp').readOnly=true;
+		document.getElementById('welfarePensionSelf').readOnly=true;
+		document.getElementById('welfareHealthSelf').readOnly=true;
+		document.getElementById('welfarePensionComp').readOnly=true;
+		document.getElementById('welfareHealthComp').readOnly=true;
 		document.getElementById('welfareBaby').readOnly=true;
 		document.getElementById('eplyInsSelf').readOnly=true;
 		document.getElementById('eplyInsComp').readOnly=true;
@@ -163,12 +165,20 @@ function doRegist(){
 			<td><input id="allowanceReason"name="allowanceReason"  type="text"  value="${salaryInfoBean.allowanceReason}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>厚生控除個人：</td>
-			<td><input id="welfareSelf"name="welfareSelf" type="text"   value="${salaryInfoBean.welfareSelf}"></td>
+			<td>厚生年金控除個人：</td>
+			<td><input id="welfarePensionSelf"name="welfarePensionSelf" type="text"   value="${salaryInfoBean.welfarePensionSelf}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
-			<td>厚生控除会社：</td>
-			<td><input id="welfareComp"name="welfareComp" type="text"  value="${salaryInfoBean.welfareComp}"></td>
+			<td>厚生健康控除個人：</td>
+			<td><input id="welfareHealthSelf"name="welfareHealthSelf" type="text"  value="${salaryInfoBean.welfareHealthSelf}"></td>
+			</tr>
+			<tr style="background-color:#bfe1ff">
+			<td>厚生年金控除会社：</td>
+			<td><input id="welfarePensionComp"name="welfarePensionComp" type="text"   value="${salaryInfoBean.welfarePensionComp}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>厚生健康控除会社：</td>
+			<td><input id="welfareHealthComp"name="welfareHealthComp" type="text"  value="${salaryInfoBean.welfareHealthComp}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>厚生控除子育(会社）：</td>
@@ -183,7 +193,7 @@ function doRegist(){
 			<td><input id="eplyInsComp"name="eplyInsComp" type="text" value="${salaryInfoBean.eplyInsComp}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
-			<td>雇用保拠出金（会社)：</td>
+			<td>一般拠出金（会社のみ)：</td>
 			<td><input id="eplyInsWithdraw"name="eplyInsWithdraw" type="text"  value="${salaryInfoBean.eplyInsWithdraw}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
