@@ -75,6 +75,138 @@ function doRegist(){
 
 	document.theForm.submit();
 }
+//数値表示方を変更する。２０００→２，０００
+function chageNumberDisp(textObject){
+	var num = textObject.value;
+	textObject.value = String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+	setSum();
+}
+
+//総額、総費用を再計算
+function setSum(){
+	//基本給の値を取得
+	var base = document.getElementById('base').value;
+	//数字化する
+	base=toNumberDisp(base);
+
+	//残業加算の値を取得
+	var overTimePlus = document.getElementById('overTimePlus').value;
+	//数字化する
+	overTimePlus=toNumberDisp(overTimePlus);
+
+	//稼働不足減の値を取得
+	var shortageReduce = document.getElementById('shortageReduce').value;
+	//数字化する
+	shortageReduce=toNumberDisp(shortageReduce);
+
+	//交通費の値を取得
+	var transportExpense = document.getElementById('transportExpense').value;
+	//数字化する
+	transportExpense=toNumberDisp(transportExpense);
+
+	//手当加算の値を取得
+	var allowancePlus = document.getElementById('allowancePlus').value;
+	//数字化する
+	allowancePlus=toNumberDisp(allowancePlus);
+
+	//手当減算の値を取得
+	var allowanceReduce = document.getElementById('allowanceReduce').value;
+	//数字化する
+	allowanceReduce=toNumberDisp(allowanceReduce);
+
+	//厚生年金控除個人の値を取得
+	var welfarePensionSelf = document.getElementById('welfarePensionSelf').value;
+	//数字化する
+	welfarePensionSelf=toNumberDisp(welfarePensionSelf);
+
+	//厚生健康控除個人の値を取得
+	var welfareHealthSelf = document.getElementById('welfareHealthSelf').value;
+	//数字化する
+	welfareHealthSelf=toNumberDisp(welfareHealthSelf);
+
+	//厚生年金控除会社の値を取得
+	var welfarePensionComp = document.getElementById('welfarePensionComp').value;
+	//数字化する
+	welfarePensionComp=toNumberDisp(welfarePensionComp);
+
+	//厚生健康控除会社の値を取得
+	var welfareHealthComp = document.getElementById('welfareHealthComp').value;
+	//数字化する
+	welfareHealthComp=toNumberDisp(welfareHealthComp);
+
+	//厚生控除子育(会社）の値を取得
+	var welfareBaby = document.getElementById('welfareBaby').value;
+	//数字化する
+	welfareBaby=toNumberDisp(welfareBaby);
+
+	//雇用保険個人負担の値を取得
+	var eplyInsSelf = document.getElementById('eplyInsSelf').value;
+	//数字化する
+	eplyInsSelf=toNumberDisp(eplyInsSelf);
+
+	//雇用保険会社負担の値を取得
+	var eplyInsComp = document.getElementById('eplyInsComp').value;
+	//数字化する
+	eplyInsComp=toNumberDisp(eplyInsComp);
+
+	//一般拠出金（会社のみ)の値を取得
+	var eplyInsWithdraw = document.getElementById('eplyInsWithdraw').value;
+	//数字化する
+	eplyInsWithdraw=toNumberDisp(eplyInsWithdraw);
+
+	//労災保険（会社負担のみ）の値を取得
+	var wkAcccpsIns = document.getElementById('wkAcccpsIns').value;
+	//数字化する
+	wkAcccpsIns=toNumberDisp(wkAcccpsIns);
+
+	//源泉控除の値を取得
+	var withholdingTax = document.getElementById('withholdingTax').value;
+	//数字化する
+	withholdingTax=toNumberDisp(withholdingTax);
+
+	//住民税控除の値を取得
+	var municipalTax = document.getElementById('municipalTax').value;
+	//数字化する
+	municipalTax=toNumberDisp(municipalTax);
+
+	//社宅家賃控除の値を取得
+	var rental = document.getElementById('rental').value;
+	//数字化する
+	rental=toNumberDisp(rental);
+
+	//社宅共益費控除の値を取得
+	var rentalMgmtFee = document.getElementById('rentalMgmtFee').value;
+	//数字化する
+	rentalMgmtFee=toNumberDisp(rentalMgmtFee);
+
+
+
+	//総額を計算し、設定する。
+	var salarySum=base+overTimePlus-shortageReduce+transportExpense+allowancePlus
+					-allowanceReduce-welfarePensionSelf-welfareHealthSelf
+					-eplyInsSelf-withholdingTax-municipalTax
+					-rental-rentalMgmtFee;
+
+	document.getElementById('sum').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+
+
+	//総費用を計算し、設定する。．
+	var salarySum=base+overTimePlus-shortageReduce+transportExpense+allowancePlus
+					-allowanceReduce+welfarePensionComp+welfareHealthComp
+					+welfareBaby+eplyInsComp+eplyInsWithdraw+wkAcccpsIns
+
+	document.getElementById('totalFee').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+
+}
+//文字列を数字に変換
+function toNumberDisp(strNumber){
+	var num=0;
+	if (!(strNumber == null || strNumber == '')) {
+		//,を除く
+		num = Number(strNumber.replaceAll(",",""));
+	}
+	return num;
+}
 </script>
 </head >
 <body onload="init()">
@@ -126,7 +258,7 @@ function doRegist(){
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>基本給：</td>
-			<td><input id="base"name="base" type="text" value="${salaryInfoBean.base}"></td>
+			<td><input id="base"name="base" type="text" value="${salaryInfoBean.base}" onchange="chageNumberDisp(this)" ></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>支払日：</td>
@@ -134,7 +266,7 @@ function doRegist(){
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>残業時間：</td>
-			<td><input id="overTime"name="overTime" type="text"  value="${salaryInfoBean.overTime}"></td>
+			<td><input id="overTime"name="overTime" type="text"  value="${salaryInfoBean.overTime}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>不足時間：</td>
@@ -142,23 +274,23 @@ function doRegist(){
 			</tr>
 			<tr  style="background-color:#bfe1ff">
 			<td>残業加算：</td>
-			<td><input id="overTimePlus"name="overTimePlus" type="text"  value="${salaryInfoBean.overTimePlus}"></td>
+			<td><input id="overTimePlus"name="overTimePlus" type="text"  value="${salaryInfoBean.overTimePlus}"onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>稼働不足減：</td>
-			<td><input id="shortageReduce"name="shortageReduce" type="text"  value="${salaryInfoBean.shortageReduce}"></td>
+			<td><input id="shortageReduce"name="shortageReduce" type="text"  value="${salaryInfoBean.shortageReduce}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>交通費：</td>
-			<td><input id="transportExpense"name="transportExpense"   type="text" value="${salaryInfoBean.transportExpense}"></td>
+			<td><input id="transportExpense"name="transportExpense"   type="text" value="${salaryInfoBean.transportExpense}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>手当加算：</td>
-			<td><input id="allowancePlus"name="allowancePlus" type="text"  value="${salaryInfoBean.allowancePlus}"></td>
+			<td><input id="allowancePlus"name="allowancePlus" type="text"  value="${salaryInfoBean.allowancePlus}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>手当減算：</td>
-			<td><input id="allowanceReduce"name="allowanceReduce" type="text"  value="${salaryInfoBean.allowanceReduce}"></td>
+			<td><input id="allowanceReduce"name="allowanceReduce" type="text"  value="${salaryInfoBean.allowanceReduce}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>手当理由：</td>
@@ -166,63 +298,63 @@ function doRegist(){
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>厚生年金控除個人：</td>
-			<td><input id="welfarePensionSelf"name="welfarePensionSelf" type="text"   value="${salaryInfoBean.welfarePensionSelf}"></td>
+			<td><input id="welfarePensionSelf"name="welfarePensionSelf" type="text"   value="${salaryInfoBean.welfarePensionSelf}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>厚生健康控除個人：</td>
-			<td><input id="welfareHealthSelf"name="welfareHealthSelf" type="text"  value="${salaryInfoBean.welfareHealthSelf}"></td>
+			<td><input id="welfareHealthSelf"name="welfareHealthSelf" type="text"  value="${salaryInfoBean.welfareHealthSelf}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>厚生年金控除会社：</td>
-			<td><input id="welfarePensionComp"name="welfarePensionComp" type="text"   value="${salaryInfoBean.welfarePensionComp}"></td>
+			<td><input id="welfarePensionComp"name="welfarePensionComp" type="text"   value="${salaryInfoBean.welfarePensionComp}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>厚生健康控除会社：</td>
-			<td><input id="welfareHealthComp"name="welfareHealthComp" type="text"  value="${salaryInfoBean.welfareHealthComp}"></td>
+			<td><input id="welfareHealthComp"name="welfareHealthComp" type="text"  value="${salaryInfoBean.welfareHealthComp}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>厚生控除子育(会社）：</td>
-			<td><input id="welfareBaby"name="welfareBaby" type="text"  value="${salaryInfoBean.welfareBaby}"></td>
+			<td><input id="welfareBaby"name="welfareBaby" type="text"  value="${salaryInfoBean.welfareBaby}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>雇用保険個人負担：</td>
-			<td><input id="eplyInsSelf"name="eplyInsSelf" type="text"  value="${salaryInfoBean.eplyInsSelf}"></td>
+			<td><input id="eplyInsSelf"name="eplyInsSelf" type="text"  value="${salaryInfoBean.eplyInsSelf}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>雇用保険会社負担：</td>
-			<td><input id="eplyInsComp"name="eplyInsComp" type="text" value="${salaryInfoBean.eplyInsComp}"></td>
+			<td><input id="eplyInsComp"name="eplyInsComp" type="text" value="${salaryInfoBean.eplyInsComp}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>一般拠出金（会社のみ)：</td>
-			<td><input id="eplyInsWithdraw"name="eplyInsWithdraw" type="text"  value="${salaryInfoBean.eplyInsWithdraw}"></td>
+			<td><input id="eplyInsWithdraw"name="eplyInsWithdraw" type="text"  value="${salaryInfoBean.eplyInsWithdraw}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>労災保険（会社負担のみ）：</td>
-			<td><input id="wkAcccpsIns"name="wkAcccpsIns" type="text"  value="${salaryInfoBean.wkAcccpsIns}"></td>
+			<td><input id="wkAcccpsIns"name="wkAcccpsIns" type="text"  value="${salaryInfoBean.wkAcccpsIns}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>源泉控除：</td>
-			<td><input id="withholdingTax"name="withholdingTax" type="text"  value="${salaryInfoBean.withholdingTax}"></td>
+			<td><input id="withholdingTax"name="withholdingTax" type="text"  value="${salaryInfoBean.withholdingTax}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>住民税控除：</td>
-			<td><input id="municipalTax"name="municipalTax" type="text"  value="${salaryInfoBean.municipalTax}"></td>
+			<td><input id="municipalTax"name="municipalTax" type="text"  value="${salaryInfoBean.municipalTax}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>社宅家賃控除：</td>
-			<td><input id="rental"name="rental" type="text"  value="${salaryInfoBean.rental}"></td>
+			<td><input id="rental"name="rental" type="text"  value="${salaryInfoBean.rental}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>社宅共益費控除：</td>
-			<td><input id="rentalMgmtFee"name="rentalMgmtFee" type="text"  value="${salaryInfoBean.rentalMgmtFee}"></td>
+			<td><input id="rentalMgmtFee"name="rentalMgmtFee" type="text"  value="${salaryInfoBean.rentalMgmtFee}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>総額：</td>
-			<td><input id="sum"name="sum" type="text"  value="${salaryInfoBean.sum}"></td>
+			<td><input id="sum"name="sum" type="text"  value="${salaryInfoBean.sum}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>総費用：</td>
-			<td><input id="totalFee"name="totalFee" type="text"  value="${salaryInfoBean.totalFee}"></td>
+			<td><input id="totalFee"name="totalFee" type="text"  value="${salaryInfoBean.totalFee}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>備考：</td>
