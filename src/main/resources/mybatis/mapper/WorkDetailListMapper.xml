@@ -16,7 +16,7 @@
 		AND wk.workMonth=#{month}
 	</select>
 	<!--社員交通情報を取得する。-->
-	<select id="geTransportDetail" parameterType="string" resultType="com.softtech.entity.Transport">
+	<select id="geTransportDetail" parameterType="string" resultType="com.softtech.entity.TransportEntity">
 		select employeeID,
         transportExpense,
 		       transport
@@ -24,7 +24,7 @@
 		where workMonth=#{month}
 	</select>
 	<!--勤怠情報を取得する。inner join-->
-	<select id="getWorkTransport" parameterType="string" resultType="com.softtech.entity.Transport">
+	<select id="getWorkTransport" parameterType="string" resultType="com.softtech.entity.TransportEntity">
 		select ee.employeeID,
 		       ee.employeeName,
 		       wk.workMonth,
