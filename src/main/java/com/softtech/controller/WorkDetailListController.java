@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.softtech.actionForm.WorkDetail;
+import com.softtech.actionForm.WorkDetailBean;
 import com.softtech.actionForm.WorkSelectJyoken;
 import com.softtech.service.WorkDetailListService;
 import com.softtech.util.DateUtil;
@@ -35,7 +35,7 @@ public class WorkDetailListController {
         //現在年月取得
 		String month=DateUtil.getNowMonth();
 		// DBから勤怠情報を取得
-		List<WorkDetail> workDetailList = workDetailListService.queryWorkDetail(month);
+		List<WorkDetailBean> workDetailList = workDetailListService.queryWorkDetail(month);
 		model.addAttribute("list", workDetailList);
 		//検索条件初期化
 		model.addAttribute("month", month);
@@ -55,7 +55,7 @@ public class WorkDetailListController {
 		}
 
 		// 入力した年月を持っち、DBから勤怠情報を取得
-	     List<WorkDetail> workDetailList1 = workDetailListService.queryWorkDetail(selectjyolken.getMonth());
+	     List<WorkDetailBean> workDetailList1 = workDetailListService.queryWorkDetail(selectjyolken.getMonth());
 
 		 // データダウンロード場合
 		 if(selectjyolken.getDownloadFlg()){

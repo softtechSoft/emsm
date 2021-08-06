@@ -6,7 +6,7 @@ package com.softtech.actionForm;
  * 作成日：2021/4/10
  */
 
-public class WorkDetail {
+public class WorkDetailBean {
 	// 社員id
 	private  String employeeID;
 	// 社員氏名
@@ -19,6 +19,8 @@ public class WorkDetail {
 	private String transportExpense;
 	//他の交通費(円)
 	private String transport;
+	//出張費
+	private String businessTrip;
 	/**
 	 * @return employeeID
 	 */
@@ -92,6 +94,18 @@ public class WorkDetail {
 	 */
 	public void setTransport(String transport) {
 		this.transport = transport;
+	}
+	/**
+	 * @return businessTrip
+	 */
+	public String getBusinessTrip() {
+		return businessTrip;
+	}
+	/**
+	 * @param businessTrip セットする businessTrip
+	 */
+	public void setBusinessTrip(String businessTrip) {
+		this.businessTrip = businessTrip;
 	}
 
 

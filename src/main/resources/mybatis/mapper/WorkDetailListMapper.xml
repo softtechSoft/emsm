@@ -30,13 +30,14 @@
 		       wk.workMonth,
 		       wk.workTime,
                tt.transportExpense1,
-		       tt.transport
+		       tt.transport,
+		       tt.businessTrip
 		from workinfo wk,contract ct,transport tt,employee ee
 		where wk.contractID=ct.contractID
 		AND   ct.employeeID=tt.employeeID
 		AND   tt.employeeID=ee.employeeID
 		AND   wk.workMonth=#{month}
-
+		AND   tt.workMonth=#{month}
 
 	</select>
 </mapper>

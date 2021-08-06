@@ -6,7 +6,7 @@ package com.softtech.entity;
  * 作成日：2021/4/10
  */
 
-public class Transport {
+public class TransportEntity {
 
 	private String workMonth = "0";
 	private String startDate = "";
@@ -31,7 +31,7 @@ public class Transport {
 	private float transportExpense1;
 	// 稼働時間
 	private float workTime;
-
+	
 	public String getStartStation() {
 		return startStation;
 	}

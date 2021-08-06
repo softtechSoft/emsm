@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.softtech.actionForm.WorkDetail;
-import com.softtech.entity.Transport;
+import com.softtech.actionForm.WorkDetailBean;
+import com.softtech.entity.TransportEntity;
 import com.softtech.mappers.WorkDetailListMapper;
 import com.softtech.util.DateUtil;
 /**
@@ -20,15 +20,15 @@ public class WorkDetailListServiceImpl implements WorkDetailListService{
 	@Autowired
 	WorkDetailListMapper workDetailListMapper;
 	@Override
-	public List<WorkDetail> queryWorkDetail(String month) {
+	public List<WorkDetailBean> queryWorkDetail(String month) {
 
         // YYYY/MM→yyyymmに変換
 		String monthP = DateUtil.chgMonthToYM(month);
 		// 勤怠リストを取得する
-		List<Transport> transportLst = workDetailListMapper.getWorkTransport(monthP);
+		List<TransportEntity> transportLst = workDetailListMapper.getWorkTransport(monthP);
 
 		// 勤怠情報へ変更する。
-		List<WorkDetail> rtn  = transfter(transportLst);
+		List<WorkDetailBean> rtn  = transfter(transportLst);
 		return  rtn;
 	}
 
@@ -40,12 +40,12 @@ public class WorkDetailListServiceImpl implements WorkDetailListService{
 	 *
 	 * @author 馬@ソフトテク
 	 */
-	private List<WorkDetail> transfter(List<Transport> lst){
-		if(lst == null ) return new ArrayList<WorkDetail>();
+	private List<WorkDetailBean> transfter(List<TransportEntity> lst){
+		if(lst == null ) return new ArrayList<WorkDetailBean>();
 
-		List<WorkDetail> rtn  =new ArrayList<WorkDetail>();
-		for(Transport tt : lst) {
-			WorkDetail workDetail = new WorkDetail();
+		List<WorkDetailBean> rtn  =new ArrayList<WorkDetailBean>();
+		for(TransportEntity tt : lst) {
+			WorkDetailBean workDetail = new WorkDetailBean();
 			//社員ID
 			workDetail.setEmployeeID(tt.getEmployeeID());
 			//社員氏名
@@ -58,6 +58,8 @@ public class WorkDetailListServiceImpl implements WorkDetailListService{
 			workDetail.setTransportExpense(DateUtil.formatTosepara(tt.getTransportExpense1()));
 			//交通費（定期券以外）(円）
 			workDetail.setTransport(DateUtil.formatTosepara(tt.getTransport()));
+			//出張費
+			workDetail.setBusinessTrip((tt.getBusinessTrip()));
 
 			rtn.add(workDetail);
 		}

@@ -48,7 +48,8 @@ function toDownLoadDataJsp(){
             <th >対象月</th>
             <th >勤怠時間（H)</th>
             <th >定期券額（円）</th>
-            <th >その他交通費（定期券以外）(円）</th>
+            <th >他の交通費（円）</th>
+            <th >出張費</th>
 		</tr>
 		<c:forEach items="${list}" var="workdetail" varStatus="status">
 			<tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
@@ -59,6 +60,7 @@ function toDownLoadDataJsp(){
 				<td><c:out value="${workdetail.getWorkTime()}"/></td>
 				<td><c:out value="${workdetail.getTransportExpense()}"/></td>
 				<td><c:out value="${workdetail.getTransport()}"/></td>
+				<td><c:out value="${workdetail.getBusinessTrip()}"/></td>
 
 			</tr>
 		</c:forEach>
