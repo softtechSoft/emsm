@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.MimeTypeUtils;
 
 import com.softtech.actionForm.WelfareBean;
-import com.softtech.actionForm.WorkDetail;
+import com.softtech.actionForm.WorkDetailBean;
 import com.softtech.entity.ClaimInfo;
 import com.softtech.entity.SalaryInfo;
 
@@ -119,7 +119,7 @@ public class FileUtil {/**
 	 * @exception なし
 	 * @author @ソフトテク
 	 */
-	public boolean workSheetDownload(HttpServletResponse  response,List<WorkDetail> workDetailList){
+	public boolean workSheetDownload(HttpServletResponse  response,List<WorkDetailBean> workDetailList){
 		//エンコーディング設定
 		response.setContentType(MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE + ";charset=Shift-JIS");
 		//ダウンロードファイル名設定
@@ -129,7 +129,7 @@ public class FileUtil {/**
 			PrintWriter pw = response.getWriter();
 			String outputString1 ="社員id,"+"社員氏名," + "対象年月," + "勤怠時間(H)," + "定期券額(円)," +"その他交通費(円）," + "\r\n";
 			pw.print(outputString1);
-			for(WorkDetail wl:workDetailList) {
+			for(WorkDetailBean wl:workDetailList) {
             	String employeeID = wl.getEmployeeID();
                 String employeeName = wl.getEmployeeName();
                 String workMonth = wl.getWorkMonth();
