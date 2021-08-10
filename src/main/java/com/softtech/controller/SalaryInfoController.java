@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.SalaryInfoBean;
+import com.softtech.actionForm.WelfareBean;
 import com.softtech.common.SalaryInfoRecord;
 import com.softtech.entity.SalaryInfo;
 import com.softtech.service.SalaryInfoService;
+import com.softtech.service.WelfareListService;
 import com.softtech.util.DateUtil;
 
 /**
@@ -31,7 +33,8 @@ import com.softtech.util.DateUtil;
 public class SalaryInfoController {
 	@Autowired
 	SalaryInfoService salaryInfoService;
-
+	@Autowired
+	WelfareListService welfareListService;
 	/*
 	 * 機能概要： 給料データの作成処理。
 	 *
@@ -41,6 +44,10 @@ public class SalaryInfoController {
 	@RequestMapping(value = "salaryInfo", method = RequestMethod.POST )
 	public String toWorkDetailList(@Valid @ModelAttribute("SalaryInfoBean") SalaryInfoBean salaryInfoBean,
 									BindingResult result, Model model) throws ParseException {
+
+		// 数値に変更
+		salaryInfoService.deleteComma(salaryInfoBean);
+
 		//作成ボタンを押す。（１：作成ボタン、２：登録ボタン）
 		if("1".equals(salaryInfoBean.getMake())) {
 
@@ -58,6 +65,11 @@ public class SalaryInfoController {
 			if(null == salaryInfoDB) {
 				//作成場合、対象年月+1後、クライアント側へ渡す。
 				salaryInfoBean.setMonth(DateUtil.modifymonth(month));
+
+				//　福祉情報を取得して、画面へ渡す。
+				 List<WelfareBean>  welfareBeans = welfareListService.queryWelfare(salaryInfoBean.getEmployeeID());
+				 salaryInfoService.setWelfareToGamen(salaryInfoBean,welfareBeans);
+
 				// 画面モードに新規作成を設定する。（ 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新）
 				salaryInfoBean.setGamenMode("1");
 				model.addAttribute("salaryInfoBean",salaryInfoBean);

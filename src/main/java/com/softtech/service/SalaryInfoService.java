@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
 
 import com.softtech.actionForm.SalaryInfoBean;
+import com.softtech.actionForm.WelfareBean;
 import com.softtech.common.SalaryInfoRecord;
 import com.softtech.entity.SalaryInfo;
 import com.softtech.entity.WelfareInfo;
@@ -440,5 +441,62 @@ public class SalaryInfoService {
 		//厚生健康控除会社
 		am.setWelfareComp(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWelfareHealthComp())));
 		return am;
+	}
+	/*
+	 * 機能概要： 画面数値項目を数値化
+	 *
+	 * @param  salaryInfoBean 画面入力値
+	 * @return なし
+	 */
+	public void  deleteComma(SalaryInfoBean salaryInfoBean) {
+		salaryInfoBean.setBase(salaryInfoBean.getBase().replaceAll(",", ""));
+		salaryInfoBean.setOverTime(salaryInfoBean.getOverTime().replaceAll(",", ""));
+		salaryInfoBean.setOverTimePlus(salaryInfoBean.getOverTimePlus().replaceAll(",", ""));
+		salaryInfoBean.setShortageReduce(salaryInfoBean.getShortageReduce().replaceAll(",", ""));
+		salaryInfoBean.setTransportExpense(salaryInfoBean.getTransportExpense().replaceAll(",", ""));
+		salaryInfoBean.setAllowancePlus(salaryInfoBean.getAllowancePlus().replaceAll(",", ""));
+		salaryInfoBean.setAllowanceReduce(salaryInfoBean.getAllowanceReduce().replaceAll(",", ""));
+		salaryInfoBean.setWelfarePensionSelf(salaryInfoBean.getWelfarePensionSelf().replaceAll(",", ""));
+		salaryInfoBean.setWelfareHealthSelf(salaryInfoBean.getWelfareHealthSelf().replaceAll(",", ""));
+		salaryInfoBean.setWelfarePensionComp(salaryInfoBean.getWelfarePensionComp().replaceAll(",", ""));
+		salaryInfoBean.setWelfareHealthComp(salaryInfoBean.getWelfareHealthComp().replaceAll(",", ""));
+		salaryInfoBean.setWelfareBaby(salaryInfoBean.getWelfareBaby().replaceAll(",", ""));
+		salaryInfoBean.setEplyInsSelf(salaryInfoBean.getEplyInsSelf().replaceAll(",", ""));
+		salaryInfoBean.setEplyInsComp(salaryInfoBean.getEplyInsComp().replaceAll(",", ""));
+		salaryInfoBean.setEplyInsWithdraw(salaryInfoBean.getEplyInsWithdraw().replaceAll(",", ""));
+		salaryInfoBean.setWkAcccpsIns(salaryInfoBean.getWkAcccpsIns().replaceAll(",", ""));
+		salaryInfoBean.setWithholdingTax(salaryInfoBean.getWithholdingTax().replaceAll(",", ""));
+		salaryInfoBean.setMunicipalTax(salaryInfoBean.getMunicipalTax().replaceAll(",", ""));
+		salaryInfoBean.setRental(salaryInfoBean.getRental().replaceAll(",", ""));
+		salaryInfoBean.setRentalMgmtFee(salaryInfoBean.getRentalMgmtFee().replaceAll(",", ""));
+		salaryInfoBean.setSum(salaryInfoBean.getSum().replaceAll(",", ""));
+		salaryInfoBean.setTotalFee(salaryInfoBean.getTotalFee().replaceAll(",", ""));
+
+	}
+	/*
+	 * 機能概要： 画面数値項目を数値化
+	 *
+	 * @param  salaryInfoBean 画面入力値
+	 * @return なし
+	 */
+	public void  setWelfareToGamen(SalaryInfoBean salaryInfoBean,List<WelfareBean>  welfareBeans)
+	{
+		for(WelfareBean welfareBean:welfareBeans) {
+			salaryInfoBean.setWelfarePensionSelf(welfareBean.getWelfarePensionSelf());
+			salaryInfoBean.setWelfareHealthSelf(welfareBean.getWelfareHealthSelf());
+			salaryInfoBean.setWelfarePensionComp(welfareBean.getWelfarePensionComp());
+			salaryInfoBean.setWelfareHealthComp(welfareBean.getWelfareHealthComp());
+			salaryInfoBean.setWelfareBaby(welfareBean.getWelfareBaby());
+			salaryInfoBean.setEplyInsSelf(welfareBean.getEplyInsSelf());
+			salaryInfoBean.setEplyInsComp(welfareBean.getEplyInsComp());
+			salaryInfoBean.setEplyInsWithdraw(welfareBean.getEplyInsWithdraw());
+			salaryInfoBean.setWkAcccpsIns(welfareBean.getWkAcccpsIns());
+			salaryInfoBean.setWithholdingTax(welfareBean.getWithholdingTax());
+			salaryInfoBean.setMunicipalTax(welfareBean.getMunicipalTax());
+			salaryInfoBean.setRental(welfareBean.getRental());
+			salaryInfoBean.setRentalMgmtFee(welfareBean.getRentalMgmtFee());
+
+		}
+
 	}
 }

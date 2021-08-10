@@ -78,6 +78,7 @@ function doRegist(){
 //数値表示方を変更する。２０００→２，０００
 function chageNumberDisp(textObject){
 	var num = textObject.value;
+	num=toNumberDisp(num);
 	textObject.value = String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 	setSum();
 }
@@ -124,40 +125,10 @@ function setSum(){
 	//数字化する
 	welfareHealthSelf=toNumberDisp(welfareHealthSelf);
 
-	//厚生年金控除会社の値を取得
-	var welfarePensionComp = document.getElementById('welfarePensionComp').value;
-	//数字化する
-	welfarePensionComp=toNumberDisp(welfarePensionComp);
-
-	//厚生健康控除会社の値を取得
-	var welfareHealthComp = document.getElementById('welfareHealthComp').value;
-	//数字化する
-	welfareHealthComp=toNumberDisp(welfareHealthComp);
-
-	//厚生控除子育(会社）の値を取得
-	var welfareBaby = document.getElementById('welfareBaby').value;
-	//数字化する
-	welfareBaby=toNumberDisp(welfareBaby);
-
 	//雇用保険個人負担の値を取得
 	var eplyInsSelf = document.getElementById('eplyInsSelf').value;
 	//数字化する
 	eplyInsSelf=toNumberDisp(eplyInsSelf);
-
-	//雇用保険会社負担の値を取得
-	var eplyInsComp = document.getElementById('eplyInsComp').value;
-	//数字化する
-	eplyInsComp=toNumberDisp(eplyInsComp);
-
-	//一般拠出金（会社のみ)の値を取得
-	var eplyInsWithdraw = document.getElementById('eplyInsWithdraw').value;
-	//数字化する
-	eplyInsWithdraw=toNumberDisp(eplyInsWithdraw);
-
-	//労災保険（会社負担のみ）の値を取得
-	var wkAcccpsIns = document.getElementById('wkAcccpsIns').value;
-	//数字化する
-	wkAcccpsIns=toNumberDisp(wkAcccpsIns);
 
 	//源泉控除の値を取得
 	var withholdingTax = document.getElementById('withholdingTax').value;
@@ -179,8 +150,6 @@ function setSum(){
 	//数字化する
 	rentalMgmtFee=toNumberDisp(rentalMgmtFee);
 
-
-
 	//総額を計算し、設定する。
 	var salarySum=base+overTimePlus-shortageReduce+transportExpense+allowancePlus
 					-allowanceReduce-welfarePensionSelf-welfareHealthSelf
@@ -189,6 +158,36 @@ function setSum(){
 
 	document.getElementById('sum').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
+
+	//厚生年金控除会社の値を取得
+	var welfarePensionComp = document.getElementById('welfarePensionComp').value;
+	//数字化する
+	welfarePensionComp=toNumberDisp(welfarePensionComp);
+
+	//厚生健康控除会社の値を取得
+	var welfareHealthComp = document.getElementById('welfareHealthComp').value;
+	//数字化する
+	welfareHealthComp=toNumberDisp(welfareHealthComp);
+
+	//厚生控除子育(会社）の値を取得
+	var welfareBaby = document.getElementById('welfareBaby').value;
+	//数字化する
+	welfareBaby=toNumberDisp(welfareBaby);
+
+	//雇用保険会社負担の値を取得
+	var eplyInsComp = document.getElementById('eplyInsComp').value;
+	//数字化する
+	eplyInsComp=toNumberDisp(eplyInsComp);
+
+	//一般拠出金（会社のみ)の値を取得
+	var eplyInsWithdraw = document.getElementById('eplyInsWithdraw').value;
+	//数字化する
+	eplyInsWithdraw=toNumberDisp(eplyInsWithdraw);
+
+	//労災保険（会社負担のみ）の値を取得
+	var wkAcccpsIns = document.getElementById('wkAcccpsIns').value;
+	//数字化する
+	wkAcccpsIns=toNumberDisp(wkAcccpsIns);
 
 	//総費用を計算し、設定する。．
 	var salarySum=base+overTimePlus-shortageReduce+transportExpense+allowancePlus

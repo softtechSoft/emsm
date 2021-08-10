@@ -9,6 +9,7 @@
 
 		SELECT * FROM welfare
 		WHERE employeeID = #{employeeID}
+		and status = 1
 
  </select>
  <!--初期画面時、福祉控除情報を取得する。-->
