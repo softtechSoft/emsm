@@ -45,9 +45,6 @@ public class SalaryInfoController {
 	public String toWorkDetailList(@Valid @ModelAttribute("SalaryInfoBean") SalaryInfoBean salaryInfoBean,
 									BindingResult result, Model model) throws ParseException {
 
-		// 数値に変更
-		salaryInfoService.deleteComma(salaryInfoBean);
-
 		//作成ボタンを押す。（１：作成ボタン、２：登録ボタン）
 		if("1".equals(salaryInfoBean.getMake())) {
 
@@ -64,7 +61,11 @@ public class SalaryInfoController {
 			//次月のデータまだ存在していない場合、給料新規作成
 			if(null == salaryInfoDB) {
 				//作成場合、対象年月+1後、クライアント側へ渡す。
-				salaryInfoBean.setMonth(DateUtil.modifymonth(month));
+				String monthYM = DateUtil.modifymonth(month);
+				salaryInfoBean.setMonth(monthYM);
+				// 支払日
+				String paymentDate=DateUtil.modifymonth(DateUtil.monthplus(month))+"/20";
+				salaryInfoBean.setPaymentDate(paymentDate);
 
 				//　福祉情報を取得して、画面へ渡す。
 				 List<WelfareBean>  welfareBeans = welfareListService.queryWelfare(salaryInfoBean.getEmployeeID());
@@ -101,7 +102,8 @@ public class SalaryInfoController {
 
 		//登録ボタンを押す
 		}else if("2".equals(salaryInfoBean.getMake())) {
-
+			// 数値に変更
+			salaryInfoService.deleteComma(salaryInfoBean);
 			// 必須チェック
 			if (result.hasErrors()) {
 			    // エラーチェック用リスト

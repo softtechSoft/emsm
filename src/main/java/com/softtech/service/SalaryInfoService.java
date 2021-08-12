@@ -13,6 +13,7 @@ import com.softtech.common.SalaryInfoRecord;
 import com.softtech.entity.SalaryInfo;
 import com.softtech.entity.WelfareInfo;
 import com.softtech.mappers.SalaryInfoMapper;
+import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
 
 /**
@@ -482,20 +483,34 @@ public class SalaryInfoService {
 	public void  setWelfareToGamen(SalaryInfoBean salaryInfoBean,List<WelfareBean>  welfareBeans)
 	{
 		for(WelfareBean welfareBean:welfareBeans) {
-			salaryInfoBean.setWelfarePensionSelf(welfareBean.getWelfarePensionSelf());
-			salaryInfoBean.setWelfareHealthSelf(welfareBean.getWelfareHealthSelf());
-			salaryInfoBean.setWelfarePensionComp(welfareBean.getWelfarePensionComp());
-			salaryInfoBean.setWelfareHealthComp(welfareBean.getWelfareHealthComp());
-			salaryInfoBean.setWelfareBaby(welfareBean.getWelfareBaby());
-			salaryInfoBean.setEplyInsSelf(welfareBean.getEplyInsSelf());
-			salaryInfoBean.setEplyInsComp(welfareBean.getEplyInsComp());
-			salaryInfoBean.setEplyInsWithdraw(welfareBean.getEplyInsWithdraw());
-			salaryInfoBean.setWkAcccpsIns(welfareBean.getWkAcccpsIns());
-			salaryInfoBean.setWithholdingTax(welfareBean.getWithholdingTax());
-			salaryInfoBean.setMunicipalTax(welfareBean.getMunicipalTax());
-			salaryInfoBean.setRental(welfareBean.getRental());
-			salaryInfoBean.setRentalMgmtFee(welfareBean.getRentalMgmtFee());
-
+			//基本給
+			salaryInfoBean.setBase(welfareBean.getBase());
+			//厚生年金控除個人
+			salaryInfoBean.setWelfarePensionSelf(DataUtil.addComma( welfareBean.getWelfarePensionSelf()));
+			//厚生健康控除個人
+			salaryInfoBean.setWelfareHealthSelf(DataUtil.addComma(welfareBean.getWelfareHealthSelf()));
+			//厚生年金控除会社
+			salaryInfoBean.setWelfarePensionComp(DataUtil.addComma(welfareBean.getWelfarePensionComp()));
+			//厚生健康控除会社
+			salaryInfoBean.setWelfareHealthComp(DataUtil.addComma(welfareBean.getWelfareHealthComp()));
+			//厚生控除子育(会社）
+			salaryInfoBean.setWelfareBaby(DataUtil.addComma(welfareBean.getWelfareBaby()));
+			//雇用保険個人負担
+			salaryInfoBean.setEplyInsSelf(DataUtil.addComma(welfareBean.getEplyInsSelf()));
+			//雇用保険会社負担
+			salaryInfoBean.setEplyInsComp(DataUtil.addComma(welfareBean.getEplyInsComp()));
+			//一般拠出金（会社のみ)
+			salaryInfoBean.setEplyInsWithdraw(DataUtil.addComma(welfareBean.getEplyInsWithdraw()));
+			//労災保険（会社負担のみ）
+			salaryInfoBean.setWkAcccpsIns(DataUtil.addComma(welfareBean.getWkAcccpsIns()));
+			//源泉控除
+			salaryInfoBean.setWithholdingTax(DataUtil.addComma(welfareBean.getWithholdingTax()));
+			//住民税控除
+			salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax()));
+			//社宅家賃控除
+			salaryInfoBean.setRental(DataUtil.addComma(welfareBean.getRental()));
+			//社宅共益費控除
+			salaryInfoBean.setRentalMgmtFee(DataUtil.addComma(welfareBean.getRentalMgmtFee()));
 		}
 
 	}
