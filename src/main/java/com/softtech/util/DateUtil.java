@@ -53,6 +53,8 @@ public class DateUtil {
 	 * @author 馬@ソフトテク
 	 */
 	public static String chgMonthToYM(String month) {
+		if(month==null) return month;
+
 		// YYYY/MM→yyyymmに変換
 		return month.replace("/", "");
 	}

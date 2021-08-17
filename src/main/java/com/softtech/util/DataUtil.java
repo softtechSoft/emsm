@@ -56,4 +56,21 @@ public class DataUtil {
         }
         return str.toString();
 	}
+	/*
+	 * 機能：数字チェック。
+	 *
+	 * @return ture:数字である、false　数字ではない。
+	 * @exception なし
+	 * @author 馬@ソフトテク
+	 */
+	public static boolean isNumeric(String str){
+
+		  for (int i = str.length();--i>=0;){
+			  if (!Character.isDigit(str.charAt(i))){
+				  return false;
+			  }
+		  }
+
+		  return true;
+		}
 }
