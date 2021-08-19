@@ -6,6 +6,7 @@ package com.softtech.actionForm;
  * 作成日：2021/5/18
  */
 
+
 public class Claimlist {
 
 	        //請求ID
