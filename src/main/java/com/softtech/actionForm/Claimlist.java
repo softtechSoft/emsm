@@ -2,9 +2,11 @@ package com.softtech.actionForm;
 /**
  * 概要：請求情報クラス
  *
+ *
  * 作成者：王@ソフトテク
  * 作成日：2021/5/18
  */
+
 
 public class Claimlist {
 
