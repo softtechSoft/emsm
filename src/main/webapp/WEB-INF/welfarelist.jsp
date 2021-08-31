@@ -76,7 +76,18 @@ function toWelfareJsp(employeeID,startDate){
         <tr>
             <th >労災保険（会社負担のみ）</th>
             <th >源泉控除</th>
-            <th >住民税控除</th>
+            <th >住民税控除一月</th>
+            <th >住民税控除二月</th>
+            <th >住民税控除三月</th>
+            <th >住民税控除四月</th>
+            <th >住民税控除五月</th>
+            <th >住民税控除六月</th>
+            <th >住民税控除七月</th>
+            <th >住民税控除八月</th>
+            <th >住民税控除九月</th>
+            <th >住民税控除十月</th>
+            <th >住民税控除十一月</th>
+            <th >住民税控除十二月</th>
             <th >社宅家賃控除</th>
             <th >社宅管理費控除</th>
             <th >控除ステータス</th>
@@ -105,7 +116,18 @@ function toWelfareJsp(employeeID,startDate){
             <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
 				<td><c:out value="${welfare.getWkAcccpsIns()}"/> </td>
 				<td><c:out value="${welfare.getWithholdingTax()}"/> </td>
-				<td><c:out value="${welfare.getMunicipalTax()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax1()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax2()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax3()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax4()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax5()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax6()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax7()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax8()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax9()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax10()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax11()}"/> </td>
+				<td><c:out value="${welfare.getMunicipalTax12()}"/> </td>
 				<td><c:out value="${welfare.getRental()}"/></td>
 				<td><c:out value="${welfare.getRentalMgmtFee()}"/> </td>
 				<td><c:out value="${welfare.getStatus()}"/> </td>

@@ -255,7 +255,7 @@ public class FileUtil {/**
                 String eplyInsWithdraw = wl.getEplyInsWithdraw();
                 String wkAcccpsIns = wl.getWkAcccpsIns();
                 String withholdingTax = wl.getWithholdingTax();
-                String municipalTax = wl.getMunicipalTax();
+                String municipalTax = wl.getMunicipalTax1();
                 String rental = wl.getRental();
                 String rentalMgmtFee = wl.getRentalMgmtFee();
                 String status = wl.getStatus();

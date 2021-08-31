@@ -38,8 +38,30 @@ public class WelfareBean {
 	 private String wkAcccpsIns;
 	 //源泉控除
 	 private String withholdingTax;
-	 //住民税控除
-	 private String municipalTax;
+	 //住民税控除一月
+	 private String municipalTax1;
+	//住民税控除二月
+	 private String municipalTax2;
+	//住民税控除三月
+	 private String municipalTax3;
+	//住民税控除四月
+	 private String municipalTax4;
+	//住民税控除五月
+	 private String municipalTax5;
+	//住民税控除六月
+	 private String municipalTax6;
+	//住民税控除七月
+	 private String municipalTax7;
+	//住民税控除八月
+	 private String municipalTax8;
+	//住民税控除九月
+	 private String municipalTax9;
+	//住民税控除十月
+	 private String municipalTax10;
+	//住民税控除十一月
+	 private String municipalTax11;
+	//住民税控除十二月
+	 private String municipalTax12;
 	 //社宅家賃控除
 	 private String rental;
 	 //社宅管理費控除
@@ -222,18 +244,7 @@ public class WelfareBean {
 	public void setWithholdingTax(String withholdingTax) {
 		this.withholdingTax = withholdingTax;
 	}
-	/**
-	 * @return municipalTax
-	 */
-	public String getMunicipalTax() {
-		return municipalTax;
-	}
-	/**
-	 * @param municipalTax セットする municipalTax
-	 */
-	public void setMunicipalTax(String municipalTax) {
-		this.municipalTax = municipalTax;
-	}
+
 	/**
 	 * @return rental
 	 */
@@ -353,6 +364,150 @@ public class WelfareBean {
 	 */
 	public void setBase(String base) {
 		this.base = base;
+	}
+	/**
+	 * @return municipalTax1
+	 */
+	public String getMunicipalTax1() {
+		return municipalTax1;
+	}
+	/**
+	 * @param municipalTax1 セットする municipalTax1
+	 */
+	public void setMunicipalTax1(String municipalTax1) {
+		this.municipalTax1 = municipalTax1;
+	}
+	/**
+	 * @return municipalTax2
+	 */
+	public String getMunicipalTax2() {
+		return municipalTax2;
+	}
+	/**
+	 * @param municipalTax2 セットする municipalTax2
+	 */
+	public void setMunicipalTax2(String municipalTax2) {
+		this.municipalTax2 = municipalTax2;
+	}
+	/**
+	 * @return municipalTax3
+	 */
+	public String getMunicipalTax3() {
+		return municipalTax3;
+	}
+	/**
+	 * @param municipalTax3 セットする municipalTax3
+	 */
+	public void setMunicipalTax3(String municipalTax3) {
+		this.municipalTax3 = municipalTax3;
+	}
+	/**
+	 * @return municipalTax4
+	 */
+	public String getMunicipalTax4() {
+		return municipalTax4;
+	}
+	/**
+	 * @param municipalTax4 セットする municipalTax4
+	 */
+	public void setMunicipalTax4(String municipalTax4) {
+		this.municipalTax4 = municipalTax4;
+	}
+	/**
+	 * @return municipalTax5
+	 */
+	public String getMunicipalTax5() {
+		return municipalTax5;
+	}
+	/**
+	 * @param municipalTax5 セットする municipalTax5
+	 */
+	public void setMunicipalTax5(String municipalTax5) {
+		this.municipalTax5 = municipalTax5;
+	}
+	/**
+	 * @return municipalTax6
+	 */
+	public String getMunicipalTax6() {
+		return municipalTax6;
+	}
+	/**
+	 * @param municipalTax6 セットする municipalTax6
+	 */
+	public void setMunicipalTax6(String municipalTax6) {
+		this.municipalTax6 = municipalTax6;
+	}
+	/**
+	 * @return municipalTax7
+	 */
+	public String getMunicipalTax7() {
+		return municipalTax7;
+	}
+	/**
+	 * @param municipalTax7 セットする municipalTax7
+	 */
+	public void setMunicipalTax7(String municipalTax7) {
+		this.municipalTax7 = municipalTax7;
+	}
+	/**
+	 * @return municipalTax8
+	 */
+	public String getMunicipalTax8() {
+		return municipalTax8;
+	}
+	/**
+	 * @param municipalTax8 セットする municipalTax8
+	 */
+	public void setMunicipalTax8(String municipalTax8) {
+		this.municipalTax8 = municipalTax8;
+	}
+	/**
+	 * @return municipalTax9
+	 */
+	public String getMunicipalTax9() {
+		return municipalTax9;
+	}
+	/**
+	 * @param municipalTax9 セットする municipalTax9
+	 */
+	public void setMunicipalTax9(String municipalTax9) {
+		this.municipalTax9 = municipalTax9;
+	}
+	/**
+	 * @return municipalTax10
+	 */
+	public String getMunicipalTax10() {
+		return municipalTax10;
+	}
+	/**
+	 * @param municipalTax10 セットする municipalTax10
+	 */
+	public void setMunicipalTax10(String municipalTax10) {
+		this.municipalTax10 = municipalTax10;
+	}
+	/**
+	 * @return municipalTax11
+	 */
+	public String getMunicipalTax11() {
+		return municipalTax11;
+	}
+	/**
+	 * @param municipalTax11 セットする municipalTax11
+	 */
+	public void setMunicipalTax11(String municipalTax11) {
+		this.municipalTax11 = municipalTax11;
+	}
+	/**
+	 * @return municipalTax12
+	 */
+	public String getMunicipalTax12() {
+		return municipalTax12;
+	}
+	/**
+	 * @param municipalTax12 セットする municipalTax12
+	 */
+	public void setMunicipalTax12(String municipalTax12) {
+		this.municipalTax12 = municipalTax12;
 	}
 
 }

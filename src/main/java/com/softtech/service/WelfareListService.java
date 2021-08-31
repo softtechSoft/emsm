@@ -83,8 +83,30 @@ public class WelfareListService {
 					welfareBean.setWkAcccpsIns(Integer.toString(ww.getWkAcccpsIns()));
 					//源泉控除
 					welfareBean.setWithholdingTax(Integer.toString(ww.getWithholdingTax()));
-					//住民税控除
-					welfareBean.setMunicipalTax(Integer.toString(ww.getMunicipalTax()));
+					//住民税控除一月
+					welfareBean.setMunicipalTax1(Integer.toString(ww.getMunicipalTax1()));
+					//住民税控除二月
+					welfareBean.setMunicipalTax2(Integer.toString(ww.getMunicipalTax2()));
+					//住民税控除三月
+					welfareBean.setMunicipalTax3(Integer.toString(ww.getMunicipalTax3()));
+					//住民税控除四月
+					welfareBean.setMunicipalTax4(Integer.toString(ww.getMunicipalTax4()));
+					//住民税控除五月
+					welfareBean.setMunicipalTax5(Integer.toString(ww.getMunicipalTax5()));
+					//住民税控除六月
+					welfareBean.setMunicipalTax6(Integer.toString(ww.getMunicipalTax6()));
+					//住民税控除七月
+					welfareBean.setMunicipalTax7(Integer.toString(ww.getMunicipalTax7()));
+					//住民税控除八月
+					welfareBean.setMunicipalTax8(Integer.toString(ww.getMunicipalTax8()));
+					//住民税控除九月
+					welfareBean.setMunicipalTax9(Integer.toString(ww.getMunicipalTax9()));
+					//住民税控除十月
+					welfareBean.setMunicipalTax10(Integer.toString(ww.getMunicipalTax10()));
+					//住民税控除十一月
+					welfareBean.setMunicipalTax11(Integer.toString(ww.getMunicipalTax11()));
+					//住民税控除十二月
+					welfareBean.setMunicipalTax12(Integer.toString(ww.getMunicipalTax12()));
 					//社宅家賃控除
 					welfareBean.setRental(Integer.toString(ww.getRental()));
 					//社宅管理費控除
@@ -146,8 +168,30 @@ public class WelfareListService {
 		welfareBean.setWkAcccpsIns(Integer.toString(ww.getWkAcccpsIns()));
 		//源泉控除
 		welfareBean.setWithholdingTax(Integer.toString(ww.getWithholdingTax()));
-		//住民税控除
-		welfareBean.setMunicipalTax(Integer.toString(ww.getMunicipalTax()));
+		//住民税控除一月
+		welfareBean.setMunicipalTax1(Integer.toString(ww.getMunicipalTax1()));
+		//住民税控除二月
+		welfareBean.setMunicipalTax2(Integer.toString(ww.getMunicipalTax2()));
+		//住民税控除三月
+		welfareBean.setMunicipalTax3(Integer.toString(ww.getMunicipalTax3()));
+		//住民税控除四月
+		welfareBean.setMunicipalTax4(Integer.toString(ww.getMunicipalTax4()));
+		//住民税控除五月
+		welfareBean.setMunicipalTax5(Integer.toString(ww.getMunicipalTax5()));
+		//住民税控除六月
+		welfareBean.setMunicipalTax6(Integer.toString(ww.getMunicipalTax6()));
+		//住民税控除七月
+		welfareBean.setMunicipalTax7(Integer.toString(ww.getMunicipalTax7()));
+		//住民税控除八月
+		welfareBean.setMunicipalTax8(Integer.toString(ww.getMunicipalTax8()));
+		//住民税控除九月
+		welfareBean.setMunicipalTax9(Integer.toString(ww.getMunicipalTax9()));
+		//住民税控除十月
+		welfareBean.setMunicipalTax10(Integer.toString(ww.getMunicipalTax10()));
+		//住民税控除十一月
+		welfareBean.setMunicipalTax11(Integer.toString(ww.getMunicipalTax11()));
+		//住民税控除十二月
+		welfareBean.setMunicipalTax12(Integer.toString(ww.getMunicipalTax12()));
 		//社宅家賃控除
 		welfareBean.setRental(Integer.toString(ww.getRental()));
 		//社宅管理費控除

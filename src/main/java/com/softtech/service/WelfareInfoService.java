@@ -73,8 +73,9 @@ public class WelfareInfoService {
 		welfareInfo.setWkAcccpsIns(Integer.parseInt(DateUtil.chgMonthToYM1(welfareBean.getWkAcccpsIns())));
 		//源泉控除
 		welfareInfo.setWithholdingTax(Integer.parseInt(welfareBean.getWithholdingTax()));
+
 		//住民税控除
-		welfareInfo.setMunicipalTax(Integer.parseInt(welfareBean.getMunicipalTax()));
+		welfareInfo.setMunicipalTax1(Integer.parseInt(welfareBean.getMunicipalTax1()));
 		//社宅家賃控除
 		welfareInfo.setRental(Integer.parseInt(welfareBean.getRental()));
 		//社宅管理費控除

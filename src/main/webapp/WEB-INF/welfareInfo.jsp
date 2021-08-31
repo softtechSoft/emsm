@@ -109,7 +109,7 @@ function myFunction(){
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>住民税控除：</td>
-			<td><input id="municipalTax"name="municipalTax" type="text"  value="${welfare.municipalTax}"></td>
+			<td><input id="municipalTax1"name="municipalTax1" type="text"  value="${welfare.municipalTax1}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>社宅家賃控除：</td>

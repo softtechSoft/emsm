@@ -318,7 +318,7 @@ public class SalaryInfoService {
 			//源泉控除
 			salaryInfoBean.setWithholdingTax(DateUtil.ma(Integer.toString(welfareInfoDB.getWithholdingTax())));
 			//住民税控除
-			salaryInfoBean.setMunicipalTax(DateUtil.ma(Integer.toString(welfareInfoDB.getMunicipalTax())));
+			salaryInfoBean.setMunicipalTax(DateUtil.ma(Integer.toString(welfareInfoDB.getMunicipalTax1())));
 			//社宅家賃控除
 			salaryInfoBean.setRental(DateUtil.ma(Integer.toString(welfareInfoDB.getRental())));
 			//社宅共益費控除
@@ -540,7 +540,7 @@ public class SalaryInfoService {
 			//源泉控除
 			salaryInfoBean.setWithholdingTax(DataUtil.addComma(welfareBean.getWithholdingTax()));
 			//住民税控除
-			salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax()));
+			salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax1()));
 			//社宅家賃控除
 			salaryInfoBean.setRental(DataUtil.addComma(welfareBean.getRental()));
 			//社宅共益費控除
