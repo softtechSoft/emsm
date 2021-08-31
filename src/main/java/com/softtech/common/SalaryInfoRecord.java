@@ -15,6 +15,7 @@ public class SalaryInfoRecord {
 	private int overTimePlus ;
 	private int shortageReduce ;
 	private int transportExpense;
+	private int specialAddition;
 	private int allowancePlus ;
 	private int allowanceReduce;
 	private String allowanceReason;
@@ -25,6 +26,7 @@ public class SalaryInfoRecord {
 	private int municipalTax ;
 	private int rental ;
 	private int rentalMgmtFee ;
+	private int specialReduce ;
 	private int sum ;
 	private String remark ;
 	private int totalFee ;
@@ -422,6 +424,30 @@ public class SalaryInfoRecord {
 	 */
 	public void setWelfareComp(int welfareComp) {
 		this.welfareComp = welfareComp;
+	}
+	/**
+	 * @return specialAddition
+	 */
+	public int getSpecialAddition() {
+		return specialAddition;
+	}
+	/**
+	 * @param specialAddition セットする specialAddition
+	 */
+	public void setSpecialAddition(int specialAddition) {
+		this.specialAddition = specialAddition;
+	}
+	/**
+	 * @return specialReduce
+	 */
+	public int getSpecialReduce() {
+		return specialReduce;
+	}
+	/**
+	 * @param specialReduce セットする specialReduce
+	 */
+	public void setSpecialReduce(int specialReduce) {
+		this.specialReduce = specialReduce;
 	}
 
 }

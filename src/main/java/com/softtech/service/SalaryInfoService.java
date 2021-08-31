@@ -116,6 +116,13 @@ public class SalaryInfoService {
 			FieldError err6= new FieldError("", "", "交通費が数字を入力してください。例：2000");
 			errorlst.add(err6);
 		}
+		//特別加算
+		// 特別加算数字チェック
+		if(DateUtil.isNumeric(salaryInfoBean.getSpecialAddition())) {
+			FieldError err7= new FieldError("", "", "特別加算が数字を入力してください。例：2000");
+			errorlst.add(err7);
+		}
+
 		// 手当加算数字チェック
 		if(DateUtil.isNumeric(salaryInfoBean.getAllowancePlus())) {
 			FieldError err7= new FieldError("", "", "手当加算が数字を入力してください。例：2000");
@@ -196,6 +203,13 @@ public class SalaryInfoService {
 			FieldError err20= new FieldError("", "", "総費用が数字を入力してください。例：60,000");
 			errorlst.add(err20);
 		}
+		//特別控除
+		//特別控除数字チェック
+		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getShortageReduce()))) {
+			FieldError err20= new FieldError("", "", "特別控除が数字を入力してください。例：60,000");
+			errorlst.add(err20);
+		}
+
 		//総額数字チェック
 		if(DateUtil.isNumeric(DateUtil.chgMonthToYM1(salaryInfoBean.getSum()))) {
 			FieldError err21= new FieldError("", "", "総額が数字を入力してください。例：60,000");
@@ -273,12 +287,15 @@ public class SalaryInfoService {
 		salaryInfoBean.setShortageReduce(salaryInfo.getShortageReduce());
 		//交通費
 		salaryInfoBean.setTransportExpense(salaryInfo.getTransportExpense());
+		//特別加算
+		//特別加算
+		salaryInfoBean.setSpecialAddition(salaryInfo.getSpecialAddition());
 		//手当加算
 		salaryInfoBean.setAllowancePlus(salaryInfo.getAllowancePlus());
 		//手当減算
 		salaryInfoBean.setAllowanceReduce(salaryInfo.getAllowanceReduce());
 		//手当理由
-		salaryInfoBean.setAllowanceReason(salaryInfo.getAllowanceReason());
+		salaryInfoBean.setSpecialAddition(salaryInfo.getAllowanceReason());
 		if(welfareInfoDB != null ) {
 			//厚生年金控除個人
 			salaryInfoBean.setWelfarePensionSelf(DateUtil.ma(Integer.toString(welfareInfoDB.getWelfarePensionSelf())));
@@ -306,7 +323,11 @@ public class SalaryInfoService {
 			salaryInfoBean.setRental(DateUtil.ma(Integer.toString(welfareInfoDB.getRental())));
 			//社宅共益費控除
 			salaryInfoBean.setRentalMgmtFee(DateUtil.ma(Integer.toString(welfareInfoDB.getRentalMgmtFee())));
+
 		}
+
+		//特別控除
+		salaryInfoBean.setShortageReduce(salaryInfo.getShortageReduce());
 		//総額
 		salaryInfoBean.setSum(salaryInfo.getSum());
 		//総費用
@@ -332,7 +353,7 @@ public class SalaryInfoService {
 		//支払日
 		am.setPaymentDate(DateUtil.chgMonthToYM(salaryInfoBean.getPaymentDate()));
 		//基本給
-		am.setBase(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getBase())));
+		am.setBase(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getBase())));
 		if(salaryInfoBean.getOverTimePlus().length()==0) {
 	     	salaryInfoBean.setOverTimePlus("0") ;
 		}
@@ -347,10 +368,17 @@ public class SalaryInfoService {
 	     	salaryInfoBean.setTransportExpense("0") ;
 		}
 		//交通費
-		am.setTransportExpense(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getTransportExpense())));
+		am.setTransportExpense(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getTransportExpense())));
 		if(salaryInfoBean.getAllowancePlus().length()==0) {
 	     	salaryInfoBean.setAllowancePlus("0") ;
 		}
+
+		//特別加算
+		am.setSpecialAddition(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getSpecialAddition())));
+		if(salaryInfoBean.getAllowancePlus().length()==0) {
+			salaryInfoBean.setAllowancePlus("0") ;
+		}
+
 		//手当加算
 		am.setAllowancePlus(Integer.parseInt(salaryInfoBean.getAllowancePlus()));
 		if(salaryInfoBean.getAllowanceReduce().length()==0) {
@@ -364,53 +392,56 @@ public class SalaryInfoService {
 	     	salaryInfoBean.setEplyInsSelf("0") ;
 		}
 		//雇用保険個人負担
-		am.setEplyInsSelf(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getEplyInsSelf())));
+		am.setEplyInsSelf(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getEplyInsSelf())));
 		if(salaryInfoBean.getWithholdingTax().length()==0) {
 	     	salaryInfoBean.setWithholdingTax("0") ;
 		}
 		//源泉控除
-		am.setWithholdingTax(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWithholdingTax())));
+		am.setWithholdingTax(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getWithholdingTax())));
 		if(salaryInfoBean.getMunicipalTax().length()==0) {
 	     	salaryInfoBean.setMunicipalTax("0") ;
 		}
 		//住民税控除
-		am.setMunicipalTax(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getMunicipalTax())));
+		am.setMunicipalTax(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getMunicipalTax())));
 		if(salaryInfoBean.getRental().length()==0) {
 	     	salaryInfoBean.setRental("0") ;
 		}
 		//社宅家賃控除
-		am.setRental(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getRental())));
+		am.setRental(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getRental())));
 		if(salaryInfoBean.getRentalMgmtFee().length()==0) {
 	     	salaryInfoBean.setRentalMgmtFee("0") ;
 		}
 		//社宅共益費控除
-		am.setRentalMgmtFee(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getRentalMgmtFee())));
+		am.setRentalMgmtFee(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getRentalMgmtFee())));
+
+		//特別控除
+		am.setSpecialReduce(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getSpecialReduce())));
 		//総額
-		am.setSum(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getSum())));
+		am.setSum(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getSum())));
 		//備考
 		am.setRemark(salaryInfoBean.getRemark());
 		//総費用
-		am.setTotalFee(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getTotalFee())));
+		am.setTotalFee(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getTotalFee())));
 		if(salaryInfoBean.getWkAcccpsIns().length()==0) {
 	     	salaryInfoBean.setWkAcccpsIns("0") ;
 		}
 		//労災保険（会社負担のみ）
-		am.setWkAcccpsIns(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWkAcccpsIns())));
+		am.setWkAcccpsIns(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getWkAcccpsIns())));
 		if(salaryInfoBean.getEplyInsWithdraw().length()==0) {
 	     	salaryInfoBean.setEplyInsWithdraw("0") ;
 		}
 		//雇用保拠出金（会社)
-		am.setEplyInsWithdraw(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getEplyInsWithdraw())));
+		am.setEplyInsWithdraw(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getEplyInsWithdraw())));
 		if(salaryInfoBean.getEplyInsComp().length()==0) {
 	     	salaryInfoBean.setEplyInsComp("0") ;
 		}
 		//雇用保険会社負担
-		am.setEplyInsComp(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getEplyInsComp())));
+		am.setEplyInsComp(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getEplyInsComp())));
 		if(salaryInfoBean.getWelfareBaby().length()==0) {
 	     	salaryInfoBean.setWelfareBaby("0") ;
 		}
 		//厚生控除子育(会社）
-		am.setWelfareBaby(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWelfareBaby())));
+		am.setWelfareBaby(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getWelfareBaby())));
 		if(salaryInfoBean.getOverTime().length()==0) {
 	     	salaryInfoBean.setOverTime("0") ;
 		}
@@ -425,22 +456,22 @@ public class SalaryInfoService {
 	     	salaryInfoBean.setWelfarePensionSelf("0") ;
 		}
 		//厚生年金控除個人
-		am.setWelfareSelf(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWelfarePensionSelf())));
+		am.setWelfareSelf(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getWelfarePensionSelf())));
 		if(salaryInfoBean.getWelfareHealthSelf().length()==0) {
 	     	salaryInfoBean.setWelfareHealthSelf("0") ;
 		}
 		//厚生健康控除個人
-		am.setWelfareComp(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWelfareHealthSelf())));
+		am.setWelfareComp(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getWelfareHealthSelf())));
 		if(salaryInfoBean.getWelfarePensionComp().length()==0) {
 	     	salaryInfoBean.setWelfarePensionComp("0") ;
 		}
 		//厚生年金控除会社
-		am.setWelfareComp(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWelfarePensionComp())));
+		am.setWelfareComp(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getWelfarePensionComp())));
 		if(salaryInfoBean.getWelfareHealthComp().length()==0) {
 	     	salaryInfoBean.setWelfareHealthComp("0") ;
 		}
 		//厚生健康控除会社
-		am.setWelfareComp(Integer.parseInt(DateUtil.chgMonthToYM1(salaryInfoBean.getWelfareHealthComp())));
+		am.setWelfareComp(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getWelfareHealthComp())));
 		return am;
 	}
 	/*
@@ -455,6 +486,7 @@ public class SalaryInfoService {
 		salaryInfoBean.setOverTimePlus(salaryInfoBean.getOverTimePlus().replaceAll(",", ""));
 		salaryInfoBean.setShortageReduce(salaryInfoBean.getShortageReduce().replaceAll(",", ""));
 		salaryInfoBean.setTransportExpense(salaryInfoBean.getTransportExpense().replaceAll(",", ""));
+		salaryInfoBean.setSpecialAddition(salaryInfoBean.getSpecialAddition().replaceAll(",", ""));
 		salaryInfoBean.setAllowancePlus(salaryInfoBean.getAllowancePlus().replaceAll(",", ""));
 		salaryInfoBean.setAllowanceReduce(salaryInfoBean.getAllowanceReduce().replaceAll(",", ""));
 		salaryInfoBean.setWelfarePensionSelf(salaryInfoBean.getWelfarePensionSelf().replaceAll(",", ""));
@@ -470,6 +502,7 @@ public class SalaryInfoService {
 		salaryInfoBean.setMunicipalTax(salaryInfoBean.getMunicipalTax().replaceAll(",", ""));
 		salaryInfoBean.setRental(salaryInfoBean.getRental().replaceAll(",", ""));
 		salaryInfoBean.setRentalMgmtFee(salaryInfoBean.getRentalMgmtFee().replaceAll(",", ""));
+		salaryInfoBean.setSpecialReduce(salaryInfoBean.getSpecialReduce().replaceAll(",", ""));
 		salaryInfoBean.setSum(salaryInfoBean.getSum().replaceAll(",", ""));
 		salaryInfoBean.setTotalFee(salaryInfoBean.getTotalFee().replaceAll(",", ""));
 
@@ -485,6 +518,7 @@ public class SalaryInfoService {
 		for(WelfareBean welfareBean:welfareBeans) {
 			//基本給
 			salaryInfoBean.setBase(welfareBean.getBase());
+
 			//厚生年金控除個人
 			salaryInfoBean.setWelfarePensionSelf(DataUtil.addComma( welfareBean.getWelfarePensionSelf()));
 			//厚生健康控除個人

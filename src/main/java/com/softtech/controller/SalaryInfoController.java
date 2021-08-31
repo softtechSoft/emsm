@@ -127,16 +127,26 @@ public class SalaryInfoController {
 
 				return "salaryInfo";
 			}
+			SalaryInfoRecord em = new SalaryInfoRecord();
+
+		 	// 対象年月+1をする。
+			String month= DateUtil.chgMonthToYM(salaryInfoBean.getMonth());
+			em.setMonth(month);
+			//社員ID
+			em.setEmployeeID(salaryInfoBean.getEmployeeID());
+			// DBから次月給料情報を取得
+			SalaryInfo salaryInfoDB= salaryInfoService.querySalaryInfo(em);
+
 
 			//給料新規作成処理
-			if("1".equals(salaryInfoBean.getGamenMode())) {
+			if(null == salaryInfoDB) {
 				// 給料情報作成
 				salaryInfoService.insertSalaryInfo(salaryInfoService.transferToDB(salaryInfoBean));
 				//作成成功後、画面の表示。
 				return "makeSalarySuccess";
 
 			//給料変更処理
-			}else if("2".equals(salaryInfoBean.getGamenMode())){
+			}else {
 				// 給料情報更新
 				salaryInfoService.updateSalaryInfo(salaryInfoService.transferToDB(salaryInfoBean));
 				//更新成功後、画面の表示。

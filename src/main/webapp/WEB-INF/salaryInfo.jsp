@@ -38,6 +38,8 @@ function init(){
 		document.getElementById('overTimePlus').readOnly=true;
 		document.getElementById('shortageReduce').readOnly=true;
 		document.getElementById('transportExpense').readOnly=true;
+		//特別加算
+		document.getElementById('specialAddition').readOnly=true;
 		document.getElementById('allowancePlus').readOnly=true;
 		document.getElementById('allowanceReduce').readOnly=true;
 		document.getElementById('allowanceReason').readOnly=true;
@@ -54,9 +56,12 @@ function init(){
 		document.getElementById('municipalTax').readOnly=true;
 		document.getElementById('rental').readOnly=true;
 		document.getElementById('rentalMgmtFee').readOnly=true;
+		//特別控除
+		document.getElementById('specialReduce').readOnly=true;
 		document.getElementById('sum').readOnly=true;
 		document.getElementById('totalFee').readOnly=true;
 		document.getElementById('remark').readOnly=true;
+
 		//初期画面の登録ボタン使用禁止
 		document.getElementById("Registration").disabled=true;
 	  }else{
@@ -110,6 +115,11 @@ function setSum(){
 	//数字化する
 	transportExpense=toNumberDisp(transportExpense);
 
+	//特別加算
+	var specialAddition = document.getElementById('specialAddition').value;
+	//数字化する
+	specialAddition=toNumberDisp(specialAddition);
+
 	//手当加算の値を取得
 	var allowancePlus = document.getElementById('allowancePlus').value;
 	//数字化する
@@ -155,11 +165,17 @@ function setSum(){
 	//数字化する
 	rentalMgmtFee=toNumberDisp(rentalMgmtFee);
 
+	//特別控除
+	var specialReduce = document.getElementById('specialReduce').value;
+	//数字化する
+	specialReduce=toNumberDisp(specialReduce);
+
 	//総額を計算し、設定する。
 	var salarySum=base+overTimePlus-shortageReduce+transportExpense+allowancePlus
 					-allowanceReduce-welfarePensionSelf-welfareHealthSelf
 					-eplyInsSelf-withholdingTax-municipalTax
-					-rental-rentalMgmtFee;
+					-rental-rentalMgmtFee
+					-specialAddition-specialControl;
 
 	document.getElementById('sum').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
@@ -288,6 +304,12 @@ function toNumberDisp(strNumber){
 			<td>交通費：</td>
 			<td><input id="transportExpense"name="transportExpense"   type="text" value="${salaryInfoBean.transportExpense}" onchange="chageNumberDisp(this)"></td>
 			</tr>
+
+			<tr style="background-color:#bfe1ff">
+			<td>特別加算：</td>
+			<td><input id="specialAddition"name="specialAddition"   type="text" value="${salaryInfoBean.specialAddition}" onchange="chageNumberDisp(this)"></td>
+			</tr>
+
 			<tr style="background-color:#dcfeeb">
 			<td>手当加算：</td>
 			<td><input id="allowancePlus"name="allowancePlus" type="text"  value="${salaryInfoBean.allowancePlus}" onchange="chageNumberDisp(this)"></td>
@@ -352,6 +374,12 @@ function toNumberDisp(strNumber){
 			<td>社宅共益費控除：</td>
 			<td><input id="rentalMgmtFee"name="rentalMgmtFee" type="text"  value="${salaryInfoBean.rentalMgmtFee}" onchange="chageNumberDisp(this)"></td>
 			</tr>
+
+			<tr style="background-color:#bfe1ff">
+			<td>特別控除：</td>
+			<td><input id="specialReduce"name="specialReduce" type="text"  value="${salaryInfoBean.specialReduce}" onchange="chageNumberDisp(this)"></td>
+			</tr>
+
 			<tr style="background-color:#dcfeeb">
 			<td>総額：</td>
 			<td><input id="sum"name="sum" type="text"  value="${salaryInfoBean.sum}" onchange="chageNumberDisp(this)"></td>

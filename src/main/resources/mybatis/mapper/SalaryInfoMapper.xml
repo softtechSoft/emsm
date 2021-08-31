@@ -27,11 +27,11 @@
 	<select id="insertSalaryInfo" parameterType="com.softtech.common.SalaryInfoRecord">
 		insert into
 			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
-			transportExpense,allowancePlus,allowanceReduce,allowanceReason,welfarePensionSelf,welfareHealthSelf,welfarePensionComp,welfareHealthComp,welfareBaby,eplyInsSelf,
-			eplyInsComp,eplyInsWithdraw,wkAcccpsIns,withholdingTax,municipalTax,rental,rentalMgmtFee,sum,totalFee,remark)
+			transportExpense,specialAddition,allowancePlus,allowanceReduce,allowanceReason,welfarePensionSelf,welfareHealthSelf,welfarePensionComp,welfareHealthComp,welfareBaby,eplyInsSelf,
+			eplyInsComp,eplyInsWithdraw,wkAcccpsIns,withholdingTax,municipalTax,rental,rentalMgmtFee,specialReduce,sum,totalFee,remark)
 		values(#{employeeID},#{month},#{paymentDate},#{base},#{overTime},#{shortage},#{overTimePlus},#{shortageReduce},
-			#{transportExpense},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfarePensionSelf},#{welfareHealthSelf},#{welfarePensionComp},#{welfareHealthComp},#{welfareBaby},
-			#{eplyInsSelf},#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},
+			#{transportExpense},#{specialAddition},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfarePensionSelf},#{welfareHealthSelf},#{welfarePensionComp},#{welfareHealthComp},#{welfareBaby},
+			#{eplyInsSelf},#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},#{specialReduce},
 			#{sum},#{totalFee},#{remark})
 
 	</select>
@@ -39,12 +39,12 @@
 	<select id="updateSalaryInfo" parameterType="com.softtech.common.SalaryInfoRecord">
 		update  ems.salaryinfo set paymentDate = #{paymentDate},base = #{base},
 				overTime = #{overTime},shortage = #{shortage},overTimePlus = #{overTimePlus},
-				shortageReduce = #{shortageReduce},transportExpense = #{transportExpense},allowancePlus = #{allowancePlus},
+				shortageReduce = #{shortageReduce},transportExpense = #{transportExpense},specialAddition = #{specialAddition},allowancePlus = #{allowancePlus},
 				allowanceReduce = #{allowanceReduce},allowanceReason = #{allowanceReason},welfarePensionSelf = #{welfarePensionSelf},
 				welfareHealthSelf = #{welfareHealthSelf},welfarePensionComp = #{welfarePensionComp},welfareHealthComp = #{welfareHealthComp},welfareBaby = #{welfareBaby},eplyInsSelf = #{eplyInsSelf},
 				eplyInsComp = #{eplyInsComp},eplyInsWithdraw = #{eplyInsWithdraw},wkAcccpsIns = #{wkAcccpsIns},
 				withholdingTax = #{withholdingTax},municipalTax = #{municipalTax},rental = #{rental},
-				rentalMgmtFee = #{rentalMgmtFee},sum = #{sum},totalFee = #{totalFee},remark = #{remark}
+				rentalMgmtFee = #{rentalMgmtFee},specialReduce = #{specialReduce},sum = #{sum},totalFee = #{totalFee},remark = #{remark}
 		where employeeID =#{employeeID}
 		AND   month=#{month}
 

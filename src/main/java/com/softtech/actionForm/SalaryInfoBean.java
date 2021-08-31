@@ -37,6 +37,10 @@ public class SalaryInfoBean {
 	private String overTime;
 	//交通費
 	private String transportExpense ;
+
+	//特別加算
+	private String specialAddition ;
+
 	//不足時間
 	private String shortage;
 	//手当加算
@@ -73,6 +77,10 @@ public class SalaryInfoBean {
 	private String rental;
 	//社宅共益費控除
 	private String rentalMgmtFee;
+
+	//特別控除
+	private String specialReduce;
+
 	//総額
 	@Size(min=1, max=30,message="総額を入力してください。例：60000")
 	private String sum;
@@ -528,5 +536,33 @@ public class SalaryInfoBean {
 	 */
 	public void setWelfareHealthComp(String welfareHealthComp) {
 		this.welfareHealthComp = welfareHealthComp;
+	}
+
+	/**
+	 * @return specialAddition
+	 */
+	public String getSpecialAddition() {
+		return specialAddition;
+	}
+
+	/**
+	 * @param specialAddition セットする specialAddition
+	 */
+	public void setSpecialAddition(String specialAddition) {
+		this.specialAddition = specialAddition;
+	}
+
+	/**
+	 * @return specialReduce
+	 */
+	public String getSpecialReduce() {
+		return specialReduce;
+	}
+
+	/**
+	 * @param specialReduce セットする specialReduce
+	 */
+	public void setSpecialReduce(String specialReduce) {
+		this.specialReduce = specialReduce;
 	}
 }

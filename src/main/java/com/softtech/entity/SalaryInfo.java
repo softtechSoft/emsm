@@ -34,6 +34,9 @@ public class SalaryInfo {
 	private String welfareSelf;
 	private String welfareComp;
 
+	private String specialAddition;
+	private String specialControl;
+
 
 	public String getEmployeeName() {
 		return employeeName;
@@ -308,6 +311,34 @@ public class SalaryInfo {
 	 */
 	public void setWelfareComp(String welfareComp) {
 		this.welfareComp = welfareComp;
+	}
+
+	/**
+	 * @return specialAddition
+	 */
+	public String getSpecialAddition() {
+		return specialAddition;
+	}
+
+	/**
+	 * @param specialAddition セットする specialAddition
+	 */
+	public void setSpecialAddition(String specialAddition) {
+		this.specialAddition = specialAddition;
+	}
+
+	/**
+	 * @return specialControl
+	 */
+	public String getSpecialControl() {
+		return specialControl;
+	}
+
+	/**
+	 * @param specialControl セットする specialControl
+	 */
+	public void setSpecialControl(String specialControl) {
+		this.specialControl = specialControl;
 	}
 
 }
