@@ -171,11 +171,36 @@ function setSum(){
 	specialReduce=toNumberDisp(specialReduce);
 
 	//総額を計算し、設定する。
-	var salarySum=base+overTimePlus-shortageReduce+transportExpense+allowancePlus
-					-allowanceReduce-welfarePensionSelf-welfareHealthSelf
-					-eplyInsSelf-withholdingTax-municipalTax
-					-rental-rentalMgmtFee
-					-specialAddition-specialControl;
+	// 総額 = 基本給
+	// 		 + 残業加算
+	// 		 + 交通費
+	// 		 + 手当加算
+	// 		 + 特別加算
+	// 		 - 稼働不足減
+	// 		 - 手当減算
+	// 		 - 厚生年金控除個人
+	// 		 - 厚生健康控除個人
+	// 		 - 雇用保険個人
+	// 		 - 源泉控除
+	// 		 - 住民税
+	// 		 - 社宅家賃
+	// 		 - 社宅共益費
+	// 		 - 特別控除
+	var salarySum=base
+				+overTimePlus
+				+transportExpense
+				+allowancePlus
+				+specialAddition
+				-shortageReduce
+				-allowanceReduce
+				-welfarePensionSelf
+				-welfareHealthSelf
+				-eplyInsSelf
+				-withholdingTax
+				-municipalTax
+				-rental
+				-rentalMgmtFee
+				-specialReduce;
 
 	document.getElementById('sum').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
@@ -210,10 +235,35 @@ function setSum(){
 	//数字化する
 	wkAcccpsIns=toNumberDisp(wkAcccpsIns);
 
-	//総費用を計算し、設定する。．
-	var salarySum=base+overTimePlus-shortageReduce+transportExpense+allowancePlus
-					-allowanceReduce+welfarePensionComp+welfareHealthComp
-					+welfareBaby+eplyInsComp+eplyInsWithdraw+wkAcccpsIns
+	//総費用を計算し、設定する。
+	//．総費用 = 基本給
+	// 			+残業加算
+	// 			+交通費
+	// 			+手当加算
+	// 			+厚生年金控除会社
+	// 			+厚生健康控除会社
+	// 			+厚生控除子育(会社）
+	// 			+雇用保険会社
+	// 			+一般拠出金（会社のみ)
+	// 			+労災保険（会社負担のみ）
+	// 			+特別加算
+	// 			-稼働不足減
+	// 			-手当減算
+	// 			-特別減
+	var salarySum=base
+				+overTimePlus
+				+transportExpense
+				+allowancePlus
+				+welfarePensionComp
+				+welfareHealthComp
+				+welfareBaby
+				+eplyInsComp
+				+eplyInsWithdraw
+				+wkAcccpsIns
+				+specialAddition
+				-shortageReduce
+				-allowanceReduce
+				-specialReduce;
 
 	document.getElementById('totalFee').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 

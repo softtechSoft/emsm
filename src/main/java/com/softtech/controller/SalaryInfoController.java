@@ -69,7 +69,7 @@ public class SalaryInfoController {
 
 				//　福祉情報を取得して、画面へ渡す。
 				 List<WelfareBean>  welfareBeans = welfareListService.queryWelfare(salaryInfoBean.getEmployeeID());
-				 salaryInfoService.setWelfareToGamen(salaryInfoBean,welfareBeans);
+				 salaryInfoService.setWelfareToGamen(salaryInfoBean,welfareBeans,monthYM.substring(5, 7));
 
 				// 画面モードに新規作成を設定する。（ 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新）
 				salaryInfoBean.setGamenMode("1");

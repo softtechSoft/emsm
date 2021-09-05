@@ -199,11 +199,11 @@ public class WelfareListService {
 		//控除ステータス
 		welfareBean.setStatus(ww.getStatus());
 		//作成日
-		welfareBean.setInsertDate(DateUtil.modifymonth1(ww.getInsertDate()));
+		welfareBean.setInsertDate(ww.getInsertDate());
 		//作成者
 		welfareBean.setInsertEmployee(ww.getInsertEmployee());
 		//更新日
-		welfareBean.setUpdateDate(DateUtil.modifymonth1(ww.getUpdateDate()));
+		welfareBean.setUpdateDate(ww.getUpdateDate());
 		//更新者
 		welfareBean.setUpdateEmployee(ww.getUpdateEmployee());
 		rtn.add(welfareBean);

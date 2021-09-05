@@ -511,9 +511,12 @@ public class SalaryInfoService {
 	 * 機能概要： 画面数値項目を数値化
 	 *
 	 * @param  salaryInfoBean 画面入力値
+	 * @param  welfareBeans 福祉情報
+	 * @param  month 対象月
+	 *
 	 * @return なし
 	 */
-	public void  setWelfareToGamen(SalaryInfoBean salaryInfoBean,List<WelfareBean>  welfareBeans)
+	public void  setWelfareToGamen(SalaryInfoBean salaryInfoBean,List<WelfareBean>  welfareBeans,String month)
 	{
 		for(WelfareBean welfareBean:welfareBeans) {
 			//基本給
@@ -540,7 +543,45 @@ public class SalaryInfoService {
 			//源泉控除
 			salaryInfoBean.setWithholdingTax(DataUtil.addComma(welfareBean.getWithholdingTax()));
 			//住民税控除
-			salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax1()));
+			switch (month) {
+			case "01":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax1()));
+				break;
+			case "02":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax2()));
+				break;
+			case "03":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax3()));
+				break;
+			case "04":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax4()));
+				break;
+			case "05":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax5()));
+				break;
+			case "06":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax6()));
+				break;
+			case "07":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax7()));
+				break;
+			case "08":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax8()));
+				break;
+			case "09":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax9()));
+				break;
+			case "10":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax10()));
+				break;
+			case "11":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax11()));
+				break;
+			case "12":
+				salaryInfoBean.setMunicipalTax(DataUtil.addComma(welfareBean.getMunicipalTax12()));
+				break;
+
+			}
 			//社宅家賃控除
 			salaryInfoBean.setRental(DataUtil.addComma(welfareBean.getRental()));
 			//社宅共益費控除
