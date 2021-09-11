@@ -108,8 +108,52 @@ function myFunction(){
 			<td><input id="withholdingTax"name="withholdingTax" type="text"   value="${welfare.withholdingTax}"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
-			<td>住民税控除：</td>
+			<td>1月住民税控除：</td>
 			<td><input id="municipalTax1"name="municipalTax1" type="text"  value="${welfare.municipalTax1}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>２月住民税控除：</td>
+			<td><input id="municipalTax2"name="municipalTax2" type="text"  value="${welfare.municipalTax2}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>3月住民税控除：</td>
+			<td><input id="municipalTax3"name="municipalTax3" type="text"  value="${welfare.municipalTax3}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>４月住民税控除：</td>
+			<td><input id="municipalTax4"name="municipalTax4" type="text"  value="${welfare.municipalTax4}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>５月住民税控除：</td>
+			<td><input id="municipalTax5"name="municipalTax5" type="text"  value="${welfare.municipalTax5}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>６月住民税控除：</td>
+			<td><input id="municipalTax6"name="municipalTax6" type="text"  value="${welfare.municipalTax6}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>７月住民税控除：</td>
+			<td><input id="municipalTax7"name="municipalTax7" type="text"  value="${welfare.municipalTax7}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>８月住民税控除：</td>
+			<td><input id="municipalTax8"name="municipalTax8" type="text"  value="${welfare.municipalTax8}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>９月住民税控除：</td>
+			<td><input id="municipalTax9"name="municipalTax9" type="text"  value="${welfare.municipalTax9}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>1０月住民税控除：</td>
+			<td><input id="municipalTax10"name="municipalTax10" type="text"  value="${welfare.municipalTax10}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>1１月住民税控除：</td>
+			<td><input id="municipalTax11"name="municipalTax11" type="text"  value="${welfare.municipalTax11}"></td>
+			</tr>
+			<tr style="background-color:#dcfeeb">
+			<td>1２月住民税控除：</td>
+			<td><input id="municipalTax12"name="municipalTax12" type="text"  value="${welfare.municipalTax12}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>社宅家賃控除：</td>

@@ -277,6 +277,10 @@ function toNumberDisp(strNumber){
 	}
 	return num;
 }
+// 対象月変更されたら、住民税を手動入力するためクリアする
+function chageMonth(){
+	document.getElementById('municipalTax').value="0";
+}
 </script>
 </head >
 <body onload="init()">
@@ -324,7 +328,7 @@ function toNumberDisp(strNumber){
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>対象月：</td>
-			<td><input id="month"name="month" type="text" value="${salaryInfoBean.month}"></td>
+			<td><input id="month"name="month" type="text" value="${salaryInfoBean.month} onchange="chageMonth()"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>基本給：</td>

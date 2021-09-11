@@ -31,7 +31,7 @@ public class DataUtil {
 	 * @author @ソフトテク
 	 */
 	public static String deleteComma(String sb) {
-		if(sb.isEmpty()) return sb;
+		if(sb.isEmpty()) return "0";
 
 		String str = sb.replaceAll(",", "");
 		return str;

@@ -350,42 +350,59 @@ public class SalaryInfoService {
 		am.setEmployeeID(salaryInfoBean.getEmployeeID());
 		//対象月
 		am.setMonth(DateUtil.chgMonthToYM(salaryInfoBean.getMonth()));
+
 		//支払日
 		am.setPaymentDate(DateUtil.chgMonthToYM(salaryInfoBean.getPaymentDate()));
+
 		//基本給
 		am.setBase(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getBase())));
 		if(salaryInfoBean.getOverTimePlus().length()==0) {
 	     	salaryInfoBean.setOverTimePlus("0") ;
 		}
 		//残業加算
-		am.setOverTimePlus(Integer.parseInt(salaryInfoBean.getOverTimePlus()));
+		if(salaryInfoBean.getOverTimePlus()!= null) {
+			am.setOverTimePlus(Integer.parseInt(salaryInfoBean.getOverTimePlus()));
+		}
+
 		if(salaryInfoBean.getShortageReduce().length()==0) {
 	     	salaryInfoBean.setShortageReduce("0") ;
 		}
+
 		//稼働不足減
-		am.setShortageReduce(Integer.parseInt(salaryInfoBean.getShortageReduce()));
+		if(salaryInfoBean.getShortageReduce()!= null) {
+			am.setShortageReduce(Integer.parseInt(salaryInfoBean.getShortageReduce()));
+		}
+
 		if(salaryInfoBean.getTransportExpense().length()==0) {
 	     	salaryInfoBean.setTransportExpense("0") ;
 		}
 		//交通費
 		am.setTransportExpense(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getTransportExpense())));
+
+
 		if(salaryInfoBean.getAllowancePlus().length()==0) {
 	     	salaryInfoBean.setAllowancePlus("0") ;
 		}
 
 		//特別加算
 		am.setSpecialAddition(Integer.parseInt(DataUtil.deleteComma(salaryInfoBean.getSpecialAddition())));
+
+
 		if(salaryInfoBean.getAllowancePlus().length()==0) {
 			salaryInfoBean.setAllowancePlus("0") ;
 		}
 
 		//手当加算
-		am.setAllowancePlus(Integer.parseInt(salaryInfoBean.getAllowancePlus()));
+		if(salaryInfoBean.getAllowancePlus()!= null) {
+			am.setAllowancePlus(Integer.parseInt(salaryInfoBean.getAllowancePlus()));
+		}
 		if(salaryInfoBean.getAllowanceReduce().length()==0) {
 	     	salaryInfoBean.setAllowanceReduce("0") ;
 		}
 		//手当減算
-		am.setAllowanceReduce(Integer.parseInt(salaryInfoBean.getAllowanceReduce()));
+		if(salaryInfoBean.getAllowanceReduce()!= null) {
+			am.setAllowanceReduce(Integer.parseInt(salaryInfoBean.getAllowanceReduce()));
+		}
 		//手当理由
 		am.setAllowanceReason(salaryInfoBean.getAllowanceReason());
 		if(salaryInfoBean.getEplyInsSelf().length()==0) {
@@ -446,12 +463,16 @@ public class SalaryInfoService {
 	     	salaryInfoBean.setOverTime("0") ;
 		}
 		//残業時間
-		am.setOverTime(Integer.parseInt(salaryInfoBean.getOverTime()));
+		if(salaryInfoBean.getOverTime() !=null ) {
+			am.setOverTime(Integer.parseInt(salaryInfoBean.getOverTime()));
+		}
 		if(salaryInfoBean.getShortage().length()==0) {
 	     	salaryInfoBean.setShortage("0") ;
 		}
 		//不足時間
-		am.setShortage(Integer.parseInt(salaryInfoBean.getShortage()));
+		if(salaryInfoBean.getShortage() !=null ) {
+			am.setShortage(Integer.parseInt(salaryInfoBean.getShortage()));
+		}
 		if(salaryInfoBean.getWelfarePensionSelf().length()==0) {
 	     	salaryInfoBean.setWelfarePensionSelf("0") ;
 		}

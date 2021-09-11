@@ -74,8 +74,19 @@ public class WelfareInfoService {
 		//源泉控除
 		welfareInfo.setWithholdingTax(Integer.parseInt(welfareBean.getWithholdingTax()));
 
-		//住民税控除
+		//1月住民税控除
 		welfareInfo.setMunicipalTax1(Integer.parseInt(welfareBean.getMunicipalTax1()));
+		welfareInfo.setMunicipalTax2(Integer.parseInt(welfareBean.getMunicipalTax2()));
+		welfareInfo.setMunicipalTax3(Integer.parseInt(welfareBean.getMunicipalTax3()));
+		welfareInfo.setMunicipalTax4(Integer.parseInt(welfareBean.getMunicipalTax4()));
+		welfareInfo.setMunicipalTax5(Integer.parseInt(welfareBean.getMunicipalTax5()));
+		welfareInfo.setMunicipalTax6(Integer.parseInt(welfareBean.getMunicipalTax6()));
+		welfareInfo.setMunicipalTax7(Integer.parseInt(welfareBean.getMunicipalTax7()));
+		welfareInfo.setMunicipalTax8(Integer.parseInt(welfareBean.getMunicipalTax8()));
+		welfareInfo.setMunicipalTax9(Integer.parseInt(welfareBean.getMunicipalTax9()));
+		welfareInfo.setMunicipalTax10(Integer.parseInt(welfareBean.getMunicipalTax10()));
+		welfareInfo.setMunicipalTax11(Integer.parseInt(welfareBean.getMunicipalTax11()));
+		welfareInfo.setMunicipalTax12(Integer.parseInt(welfareBean.getMunicipalTax12()));
 		//社宅家賃控除
 		welfareInfo.setRental(Integer.parseInt(welfareBean.getRental()));
 		//社宅管理費控除
