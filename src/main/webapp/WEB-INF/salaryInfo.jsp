@@ -328,7 +328,7 @@ function chageMonth(){
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>対象月：</td>
-			<td><input id="month"name="month" type="text" value="${salaryInfoBean.month} onchange="chageMonth()"></td>
+			<td><input id="month"name="month" type="text" value="${salaryInfoBean.month}" onchange="chageMonth()"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>基本給：</td>
