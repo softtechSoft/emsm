@@ -1,20 +1,42 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!DOCTYPE html>
+
 <html>
 <head>
-<meta charset="UTF-8">
-		<title>ソフトテク株式会社-社内管理システム</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--  <link type="text/css" rel="stylesheet" href="src/emsm/css/salarylist.css"></link>-->
+<script type="text/javascript" >
+		function toSearchJsp(){
+		var downloadFlg =document.getElementById('downloadFlg');
+		downloadFlg.value= 1;
+		document.theForm.submit();
+		}
+</script>
+<title> ソフトテク株式会社-社内管理システム </title>
 </head>
 <body>
-	<h1>契約情報リスト</h1>
-	<table>
-			<tr>
-			<td style="background-color:#F0F8FF"> <span>社員ID: <input type="text" size = "8"  /></span></td>
-			<td> <button type="button"   class="btn btn-primary">検索</button></td>
-			</tr>
+		<h2>契約情報管理リスト</h2>
+		<form:form name="theForm" id="theForm" method="post" modelAttribute="selectjyolken" action="contractInfoList" >
+</form:form>
+		<b>社員ID</b><br/>
+		<%
+		String employeeID[] ={"E001","E002","E003"};
+		%>
+		<select id="employeeID_id" name="employeeID_id">
+		<%for(int i = 0; i < employeeID.length ; i++){ %>
+      	<option value="<%= i %>"><%= employeeID[i] %> </option>
+<%} %>
 
-	</table>
-	<table border="1"  class="salrylist-table">
-    	 <tr>
+</select>
+		<input type="button" name="search" value="検索" onclick="toSearchJsp();" />
+
+		<table border="1"class="contractInfoList-table">
+		<tr>
+		   	 <tr>
         	<th width="200">契約ID</th>
         	<th width="400">契約名称</th>
         	<th width="400">社員ID</th>
@@ -38,31 +60,33 @@
         	<th width="300">更新日</th>
         	<th width="300">更新へ</th>
         </tr>
-        <tr>
-        	<td width="200">123</td>
-        	<td width="400">abc株式会社</td>
-        	<td width="400">E001</td>
-        	<td width="400">あいうえ</td>
-        	<td width="300">123</td>
-        	<td width="300">abc株式会社</td>
-        	<td width="300"> 200000円</td>
-        	<td width="500">清算あり</td>
-        	<td width="300">0h</td>
-			<td width="300">0円</td>
-        	<td width="300">20h</td>
-        	<td width="300">2000円</td>
-        	<td width="300">2021/01/15</td>
-        	<td width="500">2024/12/30</td>
-        	<td width="300">abc株式会社</td>
-        	<td width="500">不要</td>
-        	<td width="300"></td>
-        	<td width="300">abc株式会社</td>
-			<td width="300">進行中</td>
-        	<td width="300">2021/02/15</td>
-        	<td width="300">2022/01/03</td>
-        	<td> <button type="submit"   class="btn btn-primary">更新</button></td>
-        </tr>
-	</table>
-			<button type="submit"   class="btn btn-primary">新規</button>
+        </table>
+        	<c:forEach items="${list}" var="contractInfoList" varStatus="status">
+			<tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
+                <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
+            	<td><c:out value="${contractInfoList.getContractID()}"/></td>
+				<td><c:out value="${contractInfoList.getContractName()}"/></td>
+				<td><c:out value="${contractInfoList.getEmployeeID()}"/></td>
+				<td><c:out value="${contractInfoList.getEmployeeName()}"/></td>
+				<td><c:out value="${contractInfoList.getCompanyID()}"/></td>
+				<td><c:out value="${contractInfoList.getCompanyName()}"/></td>
+				<td><c:out value="${contractInfoList.getPrice()}"/></td>
+				<td><c:out value="${contractInfoList.getPayOff()}"/></td>
+				<td><c:out value="${contractInfoList.getLowerTime()}"/></td>
+				<td><c:out value="${contractInfoList.getLowerPrice()}"/></td>
+				<td><c:out value="${contractInfoList.getUpperTime()}"/></td>
+				<td><c:out value="${contractInfoList.getUpperPrice()}"/></td>
+				<td><c:out value="${contractInfoList.getContractBeginDate()}"/></td>
+				<td><c:out value="${contractInfoList.getContractEndDate()}"/></td>
+				<td><c:out value="${contractInfoList.getPaymentTerm()}"/></td>
+				<td><c:out value="${contractInfoList.getPostNeed()}"/></td>
+				<td><c:out value="${contractInfoList.getTimeReportPath()}"/></td>
+				<td><c:out value="${contractInfoList.getInvoice()}"/></td>
+				<td><c:out value="${contractInfoList.getStatus()}"/></td>
+				<td><c:out value="${contractInfoList.getInsertDate()}"/></td>
+				<td><c:out value="${contractInfoList.getUpdateDate()}"/></td>
+
+			</tr>
+		</c:forEach>
 </body>
 </html>

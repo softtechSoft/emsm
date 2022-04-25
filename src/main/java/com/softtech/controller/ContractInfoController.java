@@ -1,7 +1,6 @@
 package com.softtech.controller;
 
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +17,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ContractInfoController {
 
 	@RequestMapping("/initContractInfoList")
-	public String toContractInfoList(Model model, String contractInfoList) {
+	public String toinitContractInfoList(Model model, String contractInfoList) {
 		return "contractInfoList";
 
+}
+
+	@RequestMapping("/ContractInfoList")
+		public String toContractInfoList(Model model, String contractInfoList) {
+	//	List<ContractInfoBean> sList= ContractInfoService.queryContractInfoList(ContractInfoBean.getEmployeeID());
+		//	model.addAttribute("ContractInfoList",sList);
+			return "contractInfoList";
 
 }
+
+
+
+
 }
