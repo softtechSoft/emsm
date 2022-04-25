@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class ContractInfoController {
+
 	@RequestMapping("/initContractInfoList")
 	public String toContractInfoList(Model model, String contractInfoList) {
-		return contractInfoList;
+		return "contractInfoList";
 
 
 }
