@@ -10,28 +10,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--  <link type="text/css" rel="stylesheet" href="src/emsm/css/salarylist.css"></link>-->
 <script type="text/javascript" >
-		function toSearchJsp(){
+	function toSearchJsp(){
 		var downloadFlg =document.getElementById('downloadFlg');
 		downloadFlg.value= 1;
 		document.theForm.submit();
-		}
+	}
 </script>
 <title> ソフトテク株式会社-社内管理システム </title>
 </head>
 <body>
 		<h2>契約情報管理リスト</h2>
-		<form:form name="theForm" id="theForm" method="post" modelAttribute="selectjyolken" action="contractInfoList" >
-</form:form>
-		<b>社員ID</b><br/>
-		<%
-		String employeeID[] ={"E001","E002","E003"};
-		%>
-		<select id="employeeID_id" name="employeeID_id">
-		<%for(int i = 0; i < employeeID.length ; i++){ %>
-      	<option value="<%= i %>"><%= employeeID[i] %> </option>
-<%} %>
+<form:form name="theForm" id="theForm" method="post" modelAttribute="contractInfoBean"  action="contractInfoList" >
 
-</select>
+		<b>社員ID</b><br/>
+		<form:select path="id">
+			<form:options items="${contractList}" itemLabel="userID"  itemValue="id"/>
+		</form:select>
 		<input type="button" name="search" value="検索" onclick="toSearchJsp();" />
 
 		<table border="1"class="contractInfoList-table">
@@ -88,5 +82,6 @@
 
 			</tr>
 		</c:forEach>
+</form:form>
 </body>
 </html>
