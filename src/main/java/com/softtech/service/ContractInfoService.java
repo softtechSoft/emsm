@@ -16,5 +16,9 @@ public interface ContractInfoService {
 
 	List<ContractInfoBean > queryContractInfoList(String employeeID);
 
+	static List<ContractInfoBean> getqueryContractInfoList(String employeeID) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 
+	}
