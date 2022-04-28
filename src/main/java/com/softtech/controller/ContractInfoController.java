@@ -2,8 +2,13 @@ package com.softtech.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.softtech.actionForm.ContractInfoBean;
@@ -62,14 +67,22 @@ public class ContractInfoController {
 	 */
 
 	@RequestMapping("/ContractInfoList")
-	public String toContractInfoList(Model model) {
-		String employeeID = (String) model.getAttribute("userEmoplyeeID");
-		List<ContractInfoBean> sList= ContractInfoService.getqueryContractInfoList(employeeID);
+	public String contractInfo(@Valid @ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
+		BindingResult result,HttpSession session,Model model) {
 
+
+			String employeeID = (String) session.getAttribute("userEmoplyeeID");
+			List<ContractInfoBean> sList= ContractInfoService.queryContractInfoList(employeeID);
+					// 入力にエラーある場合、画面にエラーを表示する。
+				if (result.hasErrors()) {
+					model.addAttribute("errors", result.getFieldErrors());
+					return "login";
+				}
 
 		model.addAttribute("ContractInfoList",sList);
+		model.addAttribute("contractInfoBean",contractInfoBean);
 
-		return "contractInfoList";
+			return "contractInfoList";
 
 	}
 

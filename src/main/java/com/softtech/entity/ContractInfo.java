@@ -1,216 +1,302 @@
 package com.softtech.entity;
 
 public class ContractInfo {
-	//契約ID
-			private String ContractID;
+			//契約ID
+			private String contractID;
 			//契約名称
-			private String ContractName;
+			private String contractName;
 			//社員ID
-			private String EmployeeID;
+			private String employeeID;
 			//社員名称
-			private String EmployeeName;
+			private String employeeName;
 			//取引先ID
-			private String CompanyID;
+			private String companyID;
 			//取引先名称
-			private String CompanyName;
+			private String companyName;
 			//単価
-			private String Price;
+			private String price;
 			//精算タイプ
-			private String PayOff;
+			private String payOff;
 			//契約下限
-			private String LowerTime;
+			private String lowerTime;
 			//控除単価
-			private String LowerPrice;
+			private String lowerPrice;
 			//契約上限
-			private String UpperTime;
+			private String upperTime;
 			//残業単価
-			private String UpperPrice;
+			private String upperPrice;
 			//契約開始日
-			private String ContractBeginDate;
+			private String contractBeginDate;
 			//契約終了日
-			private String ContractEndDate;
+			private String contractEndDate;
 			//支払サイト
-			private String PaymentTerm;
+			private String paymentTerm;
 			//原本郵送フラグ
-			private String PostNeed;
+			private String postNeed;
 			//タイムレポートパス
-			private String TimeReportPath;
+			private String timeReportPath;
 			//請求書名称
-			private String Invoice;
+			private String invoice;
 			//進行ステータス
-			private String Status;
+			private String status;
 			//作成日
-			private String InsertDate;
+			private String insertDate;
 			//更新日
-			private String UpdateDate;
-
+			private String updateDate;
+			/**
+			 * @return contractID
+			 */
 			public String getContractID() {
-				return ContractID;
+				return contractID;
 			}
-
+			/**
+			 * @param contractID セットする contractID
+			 */
 			public void setContractID(String contractID) {
-				ContractID = contractID;
+				this.contractID = contractID;
 			}
-
+			/**
+			 * @return contractName
+			 */
 			public String getContractName() {
-				return ContractName;
+				return contractName;
 			}
-
+			/**
+			 * @param contractName セットする contractName
+			 */
 			public void setContractName(String contractName) {
-				ContractName = contractName;
+				this.contractName = contractName;
 			}
-
+			/**
+			 * @return employeeID
+			 */
 			public String getEmployeeID() {
-				return EmployeeID;
+				return employeeID;
 			}
-
+			/**
+			 * @param employeeID セットする employeeID
+			 */
 			public void setEmployeeID(String employeeID) {
-				EmployeeID = employeeID;
+				this.employeeID = employeeID;
 			}
-
+			/**
+			 * @return employeeName
+			 */
 			public String getEmployeeName() {
-				return EmployeeName;
+				return employeeName;
 			}
-
+			/**
+			 * @param employeeName セットする employeeName
+			 */
 			public void setEmployeeName(String employeeName) {
-				EmployeeName = employeeName;
+				this.employeeName = employeeName;
 			}
-
+			/**
+			 * @return companyID
+			 */
 			public String getCompanyID() {
-				return CompanyID;
+				return companyID;
 			}
-
+			/**
+			 * @param companyID セットする companyID
+			 */
 			public void setCompanyID(String companyID) {
-				CompanyID = companyID;
+				this.companyID = companyID;
 			}
-
+			/**
+			 * @return companyName
+			 */
 			public String getCompanyName() {
-				return CompanyName;
+				return companyName;
 			}
-
+			/**
+			 * @param companyName セットする companyName
+			 */
 			public void setCompanyName(String companyName) {
-				CompanyName = companyName;
+				this.companyName = companyName;
 			}
-
+			/**
+			 * @return price
+			 */
 			public String getPrice() {
-				return Price;
+				return price;
 			}
-
+			/**
+			 * @param price セットする price
+			 */
 			public void setPrice(String price) {
-				Price = price;
+				this.price = price;
 			}
-
+			/**
+			 * @return payOff
+			 */
 			public String getPayOff() {
-				return PayOff;
+				return payOff;
 			}
-
+			/**
+			 * @param payOff セットする payOff
+			 */
 			public void setPayOff(String payOff) {
-				PayOff = payOff;
+				this.payOff = payOff;
 			}
-
+			/**
+			 * @return lowerTime
+			 */
 			public String getLowerTime() {
-				return LowerTime;
+				return lowerTime;
 			}
-
+			/**
+			 * @param lowerTime セットする lowerTime
+			 */
 			public void setLowerTime(String lowerTime) {
-				LowerTime = lowerTime;
+				this.lowerTime = lowerTime;
 			}
-
+			/**
+			 * @return lowerPrice
+			 */
 			public String getLowerPrice() {
-				return LowerPrice;
+				return lowerPrice;
 			}
-
+			/**
+			 * @param lowerPrice セットする lowerPrice
+			 */
 			public void setLowerPrice(String lowerPrice) {
-				LowerPrice = lowerPrice;
+				this.lowerPrice = lowerPrice;
 			}
-
+			/**
+			 * @return upperTime
+			 */
 			public String getUpperTime() {
-				return UpperTime;
+				return upperTime;
 			}
-
+			/**
+			 * @param upperTime セットする upperTime
+			 */
 			public void setUpperTime(String upperTime) {
-				UpperTime = upperTime;
+				this.upperTime = upperTime;
 			}
-
+			/**
+			 * @return upperPrice
+			 */
 			public String getUpperPrice() {
-				return UpperPrice;
+				return upperPrice;
 			}
-
+			/**
+			 * @param upperPrice セットする upperPrice
+			 */
 			public void setUpperPrice(String upperPrice) {
-				UpperPrice = upperPrice;
+				this.upperPrice = upperPrice;
 			}
-
+			/**
+			 * @return contractBeginDate
+			 */
 			public String getContractBeginDate() {
-				return ContractBeginDate;
+				return contractBeginDate;
 			}
-
+			/**
+			 * @param contractBeginDate セットする contractBeginDate
+			 */
 			public void setContractBeginDate(String contractBeginDate) {
-				ContractBeginDate = contractBeginDate;
+				this.contractBeginDate = contractBeginDate;
 			}
-
+			/**
+			 * @return contractEndDate
+			 */
 			public String getContractEndDate() {
-				return ContractEndDate;
+				return contractEndDate;
 			}
-
+			/**
+			 * @param contractEndDate セットする contractEndDate
+			 */
 			public void setContractEndDate(String contractEndDate) {
-				ContractEndDate = contractEndDate;
+				this.contractEndDate = contractEndDate;
 			}
-
+			/**
+			 * @return paymentTerm
+			 */
 			public String getPaymentTerm() {
-				return PaymentTerm;
+				return paymentTerm;
 			}
-
+			/**
+			 * @param paymentTerm セットする paymentTerm
+			 */
 			public void setPaymentTerm(String paymentTerm) {
-				PaymentTerm = paymentTerm;
+				this.paymentTerm = paymentTerm;
 			}
-
+			/**
+			 * @return postNeed
+			 */
 			public String getPostNeed() {
-				return PostNeed;
+				return postNeed;
 			}
-
+			/**
+			 * @param postNeed セットする postNeed
+			 */
 			public void setPostNeed(String postNeed) {
-				PostNeed = postNeed;
+				this.postNeed = postNeed;
 			}
-
+			/**
+			 * @return timeReportPath
+			 */
 			public String getTimeReportPath() {
-				return TimeReportPath;
+				return timeReportPath;
 			}
-
+			/**
+			 * @param timeReportPath セットする timeReportPath
+			 */
 			public void setTimeReportPath(String timeReportPath) {
-				TimeReportPath = timeReportPath;
+				this.timeReportPath = timeReportPath;
 			}
-
+			/**
+			 * @return invoice
+			 */
 			public String getInvoice() {
-				return Invoice;
+				return invoice;
 			}
-
+			/**
+			 * @param invoice セットする invoice
+			 */
 			public void setInvoice(String invoice) {
-				Invoice = invoice;
+				this.invoice = invoice;
 			}
-
+			/**
+			 * @return status
+			 */
 			public String getStatus() {
-				return Status;
+				return status;
 			}
-
+			/**
+			 * @param status セットする status
+			 */
 			public void setStatus(String status) {
-				Status = status;
+				this.status = status;
 			}
-
+			/**
+			 * @return insertDate
+			 */
 			public String getInsertDate() {
-				return InsertDate;
+				return insertDate;
 			}
-
+			/**
+			 * @param insertDate セットする insertDate
+			 */
 			public void setInsertDate(String insertDate) {
-				InsertDate = insertDate;
+				this.insertDate = insertDate;
 			}
-
+			/**
+			 * @return updateDate
+			 */
 			public String getUpdateDate() {
-				return UpdateDate;
+				return updateDate;
+			}
+			/**
+			 * @param updateDate セットする updateDate
+			 */
+			public void setUpdateDate(String updateDate) {
+				this.updateDate = updateDate;
 			}
 
-			public void setUpdateDate(String updateDate) {
-				UpdateDate = updateDate;
-			}
+
 		}
 
 

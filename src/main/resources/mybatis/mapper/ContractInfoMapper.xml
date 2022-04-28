@@ -6,8 +6,15 @@
 <mapper namespace="com.softtech.mappers.ContractInfolistMapper">
 <select id="getcontractinfolist" parameterType="String" resultType="com.softtech.entity.ContractInfo">
  <!--給料情報を取得する。-->
- 	select s.*,
- 	from contract
- 	where employeeiD=#{employeeID}
+ 	select
+			ct.*,e.employeeName,cm.companyName
+		from
+			ems.employee e,
+			ems.contract ct,
+			ems.company cm
+		where ct.status = '1'
+		and ct.employeeID = e.employeeID
+		and ct.companyID = cm.companyID
+		and ct.employeeID = #{employeeID}
  	 </select>
  	 </mapper>
