@@ -2,8 +2,7 @@ package com.softtech.common;
 
 public class EmployeeIDName {
 	private int id;
-	  private String userID;
-
+	private String userID;
 
 	/**
 	 * @return id

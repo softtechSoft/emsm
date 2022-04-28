@@ -62,13 +62,16 @@ public class ContractInfoController {
 	 */
 
 	@RequestMapping("/ContractInfoList")
-		public String toContractInfoList(Model model) {
+	public String toContractInfoList(Model model) {
 		String employeeID = (String) model.getAttribute("userEmoplyeeID");
-	 List<ContractInfoBean> sList= ContractInfoService.getqueryContractInfoList(employeeID);
-	 model.addAttribute("ContractInfoList",sList);
-			return "contractInfoList";
+		List<ContractInfoBean> sList= ContractInfoService.getqueryContractInfoList(employeeID);
 
-}
+
+		model.addAttribute("ContractInfoList",sList);
+
+		return "contractInfoList";
+
+	}
 
 
 
