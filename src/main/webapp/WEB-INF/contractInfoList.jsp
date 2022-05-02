@@ -11,8 +11,6 @@
 <!--  <link type="text/css" rel="stylesheet" href="src/emsm/css/salarylist.css"></link>-->
 <script type="text/javascript" >
 	function toSearchJsp(){
-		var downloadFlg =document.getElementById('downloadFlg');
-		downloadFlg.value= 1;
 		document.theForm.submit();
 	}
 </script>
@@ -22,10 +20,11 @@
 		<h2>契約情報管理リスト</h2>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="contractInfoBean"  action="contractInfoList" >
 
-	<b>社員ID</b><br/>
-<form:select path="id">
-<form:options items="${contractList}" itemLabel="userID"  itemValue="id"/>
-</form:select>
+	<b>社員:</b>
+	<form:select path="employeeID">
+		<form:options items="${contractList}" itemLabel="employeeName"  itemValue="employeeID"/>
+	</form:select>
+
 	<input type="button" name="search" value="検索" onclick="toSearchJsp();" />
 			<!--エラーメッセージ-->
 		<p style="color: red;">

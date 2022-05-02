@@ -22,4 +22,11 @@
 		and employeeID = #{employeeID}
  </select>
 
+<!-- 社員情報IDを取得する-->
+<select id="getEmployees" resultType="com.softtech.common.EmployeeIDName">
+        SELECT employeeID,employeeName
+        FROM employee
+        WHERE status = '0'
+ </select>
+
 </mapper>

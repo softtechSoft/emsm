@@ -6,18 +6,18 @@ import com.softtech.actionForm.ContractInfoBean;
 
 
 /**
- * 機能：給料リスト取得
- * @param
- * @param employeeID 対象社員ID
- * @return 給料情報リスト
+ * 概要：給料情報取得インタフェース
+ *
  * @author テー@ソフトテク
  */
 public interface ContractInfoService {
 
-	static List<ContractInfoBean > queryContractInfoList(String employeeID) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-		}
+	/*
+	 * 機能：給料情報リスト取得
+	 *
+	 * @author テー@ソフトテク
+	 */
+	public List<ContractInfoBean > queryContractInfoList(String employeeID);
 
 }
 

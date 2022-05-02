@@ -1,7 +1,10 @@
 package com.softtech.mappers;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
+import com.softtech.common.EmployeeIDName;
 import com.softtech.common.LoginEmployee;
 import com.softtech.entity.LoginEntity;
 /**
@@ -14,4 +17,6 @@ public interface LoginMappers {
 	//LoginEntity getMailAdress(String mailAdress);
 	LoginEntity getOldPassword(LoginEmployee em);
 	LoginEntity getEmployeeByID(LoginEmployee em);
+	//社員情報IDリストを取得する
+	List<EmployeeIDName> getEmployees();
 }

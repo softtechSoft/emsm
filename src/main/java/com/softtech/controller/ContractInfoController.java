@@ -1,13 +1,9 @@
 package com.softtech.controller;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,6 +11,7 @@ import com.softtech.actionForm.ContractInfoBean;
 import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.service.ContractInfoService;
+import com.softtech.service.LoginService;
 
 /**
  * 概要：契約情報リスト初期表示
@@ -25,6 +22,13 @@ import com.softtech.service.ContractInfoService;
  */
 @Controller
 public class ContractInfoController {
+	// ログインサービス
+	@Autowired
+	LoginService loginService;
+
+    // 契約情報サービス
+	@Autowired
+	ContractInfoService contractInfoService;
 
 	/*
 	 * 機能概要：契約情報リストの初期表示
@@ -35,29 +39,20 @@ public class ContractInfoController {
 	 */
 	@RequestMapping("/initContractInfoList")
 	public String toinitContractInfoList(Model model) {
-
 		//社員IDリスト候補生成
-		List<EmployeeIDName> contractList = new ArrayList<EmployeeIDName>();
-		EmployeeIDName employeeIDName1 = new EmployeeIDName();
-		employeeIDName1.setId(1);
-		employeeIDName1.setUserID("E001");
-		contractList.add(employeeIDName1);
-
-		EmployeeIDName employeeIDName2 = new EmployeeIDName();
-		employeeIDName2.setId(2);
-		employeeIDName2.setUserID("E002");
-		contractList.add(employeeIDName2);
+		List<EmployeeIDName> contractList = loginService.getEmployeeList();
 
 		ContractInfoFormBean contractInfoBean = new ContractInfoFormBean();
-		contractInfoBean.setId(1);
-		//contractInfoBean.setEmployeeIDNameList(contractList);
-		model.addAttribute("contractInfoBean",contractInfoBean);
-		model.addAttribute("contractList",contractList);
+		//社員項目IDを任意設定
+		contractInfoBean.setEmployeeID("1");
 
+		model.addAttribute("contractInfoBean",contractInfoBean);
+		//社員IDリスト候補を画面へ渡す
+		model.addAttribute("contractList",contractList);
 
 		return "contractInfoList";
 
-}
+	}
 	/*
 	 * 機能概要：契約情報検索
 	 *
@@ -65,24 +60,20 @@ public class ContractInfoController {
 	 * @author テー@it-softtech.com
 	 *
 	 */
+	@RequestMapping("/contractInfoList")
+	public String contractInfo(@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
+								Model model) {
+		// 対象社員IDを取得する
+		String emplyeeID = contractInfoBean.getEmployeeID();
+		List<ContractInfoBean> sList= contractInfoService.queryContractInfoList(emplyeeID);
 
-	@RequestMapping("/ContractInfoList")
-	public String contractInfo(@Valid @ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
-		BindingResult result,HttpSession session,Model model) {
-
-
-			String employeeID = (String) session.getAttribute("userEmoplyeeID");
-			List<ContractInfoBean> sList= ContractInfoService.queryContractInfoList(employeeID);
-					// 入力にエラーある場合、画面にエラーを表示する。
-				if (result.hasErrors()) {
-					model.addAttribute("errors", result.getFieldErrors());
-					return "login";
-				}
-
-		model.addAttribute("ContractInfoList",sList);
+		//社員IDリスト候補生成
+		List<EmployeeIDName> contractList = loginService.getEmployeeList();
+		//社員IDリスト候補を画面へ渡す
+		model.addAttribute("contractList",contractList);
 		model.addAttribute("contractInfoBean",contractInfoBean);
 
-			return "contractInfoList";
+		return "contractInfoList";
 
 	}
 

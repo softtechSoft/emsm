@@ -1,31 +1,33 @@
 package com.softtech.common;
 
 public class EmployeeIDName {
-	private int id;
-	private String userID;
+	// ユーザーID
+	private String employeeID;
+	// ユーザー名称
+	private String employeeName;
+	/**
+	 * @return employeeID
+	 */
+	public String getEmployeeID() {
+		return employeeID;
+	}
+	/**
+	 * @param employeeID セットする employeeID
+	 */
+	public void setEmployeeID(String employeeID) {
+		this.employeeID = employeeID;
+	}
+	/**
+	 * @return employeeName
+	 */
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	/**
+	 * @param employeeName セットする employeeName
+	 */
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
 
-	/**
-	 * @return id
-	 */
-	public int getId() {
-		return id;
-	}
-	/**
-	 * @param id セットする id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-	/**
-	 * @return userID
-	 */
-	public String getUserID() {
-		return userID;
-	}
-	/**
-	 * @param userID セットする userID
-	 */
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
 }

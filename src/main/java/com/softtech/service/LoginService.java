@@ -1,9 +1,13 @@
 package com.softtech.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.LoginBean;
+import com.softtech.common.EmployeeIDName;
 import com.softtech.common.LoginEmployee;
 import com.softtech.entity.LoginEntity;
 import com.softtech.mappers.LoginMappers;
@@ -73,4 +77,22 @@ public class LoginService {
 		return employee;
 
 	}
+
+	/*
+	 * 機能：社員情報から社員IDリストを取得
+	 *
+	 * @param なし
+	 * @return 社員IDリスト
+	 * @author
+	 */
+	public List<EmployeeIDName> getEmployeeList() {
+
+		List<EmployeeIDName> contractList = new ArrayList<EmployeeIDName>();
+		// 社員情報テーブルからIDリストを取得する
+		contractList = loginMappers.getEmployees();
+
+		return contractList;
+
+	}
+
 }
