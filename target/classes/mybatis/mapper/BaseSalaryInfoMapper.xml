@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.BaseSalaryInfoMapper.xml">
+	<insert id="insertBaseSalaryInfo" parameterType="map">
+		insert
+	into
+		baseSalaryInfo
+		(
+			baseSalary,
+			minusHour,
+			plusHour,
+			wkPeriodFrom,
+			wkPeriodTo,
+			status,
+			insertDate,
+		)
+	values
+			#{baseSalary},
+			#{wkPeriodFrom},
+			#{wkPeriodTo},
+			#{minusHour},
+			#{plusHour},
+			#{status},
+			date_format(now(),'%Y%m%d'),
+
+
+	</insert>
+
+	<insert id="queryBaseSalaryInfo" parameterType="map">
+		select
+			employeeID as employeeID,
+			baseSalary as baseSalary,
+			minusHour as minusHour,
+			plusHour as plusHour,
+			wkPeriodFrom as wkPeriodFrom,
+			wkPeriodTo as wkPeriodTo,
+			status as status,
+			insertDate as insertDate,
+			updateDate as updateDate,
+			baseSalaryID as baseSalaryID,
+
+		from
+			ems.baseSalaryInfo
+		where
+			employeeID=#{employeeID}
+	</insert>
+
+	<insert id="updateBaseSalaryInfo" parameterType="map">
+		    update
+				baseSalaryInfo
+			set
+    			baseSalary=#{baseSalary},
+   	 			minusHour=#{minusHour},
+    			plusHour=#{plusHour},
+    			wkPeriodFrom=#{wkPeriodFrom},
+    			wkPeriodTo=#{wkPeriodTo},
+    			status=#{status},
+    			updateDate=date_format(now(),'%Y%m%d')
+			where
+ 				employeeID=#{employeeID}
+	</insert>
+</mapper>
