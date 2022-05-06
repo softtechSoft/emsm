@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.softtech.actionForm.ContractInfoBean;
 import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.common.EmployeeIDName;
+import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.ContractInfoService;
 import com.softtech.service.LoginService;
 
@@ -64,20 +64,17 @@ public class ContractInfoController {
 	public String contractInfo(@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
 								Model model) {
 		// 対象社員IDを取得する
-		String emplyeeID = contractInfoBean.getEmployeeID();
-		List<ContractInfoBean> sList= contractInfoService.queryContractInfoList(emplyeeID);
+		String employeeID = contractInfoBean.getEmployeeID();
+		List<ContractInfoEntity> sList= contractInfoService.queryContractInfoList(employeeID);
 
 		//社員IDリスト候補生成
 		List<EmployeeIDName> contractList = loginService.getEmployeeList();
 		//社員IDリスト候補を画面へ渡す
 		model.addAttribute("contractList",contractList);
 		model.addAttribute("contractInfoBean",contractInfoBean);
+		model.addAttribute("list",sList);
 
 		return "contractInfoList";
 
 	}
-
-
-
-
 }

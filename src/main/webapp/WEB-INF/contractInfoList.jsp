@@ -34,7 +34,6 @@
 		</p>
 
 	<table border="1"class="contractInfoList-table">
-		<tr>
 		   	 <tr>
         		<th width="200">契約ID</th>
         		<th width="400">契約名称</th>
@@ -59,7 +58,7 @@
         		<th width="300">更新日</th>
         		<th width="300">更新へ</th>
         	</tr>
-	</table>
+
         	<c:forEach items="${list}" var="contractInfoList" varStatus="status">
 				<tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
 					<c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
@@ -84,9 +83,10 @@
 					<td><c:out value="${contractInfoList.getStatus()}"/></td>
 					<td><c:out value="${contractInfoList.getInsertDate()}"/></td>
 					<td><c:out value="${contractInfoList.getUpdateDate()}"/></td>
-
+					<td><input type="button" name="uptade" value="更新"  /></td>
 				</tr>
 			</c:forEach>
+	</table>
 </form:form>
 </body>
 </html>

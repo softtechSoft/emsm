@@ -3,10 +3,10 @@
                 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.softtech.mappers.ContractInfolistMapper">
-<select id="getcontractinfolist" parameterType="String" resultType="com.softtech.entity.ContractInfo">
- <!--給料情報を取得する。-->
- 	select
+<mapper namespace="com.softtech.mappers.ContractInfoMapper">
+	<select id="getContractInfoList" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
+		 <!--給料情報を取得する。-->
+ 		select
 			ct.*,e.employeeName,cm.companyName
 		from
 			ems.employee e,
@@ -16,5 +16,5 @@
 		and ct.employeeID = e.employeeID
 		and ct.companyID = cm.companyID
 		and ct.employeeID = #{employeeID}
- 	 </select>
- 	 </mapper>
+	</select>
+ </mapper>

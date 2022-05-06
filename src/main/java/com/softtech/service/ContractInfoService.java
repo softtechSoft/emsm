@@ -2,7 +2,7 @@ package com.softtech.service;
 
 import java.util.List;
 
-import com.softtech.actionForm.ContractInfoBean;
+import com.softtech.entity.ContractInfoEntity;
 
 
 /**
@@ -17,7 +17,7 @@ public interface ContractInfoService {
 	 *
 	 * @author テー@ソフトテク
 	 */
-	public List<ContractInfoBean > queryContractInfoList(String employeeID);
+	public List<ContractInfoEntity > queryContractInfoList(String employeeID);
 
 }
 
