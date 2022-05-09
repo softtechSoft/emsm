@@ -10,14 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.softtech.actionForm.BaseSalaryInfoBean;
 import com.softtech.actionForm.BaseSalaryInfoFormBean;
-import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.BaseSalaryInfoEntity;
-import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.BaseSalaryInfoService;
-import com.softtech.service.ContractInfoService;
 import com.softtech.service.LoginService;
 
 
