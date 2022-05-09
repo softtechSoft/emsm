@@ -1,9 +1,12 @@
 package com.softtech.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.entity.BaseSalaryInfoEntity;
+import com.softtech.entity.ContractInfoEntity;
 import com.softtech.mappers.BaseSalaryInfoMapper;
 
 /**
@@ -14,20 +17,12 @@ import com.softtech.mappers.BaseSalaryInfoMapper;
  */
 
 @Service
-public class BaseSalaryInfoService {
-	@Autowired
-	BaseSalaryInfoMapper baseSalaryInfoMapper;
+public interface BaseSalaryInfoService {
 	/*
 	 * 機能概要： 作成用社員情報を取得
 	 *			条件：社員ID
 	 *
 	 * @param  employeeID 検索パラメータ
-	 * @return 作成用社員情報
 	 */
-	public BaseSalaryInfoEntity queryBaseSalaryInfoEntity(String employeeID) {
-		return null;
-		// DBから給作成用社員情報を取得する
-
-	}
-
+	public List<BaseSalaryInfoEntity > queryBaseSalaryInfoList(String employeeID);
 }
