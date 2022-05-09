@@ -1,7 +1,5 @@
 package com.softtech.actionForm;
 
-import javax.validation.constraints.Size;
-
 /**
  * 概要：基本給情報リストの区別用
  *
@@ -10,12 +8,6 @@ import javax.validation.constraints.Size;
  */
 
 public class BaseSalaryInfoBean {
-	//基本給情報リストの区別用変数
-	private String baseFlg;
-	//JSP 社員IDを転送用
-	private String gamenEmployeeID;
-
-	@Size(min=2, max=30,message="社員IDを入力してください。例：E001")
 	//社員ID
 	private String employeeID;
 	//基本給
@@ -38,12 +30,6 @@ public class BaseSalaryInfoBean {
 	private String baseSalaryID;
 
 
-	public String getBaseFlg() {
-		return baseFlg;
-	}
-	public void setBaseFlg(String baseFlg) {
-		this.baseFlg = baseFlg;
-	}
 	public String getEmployeeID() {
 		return employeeID;
 	}
@@ -103,12 +89,6 @@ public class BaseSalaryInfoBean {
 	}
 	public void setBaseSalaryID(String baseSalaryID) {
 		this.baseSalaryID = baseSalaryID;
-	}
-	public String getGamenEmployeeID() {
-		return gamenEmployeeID;
-	}
-	public void setGamenEmployeeID(String gamenEmployeeID) {
-		this.gamenEmployeeID = gamenEmployeeID;
 	}
 
 

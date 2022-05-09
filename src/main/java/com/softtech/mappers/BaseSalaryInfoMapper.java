@@ -1,10 +1,15 @@
 package com.softtech.mappers;
 
+import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.softtech.entity.BaseSalaryInfoEntity;
+import com.softtech.entity.ContractInfoEntity;
 
 /**
- * 概要：基本給
+ * 概要：基本給の検索、更新、入力
  *
  * 作成者：孫曄@ソフトテク
  * 作成日：2022/5/5
@@ -12,10 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface BaseSalaryInfoMapper {
-	//提出
-	int insertBaseSalaryInfo(Map<String, String> map);
-	//検索
-	String queryBaseSalaryInfo(String employeeID);
-	//修正
-	int updateBaseSalaryInfo(Map<String,String> map);
+
+	List<BaseSalaryInfoEntity> getBaseSalaryInfoList(@Param("employeeID")String employeeID);
 }

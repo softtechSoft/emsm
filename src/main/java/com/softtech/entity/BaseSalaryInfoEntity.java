@@ -8,25 +8,27 @@ package com.softtech.entity;
 
 public class BaseSalaryInfoEntity {
 	//社員ID
-	private String employeeID = "";
+	private String employeeID;
 	//基本給
-	private int baseSalary = 0;
-	//残業不足時間
-	private int minusHour = 0;
-	//残業時間
-	private int plusHour = 0;
+	private int baseSalary;
+	//不足減単価(h)
+	private int minusHour;
+	//残業加単価(h)
+	private int plusHour;
 	//稼働期間From
-	private int wkPeriodFrom = 0;
+	private int wkPeriodFrom;
 	//稼働期間To
-	private int wkPeriodTo = 0;
+	private int wkPeriodTo;
 	//利用ステータス
-	private int status = 0;
+	private int status;
 	//作成日
-	private String insertDate = "";
+	private String insertDate;
 	//更新日
-	private String updateDate = "";
+	private String updateDate;
 	//基本給ID
-	private String baseSalaryID = "";
+	private String baseSalaryID;
+
+	//get,set,toString,hashCode,equals
 	public String getEmployeeID() {
 		return employeeID;
 	}

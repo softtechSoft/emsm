@@ -7,7 +7,7 @@
 	<insert id="insertBaseSalaryInfo" parameterType="map">
 		insert
 	into
-		baseSalaryInfo
+		m_basesalary
 		(
 			baseSalary,
 			minusHour,
@@ -43,14 +43,14 @@
 			baseSalaryID as baseSalaryID,
 
 		from
-			ems.baseSalaryInfo
+			ems.m_basesalary
 		where
 			employeeID=#{employeeID}
 	</insert>
 
 	<insert id="updateBaseSalaryInfo" parameterType="map">
 		    update
-				baseSalaryInfo
+				m_basesalary
 			set
     			baseSalary=#{baseSalary},
    	 			minusHour=#{minusHour},
