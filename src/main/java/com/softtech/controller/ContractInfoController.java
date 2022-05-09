@@ -77,4 +77,22 @@ public class ContractInfoController {
 		return "contractInfoList";
 
 	}
+	/*
+	 * 機能概要：契約情報検索画面
+	 *
+	 * @param  model
+	 * @author テー@it-softtech.com
+	 *
+	 */
+	@RequestMapping("/toInitContractInfo")
+	public String initContractInfoList(@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
+			Model model) {
+		String contractID = contractInfoBean.getContractID();
+		List<ContractInfoEntity> sList= contractInfoService.queryContractInfoList(contractID);
+		model.addAttribute("list",sList);
+		model.addAttribute("contractInfoBean",contractInfoBean);
+		return "contractInfoEdit";
 }
+}
+
+

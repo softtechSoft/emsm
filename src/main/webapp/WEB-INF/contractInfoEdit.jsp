@@ -9,39 +9,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--  <link type="text/css" rel="stylesheet" href="src/emsm/css/salarylist.css"></link>-->
-<script type="text/javascript" >
-	function toSearchJsp(){
-		document.theForm.submit();
-	}
-	// 更新ボタン処理
-	function toUpdateJsp(contractId){
-		document.getElementById('contractID').value=contractId;
-		document.theForm.action="toInitContractInfo";
-		document.theForm.submit();
-	}
-</script>
 <title> ソフトテク株式会社-社内管理システム </title>
 </head>
 <body>
 		<h2>契約情報管理リスト</h2>
-<form:form name="theForm" id="theForm" method="post" modelAttribute="contractInfoBean"  action="contractInfoList" >
-
-	<input type="hidden" id="contractID" name="contractID" value="${contractInfoBean.contractID}"/>
-
-	<b>社員:</b>
-	<form:select path="employeeID">
-		<form:options items="${contractList}" itemLabel="employeeName"  itemValue="employeeID"/>
-	</form:select>
-
-	<input type="button" name="search" value="検索" onclick="toSearchJsp();" />
-			<!--エラーメッセージ-->
-		<p style="color: red;">
-	    	<c:forEach items="${errors}" var="error">
-			<spring:message message="${error}" /> </br>
-			</c:forEach>
-		</p>
-
-	<table border="1"class="contractInfoList-table">
+<form:form name="theForm" id="theForm" method="post" modelAttribute="contractInfoBean"  action="contractInfoEdit" >
+		<h1>契約情報更新</h1>
+		<table  border="1">
 		   	 <tr>
         		<th width="200">契約ID</th>
         		<th width="400">契約名称</th>
@@ -66,8 +40,7 @@
         		<th width="300">更新日</th>
         		<th width="300">更新へ</th>
         	</tr>
-
-        	<c:forEach items="${list}" var="contractInfoList" varStatus="status">
+			<c:forEach items="${list}" var="contractInfoList" varStatus="status">
 				<tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
 					<c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
 					<td><c:out value="${contractInfoList.getContractID()}"/></td>
@@ -91,13 +64,8 @@
 					<td><c:out value="${contractInfoList.getStatus()}"/></td>
 					<td><c:out value="${contractInfoList.getInsertDate()}"/></td>
 					<td><c:out value="${contractInfoList.getUpdateDate()}"/></td>
-					<!-- ①ボタンにする -->
-					<!-- ②ボタンをクリックしたら　formのactionをtoInitContractInfoに設定-->
-					<!-- ③submitをする -->
-					 <td><input type="button"  name="update" value="更新" onclick="toUpdateJsp('<c:out value="${contractInfoList.getContractID()}"/>');" /></td>
-				</tr>
 			</c:forEach>
-	</table>
+		</table>
 </form:form>
 </body>
 </html>
