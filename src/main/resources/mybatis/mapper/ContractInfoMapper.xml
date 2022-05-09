@@ -18,7 +18,7 @@
 		and ct.employeeID = #{employeeID}
 	</select>
 	<select id="getContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
-		 <!--給料情報を取得する。-->
+		 <!--契約情報を取得する。-->
  		select
 			ct.*,e.employeeName,cm.companyName
 		from

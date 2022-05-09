@@ -26,7 +26,11 @@ public class ContractInfoServiceImpl implements ContractInfoService{
 	public List<ContractInfoEntity> queryContractInfoList(String employeeID) {
 		List<ContractInfoEntity> contractinfolist = contractinfoMapper.getContractInfoList(employeeID);
 		return  contractinfolist;
-	}
+	}	/**
+	 * 機能：更新処理の契約情報取得
+	 *
+	 * @author テー@ソフトテク
+	 */
 	public List<ContractInfoEntity> queryContractInfo(String contractID) {
 		List<ContractInfoEntity> contractinfo = contractinfoMapper.getContractInfo(contractID);
 		return  contractinfo;

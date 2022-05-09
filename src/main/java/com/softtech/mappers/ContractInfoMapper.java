@@ -11,7 +11,9 @@ import com.softtech.entity.ContractInfoEntity;
 
 @Mapper
  public interface ContractInfoMapper {
+	//検索処理の契約リスト
 	List<ContractInfoEntity> getContractInfoList(@Param("employeeID")String employeeID);
+	//更新処理の契約情報
 	List<ContractInfoEntity> getContractInfo(@Param("contractID")String contractID);
 
 }
