@@ -17,4 +17,17 @@
 		and ct.companyID = cm.companyID
 		and ct.employeeID = #{employeeID}
 	</select>
+	<select id="getContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
+		 <!--給料情報を取得する。-->
+ 		select
+			ct.*,e.employeeName,cm.companyName
+		from
+			ems.employee e,
+			ems.contract ct,
+			ems.company cm
+		where ct.status = '1'
+		and ct.employeeID = e.employeeID
+		and ct.companyID = cm.companyID
+		and ct.contractID = #{contractID}
+	</select>
  </mapper>

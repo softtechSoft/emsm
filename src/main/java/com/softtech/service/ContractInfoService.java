@@ -18,6 +18,7 @@ public interface ContractInfoService {
 	 * @author テー@ソフトテク
 	 */
 	public List<ContractInfoEntity > queryContractInfoList(String employeeID);
+	public List<ContractInfoEntity > queryContractInfo(String contractID);
 
 
 }

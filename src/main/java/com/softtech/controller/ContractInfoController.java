@@ -88,7 +88,7 @@ public class ContractInfoController {
 	public String initContractInfoList(@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
 			Model model) {
 		String contractID = contractInfoBean.getContractID();
-		List<ContractInfoEntity> sList= contractInfoService.queryContractInfoList(contractID);
+		List<ContractInfoEntity> sList= contractInfoService.queryContractInfo(contractID);
 		model.addAttribute("list",sList);
 		model.addAttribute("contractInfoBean",contractInfoBean);
 		return "contractInfoEdit";

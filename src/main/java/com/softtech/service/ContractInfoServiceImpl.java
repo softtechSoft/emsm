@@ -27,5 +27,10 @@ public class ContractInfoServiceImpl implements ContractInfoService{
 		List<ContractInfoEntity> contractinfolist = contractinfoMapper.getContractInfoList(employeeID);
 		return  contractinfolist;
 	}
+	public List<ContractInfoEntity> queryContractInfo(String contractID) {
+		List<ContractInfoEntity> contractinfo = contractinfoMapper.getContractInfo(contractID);
+		return  contractinfo;
+	}
+
 
 }
