@@ -19,5 +19,6 @@ public interface ContractInfoService {
 	 */
 	public List<ContractInfoEntity > queryContractInfoList(String employeeID);
 
+
 }
 
