@@ -29,4 +29,12 @@
         WHERE status = '0'
  </select>
 
+
+ <!-- 契約情報IDを取得する-->
+<select id="getContracts" resultType="com.softtech.common.ContractIDName">
+        SELECT contractID,contractName
+        FROM contract
+        WHERE status = '1'
+ </select>
+
 </mapper>

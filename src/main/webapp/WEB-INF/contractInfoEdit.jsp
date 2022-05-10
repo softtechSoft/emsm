@@ -10,6 +10,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--  <link type="text/css" rel="stylesheet" href="src/emsm/css/salarylist.css"></link>-->
 <title> ソフトテク株式会社-社内管理システム </title>
+<script type="text/javascript" >
+		//登録ボタンのクリック処理
+		function doRegist(){
+		document.theForm.submit();
+	}
+</script>
 </head>
 <body>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="contractInfoBean"  action="contractInfoEdit" >
@@ -18,118 +24,129 @@
 		<c:forEach items="${list}" var="contractInfoList" varStatus="status">
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約ID</td>
-				<td width="200px"><c:out value="${contractInfoList.getContractID()}"/></td>
+				<td width="200px"><c:out  value="${contractInfoList.getContractID()}"/></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約名称</td>
-				<td width="200px"><c:out value="${contractInfoList.getContractName()}"/></td>
+				<td width="200px"><input type="text" id="contractName" name="contractName"
+									value="${contractInfoList.contractName}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
-				<td width="200px">社員ID</td>
-				<td width="200px"><c:out value="${contractInfoList.getEmployeeID()}"/></td>
-			</tr>
 
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">社員名</td>
-				<td width="200px"><c:out value="${contractInfoList.getEmployeeName()}"/></td>
-			</tr>
-
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">取引先ID</td>
-				<td width="200px"> <c:out value="${contractInfoList.getCompanyID()}"/></td>
-			</tr>
-
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">取引先名称</td>
-				<td width="200px"> <c:out value="${contractInfoList.getCompanyName()}"/></td>
-			</tr>
-
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">単価</td>
-				<td width="200px"><c:out value="${contractInfoList.getPrice()}"/></td>
-			</tr>
-
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">精算タイプ</td>
-				<td width="200px"> <c:out value="${contractInfoList.getPayOff()}"/>
-			<input type="radio" name="yesorno" id="yes" value="yes">
-	            				   <label for="yes" class="btn">清算あり</label>
-	           					   <input type="radio" name="yesorno" id="no" value="no">
-	            				   <label for="no" class="btn">固定額</label>
+				<td width="200px">社員</td>
+				<td width="200px">
+					<form:select path="employeeID">
+						<form:options items="${employeeList}" itemLabel="employeeName"  itemValue="employeeID"/>
+					</form:select>
 				</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
+				<td width="200px">取引先名称</td>
+				<td width="200px">
+					<form:select path="contractID">
+						<form:options items="${contractList}" itemLabel="contractName"  itemValue="contractID"/>
+					</form:select>
+				</td>
+			</tr>
+
+			<tr style="background-color:#dcfeeb">
+				<td width="200px">単価</td>
+				<td width="200px"><input type="text" id="price" name="price"
+									value="${contractInfoList.price}" /></td>
+			</tr>
+
+			<tr style="background-color:#dcfeeb">
+
+				<td width="200px">精算タイプ</td>
+				<td width="200px"><input type="radio" name="payOff" <c:if test="${contractInfoList.payOff == '0'}">
+				checked</c:if> value="0" /> 清算あり
+				<input type="radio" name="payOff" <c:if test="${contractInfoList.payOff == '1'}">
+				checked</c:if> value="1" /> 固定額</td>
+
+			</tr>
+
+			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約下限</td>
-				<td width="200px"> <c:out value="${contractInfoList.getLowerTime()}"/></td>
+				<td width="200px"><input type="text" id="lowerTime" name="lowerTime"
+									value="${contractInfoList.lowerTime}" /></td>
+
 			</tr>
 				<tr style="background-color:#dcfeeb">
 				<td width="200px">控除単価</td>
-				<td width="200px"> <c:out value="${contractInfoList.getLowerPrice()}"/></td>
+				<td width="200px"><input type="text" id="lowerPrice" name="lowerPrice"
+									value="${contractInfoList.lowerPrice}" /></td>
+
 			</tr>
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約上限</td>
-				<td width="200px"> <c:out value="${contractInfoList.getUpperTime()}"/></td>
+				<td width="200px"><input type="text" id="upperTime" name="upperTime"
+									value="${contractInfoList.upperTime}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">残業単価</td>
-				<td width="200px"> <c:out value="${contractInfoList.getUpperPrice()}"/></td>
+				<td width="200px"> <input type="text" id="upperPrice" name="upperPrice"
+									value="${contractInfoList.upperPrice}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約開始日</td>
-				<td width="200px"> <c:out value="${contractInfoList.getContractBeginDate()}"/></td>
+				<td width="200px">  <input type="text" id="contractBeginDate" name="contractBeginDate"
+									value="${contractInfoList.contractBeginDate}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約終了日</td>
-				<td width="200px"><c:out value="${contractInfoList.getContractEndDate()}"/></td>
+				<td width="200px">  <input type="text" id="contractEndDate" name="contractEndDate"
+									value="${contractInfoList.contractEndDate}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">支払サイト</td>
-	            <td width="200px"><c:out value="${contractInfoList.getPaymentTerm()}"/></td>
+	            <td width="200px"> <input type="text" id="paymentTerm" name="paymentTerm"
+									value="${contractInfoList.paymentTerm}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 			<td width="200px">原本郵送フラグ</td>
-			<td width="200px"><c:out value="${contractInfoList.getPostNeed()}"/>
-			<input type="radio" name="yesorno" id="yes" value="yes">
-				<label for="yes" class="btn">要郵送</label>
-			<input type="radio" name="yesorno" id="no" value="no">
-				<label for="no" class="btn">不要</label></td>
+			<td width="200px"><input type="radio" name="postNeed" <c:if test="${contractInfoList.postNeed == '0'}">
+								checked</c:if> value="0" /> 要郵送
+								<input type="radio" name="postNeed" <c:if test="${contractInfoList.postNeed == '1'}">
+				checked</c:if> value="1" /> 不要</td>
+
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">タイムレポートパス</td>
-				<td width="200px"><c:out value="${contractInfoList.getTimeReportPath()}"/></td>
+				<td width="200px"><input type="text" id="timeReportPath" name="timeReportPath"
+									value="${contractInfoList.timeReportPath}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">請求書名称</td>
-				<td width="200px"><c:out value="${contractInfoList.getInvoice()}"/></td>
+				<td width="200px"><input type="text" id="invoice" name="invoice"
+									value="${contractInfoList.invoice}" /></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">進行ステータス</td>
-				<td width="200px"><c:out value="${contractInfoList.getStatus()}"/></td>
+				<td width="200px"><input type="radio" name="status" <c:if test="${contractInfoList.status == '1'}">
+									checked</c:if> value="1" /> 進行中
+									<input type="radio" name="status" <c:if test="${contractInfoList.status == '9'}">
+									checked</c:if> value="9" /> 終了</td>
 			</tr>
 
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">作成日</td>
-				<td width="200px"><c:out value="${contractInfoList.getInsertDate()}"/></td>
-			</tr>
-
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">更新日</td>
-				<td width="200px"><c:out value="${contractInfoList.getUpdateDate()}"/></td>
+			<tr>
+			<td></td>
+			<td style="text-align: right;">
+			<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
 			</tr>
 		</c:forEach>
 		</table>
-		<button type="button"   class="btn btn-primary">登録</button>
+
 </form:form>
 </body>
 </html>

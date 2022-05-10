@@ -1,13 +1,20 @@
 package com.softtech.controller;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.ContractInfoFormBean;
+import com.softtech.actionForm.ExpensesBean;
+import com.softtech.common.ContractIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.ContractInfoService;
@@ -78,19 +85,57 @@ public class ContractInfoController {
 
 	}
 	/*
-	 * 機能概要：契約情報検索画面
-	 *
-	 * @param  model
+	 * 機能概要：契約情報更新画面初期表示
+	 * @paramater contractInfoBean リスト画面データ
+	 * @param  model　画面へデータ渡す用
+	 * @return  contractInfoEdit画面
+	 * @exception　なし
 	 * @author テー@it-softtech.com
-	 *
 	 */
 	@RequestMapping("/toInitContractInfo")
 	public String initContractInfoList(@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
 			Model model) {
+		//　選択された契約の内容を取得する
 		String contractID = contractInfoBean.getContractID();
 		List<ContractInfoEntity> sList= contractInfoService.queryContractInfo(contractID);
 		model.addAttribute("list",sList);
+
+		//社員IDリスト候補生成
+		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
+		model.addAttribute("employeeList",employeeList);
+
+		//社員項目IDを任意設定
+		contractInfoBean.setEmployeeID("1");
+
+		//契約IDリスト候補生成
+		List<ContractIDName> contractList = loginService.getContractList();
+		model.addAttribute("contractList",contractList);
+
+		//契約項目IDを任意設定
+		contractInfoBean.setContractID("1");
+
 		model.addAttribute("contractInfoBean",contractInfoBean);
+		return "contractInfoEdit";
+	}
+	/*
+	 * 機能：契約情報登録(登録ボタン）
+	 *
+	 * @paramater contractInfoBean 画面データ
+	 * @paramater　result　バリエーションチェック結果
+	 * @paramater　session　セッション
+	 * @paramater　model　画面へデータ渡す用
+	 *
+	 * @return  contractInfoEdit画面
+	 * @exception　なし
+	 *
+	 * @author テー@ソフトテク
+	 */
+	@RequestMapping(value ="/contractInfoEdit", method = RequestMethod.POST)
+	public String registContractInfo(@Valid @ModelAttribute("contractInfoBean") ExpensesBean expensesBean,
+			BindingResult result,HttpSession session,Model model) {
+
+
+
 		return "contractInfoEdit";
 }
 }

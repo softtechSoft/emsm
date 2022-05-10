@@ -2,6 +2,7 @@ package com.softtech.actionForm;
 
 import java.util.ArrayList;
 
+import com.softtech.common.ContractIDName;
 import com.softtech.common.EmployeeIDName;
 
 public class ContractInfoFormBean {
@@ -51,6 +52,8 @@ public class ContractInfoFormBean {
 	private String text;
 	//社員IDリスト
 	private ArrayList<EmployeeIDName> employeeIDNameList;
+	//契約IDリスト
+	private ArrayList<ContractIDName> contractIDNameList;
 	/**
 	 * @return contractID
 	 */
@@ -338,6 +341,18 @@ public class ContractInfoFormBean {
 	 */
 	public void setEmployeeIDNameList(ArrayList<EmployeeIDName> employeeIDNameList) {
 		this.employeeIDNameList = employeeIDNameList;
+	}
+	/**
+	 * @return contractIDNameList
+	 */
+	public ArrayList<ContractIDName> getContractIDNameList() {
+		return contractIDNameList;
+	}
+	/**
+	 * @param contractIDNameList セットする contractIDNameList
+	 */
+	public void setContractIDNameList(ArrayList<ContractIDName> contractIDNameList) {
+		this.contractIDNameList = contractIDNameList;
 	}
 
 }
