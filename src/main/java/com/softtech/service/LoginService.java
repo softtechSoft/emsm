@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.LoginBean;
+<<<<<<< HEAD
 import com.softtech.common.BaseSalaryIDName;
+=======
+import com.softtech.common.CompanyIDName;
+>>>>>>> branch 'main' of https://github.com/softtechSoft/emsm.git
 import com.softtech.common.ContractIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.common.LoginEmployee;
@@ -111,6 +115,7 @@ public class LoginService {
 
 		return contractList;
 	}
+<<<<<<< HEAD
 
 	public List<BaseSalaryIDName> getBaseSalaryList() {
 
@@ -121,3 +126,21 @@ public class LoginService {
 		return baseSalaryList;
 	}
 }
+=======
+	/*
+	 * 機能：会社情報から会社IDリストを取得
+	 *
+	 * @param なし
+	 * @return 会社IDリスト
+	 * @author
+	 */
+	public List<CompanyIDName> getCompanyList() {
+
+		List<CompanyIDName> contractList = new ArrayList<CompanyIDName>();
+		// 社員情報テーブルからIDリストを取得する
+		contractList = loginMappers.getCompanys();
+
+		return contractList;
+	}
+}
+>>>>>>> branch 'main' of https://github.com/softtechSoft/emsm.git

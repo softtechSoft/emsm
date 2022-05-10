@@ -4,7 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+<<<<<<< HEAD
 import com.softtech.common.BaseSalaryIDName;
+=======
+import com.softtech.common.CompanyIDName;
+>>>>>>> branch 'main' of https://github.com/softtechSoft/emsm.git
 import com.softtech.common.ContractIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.common.LoginEmployee;
@@ -23,6 +27,10 @@ public interface LoginMappers {
 	List<EmployeeIDName> getEmployees();
 	//契約情報IDリストを取得する
 	List<ContractIDName> getContracts();
+<<<<<<< HEAD
 
 	List<BaseSalaryIDName> getBaseSalarys();
+=======
+	List<CompanyIDName> getCompanys();
+>>>>>>> branch 'main' of https://github.com/softtechSoft/emsm.git
 }

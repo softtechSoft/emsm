@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.actionForm.ExpensesBean;
-import com.softtech.common.ContractIDName;
+import com.softtech.common.CompanyIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.ContractInfoService;
@@ -107,12 +107,12 @@ public class ContractInfoController {
 		//社員項目IDを任意設定
 		contractInfoBean.setEmployeeID("1");
 
-		//契約IDリスト候補生成
-		List<ContractIDName> contractList = loginService.getContractList();
-		model.addAttribute("contractList",contractList);
+		//会社IDリスト候補生成
+		List<CompanyIDName> companyList = loginService.getCompanyList();
+		model.addAttribute("companyList",companyList);
 
-		//契約項目IDを任意設定
-		contractInfoBean.setContractID("1");
+		//会社項目IDを任意設定
+		contractInfoBean.setCompanyID("1");
 
 		model.addAttribute("contractInfoBean",contractInfoBean);
 		return "contractInfoEdit";
