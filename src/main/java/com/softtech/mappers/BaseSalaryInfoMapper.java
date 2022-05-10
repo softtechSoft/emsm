@@ -17,6 +17,8 @@ import com.softtech.entity.ContractInfoEntity;
 
 @Mapper
 public interface BaseSalaryInfoMapper {
-
+	//データ画面
 	List<BaseSalaryInfoEntity> getBaseSalaryInfoList(@Param("employeeID")String employeeID);
+	//更新画面
+	List<BaseSalaryInfoEntity> getBaseSalaryInfo(@Param("baseSalaryID")String baseSalaryID);
 }

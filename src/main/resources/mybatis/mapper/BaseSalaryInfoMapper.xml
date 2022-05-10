@@ -3,7 +3,7 @@
                 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.softtech.mappers.BaseSalaryInfoMapper.xml">
+<mapper namespace="com.softtech.mappers.BaseSalaryInfoMapper">
 	<insert id="insertBaseSalaryInfo" parameterType="map">
 		insert
 	into
@@ -29,26 +29,16 @@
 
 	</insert>
 
-	<insert id="queryBaseSalaryInfo" parameterType="map">
+	<select id="getBaseSalaryInfoList" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
 		select
-			employeeID as employeeID,
-			baseSalary as baseSalary,
-			minusHour as minusHour,
-			plusHour as plusHour,
-			wkPeriodFrom as wkPeriodFrom,
-			wkPeriodTo as wkPeriodTo,
-			status as status,
-			insertDate as insertDate,
-			updateDate as updateDate,
-			baseSalaryID as baseSalaryID,
-
+			*
 		from
-			ems.m_basesalary
+			m_basesalary
 		where
 			employeeID=#{employeeID}
-	</insert>
+	</select>
 
-	<insert id="updateBaseSalaryInfo" parameterType="map">
+	<update id="updateBaseSalaryInfo" parameterType="map">
 		    update
 				m_basesalary
 			set
@@ -61,5 +51,5 @@
     			updateDate=date_format(now(),'%Y%m%d')
 			where
  				employeeID=#{employeeID}
-	</insert>
+	</update>
 </mapper>

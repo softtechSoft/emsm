@@ -8,7 +8,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--  <link type="text/css" rel="stylesheet" href="src/emsm/css/salarylist.css"></link>-->
 <script type="text/javascript" >
 	function toSearchJsp(){
 		document.theForm.submit();
@@ -29,7 +28,7 @@
 			<!--エラーメッセージ-->
 		<p style="color: red;">
 	    	<c:forEach items="${errors}" var="error">
-			<spring:message message="${error}" /> </br>
+			<spring:message message="${error}" />
 			</c:forEach>
 		</p>
 
@@ -59,7 +58,7 @@
 					<td><c:out value="${baseSalaryInfoList.getStatus()}"/></td>
 					<td><c:out value="${baseSalaryInfoList.getInsertDate()}"/></td>
 					<td><c:out value="${baseSalaryInfoList.getUpdateDate()}"/></td>
-					<td><input type="button" name="uptade" value="更新"  /></td>
+					<td><input type="button" name="uptade" value="更新" onclick="" /></td>
 				</tr>
 			</c:forEach>
 	</table>

@@ -24,5 +24,8 @@ public interface BaseSalaryInfoService {
 	 *
 	 * @param  employeeID 検索パラメータ
 	 */
-	public List<BaseSalaryInfoEntity > queryBaseSalaryInfoList(String employeeID);
+	//データ画面
+	public List<BaseSalaryInfoEntity> queryBaseSalaryInfoList(String employeeID);
+	//更新画面
+	public List<BaseSalaryInfoEntity> queryBaseSalaryInfo(String baseSalaryID);
 }

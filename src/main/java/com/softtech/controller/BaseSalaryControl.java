@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.softtech.actionForm.BaseSalaryInfoFormBean;
+import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.BaseSalaryInfoEntity;
+import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.BaseSalaryInfoService;
 import com.softtech.service.LoginService;
 
@@ -39,8 +41,8 @@ public class BaseSalaryControl {
 	 *
 	 * @param  model
 	 */
-
-	@RequestMapping("/initBaseSalary")
+	//データ画面の設定
+	@RequestMapping("/initBaseSalaryList")
 	public String toinitBaseSalaryList(Model model) {
 		//社員IDリスト候補生成
 		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeList();
@@ -58,8 +60,9 @@ public class BaseSalaryControl {
 
 	}
 
+	//データ画面検索
 	@RequestMapping("/baseSalaryInfoList")
-	public String contractInfo(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
+	public String baseSalaryInfo(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
 			Model model) {
 
 		String employeeID = baseSalaryInfoBean.getEmployeeID();
@@ -76,4 +79,16 @@ public class BaseSalaryControl {
 				return "baseSalaryInfoList";
 
 	}
+
+	//更新画面の検索
+
+	@RequestMapping("/toinitBaseSalaryInfo")
+	public String initBaseSalaryInfoList(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
+			Model model) {
+		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
+		List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfo(baseSalaryID);
+		model.addAttribute("list",bList);
+		model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
+		return "baseSalaryInfoEdit";
+}
 }
