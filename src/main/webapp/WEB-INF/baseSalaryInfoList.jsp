@@ -12,6 +12,13 @@
 	function toSearchJsp(){
 		document.theForm.submit();
 	}
+
+	// 更新ボタンへ
+	function toUpdateJsp(baseSalaryId){
+		document.getElementById('baseSalaryId').value=baseSalaryId;
+		document.theForm.action="toInitBaseSalaryInfo";
+		document.theForm.submit();
+	}
 </script>
 <title> ソフトテク株式会社-社内管理システム </title>
 </head>
@@ -58,7 +65,7 @@
 					<td><c:out value="${baseSalaryInfoList.getStatus()}"/></td>
 					<td><c:out value="${baseSalaryInfoList.getInsertDate()}"/></td>
 					<td><c:out value="${baseSalaryInfoList.getUpdateDate()}"/></td>
-					<td><input type="button" name="uptade" value="更新" onclick="" /></td>
+					<td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out value="${baseSalaryList.getBaseSalaryID()}"/>');" /></td>
 				</tr>
 			</c:forEach>
 	</table>

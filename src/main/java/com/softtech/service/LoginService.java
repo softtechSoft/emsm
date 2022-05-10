@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.LoginBean;
+import com.softtech.common.BaseSalaryIDName;
 import com.softtech.common.ContractIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.common.LoginEmployee;
@@ -109,5 +110,14 @@ public class LoginService {
 		contractList = loginMappers.getContracts();
 
 		return contractList;
+	}
+
+	public List<BaseSalaryIDName> getBaseSalaryList() {
+
+		List<BaseSalaryIDName> baseSalaryList = new ArrayList<BaseSalaryIDName>();
+		// 社員情報テーブルからIDリストを取得する
+		baseSalaryList = loginMappers.getBaseSalarys();
+
+		return baseSalaryList;
 	}
 }

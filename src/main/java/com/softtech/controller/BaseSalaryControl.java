@@ -4,17 +4,22 @@ package com.softtech.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.BaseSalaryInfoFormBean;
-import com.softtech.actionForm.ContractInfoFormBean;
+import com.softtech.actionForm.ExpensesBean;
+import com.softtech.common.BaseSalaryIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.BaseSalaryInfoEntity;
-import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.BaseSalaryInfoService;
 import com.softtech.service.LoginService;
 
@@ -86,9 +91,37 @@ public class BaseSalaryControl {
 	public String initBaseSalaryInfoList(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
 			Model model) {
 		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
+
 		List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfo(baseSalaryID);
 		model.addAttribute("list",bList);
+
+		//社員IDリスト候補生成
+		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
+		model.addAttribute("employeeList",employeeList);
+		//社員項目IDを任意設定
+		baseSalaryInfoBean.setEmployeeID("1");
+		//IDリスト候補生成
+		List<BaseSalaryIDName> baseSalaryList = loginService.getBaseSalaryList();
+		model.addAttribute("baseSalaryList",baseSalaryList);
+
+		//IDを任意設定
+		baseSalaryInfoBean.setBaseSalaryID("1");
+
 		model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
 		return "baseSalaryInfoEdit";
-}
+	}
+
+	/**
+	 * 基本給情報登録ボタン
+	 */
+
+	@RequestMapping(value ="/baseSalaryInfoEdit", method = RequestMethod.POST)
+	public String registBaseSalaryInfo(@Valid @ModelAttribute("baseSalaryInfoBean") ExpensesBean expensesBean,
+			BindingResult result,HttpSession session,Model model) {
+
+
+
+		return "baseSalaryInfoEdit";
+	}
+
 }
