@@ -46,8 +46,8 @@
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">取引先名称</td>
 				<td width="200px">
-					<form:select path="contractID">
-						<form:options items="${contractList}" itemLabel="contractName"  itemValue="contractID"/>
+					<form:select path="companyID">
+						<form:options items="${companyList}" itemLabel="companyName"  itemValue="companyID"/>
 					</form:select>
 				</td>
 			</tr>

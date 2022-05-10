@@ -36,5 +36,11 @@
         FROM contract
         WHERE status = '1'
  </select>
+  <!-- 会社情報IDを取得する-->
+<select id="getCompanys" resultType="com.softtech.common.CompanyIDName">
+        SELECT companyID,companyName
+        FROM company
+
+ </select>
 
 </mapper>

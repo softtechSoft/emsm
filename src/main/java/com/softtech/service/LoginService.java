@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.LoginBean;
+import com.softtech.common.CompanyIDName;
 import com.softtech.common.ContractIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.common.LoginEmployee;
@@ -107,6 +108,21 @@ public class LoginService {
 		List<ContractIDName> contractList = new ArrayList<ContractIDName>();
 		// 社員情報テーブルからIDリストを取得する
 		contractList = loginMappers.getContracts();
+
+		return contractList;
+	}
+	/*
+	 * 機能：会社情報から会社IDリストを取得
+	 *
+	 * @param なし
+	 * @return 会社IDリスト
+	 * @author
+	 */
+	public List<CompanyIDName> getCompanyList() {
+
+		List<CompanyIDName> contractList = new ArrayList<CompanyIDName>();
+		// 社員情報テーブルからIDリストを取得する
+		contractList = loginMappers.getCompanys();
 
 		return contractList;
 	}
