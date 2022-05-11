@@ -2,6 +2,7 @@ package com.softtech.service;
 
 import java.util.List;
 
+import com.softtech.actionForm.ContractInfoBean;
 import com.softtech.entity.ContractInfoEntity;
 
 
@@ -22,6 +23,7 @@ public interface ContractInfoService {
 	//更新処理の契約情報
 	public List<ContractInfoEntity > queryContractInfo(String contractID);
 
+	public boolean updateContractInfoDetail(ContractInfoBean contractInfoBean) ;
+
 
 }
-

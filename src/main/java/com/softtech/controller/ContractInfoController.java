@@ -1,9 +1,6 @@
 package com.softtech.controller;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.softtech.actionForm.ContractInfoBean;
 import com.softtech.actionForm.ContractInfoFormBean;
-import com.softtech.actionForm.ExpensesBean;
 import com.softtech.common.CompanyIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.ContractInfoEntity;
@@ -122,7 +119,7 @@ public class ContractInfoController {
 	 *
 	 * @paramater contractInfoBean 画面データ
 	 * @paramater　result　バリエーションチェック結果
-	 * @paramater　session　セッション
+	 *
 	 * @paramater　model　画面へデータ渡す用
 	 *
 	 * @return  contractInfoEdit画面
@@ -131,13 +128,19 @@ public class ContractInfoController {
 	 * @author テー@ソフトテク
 	 */
 	@RequestMapping(value ="/contractInfoEdit", method = RequestMethod.POST)
-	public String registContractInfo(@Valid @ModelAttribute("contractInfoBean") ExpensesBean expensesBean,
-			BindingResult result,HttpSession session,Model model) {
+	public String updateContractInfo(@ModelAttribute("contractInfoBean") ContractInfoBean contractInfoBean,
+			BindingResult result,Model model) {
+		//必須チェック
+		if (result.hasErrors()) {
+			model.addAttribute("errors", result.getFieldErrors());
+				return "contractInfoEdit";
+			}
 
-
+		//DB登録
+		contractInfoService.updateContractInfoDetail(contractInfoBean);
 
 		return "contractInfoEdit";
-}
+	}
 }
 
 

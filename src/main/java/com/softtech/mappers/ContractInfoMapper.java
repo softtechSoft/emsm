@@ -15,6 +15,7 @@ import com.softtech.entity.ContractInfoEntity;
 	List<ContractInfoEntity> getContractInfoList(@Param("employeeID")String employeeID);
 	//更新処理の契約情報
 	List<ContractInfoEntity> getContractInfo(@Param("contractID")String contractID);
-
+	//画面データをDBデータ登録
+	public void updateContractInfo(ContractInfoEntity contractInfoEntity);
 }
 

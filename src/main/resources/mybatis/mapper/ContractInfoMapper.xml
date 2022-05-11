@@ -30,4 +30,25 @@
 		and ct.companyID = cm.companyID
 		and ct.contractID = #{contractID}
 	</select>
+	<!--契約情報を更新する。-->
+	<select id="updateContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
+	update ems.contract set
+		contractName=#{contractName},
+		employeeID=#{employeeID},
+		companyID=#{companyID},
+		price=#{price},
+		payOff=#{payOff},
+		lowerTime=#{lowerTime},
+		lowerPrice=#{lowerPrice},
+		upperTime=#{upperTime},
+		upperPrice=#{upperPrice},
+		contractBeginDate=#{contractBeginDate},
+		contractEndDate=#{contractEndDate},
+		paymentTerm=#{paymentTerm},
+		postNeed=#{postNeed},
+		timeReportPath=#{timeReportPath},
+		invoice=#{invoice},
+		status=#{status}
+	where contractID=#{contractID}
+	</select>
  </mapper>

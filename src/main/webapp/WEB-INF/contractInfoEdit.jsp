@@ -20,6 +20,8 @@
 <body>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="contractInfoBean"  action="contractInfoEdit" >
 				<h1>契約情報更新</h1>
+		<input type="hidden" id="contractID" name="contractID" value="${contractInfoBean.contractID}"/>
+
 		<table  border="1">
 		<c:forEach items="${list}" var="contractInfoList" varStatus="status">
 			<tr style="background-color:#dcfeeb">
