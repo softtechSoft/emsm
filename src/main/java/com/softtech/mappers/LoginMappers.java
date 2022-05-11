@@ -27,5 +27,6 @@ public interface LoginMappers {
 
 	List<BaseSalaryIDName> getBaseSalarys();
 
+
 	List<CompanyIDName> getCompanys();
 }

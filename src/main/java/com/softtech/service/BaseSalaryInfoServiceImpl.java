@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.entity.BaseSalaryInfoEntity;
-import com.softtech.entity.ContractInfoEntity;
 import com.softtech.mappers.BaseSalaryInfoMapper;
 @Service
 public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {

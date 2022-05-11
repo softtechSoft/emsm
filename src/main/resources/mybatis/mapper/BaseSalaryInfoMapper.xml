@@ -38,6 +38,15 @@
 			employeeID=#{employeeID}
 	</select>
 
+		<select id="getBaseSalaryInfo" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
+		select
+			*
+		from
+			m_basesalary
+		where
+			baseSalaryID=#{baseSalaryID}
+	</select>
+
 	<update id="updateBaseSalaryInfo" parameterType="map">
 		    update
 				m_basesalary
