@@ -65,10 +65,15 @@ public class BaseSalaryControl {
 
 	}
 
-	//データ画面検索
+	/*
+	 * 機能概要：基本給情報リスト検索
+	 *
+	 * @param  model
+	 */
 	@RequestMapping("/baseSalaryInfoList")
 	public String baseSalaryInfo(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
-			Model model) {
+			Model model)
+	{
 
 		String employeeID = baseSalaryInfoBean.getEmployeeID();
 
@@ -81,13 +86,16 @@ public class BaseSalaryControl {
 		model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
 		model.addAttribute("list",bList);
 
-				return "baseSalaryInfoList";
+		return "baseSalaryInfoList";
 
 	}
 
-	//更新画面の検索
-
-	@RequestMapping("/toinitBaseSalaryInfo")
+	/*
+	 * 機能概要：基本給情報更新画面の初期表示
+	 *
+	 * @param  model
+	 */
+	@RequestMapping("/toInitBaseSalaryInfo")
 	public String initBaseSalaryInfoList(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
 			Model model) {
 		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();

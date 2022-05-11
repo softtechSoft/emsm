@@ -15,7 +15,7 @@
 
 	// 更新ボタンへ
 	function toUpdateJsp(baseSalaryId){
-		document.getElementById('baseSalaryId').value=baseSalaryId;
+		document.getElementById('baseSalaryID').value=baseSalaryId;
 		document.theForm.action="toInitBaseSalaryInfo";
 		document.theForm.submit();
 	}
@@ -25,6 +25,7 @@
 <body>
 		<h2>基本給管理リスト</h2>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoList" >
+	<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoBean.baseSalaryID}"/>
 
 	<b>社員:</b>
 	<form:select path="employeeID">
@@ -38,7 +39,6 @@
 			<spring:message message="${error}" />
 			</c:forEach>
 		</p>
-
 	<table border="1"class="baseSalaryInfoList-table">
 		   	 <tr>
         		<th width="200">基本給ID</th>
@@ -65,7 +65,7 @@
 					<td><c:out value="${baseSalaryInfoList.getStatus()}"/></td>
 					<td><c:out value="${baseSalaryInfoList.getInsertDate()}"/></td>
 					<td><c:out value="${baseSalaryInfoList.getUpdateDate()}"/></td>
-					<td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out value="${baseSalaryList.getBaseSalaryID()}"/>');" /></td>
+					<td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out value="${baseSalaryInfoList.getBaseSalaryID()}"/>');" /></td>
 				</tr>
 			</c:forEach>
 	</table>
