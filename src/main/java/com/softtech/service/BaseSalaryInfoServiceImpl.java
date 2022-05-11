@@ -26,6 +26,4 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		List<BaseSalaryInfoEntity> baseSalaryInfo = baseSalaryInfoMapper.getBaseSalaryInfo(baseSalaryID);
 		return  baseSalaryInfo;
 	}
-
-
 }

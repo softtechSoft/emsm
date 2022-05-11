@@ -42,7 +42,7 @@ public class BaseSalaryControl {
 	BaseSalaryInfoService baseSalaryInfoService;
 
 	/*
-	 * 機能概要：契約情報リストの初期表示
+	 * 機能概要：基本給情報リストの初期表示
 	 *
 	 * @param  model
 	 */

@@ -23,6 +23,8 @@ public class BaseSalaryInfo {
 		private String updateDate;
 		//基本給ID
 		private String baseSalaryID;
+
+
 		public String getEmployeeID() {
 			return employeeID;
 		}
@@ -83,6 +85,4 @@ public class BaseSalaryInfo {
 		public void setBaseSalaryID(String baseSalaryID) {
 			this.baseSalaryID = baseSalaryID;
 		}
-
-
 }

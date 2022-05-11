@@ -50,7 +50,7 @@
    				<th width="100">利用ステータス</th>
    				<th width="100">作成日</th>
    				<th width="100">更新日</th>
-    			<th width="45">更新へ</th>
+    			<th width="45">更新</th>
         	</tr>
 
         	<c:forEach items="${list}" var="baseSalaryInfoList" varStatus="status">
