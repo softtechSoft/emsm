@@ -38,7 +38,7 @@
  </select>
 
  <select id="getBaseSalarys" resultType="com.softtech.common.BaseSalaryIDName">
-        SELECT baseSalaryID,employee
+        SELECT baseSalaryID,employeeID
         FROM m_basesalary
         WHERE status = '1'
  </select>

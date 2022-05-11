@@ -97,6 +97,8 @@ public class LoginService {
 		return contractList;
 
 	}
+
+
 	/*
 	 * 機能：契約情報から契約IDリストを取得
 	 *

@@ -28,7 +28,7 @@
 
 
 	</insert>
-
+<!-- 基本給リストの検索 -->
 	<select id="getBaseSalaryInfoList" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
 		select
 			*
@@ -38,6 +38,18 @@
 			employeeID=#{employeeID}
 	</select>
 
+<!-- 基本給更新画面へのときの検索 -->
+
+		<select id="getBaseSalaryInfo" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
+		select
+			*
+		from
+			m_basesalary
+		where
+			baseSalaryID=#{baseSalaryID}
+	</select>
+
+<!-- 基本給更新 -->
 	<update id="updateBaseSalaryInfo" parameterType="map">
 		    update
 				m_basesalary

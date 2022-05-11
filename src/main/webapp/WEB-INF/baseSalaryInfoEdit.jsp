@@ -15,6 +15,11 @@
 		function doRegist(){
 		document.theForm.submit();
 		}
+
+		function toUpdateJsp(){
+			document.theForm.action="baseSalaryInfoEdit";
+			document.theForm.submit();
+		}
 </script>
 </head>
 <body>
@@ -31,11 +36,7 @@
 			<tr style="background-color:#dcfeeb">
 
 				<td width="200px">社員ID</td>
-				<td width="200px">
-					<form:select path="employeeID">
-						<form:options items="${employeeList}" itemLabel="employeeName"  itemValue="employeeID"/>
-					</form:select>
-				</td>
+				<td width="200px"><c:out  value="${baseSalaryInfoList.getEmployeeID()}"/></td>
 			</tr>
 
 
@@ -73,14 +74,14 @@
 				<td width="200px">利用ステータス</td>
 				<td width="200px"><input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '1'}">
 									checked</c:if> value="1" /> する
-									<input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '9'}">
-									checked</c:if> value="9" /> しない</td>
+									<input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '0'}">
+									checked</c:if> value="0" /> しない</td>
 			</tr>
 
 			<tr>
 			<td></td>
 			<td style="text-align: right;">
-			<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
+			<input type="button" id="Registration" name="Registration" value="登録"  onclick="toUpdateJsp()" /></td>
 			</tr>
 		</c:forEach>
 		</table>
