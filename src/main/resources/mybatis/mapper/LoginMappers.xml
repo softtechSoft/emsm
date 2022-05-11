@@ -36,6 +36,12 @@
         FROM contract
         WHERE status = '1'
  </select>
+
+ <select id="getBaseSalarys" resultType="com.softtech.common.BaseSalaryIDName">
+        SELECT baseSalaryID,employee
+        FROM m_basesalary
+        WHERE status = '1'
+ </select>
   <!-- 会社情報IDを取得する-->
 <select id="getCompanys" resultType="com.softtech.common.CompanyIDName">
         SELECT companyID,companyName
