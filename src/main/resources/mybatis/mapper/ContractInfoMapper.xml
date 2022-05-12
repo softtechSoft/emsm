@@ -51,4 +51,13 @@
 		status=#{status}
 	where contractID=#{contractID}
 	</select>
+	<!--最大ID取得。-->
+	<select id="getMaxContractID"  resultType="string">
+		 <!--契約情報IDを取得する。-->
+ 		select
+			MAX(contractID)
+		from
+			contract ct
+
+	</select>
  </mapper>

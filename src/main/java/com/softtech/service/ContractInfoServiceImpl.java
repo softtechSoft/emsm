@@ -32,6 +32,7 @@ import com.softtech.util.DateUtil;
 	public List<ContractInfoEntity> queryContractInfoList(String employeeID) {
 		List<ContractInfoEntity> contractinfolist = contractinfoMapper.getContractInfoList(employeeID);
 		return  contractinfolist;
+
 	}
 	/**
 	 * 機能：更新処理の契約情報取得
@@ -236,4 +237,32 @@ import com.softtech.util.DateUtil;
 
 		return contractInfoFormBean;
 	}
+	/*
+	 * 機能概要:契約情報の最大IDを取得する
+ 	 *
+	 *
+	 * @param なし
+	 * @return 最大ID
+	 */
+	private String getMaxContractID()
+	{
+		String maxContractID = contractinfoMapper.getMaxContractID();
+		return  maxContractID;
+	}
+
+	/*
+	 * 機能概要:契約情報の契約IDを採番する
+	 *
+	 * @param なし
+	 * @return 契約ID
+	 */
+	public String getNextContractID()
+	{
+		//契約情報の最大IDを取得する
+		String maxContractID = getMaxContractID();
+		// 採番する
+		String nextContractID = DataUtil.getNextID(maxContractID,2);
+		return  nextContractID;
+	}
+
 }

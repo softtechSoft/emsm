@@ -49,6 +49,7 @@ public class ContractInfoFormBean {
 	//更新日
 	private String updateDate;
 
+
 	//新規フラグ　0　新規　１　更新
 	private String insertFlg;
 
@@ -58,7 +59,7 @@ public class ContractInfoFormBean {
 	private ArrayList<EmployeeIDName> employeeIDNameList;
 	//契約IDリスト
 	private ArrayList<ContractIDName> contractIDNameList;
-	//契約IDリスト
+
 
 	/**
 	 * @return contractID
@@ -372,6 +373,8 @@ public class ContractInfoFormBean {
 	public void setInsertFlg(String insertFlg) {
 		this.insertFlg = insertFlg;
 	}
+
+
 
 }
 

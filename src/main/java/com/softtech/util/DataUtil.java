@@ -73,4 +73,30 @@ public class DataUtil {
 
 		  return true;
 		}
+	/*
+	 * 機能：採番する
+	 *
+	 * @param nowID 現在ID
+	 * @param headerIndex ヘッダー桁数
+	 * @return 新ID
+	 * @exception なし
+	 * @author 馬@ソフトテク
+	 */
+	public static String getNextID(String nowID,int headerIndex)
+	{
+		if( nowID==null || nowID.length() <=headerIndex) return nowID;
+		// 桁数取得
+		int length=nowID.length();
+		// ヘッダ
+		String header = nowID.substring(0, headerIndex);
+		// +1 にする
+		String nextNumber= Integer.toString( Integer.parseInt( nowID.substring(headerIndex))+1);
+		// 新ID
+
+		for (int i=0;i<length-nextNumber.length();i++) {
+			nextNumber = "0"+nextNumber;
+		}
+		String nextID = header + nextNumber;
+		return nextID;
+	}
 }

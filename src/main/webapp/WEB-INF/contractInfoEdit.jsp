@@ -15,16 +15,7 @@
 		function doRegist(){
 			document.theForm.submit();
 	}
-		//作成処理
-		function doMake(){
 
-			//作成処理の設定。1:作成処理、2:登録処理
-			var make =document.getElementById("make");
-			make.value= "1";
-
-
-			document.theForm.submit();
-		} 
 </script>
 </head>
 <body>

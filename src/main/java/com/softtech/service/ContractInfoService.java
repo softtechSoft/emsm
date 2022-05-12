@@ -33,5 +33,8 @@ public interface ContractInfoService {
 	public List<FieldError> chkDate(ContractInfoBean contractInfoBean);
 	//DB Entityからui　formへ変更
 	public ContractInfoFormBean trasferEntityToUI(List<ContractInfoEntity> sList);
+	// contrctidの最大値を取得
+	public String getNextContractID();
+
 
 }

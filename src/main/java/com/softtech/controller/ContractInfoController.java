@@ -116,10 +116,11 @@ public class ContractInfoController {
 			ContractInfoFormBean contractInfoFormBean = new ContractInfoFormBean();
 
 			// 契約情報を採番する（既存の最大値＋１）
-			//　①契約情報テーブルから最大contractidを取得
-			
-			
+			String maxContractID =contractInfoService.getNextContractID();
+			contractInfoFormBean.setContractID(maxContractID);
+
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
+
 		//更新の場合
 		} else {
 			//　選択された契約の内容を取得する

@@ -17,5 +17,7 @@ import com.softtech.entity.ContractInfoEntity;
 	List<ContractInfoEntity> getContractInfo(@Param("contractID")String contractID);
 	//画面データをDBデータ登録
 	public void updateContractInfo(ContractInfoEntity contractInfoEntity);
+	// contrctidの最大値を取得
+	public String getMaxContractID();
 }
 
