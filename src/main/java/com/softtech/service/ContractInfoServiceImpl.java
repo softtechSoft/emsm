@@ -1,12 +1,17 @@
 package com.softtech.service;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.FieldError;
 
 import com.softtech.actionForm.ContractInfoBean;
+import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.entity.ContractInfoEntity;
 import com.softtech.mappers.ContractInfoMapper;
+import com.softtech.util.DataUtil;
+import com.softtech.util.DateUtil;
 	/**
 	 * 概要：給料情報取得インタフェース
 	 *
@@ -113,5 +118,122 @@ import com.softtech.mappers.ContractInfoMapper;
 		String status=contractInfoBean.getStatus();
 		contractInfoEntity.setStatus(status);
 		return contractInfoEntity;
+	}
+
+	/*
+	 * 機能概要：数字チェック
+	 *
+	 * @param contractInfoBean　チェック対象
+	 * @return エーラリスト
+	 */
+	public List<FieldError> chkNumberData(ContractInfoBean contractInfoBean) {
+		// エラーチェック用リスト
+		List<FieldError> errorlst = new ArrayList<FieldError>();
+		// 単価は数字ではない場合、エラーメッセージ戻す
+		String price=contractInfoBean.getPrice();
+			if(DataUtil.isNumeric(price)) {
+
+			} else {
+				FieldError err1 = new FieldError("", "", "単価に数値のみを入力してください。");
+				errorlst.add(err1);
+			}
+		// 控除単価は数字ではない場合、エラーメッセージ戻す
+		String lowerPrice=contractInfoBean.getLowerPrice();
+			if(DataUtil.isNumeric(lowerPrice)) {
+
+			} else {
+				FieldError err2 = new FieldError("", "", "控除単価に数値のみ入力してください。");
+				errorlst.add(err2);
+			}
+		//契約下限は数字ではない場合、エラーメッセージ戻す
+		String lowerTime=contractInfoBean.getLowerTime();
+			if(DataUtil.isNumeric(lowerTime)) {
+
+			} else {
+				FieldError err3 = new FieldError("", "", "契約下限に数値のみを入力してください。");
+				errorlst.add(err3);
+			}
+		//契約上限は数字ではない場合、エラーメッセージ戻す
+		String upperTime=contractInfoBean.getUpperTime();
+			if(DataUtil.isNumeric(upperTime)) {
+
+			} else {
+				FieldError err4= new FieldError("", "", "契約上限に数値のみを入力してください。");
+				errorlst.add(err4);
+		}
+		//残業単価は数字ではない場合、エラーメッセージ戻す
+		String upperPrice=contractInfoBean.getUpperPrice();
+			if(DataUtil.isNumeric(upperPrice)) {
+
+			} else {
+				FieldError err5= new FieldError("", "", "残業単価を入力してください。");
+				errorlst.add(err5);
+			}
+		//支払サイトは数字ではない場合、エラーメッセージ戻す
+		String paymentTerm=contractInfoBean.getPaymentTerm();
+			if(DataUtil.isNumeric(paymentTerm)) {
+
+			} else {
+				FieldError err6= new FieldError("", "", "支払サイトに数値のみを入力してください。");
+				errorlst.add(err6);
+			}
+		return errorlst;
+	}
+	/*
+	 * 機能概要：日付チェック
+	 *
+	 * @param expensesBean　チェック対象
+	 * @return エラーリスト
+	 */
+	public List<FieldError> chkDate(ContractInfoBean contractInfoBean) {
+
+		// エラーチェック用リスト
+		List<FieldError> errorlst = new ArrayList<FieldError>();
+
+		// 契約開始日は日付ではない場合、エラーメッセージ戻す
+		String contractBeginDate=contractInfoBean.getContractBeginDate();
+			if(!DateUtil.isDate(contractBeginDate)) {
+
+			FieldError err1 = new FieldError("", "", "契約開始日に日付のみを入力してください。");
+			errorlst.add(err1);
+		}
+		return errorlst;
+	}
+	/*
+	 * 機能概要:DBのデータを画面formへ転換する
+ 	 *
+	 *
+	 * @param sList　DBのデータ
+	 * @return 画面form
+	 */
+	public ContractInfoFormBean trasferEntityToUI(List<ContractInfoEntity> sList) {
+
+		// 画面form
+		ContractInfoFormBean contractInfoFormBean = new ContractInfoFormBean();
+
+		// DBのデータを画面formへ転換する
+		for(ContractInfoEntity contractInfoEntity:sList){
+			contractInfoFormBean.setContractID(contractInfoEntity.getContractID());
+			contractInfoFormBean.setContractName(contractInfoEntity.getContractName());
+			contractInfoFormBean.setEmployeeID(contractInfoEntity.getEmployeeID());
+			contractInfoFormBean.setEmployeeName(contractInfoEntity.getEmployeeName());
+			contractInfoFormBean.setCompanyID(contractInfoEntity.getCompanyID());
+			contractInfoFormBean.setCompanyName(contractInfoEntity.getCompanyName());
+			contractInfoFormBean.setPrice(contractInfoEntity.getPrice());
+			contractInfoFormBean.setPayOff(contractInfoEntity.getPayOff());
+			contractInfoFormBean.setLowerTime(contractInfoEntity.getLowerTime());
+			contractInfoFormBean.setLowerPrice(contractInfoEntity.getLowerPrice());
+			contractInfoFormBean.setUpperTime(contractInfoEntity.getUpperTime());
+			contractInfoFormBean.setUpperPrice(contractInfoEntity.getUpperPrice());
+			contractInfoFormBean.setContractBeginDate(contractInfoEntity.getContractBeginDate());
+			contractInfoFormBean.setContractEndDate(contractInfoEntity.getContractEndDate());
+			contractInfoFormBean.setPaymentTerm(contractInfoEntity.getPaymentTerm());
+			contractInfoFormBean.setPostNeed(contractInfoEntity.getPostNeed());
+			contractInfoFormBean.setTimeReportPath(contractInfoEntity.getTimeReportPath());
+			contractInfoFormBean.setInvoice(contractInfoEntity.getInvoice());
+			contractInfoFormBean.setStatus(contractInfoEntity.getStatus());
+		}
+
+		return contractInfoFormBean;
 	}
 }

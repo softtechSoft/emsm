@@ -10,6 +10,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--  <link type="text/css" rel="stylesheet" href="src/emsm/css/salarylist.css"></link>-->
 <script type="text/javascript" >
+	//検索ボタン処理
 	function toSearchJsp(){
 		document.theForm.submit();
 	}
@@ -19,6 +20,14 @@
 		document.theForm.action="toInitContractInfo";
 		document.theForm.submit();
 	}
+
+	// 新規ボタン処理
+	function toMakeJsp(contractId){
+		document.getElementById('contractID').value=contractId;
+		document.theForm.action="toInitContractInfo";
+		document.theForm.submit();
+	}
+
 </script>
 <title> ソフトテク株式会社-社内管理システム </title>
 </head>
@@ -94,10 +103,15 @@
 					<!-- ①ボタンにする -->
 					<!-- ②ボタンをクリックしたら　formのactionをtoInitContractInfoに設定-->
 					<!-- ③submitをする -->
-					 <td><input type="button"  name="update" value="更新" onclick="toUpdateJsp('<c:out value="${contractInfoList.getContractID()}"/>');" /></td>
+					<td><input type="button"  name="update" value="更新" onclick="toUpdateJsp
+					 ('<c:out value="${contractInfoList.getContractID()}"/>');" /></td>
 				</tr>
+
 			</c:forEach>
+
 	</table>
+				<input type="button"  name="make" value="新規" onclick="toMakeJsp
+				('<c:out value="${contractInfoList.getContractID()}"/>');" />
 </form:form>
 </body>
 </html>
