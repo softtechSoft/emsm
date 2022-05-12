@@ -93,10 +93,10 @@
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">利用ステータス</td>
-				<td width="200px"><input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '1'}">
-									checked</c:if> value="1" /> する
-									<input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '0'}">
-									checked</c:if> value="0" /> しない</td>
+				<td width="200px"><input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '0'}">
+									checked</c:if> value="0" /> する
+									<input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '1'}">
+									checked</c:if> value="1" /> しない</td>
 			</tr>
 
 			<tr>
