@@ -15,16 +15,15 @@
 		function doRegist(){
 		document.theForm.submit();
 		}
-
-		function toUpdateJsp(){
-			document.theForm.action="baseSalaryInfoEdit";
-			document.theForm.submit();
-		}
 </script>
 </head>
 <body>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoEdit" >
+
 				<h1>基本給情報更新</h1>
+		<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoList.getBaseSalaryID()}"/>
+		<input type="hidden" id="insertDate" name="insertDate" value="${baseSalaryInfoList.insertDate}"/>
+		<input type="hidden" id="updateDate" name="updateDate" value="${baseSalaryInfoList.updateDate}"/>
 		<table  border="1">
 		<c:forEach items="${list}" var="baseSalaryInfoList" varStatus="status">
 			<tr style="background-color:#dcfeeb">
@@ -36,7 +35,11 @@
 			<tr style="background-color:#dcfeeb">
 
 				<td width="200px">社員ID</td>
-				<td width="200px"><c:out  value="${baseSalaryInfoList.getEmployeeID()}"/></td>
+				<td width="200px">
+					<form:select path="employeeID">
+						<form:options items="${employeeList}" itemLabel="employeeName"  itemValue="employeeID"/>
+					</form:select>
+				</td>
 			</tr>
 
 
@@ -71,6 +74,18 @@
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
+				<td width="200px">作成日</td>
+				<td width="200px"><c:out  value="${baseSalaryInfoList.insertDate}"/>
+				<input type="hidden" id="insertDate" name="insertDate"value="${baseSalaryInfoList.insertDate}" /></td>
+			</tr>
+
+			<tr style="background-color:#dcfeeb">
+				<td width="200px">更新日</td>
+				<td width="200px"><c:out  value="${baseSalaryInfoList.updateDate}"/>
+				<input type="hidden" id="updateDate" name="updateDate"value="${baseSalaryInfoList.updateDate}" /></td>
+			</tr>
+
+			<tr style="background-color:#dcfeeb">
 				<td width="200px">利用ステータス</td>
 				<td width="200px"><input type="radio" name="status" <c:if test="${baseSalaryInfoList.status == '1'}">
 									checked</c:if> value="1" /> する
@@ -81,7 +96,7 @@
 			<tr>
 			<td></td>
 			<td style="text-align: right;">
-			<input type="button" id="Registration" name="Registration" value="登録"  onclick="toUpdateJsp()" /></td>
+			<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
 			</tr>
 		</c:forEach>
 		</table>

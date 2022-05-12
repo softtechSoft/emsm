@@ -50,7 +50,7 @@
 	</select>
 
 <!-- 基本給更新 -->
-	<update id="updateBaseSalaryInfo" parameterType="map">
+	<update id="updateBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity">
 		    update
 				m_basesalary
 			set
@@ -62,6 +62,6 @@
     			status=#{status},
     			updateDate=date_format(now(),'%Y%m%d')
 			where
- 				employeeID=#{employeeID}
+ 				baseSalaryID=#{baseSalaryID}
 	</update>
 </mapper>

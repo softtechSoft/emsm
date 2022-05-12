@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.softtech.entity.BaseSalaryInfoEntity;
+import com.softtech.entity.ExpensesEntity;
 
 /**
  * 概要：基本給の検索、更新、入力
@@ -19,4 +20,6 @@ public interface BaseSalaryInfoMapper {
 	List<BaseSalaryInfoEntity> getBaseSalaryInfoList(@Param("employeeID")String employeeID);
 	//更新画面
 	List<BaseSalaryInfoEntity> getBaseSalaryInfo(@Param("baseSalaryID")String baseSalaryID);
+
+	public void updateBaseSalaryInfo(BaseSalaryInfoEntity baseSalaryInfoEntity);
 }

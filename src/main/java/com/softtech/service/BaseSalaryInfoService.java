@@ -1,9 +1,9 @@
 package com.softtech.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
+import com.softtech.actionForm.BaseSalaryInfoBean;
 import com.softtech.entity.BaseSalaryInfoEntity;
 
 /**
@@ -25,4 +25,6 @@ public interface BaseSalaryInfoService {
 	public List<BaseSalaryInfoEntity> queryBaseSalaryInfoList(String employeeID);
 	//更新画面
 	public List<BaseSalaryInfoEntity> queryBaseSalaryInfo(String baseSalaryID);
+
+	public boolean updateBaseSalaryInfoList(BaseSalaryInfoBean baseSalaryInfoBean);
 }
