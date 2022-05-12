@@ -109,13 +109,26 @@ public class ContractInfoController {
 		//会社項目IDを任意設定
 		contractInfoBean.setCompanyID("1");
 
-		//　選択された契約の内容を取得する
-		String contractID = contractInfoBean.getContractID();
-		List<ContractInfoEntity> sList= contractInfoService.queryContractInfo(contractID);
-		//model.addAttribute("list",sList);
+		//新規フラグを取得
+		String insertFlg = contractInfoBean.getInsertFlg();
+		//新規の場合
+		if("0".equals(insertFlg)) {
+			ContractInfoFormBean contractInfoFormBean = new ContractInfoFormBean();
 
-		ContractInfoFormBean contractInfoFormBean=contractInfoService.trasferEntityToUI(sList);
-		model.addAttribute("contractInfoBean",contractInfoFormBean);
+			// 契約情報を採番する（既存の最大値＋１）
+			//　①契約情報テーブルから最大contractidを取得
+			
+			
+			model.addAttribute("contractInfoBean",contractInfoFormBean);
+		//更新の場合
+		} else {
+			//　選択された契約の内容を取得する
+			String contractID = contractInfoBean.getContractID();
+			List<ContractInfoEntity> sList= contractInfoService.queryContractInfo(contractID);
+
+			ContractInfoFormBean contractInfoFormBean=contractInfoService.trasferEntityToUI(sList);
+			model.addAttribute("contractInfoBean",contractInfoFormBean);
+		}
 		return "contractInfoEdit";
 	}
 	/*
@@ -173,6 +186,25 @@ public class ContractInfoController {
 		contractInfoBean.setCompanyID("1");
 		return "contractInfoEdit";
 	}
+	/*
+	 * 機能：新規作成(新規ボタン）
+	 *
+	 * @paramater contractInfoBean 画面データ
+	 * @paramater　result　バリエーションチェック結果
+	 *
+	 * @paramater　model　画面へデータ渡す用
+	 *
+	 * @return  contractInfoEdit画面
+	 * @exception　なし
+	 *
+	 * @author テー@ソフトテク
+	 */
+	@RequestMapping(value ="/tocontractInfoEdit", method = RequestMethod.POST)
+	public String insertContractInfo(@Validated@ModelAttribute("contractInfoBean") ContractInfoBean contractInfoBean,
+			BindingResult result,Model model) {
+		return "contractInfoEdit";
+	}
 }
+
 
 

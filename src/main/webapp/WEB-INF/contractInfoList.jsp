@@ -16,6 +16,8 @@
 	}
 	// 更新ボタン処理
 	function toUpdateJsp(contractId){
+		// 更新
+		document.getElementById('insertFlg').value='1';
 		document.getElementById('contractID').value=contractId;
 		document.theForm.action="toInitContractInfo";
 		document.theForm.submit();
@@ -23,7 +25,8 @@
 
 	// 新規ボタン処理
 	function toMakeJsp(contractId){
-		document.getElementById('contractID').value=contractId;
+		// 新規
+		document.getElementById('insertFlg').value='0';
 		document.theForm.action="toInitContractInfo";
 		document.theForm.submit();
 	}
@@ -34,8 +37,10 @@
 <body>
 		<h2>契約情報管理リスト</h2>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="contractInfoBean"  action="contractInfoList" >
-
+	<!--契約ID-->
 	<input type="hidden" id="contractID" name="contractID" value="${contractInfoBean.contractID}"/>
+	<!--新規フラグ　０　新規　１　更新-->
+	<input type="hidden" id="insertFlg" name="insertFlg" value="${contractInfoBean.insertFlg}"/>
 
 	<b>社員:</b>
 	<form:select path="employeeID">
@@ -110,8 +115,10 @@
 			</c:forEach>
 
 	</table>
-				<input type="button"  name="make" value="新規" onclick="toMakeJsp
-				('<c:out value="${contractInfoList.getContractID()}"/>');" />
+
+
+				<input type="button"  name="make" value="新規" onclick="toMakeJsp();"
+					/>
 </form:form>
 </body>
 </html>
