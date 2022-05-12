@@ -1,5 +1,7 @@
 package com.softtech.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +41,9 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		BaseSalaryInfoEntity baseSalaryInfoEntity = new BaseSalaryInfoEntity();
 
 		//修正時間
-		//日付YYYY/MM/DD→YYYYMMDD変換
-		//発生日YYYY/MM/DD→YYYYMMDD変換
-		String updateDate = baseSalaryInfoBean.getUpdateDate();
-		baseSalaryInfoEntity.setUpdateDate(DateUtil.chgMonthToYM(updateDate));
+		LocalDateTime now = LocalDateTime.now();
+        String format = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		baseSalaryInfoEntity.setUpdateDate(format);
 
 		//基本給
 		int baseSalary = baseSalaryInfoBean.getBaseSalary();
@@ -73,7 +74,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
 		baseSalaryInfoEntity.setBaseSalaryID(baseSalaryID);
 
-		//登録日
+		//登録日　　！入力日は修正しません
 		String insertDate = baseSalaryInfoBean.getInsertDate();
 		baseSalaryInfoEntity.setInsertDate(insertDate);
 

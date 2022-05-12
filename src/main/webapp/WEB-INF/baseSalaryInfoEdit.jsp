@@ -21,14 +21,20 @@
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoEdit" >
 
 				<h1>基本給情報更新</h1>
-		<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoList.getBaseSalaryID()}"/>
-		<input type="hidden" id="insertDate" name="insertDate" value="${baseSalaryInfoList.insertDate}"/>
-		<input type="hidden" id="updateDate" name="updateDate" value="${baseSalaryInfoList.updateDate}"/>
+				<p style="color: red;">
+			<c:forEach items="${errors}" var="error">
+				<spring:message message="${error}" />
+			</c:forEach>
+		</p>
+
+
 		<table  border="1">
 		<c:forEach items="${list}" var="baseSalaryInfoList" varStatus="status">
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">基本給ID</td>
-				<td width="200px"><c:out  value="${baseSalaryInfoList.getBaseSalaryID()}"/></td>
+				<td width="200px"><c:out  value="${baseSalaryInfoList.getBaseSalaryID()}"/>
+				<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoList.baseSalaryID}"/>
+				</td>
 			</tr>
 
 
