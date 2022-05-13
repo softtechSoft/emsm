@@ -2,9 +2,6 @@ package com.softtech.service;
 
 import java.util.List;
 
-import org.springframework.validation.FieldError;
-
-import com.softtech.actionForm.ContractInfoBean;
 import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.entity.ContractInfoEntity;
 
@@ -27,10 +24,10 @@ public interface ContractInfoService {
 	public List<ContractInfoEntity > queryContractInfo(String contractID);
 	//更新処理
 	public boolean updateContractInfoDetail(ContractInfoFormBean contractInfoBean) ;
-	//数字チェック
-	public List<FieldError> chkNumberData(ContractInfoBean contractInfoBean);
-	//日付チェック
-	public List<FieldError> chkDate(ContractInfoBean contractInfoBean);
+//	//数字チェック
+//	public List<FieldError> chkNumberData(ContractInfoBean contractInfoBean);
+//	//日付チェック
+//	public List<FieldError> chkDate(ContractInfoFormBean ContractInfoFormBean);
 	//DB Entityからui　formへ変更
 	public ContractInfoFormBean trasferEntityToUI(List<ContractInfoEntity> sList);
 	// contrctidの最大値を取得

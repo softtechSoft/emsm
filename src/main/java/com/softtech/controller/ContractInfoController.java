@@ -150,12 +150,25 @@ public class ContractInfoController {
 	public String updateContractInfo(@Validated@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
 			BindingResult result,Model model) {
 
-//		//必須チェック
-//		if (result.hasErrors()) {
-//			model.addAttribute("errors", result.getFieldErrors());
-//			return "contractInfoEdit";
-//		}
-//		//数字チェック
+		//必須チェック
+		if (result.hasErrors()) {
+			//社員IDリスト候補生成
+			List<EmployeeIDName> employeeList = loginService.getEmployeeList();
+			model.addAttribute("employeeList",employeeList);
+
+			//社員項目IDを任意設定
+			contractInfoBean.setEmployeeID("1");
+
+			//会社IDリスト候補生成
+			List<CompanyIDName> companyList = loginService.getCompanyList();
+			model.addAttribute("companyList",companyList);
+
+			//会社項目IDを任意設定
+			contractInfoBean.setCompanyID("1");
+			model.addAttribute("errors", result.getAllErrors());
+			return "contractInfoEdit";
+		}
+		//数字チェック
 //		 List<FieldError> errors = contractInfoService.chkNumberData(contractInfoBean);
 //		 // エラーがある場合
 //		if (errors.size() > 0) {
@@ -163,14 +176,16 @@ public class ContractInfoController {
 //			return "contractInfoEdit";
 //		}
 
-//		//日付チェック
-//		 errors = contractInfoService.chkDate(contractInfoBean);
+		//日付チェック
+//
+//		List<FieldError>errors = contractInfoService.chkDate(contractInfoBean);
 //		 // エラーがある場合
 //		if (errors.size() > 0) {
 //			model.addAttribute("errors", errors);
 //			return "contractInfoEdit";
 //		}
-		//新規フラグを取得
+
+		//新規フラグを取得l
 		String insertFlg = contractInfoBean.getInsertFlg();
 		//新規の場合
 		if("0".equals(insertFlg)) {
@@ -179,7 +194,7 @@ public class ContractInfoController {
 			//DB登録
 			contractInfoService.updateContractInfoDetail(contractInfoBean);
 		}
-				
+
 
 		//社員IDリスト候補生成
 		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
