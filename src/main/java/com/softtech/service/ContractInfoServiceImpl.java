@@ -45,7 +45,7 @@ import com.softtech.util.DateUtil;
 	}
 
 	/*
-	 * 機能概要：画面データをDBに登録
+	 * 機能概要：更新画面データをDBに登録
 	 *
 	 * @param ContractInfoBean 画面データ
 	 * @return true:成功、false:失敗
@@ -58,6 +58,22 @@ import com.softtech.util.DateUtil;
 		contractinfoMapper.updateContractInfo(contractInfoEntity);
 
 	return true;
+	}
+	/*
+	 * 機能概要：新規画面データをDBに登録
+	 *
+	 * @param ContractInfoBean 画面データ
+	 * @return true:成功、false:失敗
+	 */
+	public boolean insertContractInfoDetail(ContractInfoFormBean contractInfoBean) {
+		//画面データをEntityに設定する。
+		ContractInfoEntity contractInfoEntity = tranferBeanToEntity(contractInfoBean);
+
+		// DB登録
+		contractinfoMapper.insertContractInfo(contractInfoEntity);
+
+		return true;
+
 	}
 	/*
 	 * 機能概要：画面データをEntityクラスに設定する
@@ -264,14 +280,5 @@ import com.softtech.util.DateUtil;
 		String nextContractID = DataUtil.getNextID(maxContractID,2);
 		return  nextContractID;
 	}
-	public boolean insertContractInfoDetail(ContractInfoFormBean contractInfoBean) {
-		//画面データをEntityに設定する。
-		ContractInfoEntity contractInfoEntity = tranferBeanToEntity(contractInfoBean);
 
-		// DB登録
-		contractinfoMapper.insertContractInfo(contractInfoEntity);
-
-		return true;
-
-}
 	}

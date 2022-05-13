@@ -1,10 +1,5 @@
 package com.softtech.actionForm;
 
-import java.util.ArrayList;
-
-import com.softtech.common.ContractIDName;
-import com.softtech.common.EmployeeIDName;
-
 public class ContractInfoFormBean {
 	//契約ID
 	private String contractID;
@@ -53,12 +48,12 @@ public class ContractInfoFormBean {
 	//新規フラグ　0　新規　１　更新
 	private String insertFlg;
 
-	private int id;
-	private String text;
+//	private int id;
+//	private String text;
 	//社員IDリスト
-	private ArrayList<EmployeeIDName> employeeIDNameList;
-	//契約IDリスト
-	private ArrayList<ContractIDName> contractIDNameList;
+//	private ArrayList<EmployeeIDName> employeeIDNameList;
+//	//契約IDリスト
+//	private ArrayList<ContractIDName> contractIDNameList;
 
 
 	/**
@@ -313,54 +308,54 @@ public class ContractInfoFormBean {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
-	/**
-	 * @return id
-	 */
-	public int getId() {
-		return id;
-	}
-	/**
-	 * @param id セットする id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-	/**
-	 * @return text
-	 */
-	public String getText() {
-		return text;
-	}
-	/**
-	 * @param text セットする text
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-	/**
-	 * @return employeeIDNameList
-	 */
-	public ArrayList<EmployeeIDName> getEmployeeIDNameList() {
-		return employeeIDNameList;
-	}
-	/**
-	 * @param employeeIDNameList セットする employeeIDNameList
-	 */
-	public void setEmployeeIDNameList(ArrayList<EmployeeIDName> employeeIDNameList) {
-		this.employeeIDNameList = employeeIDNameList;
-	}
-	/**
-	 * @return contractIDNameList
-	 */
-	public ArrayList<ContractIDName> getContractIDNameList() {
-		return contractIDNameList;
-	}
-	/**
-	 * @param contractIDNameList セットする contractIDNameList
-	 */
-	public void setContractIDNameList(ArrayList<ContractIDName> contractIDNameList) {
-		this.contractIDNameList = contractIDNameList;
-	}
+//	/**
+//	 * @return id
+//	 */
+//	public int getId() {
+//		return id;
+//	}
+//	/**
+//	 * @param id セットする id
+//	 */
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+//	/**
+//	 * @return text
+//	 */
+//	public String getText() {
+//		return text;
+//	}
+//	/**
+//	 * @param text セットする text
+//	 */
+//	public void setText(String text) {
+//		this.text = text;
+//	}
+//	/**
+//	 * @return employeeIDNameList
+//	 */
+//	public ArrayList<EmployeeIDName> getEmployeeIDNameList() {
+//		return employeeIDNameList;
+//	}
+//	/**
+//	 * @param employeeIDNameList セットする employeeIDNameList
+//	 */
+//	public void setEmployeeIDNameList(ArrayList<EmployeeIDName> employeeIDNameList) {
+//		this.employeeIDNameList = employeeIDNameList;
+//	}
+//	/**
+//	 * @return contractIDNameList
+//	 */
+//	public ArrayList<ContractIDName> getContractIDNameList() {
+//		return contractIDNameList;
+//	}
+//	/**
+//	 * @param contractIDNameList セットする contractIDNameList
+//	 */
+//	public void setContractIDNameList(ArrayList<ContractIDName> contractIDNameList) {
+//		this.contractIDNameList = contractIDNameList;
+//	}
 	/**
 	 * @return insertFlg
 	 */

@@ -60,6 +60,7 @@
 			contract ct
 
 	</select>
+	<!--契約情報を新規する。-->
 	<select id="insertContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
 
 	insert into ems.contract(
