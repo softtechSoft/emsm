@@ -187,30 +187,7 @@ public class ContractInfoEntity {
 			public void setUpperPrice(String upperPrice) {
 				this.upperPrice = upperPrice;
 			}
-			/**
-			 * @return contractBeginDate
-			 */
-			public String getContractBeginDate() {
-				return contractBeginDate;
-			}
-			/**
-			 * @param contractBeginDate セットする contractBeginDate
-			 */
-			public void setContractBeginDate(String contractBeginDate) {
-				this.contractBeginDate = contractBeginDate;
-			}
-			/**
-			 * @return contractEndDate
-			 */
-			public String getContractEndDate() {
-				return contractEndDate;
-			}
-			/**
-			 * @param contractEndDate セットする contractEndDate
-			 */
-			public void setContractEndDate(String contractEndDate) {
-				this.contractEndDate = contractEndDate;
-			}
+
 			/**
 			 * @return paymentTerm
 			 */
@@ -294,6 +271,30 @@ public class ContractInfoEntity {
 			 */
 			public void setUpdateDate(String updateDate) {
 				this.updateDate = updateDate;
+			}
+			/**
+			 * @return contractEndDate
+			 */
+			public String getContractEndDate() {
+				return contractEndDate;
+			}
+			/**
+			 * @param contractEndDate セットする contractEndDate
+			 */
+			public void setContractEndDate(String contractEndDate) {
+				this.contractEndDate = contractEndDate;
+			}
+			/**
+			 * @return contractBeginDate
+			 */
+			public String getContractBeginDate() {
+				return contractBeginDate;
+			}
+			/**
+			 * @param contractBeginDate セットする contractBeginDate
+			 */
+			public void setContractBeginDate(String contractBeginDate) {
+				this.contractBeginDate = contractBeginDate;
 			}
 
 

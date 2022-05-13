@@ -56,6 +56,7 @@ public class DateUtil {
 		if(month==null) return month;
 
 		// YYYY/MM→yyyymmに変換
+		month = month.replace("-", "");
 		return month.replace("/", "");
 	}
 	public static String chgMonthToYM1(String month) {
@@ -161,6 +162,15 @@ public class DateUtil {
      * */
     public static String modifymonth1(String month){
     	String month1 = month.substring(0,4)+"/"+month.substring(4,6)+"/"+month.substring(6,8);
+    	return month1;
+    }
+    /**
+     * 対象年月日"-"を追加
+     * @param
+     * @author 馬@ソフトテク
+     * */
+    public static String modifyDateToYMDH(String month){
+    	String month1 = month.substring(0,4)+"-"+month.substring(4,6)+"-"+month.substring(6,8);
     	return month1;
     }
     /**

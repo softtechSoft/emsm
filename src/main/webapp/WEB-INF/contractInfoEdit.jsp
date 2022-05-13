@@ -103,8 +103,10 @@
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約開始日</td>
-				<td width="200px">  <input type="text" id="contractBeginDate" name="contractBeginDate"
-									value="${contractInfoBean.contractBeginDate}" /></td>
+				<td width="200px">
+				 <!--  input type="text" id="contractBeginDate" name="contractBeginDate"	value="${contractInfoBean.contractBeginDate}" / -->
+					<input type="date" id="contractBeginDateS" name="contractBeginDateS"	value="${contractInfoBean.contractBeginDate}" />
+				</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">

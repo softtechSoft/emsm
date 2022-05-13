@@ -1,5 +1,7 @@
 package com.softtech.actionForm;
 
+import java.sql.Date;
+
 public class ContractInfoBean {
 	//契約ID
 		private String ContractID;
@@ -26,7 +28,7 @@ public class ContractInfoBean {
 		//残業単価
 		private String UpperPrice;
 		//契約開始日
-		private String ContractBeginDate;
+		private Date ContractBeginDate;
 		//契約終了日
 		private String ContractEndDate;
 		//支払サイト
@@ -187,18 +189,7 @@ public class ContractInfoBean {
 		public void setUpperPrice(String upperPrice) {
 			UpperPrice = upperPrice;
 		}
-		/**
-		 * @return contractBeginDate
-		 */
-		public String getContractBeginDate() {
-			return ContractBeginDate;
-		}
-		/**
-		 * @param contractBeginDate セットする contractBeginDate
-		 */
-		public void setContractBeginDate(String contractBeginDate) {
-			ContractBeginDate = contractBeginDate;
-		}
+
 		/**
 		 * @return contractEndDate
 		 */
@@ -295,6 +286,20 @@ public class ContractInfoBean {
 		public void setUpdateDate(String updateDate) {
 			UpdateDate = updateDate;
 		}
+		/**
+		 * @return contractBeginDate
+		 */
+		public Date getContractBeginDate() {
+			return ContractBeginDate;
+		}
+		/**
+		 * @param contractBeginDate セットする contractBeginDate
+		 */
+		public void setContractBeginDate(Date contractBeginDate) {
+			ContractBeginDate = contractBeginDate;
+		}
 
-}
+		}
+
+
 
