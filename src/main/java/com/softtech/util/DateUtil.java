@@ -197,5 +197,23 @@ public class DateUtil {
         }
         return str.toString();
     }
+	/**
+	 * 機能：現在年度を生成する
+	 *
+	 * @return 現在年度
+	 * @exception なし
+	 * @author @ソフトテク
+	 */
+	public static String getNowYear() {
+		// YYYY/MM→yyyymmに変換
+		// 現在月生成
+		String b;
+		Date dNow = new Date( );
+		SimpleDateFormat a = new SimpleDateFormat ("yyyy");
+		 b = a.format(dNow);
+		//TETS COMMIT
+		 //TEST
+		return b;
+	}
 
 }

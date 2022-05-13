@@ -1,5 +1,4 @@
 package com.softtech.controller;
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.ContractInfoService;
 import com.softtech.service.LoginService;
+import com.softtech.util.DateUtil;
 
 /**
  * 概要：契約情報リスト初期表示
@@ -119,7 +119,9 @@ public class ContractInfoController {
 			contractInfoFormBean.setContractID(maxContractID);
 			//新規
 			contractInfoFormBean.setInsertFlg(insertFlg);
-			contractInfoFormBean.setContractBeginDate(Date.valueOf("2017-03-02"));
+
+			contractInfoFormBean.setContractBeginDateS(DateUtil.getNowYear());
+
 
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
 
