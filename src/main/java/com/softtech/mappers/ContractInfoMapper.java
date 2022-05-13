@@ -19,5 +19,6 @@ import com.softtech.entity.ContractInfoEntity;
 	public void updateContractInfo(ContractInfoEntity contractInfoEntity);
 	// contrctidの最大値を取得
 	public String getMaxContractID();
+	public void insertContractInfo(ContractInfoEntity contractInfoEntity);
 }
 

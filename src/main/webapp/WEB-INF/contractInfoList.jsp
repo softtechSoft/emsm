@@ -24,7 +24,7 @@
 	}
 
 	// 新規ボタン処理
-	function toMakeJsp(contractId){
+	function toMakeJsp(){
 		// 新規
 		document.getElementById('insertFlg').value='0';
 		document.theForm.action="toInitContractInfo";
@@ -117,8 +117,7 @@
 	</table>
 
 
-				<input type="button"  name="make" value="新規" onclick="toMakeJsp();"
-					/>
+				<input type="button"  name="make" value="新規" onclick="toMakeJsp();"/>
 </form:form>
 </body>
 </html>

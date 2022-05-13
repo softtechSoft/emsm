@@ -28,6 +28,8 @@
 		</p>
 
 		<input type="hidden" id="contractID" name="contractID" value="${contractInfoBean.contractID}"/>
+		<!--新規フラグ　０　新規　１　更新-->
+		<input type="hidden" id="insertFlg" name="insertFlg" value="${contractInfoBean.insertFlg}"/>
 
 		<table  border="1">
 			<tr style="background-color:#dcfeeb">

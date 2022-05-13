@@ -25,8 +25,8 @@ public interface ContractInfoService {
 	public List<ContractInfoEntity > queryContractInfoList(String employeeID);
 	//更新処理の契約情報
 	public List<ContractInfoEntity > queryContractInfo(String contractID);
-	//登録処理
-	public boolean updateContractInfoDetail(ContractInfoBean contractInfoBean) ;
+	//更新処理
+	public boolean updateContractInfoDetail(ContractInfoFormBean contractInfoBean) ;
 	//数字チェック
 	public List<FieldError> chkNumberData(ContractInfoBean contractInfoBean);
 	//日付チェック
@@ -35,6 +35,8 @@ public interface ContractInfoService {
 	public ContractInfoFormBean trasferEntityToUI(List<ContractInfoEntity> sList);
 	// contrctidの最大値を取得
 	public String getNextContractID();
+	//新規処理
+	public boolean insertContractInfoDetail(ContractInfoFormBean contractInfoBean);
 
 
 }

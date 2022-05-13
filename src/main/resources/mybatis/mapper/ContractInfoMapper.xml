@@ -60,4 +60,31 @@
 			contract ct
 
 	</select>
+	<select id="insertContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
+
+	insert into ems.contract(
+		contractID,
+        contractName,
+        employeeID,
+        companyID,
+        price,
+        payOff,
+        lowerTime,
+        lowerPrice,
+        upperTime,
+        upperPrice,
+        contractBeginDate,
+        contractEndDate,
+        paymentTerm,
+        postNeed,
+        timeReportPath,
+        invoice,
+        status,
+        insertDate,
+        updateDate) values (
+        #{contractID},#{contractName},#{employeeID},#{companyID},#{price},#{payOff},#{lowerTime},#{lowerPrice},#{upperTime},
+        #{upperPrice},#{contractBeginDate},#{contractEndDate},#{paymentTerm},#{postNeed},#{timeReportPath},#{invoice},#{status},
+       date_format(now(),'%Y%m%d'), date_format(now(),'%Y%m%d'))
+
+	</select>
  </mapper>

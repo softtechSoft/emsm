@@ -50,12 +50,12 @@ import com.softtech.util.DateUtil;
 	 * @param ContractInfoBean 画面データ
 	 * @return true:成功、false:失敗
 	 */
-	public boolean updateContractInfoDetail(ContractInfoBean contractInfoBean) {
-	//画面データをEntityに設定する。
-	ContractInfoEntity contractInfoEntity = tranferBeanToEntity(contractInfoBean);
+	public boolean updateContractInfoDetail(ContractInfoFormBean contractInfoBean) {
+		//画面データをEntityに設定する。
+		ContractInfoEntity contractInfoEntity = tranferBeanToEntity(contractInfoBean);
 
-	// DB登録
-	contractinfoMapper.updateContractInfo(contractInfoEntity);
+		// DB登録
+		contractinfoMapper.updateContractInfo(contractInfoEntity);
 
 	return true;
 	}
@@ -65,7 +65,7 @@ import com.softtech.util.DateUtil;
 	 * @param contractInfoBean 画面データ
 	 * @return Entityクラス
 	 */
-	private ContractInfoEntity tranferBeanToEntity(ContractInfoBean contractInfoBean) {
+	private ContractInfoEntity tranferBeanToEntity(ContractInfoFormBean contractInfoBean) {
 		ContractInfoEntity contractInfoEntity = new ContractInfoEntity();
 		//契約ID
 		String contractID=contractInfoBean.getContractID();
@@ -264,5 +264,14 @@ import com.softtech.util.DateUtil;
 		String nextContractID = DataUtil.getNextID(maxContractID,2);
 		return  nextContractID;
 	}
+	public boolean insertContractInfoDetail(ContractInfoFormBean contractInfoBean) {
+		//画面データをEntityに設定する。
+		ContractInfoEntity contractInfoEntity = tranferBeanToEntity(contractInfoBean);
+
+		// DB登録
+		contractinfoMapper.insertContractInfo(contractInfoEntity);
+
+		return true;
 
 }
+	}

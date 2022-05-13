@@ -5,13 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.softtech.actionForm.ContractInfoBean;
 import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.common.CompanyIDName;
 import com.softtech.common.EmployeeIDName;
@@ -118,7 +116,8 @@ public class ContractInfoController {
 			// 契約情報を採番する（既存の最大値＋１）
 			String maxContractID =contractInfoService.getNextContractID();
 			contractInfoFormBean.setContractID(maxContractID);
-
+			//新規
+			contractInfoFormBean.setInsertFlg(insertFlg);
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
 
 		//更新の場合
@@ -128,6 +127,8 @@ public class ContractInfoController {
 			List<ContractInfoEntity> sList= contractInfoService.queryContractInfo(contractID);
 
 			ContractInfoFormBean contractInfoFormBean=contractInfoService.trasferEntityToUI(sList);
+			//更新
+			contractInfoFormBean.setInsertFlg(insertFlg);
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
 		}
 		return "contractInfoEdit";
@@ -146,21 +147,21 @@ public class ContractInfoController {
 	 * @author テー@ソフトテク
 	 */
 	@RequestMapping(value ="/contractInfoEdit", method = RequestMethod.POST)
-	public String updateContractInfo(@Validated@ModelAttribute("contractInfoBean") ContractInfoBean contractInfoBean,
+	public String updateContractInfo(@Validated@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
 			BindingResult result,Model model) {
 
-		//必須チェック
-		if (result.hasErrors()) {
-			model.addAttribute("errors", result.getFieldErrors());
-			return "contractInfoEdit";
-		}
-		//数字チェック
-		 List<FieldError> errors = contractInfoService.chkNumberData(contractInfoBean);
-		 // エラーがある場合
-		if (errors.size() > 0) {
-			model.addAttribute("errors", errors);
-			return "contractInfoEdit";
-		}
+//		//必須チェック
+//		if (result.hasErrors()) {
+//			model.addAttribute("errors", result.getFieldErrors());
+//			return "contractInfoEdit";
+//		}
+//		//数字チェック
+//		 List<FieldError> errors = contractInfoService.chkNumberData(contractInfoBean);
+//		 // エラーがある場合
+//		if (errors.size() > 0) {
+//			model.addAttribute("errors", errors);
+//			return "contractInfoEdit";
+//		}
 
 //		//日付チェック
 //		 errors = contractInfoService.chkDate(contractInfoBean);
@@ -169,9 +170,17 @@ public class ContractInfoController {
 //			model.addAttribute("errors", errors);
 //			return "contractInfoEdit";
 //		}
+		//新規フラグを取得
+		String insertFlg = contractInfoBean.getInsertFlg();
+		//新規の場合
+		if("0".equals(insertFlg)) {
+			contractInfoService.insertContractInfoDetail(contractInfoBean);
+		} else {
+			//DB登録
+			contractInfoService.updateContractInfoDetail(contractInfoBean);
+		}
+				
 
-		//DB登録
-		contractInfoService.updateContractInfoDetail(contractInfoBean);
 		//社員IDリスト候補生成
 		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
 		model.addAttribute("employeeList",employeeList);
@@ -187,24 +196,7 @@ public class ContractInfoController {
 		contractInfoBean.setCompanyID("1");
 		return "contractInfoEdit";
 	}
-	/*
-	 * 機能：新規作成(新規ボタン）
-	 *
-	 * @paramater contractInfoBean 画面データ
-	 * @paramater　result　バリエーションチェック結果
-	 *
-	 * @paramater　model　画面へデータ渡す用
-	 *
-	 * @return  contractInfoEdit画面
-	 * @exception　なし
-	 *
-	 * @author テー@ソフトテク
-	 */
-	@RequestMapping(value ="/tocontractInfoEdit", method = RequestMethod.POST)
-	public String insertContractInfo(@Validated@ModelAttribute("contractInfoBean") ContractInfoBean contractInfoBean,
-			BindingResult result,Model model) {
-		return "contractInfoEdit";
-	}
+
 }
 
 
