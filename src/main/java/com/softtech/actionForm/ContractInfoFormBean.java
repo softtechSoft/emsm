@@ -1,5 +1,7 @@
 package com.softtech.actionForm;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -37,12 +39,13 @@ public class ContractInfoFormBean {
 	private String upperTime;
 	//残業単価
 	@NotEmpty(message = "残業単価を入力してください。")
-	@Pattern(message = "残業単価に数値のみを入力してください。", regexp ="\\\\\\d{0,6}")
+
 	private String upperPrice;
 	//契約開始日
-	@NotEmpty(message = "契約開始日を入力してください。")
-	private String contractBeginDate;
-	//契約終了日
+	//@NotEmpty(message = "契約開始日を入力してください。")
+	private Date contractBeginDate;
+	private String contractBeginDateS;
+	//契約終
 	@NotEmpty(message = "契約終了日を入力してください。")
 	private String contractEndDate;
 	//支払サイト
@@ -219,18 +222,7 @@ public class ContractInfoFormBean {
 	public void setUpperPrice(String upperPrice) {
 		this.upperPrice = upperPrice;
 	}
-	/**
-	 * @return contractBeginDate
-	 */
-	public String getContractBeginDate() {
-		return contractBeginDate;
-	}
-	/**
-	 * @param contractBeginDate セットする contractBeginDate
-	 */
-	public void setContractBeginDate(String contractBeginDate) {
-		this.contractBeginDate = contractBeginDate;
-	}
+
 	/**
 	 * @return contractEndDate
 	 */
@@ -386,6 +378,30 @@ public class ContractInfoFormBean {
 	 */
 	public void setInsertFlg(String insertFlg) {
 		this.insertFlg = insertFlg;
+	}
+	/**
+	 * @return contractBeginDate
+	 */
+	public Date getContractBeginDate() {
+		return contractBeginDate;
+	}
+	/**
+	 * @param contractBeginDate セットする contractBeginDate
+	 */
+	public void setContractBeginDate(Date contractBeginDate) {
+		this.contractBeginDate = contractBeginDate;
+	}
+	/**
+	 * @return contractBeginDateS
+	 */
+	public String getContractBeginDateS() {
+		return contractBeginDateS;
+	}
+	/**
+	 * @param contractBeginDateS セットする contractBeginDateS
+	 */
+	public void setContractBeginDateS(String contractBeginDateS) {
+		this.contractBeginDateS = contractBeginDateS;
 	}
 
 

@@ -1,4 +1,6 @@
 package com.softtech.service;
+
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,8 @@ import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.entity.ContractInfoEntity;
 import com.softtech.mappers.ContractInfoMapper;
 import com.softtech.util.DataUtil;
+import com.softtech.util.DateUtil;
+
 	/**
 	 * 概要：給料情報取得インタフェース
 	 *
@@ -27,6 +31,7 @@ import com.softtech.util.DataUtil;
 	@Override
 	public List<ContractInfoEntity> queryContractInfoList(String employeeID) {
 		List<ContractInfoEntity> contractinfolist = contractinfoMapper.getContractInfoList(employeeID);
+
 		return  contractinfolist;
 
 	}
@@ -110,7 +115,7 @@ import com.softtech.util.DataUtil;
 		String upperPrice=contractInfoBean.getUpperPrice();
 		contractInfoEntity.setUpperPrice(upperPrice);
 		//契約開始日
-		String contractBeginDate=contractInfoBean.getContractBeginDate();
+		String contractBeginDate=DateUtil.chgMonthToYM(contractInfoBean.getContractBeginDateS());
 		contractInfoEntity.setContractBeginDate(contractBeginDate);
 		//契約終了日
 		String contractEndDate=contractInfoBean.getContractEndDate();
@@ -238,7 +243,7 @@ import com.softtech.util.DataUtil;
 			contractInfoFormBean.setLowerPrice(contractInfoEntity.getLowerPrice());
 			contractInfoFormBean.setUpperTime(contractInfoEntity.getUpperTime());
 			contractInfoFormBean.setUpperPrice(contractInfoEntity.getUpperPrice());
-			contractInfoFormBean.setContractBeginDate(contractInfoEntity.getContractBeginDate());
+			contractInfoFormBean.setContractBeginDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractBeginDate())));
 			contractInfoFormBean.setContractEndDate(contractInfoEntity.getContractEndDate());
 			contractInfoFormBean.setPaymentTerm(contractInfoEntity.getPaymentTerm());
 			contractInfoFormBean.setPostNeed(contractInfoEntity.getPostNeed());

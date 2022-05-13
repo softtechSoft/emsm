@@ -1,4 +1,5 @@
 package com.softtech.util;
+
 /**
  * 概要：データ処理機能
  *
@@ -99,4 +100,5 @@ public class DataUtil {
 		String nextID = header + nextNumber;
 		return nextID;
 	}
+
 }

@@ -1,4 +1,5 @@
 package com.softtech.controller;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +119,8 @@ public class ContractInfoController {
 			contractInfoFormBean.setContractID(maxContractID);
 			//新規
 			contractInfoFormBean.setInsertFlg(insertFlg);
+			contractInfoFormBean.setContractBeginDate(Date.valueOf("2017-03-02"));
+
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
 
 		//更新の場合
@@ -129,6 +132,7 @@ public class ContractInfoController {
 			ContractInfoFormBean contractInfoFormBean=contractInfoService.trasferEntityToUI(sList);
 			//更新
 			contractInfoFormBean.setInsertFlg(insertFlg);
+
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
 		}
 		return "contractInfoEdit";
@@ -150,24 +154,24 @@ public class ContractInfoController {
 	public String updateContractInfo(@Validated@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
 			BindingResult result,Model model) {
 
-		//必須チェック
-		if (result.hasErrors()) {
-			//社員IDリスト候補生成
-			List<EmployeeIDName> employeeList = loginService.getEmployeeList();
-			model.addAttribute("employeeList",employeeList);
-
-			//社員項目IDを任意設定
-			contractInfoBean.setEmployeeID("1");
-
-			//会社IDリスト候補生成
-			List<CompanyIDName> companyList = loginService.getCompanyList();
-			model.addAttribute("companyList",companyList);
-
-			//会社項目IDを任意設定
-			contractInfoBean.setCompanyID("1");
-			model.addAttribute("errors", result.getAllErrors());
-			return "contractInfoEdit";
-		}
+//		//必須チェック
+//		if (result.hasErrors()) {
+//			//社員IDリスト候補生成
+//			List<EmployeeIDName> employeeList = loginService.getEmployeeList();
+//			model.addAttribute("employeeList",employeeList);
+//
+//			//社員項目IDを任意設定
+//			contractInfoBean.setEmployeeID("1");
+//
+//			//会社IDリスト候補生成
+//			List<CompanyIDName> companyList = loginService.getCompanyList();
+//			model.addAttribute("companyList",companyList);
+//
+//			//会社項目IDを任意設定
+//			contractInfoBean.setCompanyID("1");
+//			model.addAttribute("errors", result.getAllErrors());
+//			return "contractInfoEdit";
+//		}
 		//数字チェック
 //		 List<FieldError> errors = contractInfoService.chkNumberData(contractInfoBean);
 //		 // エラーがある場合
