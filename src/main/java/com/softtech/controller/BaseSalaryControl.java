@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.BaseSalaryInfoBean;
 import com.softtech.actionForm.BaseSalaryInfoFormBean;
+import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.common.BaseSalaryIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.BaseSalaryInfoEntity;
+import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.BaseSalaryInfoService;
 import com.softtech.service.LoginService;
 
@@ -115,27 +117,50 @@ public class BaseSalaryControl {
 		//IDを任意設定
 		baseSalaryInfoBean.setBaseSalaryID("1");
 
-		model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
+		//新規フラグを取得
+		String insertFlg = baseSalaryInfoBean.getInsertFlg();
+		//新規の場合
+		if("0".equals(insertFlg)) {
+			BaseSalaryInfoFormBean baseSalaryInfoFormBean = new BaseSalaryInfoFormBean();
+
+			//baseSalaryIDを採番する（既存の最大値＋１）
+			String maxBaseSalaryID =baseSalaryInfoService.getNextBaseSalaryID();
+			baseSalaryInfoFormBean.setBaseSalaryID(maxBaseSalaryID);
+			//新規
+			baseSalaryInfoFormBean.setInsertFlg(insertFlg);
+			model.addAttribute("baseSalarytInfoBean",baseSalaryInfoFormBean);;
+
+		//更新の場合
+		} else {
+			//選択された内容を取得する
+			baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
+			bList= baseSalaryInfoService.queryBaseSalaryInfo(baseSalaryID);
+
+			BaseSalaryInfoFormBean baseSalaryInfoFormBean = baseSalaryInfoService.trasferEntityToUI(bList);
+			//更新
+			baseSalaryInfoFormBean.setInsertFlg(insertFlg);
+			model.addAttribute("baseSalaryInfoBean",baseSalaryInfoFormBean);
+		}
 		return "baseSalaryInfoEdit";
 	}
 
 	/**
-	 * 基本給情報登録ボタン
+	 * 基本給情報更新と新規ボタン
 	 */
 
 	@RequestMapping(value ="/baseSalaryInfoEdit", method = RequestMethod.POST)
-	public String registBaseSalaryInfo(@Valid @ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoBean baseSalaryInfoBean,
+	public String registBaseSalaryInfo(@Valid @ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
 			BindingResult result,HttpSession session,Model model) {
-		//必須チェック
-		if (result.hasErrors()) {
-			model.addAttribute("errors", result.getFieldErrors());
-			return "baseSalaryInfoEdit";
-			}
 
 
-		//DBに入力
-		baseSalaryInfoService.updateBaseSalaryInfoList(baseSalaryInfoBean);
+		String insertFlg = baseSalaryInfoBean.getInsertFlg();
+		//新規の場合
+		if("0".equals(insertFlg)) {
+			baseSalaryInfoService.insertBaseSalaryInfoDetail(baseSalaryInfoBean);
+		} else {
+			//DBに更新入力
+			baseSalaryInfoService.updateBaseSalaryInfoList(baseSalaryInfoBean);
+		}
 		return "baseSalaryInfoEdit";
 	}
-
 }

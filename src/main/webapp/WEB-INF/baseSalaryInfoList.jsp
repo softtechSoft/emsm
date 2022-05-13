@@ -12,10 +12,19 @@
 	function toSearchJsp(){
 		document.theForm.submit();
 	}
-
-	// 更新ボタンへ
+	// 更新ボタン処理
 	function toUpdateJsp(baseSalaryId){
-		document.getElementById('baseSalaryID').value=baseSalaryId;
+		// 更新
+		document.getElementById('insertFlg').value='1';
+		document.getElementById('baseSalaryId').value=baseSalaryId;
+		document.theForm.action="toInitBaseSalaryInfo";
+		document.theForm.submit();
+	}
+
+	// 新規ボタン処理
+	function toInsertJsp(){
+		// 新規
+		document.getElementById('insertFlg').value='0';
 		document.theForm.action="toInitBaseSalaryInfo";
 		document.theForm.submit();
 	}
@@ -26,6 +35,8 @@
 		<h2>基本給管理リスト</h2>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoList" >
 	<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoBean.baseSalaryID}"/>
+	<!--新規フラグ　０　新規　１　更新-->
+	<input type="hidden" id="insertFlg" name="insertFlg" value="${baseSalaryInfoBean.insertFlg}"/>
 
 	<b>社員:</b>
 	<form:select path="employeeID">
@@ -69,6 +80,7 @@
 				</tr>
 			</c:forEach>
 	</table>
+	<input type="button"  name="insert" value="新規登録" onclick="toInsertJsp();"/>
 </form:form>
 </body>
 </html>

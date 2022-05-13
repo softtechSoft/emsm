@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.softtech.entity.BaseSalaryInfoEntity;
+import com.softtech.entity.ContractInfoEntity;
 import com.softtech.entity.ExpensesEntity;
 
 /**
@@ -20,6 +21,9 @@ public interface BaseSalaryInfoMapper {
 	List<BaseSalaryInfoEntity> getBaseSalaryInfoList(@Param("employeeID")String employeeID);
 	//更新画面
 	List<BaseSalaryInfoEntity> getBaseSalaryInfo(@Param("baseSalaryID")String baseSalaryID);
-
+	//update
 	public void updateBaseSalaryInfo(BaseSalaryInfoEntity baseSalaryInfoEntity);
+	//insert
+	public String getMaxBaseSalaryID();
+	public void insertBaseSalaryInfo(BaseSalaryInfoEntity baseSalaryInfoEntity);
 }

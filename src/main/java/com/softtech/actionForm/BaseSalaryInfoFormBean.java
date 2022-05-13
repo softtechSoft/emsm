@@ -24,6 +24,8 @@ public class BaseSalaryInfoFormBean {
 	private String updateDate;
 	//基本給ID
 	private String baseSalaryID;
+	//更新と新規区別用のFlg
+	private String insertFlg;
 
 	//社員IDリスト
 	private ArrayList<EmployeeIDName> employeeIDNameList;
@@ -94,5 +96,10 @@ public class BaseSalaryInfoFormBean {
 	public void setBaseSalaryID(String baseSalaryID) {
 		this.baseSalaryID = baseSalaryID;
 	}
-
+	public String getInsertFlg() {
+		return insertFlg;
+	}
+	public void setInsertFlg(String insertFlg) {
+		this.insertFlg = insertFlg;
+	}
 }
