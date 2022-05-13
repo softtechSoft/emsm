@@ -64,4 +64,13 @@
 			where
  				baseSalaryID=#{baseSalaryID}
 	</select>
+	<!--最大ID取得。-->
+	<select id="getMaxBaseSalaryID"  resultType="string">
+		 <!--基本給情報IDを取得する。-->
+ 		select
+			MAX(baseSalaryID)
+		from
+			m_basesalary ct
+
+	</select>
 </mapper>
