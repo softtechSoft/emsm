@@ -16,7 +16,7 @@
 	function toUpdateJsp(baseSalaryId){
 		// 更新
 		document.getElementById('insertFlg').value='1';
-		document.getElementById('baseSalaryId').value=baseSalaryId;
+		document.getElementById('baseSalaryID').value=baseSalaryID;
 		document.theForm.action="toInitBaseSalaryInfo";
 		document.theForm.submit();
 	}
