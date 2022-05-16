@@ -111,8 +111,9 @@
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約終了日</td>
-				<td width="200px">  <input type="text" id="contractEndDate" name="contractEndDate"
-									value="${contractInfoBean.contractEndDate}" /></td>
+				<td width="200px">
+					<input type="date" id="contractEndDateS" name="contractEndDateS"	value="${contractInfoBean.contractEndDate}" />
+				</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">

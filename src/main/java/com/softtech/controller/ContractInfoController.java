@@ -1,5 +1,4 @@
 package com.softtech.controller;
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +118,7 @@ public class ContractInfoController {
 			contractInfoFormBean.setContractID(maxContractID);
 			//新規
 			contractInfoFormBean.setInsertFlg(insertFlg);
-			contractInfoFormBean.setContractBeginDate(Date.valueOf("2017-03-02"));
+			//contractInfoFormBean.setContractBeginDate(Date.valueOf(getNowYear()));
 
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
 
@@ -137,6 +136,7 @@ public class ContractInfoController {
 		}
 		return "contractInfoEdit";
 	}
+
 	/*
 	 * 機能：契約情報登録(登録ボタン）
 	 *

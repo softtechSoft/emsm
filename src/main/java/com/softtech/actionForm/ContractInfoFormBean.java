@@ -46,8 +46,9 @@ public class ContractInfoFormBean {
 	private Date contractBeginDate;
 	private String contractBeginDateS;
 	//契約終
-	@NotEmpty(message = "契約終了日を入力してください。")
-	private String contractEndDate;
+	//@NotEmpty(message = "契約終了日を入力してください。")
+	private Date contractEndDate;
+	private String contractEndDateS;
 	//支払サイト
 	@NotEmpty(message = "支払サイトを入力してください。")
 	private String paymentTerm;
@@ -223,16 +224,11 @@ public class ContractInfoFormBean {
 		this.upperPrice = upperPrice;
 	}
 
-	/**
-	 * @return contractEndDate
-	 */
-	public String getContractEndDate() {
+
+	public Date getContractEndDate() {
 		return contractEndDate;
 	}
-	/**
-	 * @param contractEndDate セットする contractEndDate
-	 */
-	public void setContractEndDate(String contractEndDate) {
+	public void setContractEndDate(Date contractEndDate) {
 		this.contractEndDate = contractEndDate;
 	}
 	/**
@@ -402,6 +398,18 @@ public class ContractInfoFormBean {
 	 */
 	public void setContractBeginDateS(String contractBeginDateS) {
 		this.contractBeginDateS = contractBeginDateS;
+	}
+	/**
+	 * @return contractEndDateS
+	 */
+	public String getContractEndDateS() {
+		return contractEndDateS;
+	}
+	/**
+	 * @param contractEndDateS セットする contractEndDateS
+	 */
+	public void setContractEndDateS(String contractEndDateS) {
+		this.contractEndDateS = contractEndDateS;
 	}
 
 

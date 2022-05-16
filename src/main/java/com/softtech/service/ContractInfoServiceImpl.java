@@ -118,7 +118,8 @@ import com.softtech.util.DateUtil;
 		String contractBeginDate=DateUtil.chgMonthToYM(contractInfoBean.getContractBeginDateS());
 		contractInfoEntity.setContractBeginDate(contractBeginDate);
 		//契約終了日
-		String contractEndDate=contractInfoBean.getContractEndDate();
+		//String contractEndDate=contractInfoBean.getContractEndDate();
+		String contractEndDate=DateUtil.chgMonthToYM(contractInfoBean.getContractEndDateS());
 		contractInfoEntity.setContractEndDate(contractEndDate);
 		//原本郵送フラグ
 		String postNeed=contractInfoBean.getPostNeed();
@@ -244,7 +245,7 @@ import com.softtech.util.DateUtil;
 			contractInfoFormBean.setUpperTime(contractInfoEntity.getUpperTime());
 			contractInfoFormBean.setUpperPrice(contractInfoEntity.getUpperPrice());
 			contractInfoFormBean.setContractBeginDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractBeginDate())));
-			contractInfoFormBean.setContractEndDate(contractInfoEntity.getContractEndDate());
+			contractInfoFormBean.setContractEndDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractEndDate())));
 			contractInfoFormBean.setPaymentTerm(contractInfoEntity.getPaymentTerm());
 			contractInfoFormBean.setPostNeed(contractInfoEntity.getPostNeed());
 			contractInfoFormBean.setTimeReportPath(contractInfoEntity.getTimeReportPath());

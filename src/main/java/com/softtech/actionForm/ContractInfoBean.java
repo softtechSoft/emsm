@@ -30,7 +30,7 @@ public class ContractInfoBean {
 		//契約開始日
 		private Date ContractBeginDate;
 		//契約終了日
-		private String ContractEndDate;
+		private Date ContractEndDate;
 		//支払サイト
 		private String PaymentTerm;
 		//原本郵送フラグ
@@ -190,18 +190,7 @@ public class ContractInfoBean {
 			UpperPrice = upperPrice;
 		}
 
-		/**
-		 * @return contractEndDate
-		 */
-		public String getContractEndDate() {
-			return ContractEndDate;
-		}
-		/**
-		 * @param contractEndDate セットする contractEndDate
-		 */
-		public void setContractEndDate(String contractEndDate) {
-			ContractEndDate = contractEndDate;
-		}
+
 		/**
 		 * @return paymentTerm
 		 */
@@ -297,6 +286,18 @@ public class ContractInfoBean {
 		 */
 		public void setContractBeginDate(Date contractBeginDate) {
 			ContractBeginDate = contractBeginDate;
+		}
+		/**
+		 * @return contractEndDate
+		 */
+		public Date getContractEndDate() {
+			return ContractEndDate;
+		}
+		/**
+		 * @param contractEndDate セットする contractEndDate
+		 */
+		public void setContractEndDate(Date contractEndDate) {
+			ContractEndDate = contractEndDate;
 		}
 
 		}
