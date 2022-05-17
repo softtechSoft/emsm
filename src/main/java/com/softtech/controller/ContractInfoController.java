@@ -120,7 +120,11 @@ public class ContractInfoController {
 			//新規
 			contractInfoFormBean.setInsertFlg(insertFlg);
 
+
 			contractInfoFormBean.setContractBeginDateS(DateUtil.getNowYear());
+
+
+			//contractInfoFormBean.setContractBeginDate(Date.valueOf(getNowYear()));
 
 
 			model.addAttribute("contractInfoBean",contractInfoFormBean);
@@ -139,6 +143,7 @@ public class ContractInfoController {
 		}
 		return "contractInfoEdit";
 	}
+
 	/*
 	 * 機能：契約情報登録(登録ボタン）
 	 *

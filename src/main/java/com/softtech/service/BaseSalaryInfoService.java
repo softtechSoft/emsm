@@ -39,7 +39,7 @@ public interface BaseSalaryInfoService {
 	//DB Entityからui　formへ変更
 	public BaseSalaryInfoFormBean trasferEntityToUI(List<BaseSalaryInfoEntity> bList);
 
-	//baseSalaryIDの最大値を取得
+	//baseSalaryIDの最大値+1を取得
 	public String getNextBaseSalaryID();
 	//新規処理
 	public boolean insertBaseSalaryInfoDetail(BaseSalaryInfoFormBean baseSalaryInfoBean);
