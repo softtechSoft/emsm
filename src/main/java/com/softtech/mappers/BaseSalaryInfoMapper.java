@@ -5,8 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.softtech.entity.BaseSalaryInfoEntity;
-import com.softtech.entity.ContractInfoEntity;
-import com.softtech.entity.ExpensesEntity;
 
 /**
  * 概要：基本給の検索、更新、入力

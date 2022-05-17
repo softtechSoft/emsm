@@ -4,7 +4,7 @@
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.BaseSalaryInfoMapper">
-	<insert id="insertBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity">
+	<select id="insertBaseSalaryInfo" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
 		insert
 	into
 		m_basesalary
@@ -24,10 +24,10 @@
 			#{minusHour},
 			#{plusHour},
 			#{status},
-			date_format(now(),'%Y%m%d'),
+			date_format(now(),'%Y%m%d')
 
 
-	</insert>
+	</select>
 <!-- 基本給リストの検索 -->
 	<select id="getBaseSalaryInfoList" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
 		select
@@ -60,7 +60,7 @@
     			wkPeriodFrom=#{wkPeriodFrom},
     			wkPeriodTo=#{wkPeriodTo},
     			status=#{status},
-    			updateDate=#{updateDate}
+    			updateDate=date_format(now(),'%Y%m%d')
 			where
  				baseSalaryID=#{baseSalaryID}
 	</select>

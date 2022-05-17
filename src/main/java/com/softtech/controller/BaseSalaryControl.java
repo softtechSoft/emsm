@@ -73,16 +73,14 @@ public class BaseSalaryControl {
 	 * @param  model
 	 */
 	@RequestMapping("/baseSalaryInfoList")
-	public String baseSalaryInfo(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
-			Model model)
-	{
+	public String baseSalaryInfo(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,Model model){
 
 		String employeeID = baseSalaryInfoBean.getEmployeeID();
 
 		List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfoList(employeeID);
 
 		//社員IDリスト候補生成
-		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeList();
+		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeID();
 		//社員IDリスト候補を画面へ渡す
 		model.addAttribute("baseSalaryList",baseSalaryList);
 		model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
@@ -102,21 +100,6 @@ public class BaseSalaryControl {
 			Model model) {
 		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
 
-		List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfo(baseSalaryID);
-		model.addAttribute("list",bList);
-
-		//社員IDリスト候補生成
-		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
-		model.addAttribute("employeeList",employeeList);
-		//社員項目IDを任意設定
-		baseSalaryInfoBean.setEmployeeID("1");
-		//IDリスト候補生成
-		List<BaseSalaryIDName> baseSalaryList = loginService.getBaseSalaryList();
-		model.addAttribute("baseSalaryList",baseSalaryList);
-
-		//IDを任意設定
-		baseSalaryInfoBean.setBaseSalaryID("1");
-
 		//新規フラグを取得
 		String insertFlg = baseSalaryInfoBean.getInsertFlg();
 		//新規の場合
@@ -134,13 +117,27 @@ public class BaseSalaryControl {
 		} else {
 			//選択された内容を取得する
 			baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
-			bList= baseSalaryInfoService.queryBaseSalaryInfo(baseSalaryID);
+			List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfo(baseSalaryID);
 
 			BaseSalaryInfoFormBean baseSalaryInfoFormBean = baseSalaryInfoService.trasferEntityToUI(bList);
 			//更新
 			baseSalaryInfoFormBean.setInsertFlg(insertFlg);
 			model.addAttribute("baseSalaryInfoBean",baseSalaryInfoFormBean);
 		}
+
+
+		//社員IDリスト候補生成
+		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
+		model.addAttribute("employeeList",employeeList);
+		//社員項目IDを任意設定
+//		baseSalaryInfoBean.setEmployeeID("1");
+//		//IDリスト候補生成
+//		List<BaseSalaryIDName> baseSalaryList = loginService.getBaseSalaryList();
+//		model.addAttribute("baseSalaryList",baseSalaryList);
+//
+//		//IDを任意設定
+//		baseSalaryInfoBean.setBaseSalaryID("1");
+
 		return "baseSalaryInfoEdit";
 	}
 
@@ -161,6 +158,13 @@ public class BaseSalaryControl {
 			//DBに更新入力
 			baseSalaryInfoService.updateBaseSalaryInfoList(baseSalaryInfoBean);
 		}
+
+		//社員IDリスト候補生成
+		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
+		model.addAttribute("employeeList",employeeList);
+
+		//社員項目IDを任意設定
+		baseSalaryInfoBean.setEmployeeID("1");
 		return "baseSalaryInfoEdit";
 	}
 }

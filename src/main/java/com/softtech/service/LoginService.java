@@ -98,6 +98,16 @@ public class LoginService {
 
 	}
 
+	public List<EmployeeIDName> getEmployeeID() {
+
+		List<EmployeeIDName> baseSalaryList = new ArrayList<EmployeeIDName>();
+		// 社員情報テーブルからIDリストを取得する
+		baseSalaryList = loginMappers.getEmployees();
+
+		return baseSalaryList;
+
+	}
+
 
 	/*
 	 * 機能：契約情報から契約IDリストを取得

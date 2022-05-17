@@ -1,13 +1,8 @@
 package com.softtech.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.FieldError;
-
-import com.softtech.actionForm.BaseSalaryInfoBean;
 import com.softtech.actionForm.BaseSalaryInfoFormBean;
 import com.softtech.entity.BaseSalaryInfoEntity;
 import com.softtech.mappers.BaseSalaryInfoMapper;
@@ -24,7 +19,12 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		List<BaseSalaryInfoEntity> baseSalaryInfoList = baseSalaryInfoMapper.getBaseSalaryInfoList(employeeID);
 		return  baseSalaryInfoList;
 	}
-	//更新画面
+	/**
+	 * @Description: 更新画面へのquery
+	 * @author 孫曄
+	 * @date 2022-05-09
+	 * @return:
+	*/
 	@Override
 	public List<BaseSalaryInfoEntity> queryBaseSalaryInfo(String baseSalaryID) {
 		List<BaseSalaryInfoEntity> baseSalaryInfo = baseSalaryInfoMapper.getBaseSalaryInfo(baseSalaryID);
@@ -40,18 +40,13 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 
 	}
 	/**
-	 * @Description: 更新画面用のBeanToEntity
+	 * @Description: 更新用のBeanToEntity
 	 * @author 孫曄
 	 * @date 2022-05-12
 	 * @return:
 	*/
 	private BaseSalaryInfoEntity tranferBeanToEntity(BaseSalaryInfoFormBean baseSalaryInfoBean) {
 		BaseSalaryInfoEntity baseSalaryInfoEntity = new BaseSalaryInfoEntity();
-
-		//修正時間
-		LocalDateTime now = LocalDateTime.now();
-        String format = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-		baseSalaryInfoEntity.setUpdateDate(format);
 
 		//基本給
 		int baseSalary = baseSalaryInfoBean.getBaseSalary();
@@ -60,7 +55,6 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		//残業不足時間
 		int minusHour = baseSalaryInfoBean.getMinusHour();
 		baseSalaryInfoEntity.setMinusHour(minusHour);
-
 
 		//残業時間
 		int plusHour= baseSalaryInfoBean.getPlusHour();
@@ -82,26 +76,19 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
 		baseSalaryInfoEntity.setBaseSalaryID(baseSalaryID);
 
-		//登録日　　！入力日は修正しません
-		String insertDate = baseSalaryInfoBean.getInsertDate();
-		baseSalaryInfoEntity.setInsertDate(insertDate);
-
 		//社員ID
 		String employeeID = baseSalaryInfoBean.getEmployeeID();
 		baseSalaryInfoEntity.setEmployeeID(employeeID);
 
+		//登録日
+		String insertDate = baseSalaryInfoBean.getInsertDate();
+		baseSalaryInfoEntity.setInsertDate(insertDate);
+
+		//更新日
+		String updateDate = baseSalaryInfoBean.getUpdateDate();
+		baseSalaryInfoEntity.setInsertDate(updateDate);
+
 		return baseSalaryInfoEntity;
-	}
-	/**
-	 * @Description: 更新画面の数字チェク
-	 * @author 孫曄
-	 * @date 2022-05-13
-	 * @return:
-	*/
-	@Override
-	public List<FieldError> chkNumberData(BaseSalaryInfoBean baseSalaryInfoBean) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
 	}
 
 	/**
@@ -114,6 +101,60 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		String maxBaseSalaryID = baseSalaryInfoMapper.getMaxBaseSalaryID();
 		return maxBaseSalaryID;
 	}
+	/**
+	 *
+	 * @Description: 新規用のBeanToEntity
+	 * @author 孫曄
+	 * @date 2022-05-17
+	 * @return:
+	 */
+	private BaseSalaryInfoEntity tranferBeanToEntity1(BaseSalaryInfoFormBean baseSalaryInfoBean) {
+		BaseSalaryInfoEntity baseSalaryInfoEntity = new BaseSalaryInfoEntity();
+
+		//基本給
+		int baseSalary = baseSalaryInfoBean.getBaseSalary();
+		baseSalaryInfoEntity.setBaseSalary(baseSalary);
+
+		//残業不足時間
+		int minusHour = baseSalaryInfoBean.getMinusHour();
+		baseSalaryInfoEntity.setMinusHour(minusHour);
+
+		//残業時間
+		int plusHour= baseSalaryInfoBean.getPlusHour();
+		baseSalaryInfoEntity.setPlusHour(plusHour);
+
+		//稼働期間From
+		int wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
+		baseSalaryInfoEntity.setWkPeriodFrom(wkPeriodFrom);
+
+		//稼働期間To
+		int wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
+		baseSalaryInfoEntity.setWkPeriodTo(wkPeriodTo);
+
+		//利用ステータス
+		int status = baseSalaryInfoBean.getStatus();
+		baseSalaryInfoEntity.setStatus(status);
+
+		//基本給ID
+		String maxBaseSalaryID = getMaxBaseSalaryID();
+		String nextBaseSalaryID = DataUtil.getNextID(maxBaseSalaryID,2);
+		baseSalaryInfoEntity.setBaseSalaryID(nextBaseSalaryID);
+
+		//社員ID
+		String employeeID = baseSalaryInfoBean.getEmployeeID();
+		baseSalaryInfoEntity.setEmployeeID(employeeID);
+
+		//登録日
+		String insertDate = baseSalaryInfoBean.getInsertDate();
+		baseSalaryInfoEntity.setInsertDate(insertDate);
+
+		//更新日
+		String updateDate = baseSalaryInfoBean.getUpdateDate();
+		baseSalaryInfoEntity.setInsertDate(updateDate);
+
+		return baseSalaryInfoEntity;
+	}
+
 	/**
 	 * @Description: baseSalaryIDの最大値+1を取得,登録時用のPK
 	 * @author 孫曄
@@ -145,59 +186,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		return true;
 	}
 	/**
-	 * @Description: 新規画面用のBeanToEntity
-	 * @author 孫曄
-	 * @date 2022-05-13
-	 * @return:Map
-	*/
-	private BaseSalaryInfoEntity tranferBeanToEntity1(BaseSalaryInfoFormBean baseSalaryInfoBean) {
-		BaseSalaryInfoEntity baseSalaryInfoEntity = new BaseSalaryInfoEntity();
-
-		//修正時間
-		LocalDateTime now = LocalDateTime.now();
-        String format = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-		baseSalaryInfoEntity.setUpdateDate(format);
-
-		//基本給
-		int baseSalary = baseSalaryInfoBean.getBaseSalary();
-		baseSalaryInfoEntity.setBaseSalary(baseSalary);
-
-		//残業不足時間
-		int minusHour = baseSalaryInfoBean.getMinusHour();
-		baseSalaryInfoEntity.setMinusHour(minusHour);
-
-
-		//残業時間
-		int plusHour= baseSalaryInfoBean.getPlusHour();
-		baseSalaryInfoEntity.setPlusHour(plusHour);
-
-		//稼働期間From
-		int wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
-		baseSalaryInfoEntity.setWkPeriodFrom(wkPeriodFrom);
-
-		//稼働期間To
-		int wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
-		baseSalaryInfoEntity.setWkPeriodTo(wkPeriodTo);
-
-		//利用ステータス
-		int status = baseSalaryInfoBean.getStatus();
-		baseSalaryInfoEntity.setStatus(status);
-
-		//基本給ID
-		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
-		baseSalaryInfoEntity.setBaseSalaryID(baseSalaryID);
-
-		//登録日：新規ので、LocalDateTime.now();から時間を入ります
-		baseSalaryInfoEntity.setInsertDate(format);
-
-		//社員ID
-		String employeeID = baseSalaryInfoBean.getEmployeeID();
-		baseSalaryInfoEntity.setEmployeeID(employeeID);
-
-		return baseSalaryInfoEntity;
-	}
-	/**
-	 * @Description: 画面form
+	 * @Description: 画面form,画面初期値
 	 * @author 孫曄
 	 * @date 2022-05-13
 	 * @return:
@@ -206,7 +195,6 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 	public BaseSalaryInfoFormBean trasferEntityToUI(List<BaseSalaryInfoEntity> bList) {
 		// 画面form
 		BaseSalaryInfoFormBean baseSalaryInfoFormBean = new BaseSalaryInfoFormBean();
-
 		// DBのデータを画面formへ転換する
 		for(BaseSalaryInfoEntity baseSalaryInfoEntity:bList){
 			baseSalaryInfoFormBean.setBaseSalaryID(baseSalaryInfoEntity.getBaseSalaryID());
@@ -217,6 +205,8 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 			baseSalaryInfoFormBean.setWkPeriodTo(baseSalaryInfoEntity.getWkPeriodTo());
 			baseSalaryInfoFormBean.setStatus(baseSalaryInfoEntity.getStatus());
 			baseSalaryInfoFormBean.setEmployeeID(baseSalaryInfoEntity.getEmployeeID());
+			baseSalaryInfoFormBean.setInsertDate(baseSalaryInfoEntity.getInsertDate());
+			baseSalaryInfoFormBean.setUpdateDate(baseSalaryInfoEntity.getUpdateDate());
 		}
 		return baseSalaryInfoFormBean;
 	}

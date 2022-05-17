@@ -33,9 +33,6 @@ public interface BaseSalaryInfoService {
 	//データ更新
 	public boolean updateBaseSalaryInfoList(BaseSalaryInfoFormBean baseSalaryInfoBean);
 
-	//数字チェック
-	public List<FieldError> chkNumberData(BaseSalaryInfoBean baseSalaryInfoBean);
-
 	//DB Entityからui　formへ変更
 	public BaseSalaryInfoFormBean trasferEntityToUI(List<BaseSalaryInfoEntity> bList);
 
