@@ -6,9 +6,19 @@
       <layout class="org.apache.log4j.PatternLayout">
          <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-6p %m%n"/>
       </layout>
+       <RollingFile
+            name="File"
+            fileName="logs/app.log"
+            filePattern="${daily_log}.gz">
+            <PatternLayout pattern="${date}, [${app_name}], [ %-5level ], %logger{10}, %msg %n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
    </appender>
    <root>
       <level value="debug" />
       <appender-ref ref="Appender1" />
+      <appender-ref ref="File" />
    </root>
 </log4j:configuration>
