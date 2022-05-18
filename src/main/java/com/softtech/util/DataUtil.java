@@ -93,8 +93,10 @@ public class DataUtil {
 		// +1 にする
 		String nextNumber= Integer.toString( Integer.parseInt( nowID.substring(headerIndex))+1);
 		// 新ID
+		int endIndex = length-nextNumber.length();
+		endIndex = endIndex-headerIndex;
 
-		for (int i=0;i<length-nextNumber.length();i++) {
+		for (int i=0;i<endIndex;i++) {
 			nextNumber = "0"+nextNumber;
 		}
 		String nextID = header + nextNumber;
