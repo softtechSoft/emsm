@@ -1,8 +1,10 @@
 package com.softtech.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.softtech.actionForm.BaseSalaryInfoFormBean;
 import com.softtech.entity.BaseSalaryInfoEntity;
 import com.softtech.mappers.BaseSalaryInfoMapper;

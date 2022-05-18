@@ -1,6 +1,8 @@
 package com.softtech.controller;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +19,6 @@ import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.ContractInfoService;
 import com.softtech.service.LoginService;
 import com.softtech.util.DateUtil;
-
 /**
  * 概要：契約情報リスト初期表示
  *
@@ -27,6 +28,7 @@ import com.softtech.util.DateUtil;
  */
 @Controller
 public class ContractInfoController {
+	static protected Logger logger = LogManager.getLogger(ContractInfoController.class);
 	// ログインサービス
 	@Autowired
 	LoginService loginService;
@@ -44,6 +46,7 @@ public class ContractInfoController {
 	 */
 	@RequestMapping("/initContractInfoList")
 	public String toinitContractInfoList(Model model) {
+		  logger.info("start index()");
 		//社員IDリスト候補生成
 		List<EmployeeIDName> contractList = loginService.getEmployeeList();
 
