@@ -165,7 +165,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		//baseSalaryIDの最大ID+1を取得する
 		String maxBaseSalaryID = getMaxBaseSalaryID();
 		//採番する
-		String nextBaseSalaryID = DataUtil.getNextID(maxBaseSalaryID,2);
+		String nextBaseSalaryID = DataUtil.getNextID(maxBaseSalaryID,1);
 		return nextBaseSalaryID;
 	}
 

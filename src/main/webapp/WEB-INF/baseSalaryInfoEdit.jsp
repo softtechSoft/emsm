@@ -33,7 +33,7 @@
 		<table  border="1">
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">基本給ID</td>
-				<td width="200px"><c:out  value="${baseSalaryInfoBean.getBaseSalaryID()}"/></td>
+				<td width="200px"><c:out  value="${baseSalaryInfoBean.baseSalaryID}"/></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
