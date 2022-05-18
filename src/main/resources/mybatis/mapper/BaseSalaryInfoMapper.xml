@@ -9,6 +9,8 @@
 	into
 		m_basesalary
 		(
+			baseSalaryID,
+			employeeID,
 			baseSalary,
 			minusHour,
 			plusHour,
@@ -18,6 +20,8 @@
 			insertDate,
 		)
 	values
+			#{baseSalaryID},
+			#{employeeID},
 			#{baseSalary},
 			#{wkPeriodFrom},
 			#{wkPeriodTo},
@@ -54,6 +58,7 @@
 		    update
 				m_basesalary
 			set
+				employeeID=#{employeeID},
     			baseSalary=#{baseSalary},
    	 			minusHour=#{minusHour},
     			plusHour=#{plusHour},

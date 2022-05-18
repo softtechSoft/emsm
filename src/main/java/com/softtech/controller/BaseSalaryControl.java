@@ -111,7 +111,7 @@ public class BaseSalaryControl {
 			baseSalaryInfoFormBean.setBaseSalaryID(maxBaseSalaryID);
 			//新規
 			baseSalaryInfoFormBean.setInsertFlg(insertFlg);
-			model.addAttribute("baseSalarytInfoBean",baseSalaryInfoFormBean);;
+			model.addAttribute("baseSalaryInfoBean",baseSalaryInfoFormBean);;
 
 		//更新の場合
 		} else {
