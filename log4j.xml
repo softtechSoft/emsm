@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
    <appender name="Appender1" class="org.apache.log4j.FileAppender">
-      <param name="File" value="C:/workspace/emsm/testlog.log" />
+      <param name="File" value="testlog.log" />
       <layout class="org.apache.log4j.PatternLayout">
          <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-6p %m%n"/>
       </layout>

@@ -15,13 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.softtech.actionForm.BaseSalaryInfoBean;
 import com.softtech.actionForm.BaseSalaryInfoFormBean;
-import com.softtech.actionForm.ContractInfoFormBean;
-import com.softtech.common.BaseSalaryIDName;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.BaseSalaryInfoEntity;
-import com.softtech.entity.ContractInfoEntity;
 import com.softtech.service.BaseSalaryInfoService;
 import com.softtech.service.LoginService;
 
@@ -111,7 +107,7 @@ public class BaseSalaryControl {
 			baseSalaryInfoFormBean.setBaseSalaryID(maxBaseSalaryID);
 			//新規
 			baseSalaryInfoFormBean.setInsertFlg(insertFlg);
-			model.addAttribute("baseSalarytInfoBean",baseSalaryInfoFormBean);;
+			model.addAttribute("baseSalaryInfoBean",baseSalaryInfoFormBean);
 
 		//更新の場合
 		} else {
