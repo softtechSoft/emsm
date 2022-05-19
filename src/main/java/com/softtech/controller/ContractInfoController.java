@@ -71,6 +71,10 @@ public class ContractInfoController {
 	@RequestMapping("/contractInfoList")
 	public String contractInfo(@ModelAttribute("contractInfoBean") ContractInfoFormBean contractInfoBean,
 								Model model) {
+		logger.debug("debug test");
+		logger.info("info test");
+		logger.warn("warn test");
+		logger.error("error test");
 		// 対象社員IDを取得する
 		String employeeID = contractInfoBean.getEmployeeID();
 		List<ContractInfoEntity> sList= contractInfoService.queryContractInfoList(employeeID);
