@@ -150,13 +150,13 @@
 									<input type="radio" name="status" <c:if test="${contractInfoBean.status == '9'}">
 									checked</c:if> value="9" /> 終了</td>
 			</tr>
-
+		</table>
+		<table  border="0">
 			<tr>
-			<td></td>
-			<td style="text-align: right;">
-			<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
+				<td width="200px"></td>
+				<td width="200px" style="text-align: right;">
+					<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
 			</tr>
-
 		</table>
 
 </form:form>
