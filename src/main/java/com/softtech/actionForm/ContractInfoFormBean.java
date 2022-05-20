@@ -3,6 +3,7 @@ package com.softtech.actionForm;
 import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class ContractInfoFormBean {
 	//契約ID
@@ -20,36 +21,38 @@ public class ContractInfoFormBean {
 	private String companyName;
 	//単価
 	@NotEmpty(message = "単価を入力してください。")
-	//@Pattern(message = "単価に数値のみを入力してください。", regexp = "\\\\\\d{0,7}")
+	//@Pattern(message = "単価に数値のみを入力してください。", regexp = "^\\\\\\d")
+	@Pattern(message = "単価に数値のみを入力してください。", regexp = "^[0-9]*$")
 	private String price;
 	//精算タイプ
 	private String payOff;
 	//契約下限
 	@NotEmpty(message = "契約下限を入力してください。")
-	//@Pattern(message = "契約下限に数値のみを入力してください。", regexp = "\\d{0,3}")
+	//@Pattern(message = "契約下限に数値のみを入力してください。", regexp = "^\\¥d")
+	@Pattern(message = "契約下限に数値のみを入力してください。", regexp = "^[0-9]*$")
 	private String lowerTime;
 	//控除単価
 	@NotEmpty(message = "控除単価を入力してください。")
-	//@Pattern(message = "控除単価に数値のみを入力してください。", regexp = "\\\\\\d{0,6}")
+	//@Pattern(message = "控除単価に数値のみを入力してください。", regexp = "^\\\\¥d")
+	@Pattern(message = "控除単価に数値のみを入力してください。", regexp = "^[0-9]*$")
 	private String lowerPrice;
 	//契約上限
 	@NotEmpty(message = "契約上限を入力してください。")
-	//@Pattern(message = "契約上限に数値のみを入力してください。", regexp = "\\d{0,3}")
+	@Pattern(message = "契約上限に数値のみを入力してください。", regexp ="^[0-9]*$")
 	private String upperTime;
 	//残業単価
 	@NotEmpty(message = "残業単価を入力してください。")
-
+	@Pattern(message = "残業単価に数値のみを入力してください。", regexp ="^[0-9]*$")
 	private String upperPrice;
 	//契約開始日
-	//@NotEmpty(message = "契約開始日を入力してください。")
 	private Date contractBeginDate;
 	private String contractBeginDateS;
 	//契約終
-	//@NotEmpty(message = "契約終了日を入力してください。")
 	private Date contractEndDate;
 	private String contractEndDateS;
 	//支払サイト
 	@NotEmpty(message = "支払サイトを入力してください。")
+	@Pattern(message = "支払サイトに数値のみを入力してください。", regexp ="^[0-9]*$")
 	private String paymentTerm;
 	//原本郵送フラグ
 	private String postNeed;
