@@ -186,7 +186,7 @@ public class ContractInfoController {
 			model.addAttribute("errors", result.getAllErrors());
 			return "contractInfoEdit";
 		}
-		//数字チェック
+//		//数字チェック
 //		 List<FieldError> errors = contractInfoService.chkNumberData(contractInfoBean);
 //		 // エラーがある場合
 //		if (errors.size() > 0) {
