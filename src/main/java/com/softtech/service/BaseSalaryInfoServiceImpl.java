@@ -1,5 +1,7 @@
 package com.softtech.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +89,10 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		baseSalaryInfoEntity.setInsertDate(insertDate);
 
 		//更新日
-		String updateDate = baseSalaryInfoBean.getUpdateDate();
-		baseSalaryInfoEntity.setInsertDate(updateDate);
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		String format = formatter.format(now);
+		baseSalaryInfoEntity.setInsertDate(format);
 
 		return baseSalaryInfoEntity;
 	}
@@ -139,7 +143,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 
 		//基本給ID
 		String maxBaseSalaryID = getMaxBaseSalaryID();
-		String nextBaseSalaryID = DataUtil.getNextID(maxBaseSalaryID,2);
+		String nextBaseSalaryID = DataUtil.getNextID(maxBaseSalaryID,1);
 		baseSalaryInfoEntity.setBaseSalaryID(nextBaseSalaryID);
 
 		//社員ID
@@ -151,8 +155,10 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		baseSalaryInfoEntity.setInsertDate(insertDate);
 
 		//更新日
-		String updateDate = baseSalaryInfoBean.getUpdateDate();
-		baseSalaryInfoEntity.setInsertDate(updateDate);
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+		String format = formatter.format(now);
+		baseSalaryInfoEntity.setInsertDate(format);
 
 		return baseSalaryInfoEntity;
 	}

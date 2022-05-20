@@ -80,7 +80,7 @@
 				</tr>
 			</c:forEach>
 	</table>
-	<input type="button"  name="insert" value="新規登録" onclick="toInsertJsp();"/>
+	<input type="button"  name="insert" value="新規追加" onclick="toInsertJsp();"/>
 </form:form>
 </body>
 </html>
