@@ -21,9 +21,14 @@
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoEdit" >
 				<h1>基本給情報更新</h1>
 		<p style="color: red;">
-			<c:forEach items="${errors}" var="error">
-				<spring:message message="${error}" />
-			</c:forEach>
+			<form:errors path="baseSalaryID" />
+			<form:errors path="baseSalary" />
+			<form:errors path="employeeID" />
+			<form:errors path="wkPeriodFrom" />
+			<form:errors path="wkPeriodTo" />
+			<form:errors path="minusHour" />
+			<form:errors path="plusHour" />
+			<form:errors path="status" />
 		</p>
 
 		<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoBean.baseSalaryID}"/>

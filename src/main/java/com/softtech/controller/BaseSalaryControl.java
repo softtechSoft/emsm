@@ -7,6 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.softtech.common.CompanyIDName;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +34,7 @@ import com.softtech.service.LoginService;
  */
 @Controller
 public class BaseSalaryControl {
+	static protected Logger logger = LogManager.getLogger(BaseSalaryControl.class);
 	// ログインサービス
 	@Autowired
 	LoginService loginService;
@@ -47,6 +51,7 @@ public class BaseSalaryControl {
 	//データ画面の設定
 	@RequestMapping("/initBaseSalaryList")
 	public String toinitBaseSalaryList(Model model) {
+		logger.info("start index()");
 		//社員IDリスト候補生成
 		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeList();
 
@@ -71,6 +76,10 @@ public class BaseSalaryControl {
 	@RequestMapping("/baseSalaryInfoList")
 	public String baseSalaryInfo(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,Model model){
 
+		logger.debug("debug test");
+		logger.info("info test");
+		logger.warn("warn test");
+		logger.error("error test");
 		String employeeID = baseSalaryInfoBean.getEmployeeID();
 
 		List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfoList(employeeID);
@@ -92,8 +101,7 @@ public class BaseSalaryControl {
 	 * @param  model
 	 */
 	@RequestMapping("/toInitBaseSalaryInfo")
-	public String initBaseSalaryInfoList(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
-			Model model) {
+	public String initBaseSalaryInfoList(@ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,Model model) {
 		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
 
 		//新規フラグを取得
@@ -143,9 +151,19 @@ public class BaseSalaryControl {
 	 */
 
 	@RequestMapping(value ="/baseSalaryInfoEdit", method = RequestMethod.POST)
-	public String registBaseSalaryInfo(@Valid @ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,
-			BindingResult result,HttpSession session,Model model) {
+	public String registBaseSalaryInfo(@Valid @ModelAttribute("baseSalaryInfoBean") BaseSalaryInfoFormBean baseSalaryInfoBean,BindingResult result,HttpSession session,Model model) {
 
+		//必須チェック
+		if (result.hasErrors()) {
+			//社員IDリスト候補生成
+			List<EmployeeIDName> employeeList = loginService.getEmployeeID();
+			model.addAttribute("employeeList",employeeList);
+
+			//社員項目IDを任意設定
+			baseSalaryInfoBean.setEmployeeID("1");
+
+			return "baseSalaryInfoEdit";
+		}
 
 		String insertFlg = baseSalaryInfoBean.getInsertFlg();
 		//新規の場合

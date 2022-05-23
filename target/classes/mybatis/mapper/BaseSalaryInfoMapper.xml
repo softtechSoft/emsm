@@ -3,12 +3,14 @@
                 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.softtech.mappers.BaseSalaryInfoMapper.xml">
-	<insert id="insertBaseSalaryInfo" parameterType="map">
+<mapper namespace="com.softtech.mappers.BaseSalaryInfoMapper">
+	<select id="insertBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity" >
 		insert
 	into
-		baseSalaryInfo
+		m_basesalary
 		(
+			baseSalaryID,
+			employeeID,
 			baseSalary,
 			minusHour,
 			plusHour,
@@ -16,8 +18,11 @@
 			wkPeriodTo,
 			status,
 			insertDate,
+			updateDate
 		)
-	values
+	values(
+			#{baseSalaryID},
+			#{employeeID},
 			#{baseSalary},
 			#{wkPeriodFrom},
 			#{wkPeriodTo},
@@ -25,33 +30,38 @@
 			#{plusHour},
 			#{status},
 			date_format(now(),'%Y%m%d'),
+			date_format(now(),'%Y%m%d')
+			)
 
 
-	</insert>
-
-	<insert id="queryBaseSalaryInfo" parameterType="map">
+	</select>
+<!-- 基本給リストの検索 -->
+	<select id="getBaseSalaryInfoList" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
 		select
-			employeeID as employeeID,
-			baseSalary as baseSalary,
-			minusHour as minusHour,
-			plusHour as plusHour,
-			wkPeriodFrom as wkPeriodFrom,
-			wkPeriodTo as wkPeriodTo,
-			status as status,
-			insertDate as insertDate,
-			updateDate as updateDate,
-			baseSalaryID as baseSalaryID,
-
+			*
 		from
-			ems.baseSalaryInfo
+			m_basesalary
 		where
 			employeeID=#{employeeID}
-	</insert>
+	</select>
 
-	<insert id="updateBaseSalaryInfo" parameterType="map">
+<!-- 基本給更新画面へのときの検索 -->
+
+		<select id="getBaseSalaryInfo" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
+		select
+			*
+		from
+			m_basesalary
+		where
+			baseSalaryID=#{baseSalaryID}
+	</select>
+
+<!-- 基本給更新 -->
+	<select id="updateBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity">
 		    update
-				baseSalaryInfo
+				m_basesalary
 			set
+				employeeID=#{employeeID},
     			baseSalary=#{baseSalary},
    	 			minusHour=#{minusHour},
     			plusHour=#{plusHour},
@@ -60,6 +70,15 @@
     			status=#{status},
     			updateDate=date_format(now(),'%Y%m%d')
 			where
- 				employeeID=#{employeeID}
-	</insert>
+ 				baseSalaryID=#{baseSalaryID}
+	</select>
+	<!--最大ID取得。-->
+	<select id="getMaxBaseSalaryID"  resultType="string">
+		 <!--基本給情報IDを取得する。-->
+ 		select
+			MAX(baseSalaryID)
+		from
+			m_basesalary ct
+
+	</select>
 </mapper>

@@ -53,23 +53,23 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		BaseSalaryInfoEntity baseSalaryInfoEntity = new BaseSalaryInfoEntity();
 
 		//基本給
-		int baseSalary = baseSalaryInfoBean.getBaseSalary();
+		String baseSalary = baseSalaryInfoBean.getBaseSalary();
 		baseSalaryInfoEntity.setBaseSalary(baseSalary);
 
 		//残業不足時間
-		int minusHour = baseSalaryInfoBean.getMinusHour();
+		String minusHour = baseSalaryInfoBean.getMinusHour();
 		baseSalaryInfoEntity.setMinusHour(minusHour);
 
 		//残業時間
-		int plusHour= baseSalaryInfoBean.getPlusHour();
+		String plusHour= baseSalaryInfoBean.getPlusHour();
 		baseSalaryInfoEntity.setPlusHour(plusHour);
 
 		//稼働期間From
-		int wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
+		String wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
 		baseSalaryInfoEntity.setWkPeriodFrom(wkPeriodFrom);
 
 		//稼働期間To
-		int wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
+		String wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
 		baseSalaryInfoEntity.setWkPeriodTo(wkPeriodTo);
 
 		//利用ステータス
@@ -118,23 +118,23 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		BaseSalaryInfoEntity baseSalaryInfoEntity = new BaseSalaryInfoEntity();
 
 		//基本給
-		int baseSalary = baseSalaryInfoBean.getBaseSalary();
+		String baseSalary = baseSalaryInfoBean.getBaseSalary();
 		baseSalaryInfoEntity.setBaseSalary(baseSalary);
 
 		//残業不足時間
-		int minusHour = baseSalaryInfoBean.getMinusHour();
+		String minusHour = baseSalaryInfoBean.getMinusHour();
 		baseSalaryInfoEntity.setMinusHour(minusHour);
 
 		//残業時間
-		int plusHour= baseSalaryInfoBean.getPlusHour();
+		String plusHour= baseSalaryInfoBean.getPlusHour();
 		baseSalaryInfoEntity.setPlusHour(plusHour);
 
 		//稼働期間From
-		int wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
+		String wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
 		baseSalaryInfoEntity.setWkPeriodFrom(wkPeriodFrom);
 
 		//稼働期間To
-		int wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
+		String wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
 		baseSalaryInfoEntity.setWkPeriodTo(wkPeriodTo);
 
 		//利用ステータス
