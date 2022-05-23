@@ -23,17 +23,12 @@
 				<h1>契約情報更新</h1>
 		<p style="color: red;">
 
-				 <form:errors path="contractName" />
-				 <form:errors path="price" />
-				 <form:errors path="lowerTime" />
-				 <form:errors path="lowerPrice" />
-				 <form:errors path="upperTime" />
-				 <form:errors path="upperPrice" />
-				 <form:errors path="paymentTerm" />
-				 <form:errors path="timeReportPath" />
+	    <c:forEach items="${errors}" var="error">
+			<spring:message message="${error}" /> </br>
+		</c:forEach>
+	</p>
 
 
-		</p>
 
 		<input type="hidden" id="contractID" name="contractID" value="${contractInfoBean.contractID}"/>
 		<!--新規フラグ　０　新規　１　更新-->
