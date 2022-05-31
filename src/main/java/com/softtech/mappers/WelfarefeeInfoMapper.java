@@ -32,6 +32,6 @@ public interface WelfarefeeInfoMapper {
   // insert
   void insertWelfarefeeInfo(WelfarefeeInfoEntity welfarefeeInfoEntity);
 
-  // 初期表示画面を検索
-  List<WelfarefeeIDName> getWelfarefeeInfoID();
+  // 選択枠
+  //List<WelfarefeeIDName> getWelfarefeeInfoID();
 }

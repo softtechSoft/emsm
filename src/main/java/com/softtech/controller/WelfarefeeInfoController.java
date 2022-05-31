@@ -107,6 +107,9 @@ public class WelfarefeeInfoController {
 
         //enterSalaryにより、検索する
         List<WelfarefeeInfoEntity> eList= welfarefeeInfoService.getWelfarefeeInfoByEnterSalary(enterSalary);
+        //リスト候補を画面へ渡す
+        model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
+        model.addAttribute("list",eList);
 
         return "welfarefeeInfoList";
 
