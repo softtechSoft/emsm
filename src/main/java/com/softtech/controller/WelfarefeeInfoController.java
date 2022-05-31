@@ -1,9 +1,7 @@
 package com.softtech.controller;
 
 import com.softtech.actionForm.WelfarefeeInfoFormBean;
-import com.softtech.common.EmployeeIDName;
 import com.softtech.common.WelfarefeeIDName;
-import com.softtech.entity.BaseSalaryInfoEntity;
 import com.softtech.entity.WelfarefeeInfoEntity;
 import com.softtech.service.LoginService;
 import com.softtech.service.WelfarefeeInfoService;
@@ -61,33 +59,45 @@ public class WelfarefeeInfoController {
 
     }
 
-    /**概要:厚生保険料マスタ リスト検索 By Year
+    /**概要:年度と入力の収入を分別検索する
     *@param:[welfarefeeInfoFormBean, model]
     *@return:welfarefeeInfoList
     *@author:孫曄@SOFTTECH
-    *@date:2022/05/31
+    *@date:2022/05/30
     */
     @RequestMapping("/WelfarefeeInfoList")
-    public String WelfarefeeInfoByYear(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model){
+    public String WelfarefeeInfo(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model){
 
         logger.debug("debug test");
         logger.info("info test");
         logger.warn("warn test");
         logger.error("error test");
         String year = welfarefeeInfoFormBean.getYear();
+        String enterSalary = welfarefeeInfoFormBean.getEnterSalary();
 
-        //年度により、検索する
-        List<WelfarefeeInfoEntity> bList= welfarefeeInfoService.getWelfarefeeInfoByYear(year);
+        if (year != null) {
+            //年度により、検索する
+            List<WelfarefeeInfoEntity> bList= welfarefeeInfoService.getWelfarefeeInfoByYear(year);
 
-        //年度リスト候補生成
-        List<WelfarefeeIDName> welfarefeeList = loginService.getYear();
-        //年度リスト候補を画面へ渡す
-        model.addAttribute("welfarefeeList",welfarefeeList);
-        model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
-        model.addAttribute("list",bList);
+            //年度リスト候補生成
+            List<WelfarefeeIDName> welfarefeeList = loginService.getYear();
+            //年度リスト候補を画面へ渡す
+            model.addAttribute("welfarefeeList",welfarefeeList);
+            model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
+            model.addAttribute("list",bList);
 
+
+        }
+        if(enterSalary != null) {
+            //enterSalaryにより、検索する
+            List<WelfarefeeInfoEntity> eList= welfarefeeInfoService.getWelfarefeeInfoByEnterSalary(enterSalary);
+            //リスト候補を画面へ渡す
+            model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
+            model.addAttribute("list",eList);
+
+
+        }
         return "welfarefeeInfoList";
-
     }
 
     /**概要:厚生保険料マスタ リスト検索 ByEnterSalary
@@ -96,24 +106,7 @@ public class WelfarefeeInfoController {
     *@author:孫曄@SOFTTECH
     *@date:2022/05/31
     */
-    @RequestMapping("/WelfarefeeInfoList")
-    public String WelfarefeeInfoByEnterSalary(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model){
 
-        logger.debug("debug test");
-        logger.info("info test");
-        logger.warn("warn test");
-        logger.error("error test");
-        String enterSalary = welfarefeeInfoFormBean.getEnterSalary();
-
-        //enterSalaryにより、検索する
-        List<WelfarefeeInfoEntity> eList= welfarefeeInfoService.getWelfarefeeInfoByEnterSalary(enterSalary);
-        //リスト候補を画面へ渡す
-        model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
-        model.addAttribute("list",eList);
-
-        return "welfarefeeInfoList";
-
-    }
 
 
     /**概要:更新画面の初期表示
