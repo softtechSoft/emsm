@@ -6,13 +6,13 @@ package com.softtech.common;
  */
 public class WelfarefeeIDName {
   // 厚生保険料ID PK
-  private String welfarefeeID;
+  private String year;
 
-  public String getWelfarefeeID() {
-    return welfarefeeID;
+  public String getYear() {
+    return year;
   }
 
-  public void setWelfarefeeID(String welfarefeeID) {
-    this.welfarefeeID = welfarefeeID;
+  public void setYear(String year) {
+    this.year = year;
   }
 }

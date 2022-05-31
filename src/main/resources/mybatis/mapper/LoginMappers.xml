@@ -48,5 +48,11 @@
         FROM company
 
  </select>
+    <!--選択枠-->
+    <select id="getYear" resultType="com.softtech.common.WelfarefeeIDName">
+        select year
+        from m_welfarefee
+        where status='1'
+    </select>
 
 </mapper>
