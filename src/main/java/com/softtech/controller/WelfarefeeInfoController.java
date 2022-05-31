@@ -28,7 +28,7 @@ import javax.validation.Valid;
  */
 @Controller
 public class WelfarefeeInfoController {
-    static protected Logger logger = LogManager.getLogger(BaseSalaryControl.class);
+    static protected Logger logger = LogManager.getLogger(WelfarefeeInfoController.class);
     //IOC
     @Resource
     private WelfarefeeInfoService welfarefeeInfoService;
@@ -65,7 +65,7 @@ public class WelfarefeeInfoController {
     *@author:孫曄@SOFTTECH
     *@date:2022/05/30
     */
-    @RequestMapping("/WelfarefeeInfoList")
+    @RequestMapping("/welfarefeeInfoList")
     public String WelfarefeeInfo(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model){
 
         logger.debug("debug test");
