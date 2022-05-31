@@ -3,15 +3,11 @@ package com.softtech.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.softtech.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.LoginBean;
-import com.softtech.common.BaseSalaryIDName;
-import com.softtech.common.CompanyIDName;
-import com.softtech.common.ContractIDName;
-import com.softtech.common.EmployeeIDName;
-import com.softtech.common.LoginEmployee;
 import com.softtech.entity.LoginEntity;
 import com.softtech.mappers.LoginMappers;
 
@@ -108,6 +104,21 @@ public class LoginService {
 
 	}
 
+	/**概要:選択枠の年度リストを検索
+	*@param:[]
+	*@return:java.util.List<com.softtech.common.WelfarefeeIDName>
+	*@author:孫曄@SOFTTECH
+	*@date:2022/05/31
+	*/
+	public List<WelfarefeeIDName> getYear() {
+
+		List<WelfarefeeIDName> welfarefeeIDNameList = new ArrayList<WelfarefeeIDName>();
+		// 厚生保険料マスタテーブルから年度リストを取得する
+		welfarefeeIDNameList = loginMappers.getYear();
+
+		return welfarefeeIDNameList;
+
+	}
 
 	/*
 	 * 機能：契約情報から契約IDリストを取得
