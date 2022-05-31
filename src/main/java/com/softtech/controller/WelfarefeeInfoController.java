@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,15 +46,15 @@ public class WelfarefeeInfoController {
     public String toinitWelfarefeeInfoList(Model model) {
         logger.info("start index()");
         //枠用の年度リスト候補生成
-        List<WelfarefeeIDName> welfarefeeIDNameList = loginService.getYear();
+        //List<WelfarefeeIDName> welfarefeeIDNameList = loginService.getYear();
 
         WelfarefeeInfoFormBean welfarefeeInfoFormBean = new WelfarefeeInfoFormBean();
         //年度を任意設定
-        welfarefeeInfoFormBean.setYear("2020");
+        //welfarefeeInfoFormBean.setYear("2020");
 
         model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
         //年度リスト候補を画面へ渡す
-        model.addAttribute("welfarefeeIDNameList",welfarefeeIDNameList);
+        //model.addAttribute("welfarefeeIDNameList",welfarefeeIDNameList);
 
         return "welfarefeeInfoList";
 
@@ -75,7 +76,8 @@ public class WelfarefeeInfoController {
         String year = welfarefeeInfoFormBean.getYear();
         String enterSalary = welfarefeeInfoFormBean.getEnterSalary();
 
-        if (year != null) {
+
+        if (StringUtils.isEmpty(year)) {
             //年度により、検索する
             List<WelfarefeeInfoEntity> bList= welfarefeeInfoService.getWelfarefeeInfoByYear(year);
 
@@ -88,7 +90,7 @@ public class WelfarefeeInfoController {
 
 
         }
-        if(enterSalary != null) {
+        if(StringUtils.isEmpty(enterSalary)) {
             //enterSalaryにより、検索する
             List<WelfarefeeInfoEntity> eList= welfarefeeInfoService.getWelfarefeeInfoByEnterSalary(enterSalary);
             //リスト候補を画面へ渡す

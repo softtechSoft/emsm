@@ -15,7 +15,7 @@ public class WelfarefeeInfoFormBean {
   private String welfarefeeID;
   // 対象年度
   // 年度と収入、２の１選択、@NotEmptyは必要ない
-  @Pattern(message = "対象年度に4位整数のみを入力してください。", regexp = "^d{4}$")
+  @Pattern(message = "対象年度に数値のみを入力してください。", regexp = "^[0-9]*$")
   private String year;
   // 対象エリア 都道府県の名前
   @Pattern(message = "対象エリアに漢字のみを入力してください。", regexp = "^[\\u4E00-\\u9FFF]+$")
@@ -23,15 +23,15 @@ public class WelfarefeeInfoFormBean {
   private String area;
   // 計算用標準報酬
   @NotEmpty(message = "計算用標準報酬を入力してください。")
-  @Pattern(message = "計算用標準報酬に整数のみを入力してください。", regexp = "^-[1-9]*$")
+  @Pattern(message = "計算用標準報酬に数値のみを入力してください。", regexp = "^[0-9]*$")
   private String standSalary;
   // 給料From
   @NotEmpty(message = "給料Fromを入力してください。")
-  @Pattern(message = "給料Fromに整数のみを入力してください。", regexp = "^-[1-9]*$")
+  @Pattern(message = "給料Fromに数値のみを入力してください。", regexp = "^[0-9]*$")
   private String salaryFrom;
   // 給料To
   @NotEmpty(message = "給料Toを入力してください。")
-  @Pattern(message = "給料Toに整数のみを入力してください。", regexp = "^-[1-9]*$")
+  @Pattern(message = "給料Toに数値のみを入力してください。", regexp = "^[0-9]*$")
   private String salaryTo;
   // 介護必要ない料率
   @NotEmpty(message = "介護必要ない料率を入力してください。")

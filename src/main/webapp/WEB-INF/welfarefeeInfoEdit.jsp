@@ -44,11 +44,8 @@
         <tr style="background-color:#dcfeeb">
 
             <td width="200px">対象年度</td>
-            <td width="200px">
-                <form:select path="year">
-                    <form:options items="${welfarefeeIDNameList}" itemLabel="year"  itemValue="year"/>
-                </form:select>
-            </td>
+            <td width="200px"><input type="text" id="year" name="year"
+                                     value="${welfarefeeInfoFormBean.year}" /></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">

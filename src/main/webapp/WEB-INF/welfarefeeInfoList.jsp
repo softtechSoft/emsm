@@ -9,10 +9,22 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" >
-        <!--更新两种情况-->
+        <!--検索-->
         function toSearchJsp(){
             document.theForm.submit();
         }
+
+        function selectData(){
+            var enterSalary=document.getElementById("enterSalary").value;
+            var year = document.getElementById("year").value;
+            if (enterSalary !== null){
+                document.theForm.submit();
+            }
+            if (year !== null){
+                document.theForm.submit();
+            }
+        }
+
         // 更新ボタン処理
         function toUpdateJsp(welfarefeeID){
             // 更新
@@ -39,13 +51,12 @@
     <!--新規フラグ　０　新規　１　更新-->
     <input type="hidden" id="insertFlg" name="insertFlg" value="${welfarefeeInfoFormBean.insertFlg}"/>
 
-    <!--下拉选择框只有年度-->
-    <b>年度:</b>
-    <form:select path="year">
-        <form:options items="${welfarefeeIDNameList}" itemLabel="year"  itemValue="year"/>
-    </form:select>
-    <td><span>収入:<input type="text" size="8" ></span></td>
-    <input type="button" name="search" value="検索" onclick="toSearchJsp();" />
+
+
+    <tr><td><span>年度:<input id="year" type="text" size="8" name="year" ></span></td>
+    <td><span>収入:<input id="enterSalary" type="text" size="8" name="enterSalary" ></span></td>
+    <input type="button" name="search" value="検索" onclick="selectData();" />
+    </tr>
     <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
@@ -54,14 +65,14 @@
     </p>
     <table border="1"class="welfarefeeInfoList-table">
         <tr>
-            <th width="200">厚生保険料ID</th>
-            <th width="200">対象エリア</th>
-            <th width="200">標準報酬</th>
-            <th width="200">給料From</th>
-            <th width="200">給料To</th>
-            <th width="100">介護必要ない料率</th>
-            <th width="100">介護必要料率</th>
-            <th width="100">厚生年金保険料率</th>
+            <th width="100">厚生保険料ID</th>
+            <th width="100">対象エリア</th>
+            <th width="100">標準報酬</th>
+            <th width="100">給料From</th>
+            <th width="100">給料To</th>
+            <th width="150">介護必要ない料率%</th>
+            <th width="150">介護必要料率%</th>
+            <th width="150">厚生年金保険料率%</th>
             <th width="100">利用ステータス</th>
             <th width="100">作成日</th>
             <th width="100">更新日</th>
