@@ -53,6 +53,16 @@
             year = #{year}
 
     </select>
+
+    <select id="getWelfarefeeInfoByYearAndEnterSalary" parameterType="String"
+            resultType="com.softtech.entity.WelfarefeeInfoEntity">
+        select *
+        from m_welfarefee
+        where #{enterSalary} >= salaryFrom
+          and #{enterSalary} &lt; salaryTo
+          and year = #{year}
+    </select>
+
     <!--更新画面への検索,表示される画面の厚生保険料IDにより、検索する-->
     <select id="getUpdateWelfarefeeInfoList" parameterType="String"
             resultType="com.softtech.entity.WelfarefeeInfoEntity">

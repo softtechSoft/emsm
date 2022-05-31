@@ -51,12 +51,16 @@
     <!--新規フラグ　０　新規　１　更新-->
     <input type="hidden" id="insertFlg" name="insertFlg" value="${welfarefeeInfoFormBean.insertFlg}"/>
 
+    <b>年度:</b>
+    <form:select path="year">
+        <form:options items="${welfarefeeIDNameList}" itemLabel="year"  itemValue="year"/>
+    </form:select>
+    <input type="button" name="search" value="検索" onclick="toSearchJsp()" />
+    <td></td>
+    <td><span>収入:<input type="text" size="8" ></span></td>
+    <input type="button" name="search" value="検索" onclick="toSearchJsp()" />
 
 
-    <tr><td><span>年度:<input id="year" type="text" size="8" name="year" ></span></td>
-    <td><span>収入:<input id="enterSalary" type="text" size="8" name="enterSalary" ></span></td>
-    <input type="button" name="search" value="検索" onclick="selectData();" />
-    </tr>
     <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
