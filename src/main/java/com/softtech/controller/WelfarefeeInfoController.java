@@ -100,15 +100,6 @@ public class WelfarefeeInfoController {
         return "welfarefeeInfoList";
     }
 
-    /**概要:厚生保険料マスタ リスト検索 ByEnterSalary
-    *@param:[welfarefeeInfoFormBean, model]
-    *@return:welfarefeeInfoList
-    *@author:孫曄@SOFTTECH
-    *@date:2022/05/31
-    */
-
-
-
     /**概要:更新画面の初期表示
     *@param:[welfarefeeInfoFormBean, model]
     *@return:welfarefeeInfoEdit
