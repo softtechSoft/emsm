@@ -36,7 +36,6 @@
     </insert>
     <!--画面表示用のquery,入力の収入により、検索する-->
     <!--保険料を納付したいとき、検索用-->
-    <!--输入的数据只有一条enterSalary，所以参数映射是String，返回值映射还是实体类-->
     <select id="getWelfarefeeInfoByEnterSalary" parameterType="String"
             resultType="com.softtech.entity.WelfarefeeInfoEntity">
         select *
@@ -53,14 +52,14 @@
             year = #{year}
 
     </select>
-
-    <select id="getWelfarefeeInfoByYearAndEnterSalary" parameterType="String"
+    <!--同时检索年度和收入-->
+    <select id="getWelfarefeeInfoByYearAndEnterSalary"
             resultType="com.softtech.entity.WelfarefeeInfoEntity">
         select *
         from m_welfarefee
         where #{enterSalary} >= salaryFrom
-          and #{enterSalary} &lt; salaryTo
-          and year = #{year}
+                  and #{enterSalary} &lt; salaryTo
+                  and year = #{year}
     </select>
 
     <!--更新画面への検索,表示される画面の厚生保険料IDにより、検索する-->

@@ -14,24 +14,28 @@ import java.util.List;
  */
 @Mapper
 public interface WelfarefeeInfoMapper {
-  // 画面表示用のquery,入力の収入により、検索する、保険料を納付したいとき、検索用
-  List<WelfarefeeInfoEntity> getWelfarefeeInfoByEnterSalary(
-      @Param("enterSalary") String enterSalary);
-  // 画面表示用のquery方法２：年度により、検索する
-  List<WelfarefeeInfoEntity> getWelfarefeeInfoByYear(@Param("year") String year);
+    // 画面表示用のquery,入力の収入により、検索する、保険料を納付したいとき、検索用
+    List<WelfarefeeInfoEntity> getWelfarefeeInfoByEnterSalary(
+            @Param("enterSalary") String enterSalary);
 
-  // 更新画面への検索,表示される画面の厚生保険料IDにより、検索する
-  List<WelfarefeeInfoEntity> getUpdateWelfarefeeInfoList(String welfarefeeID);
+    // 画面表示用のquery方法２：年度により、検索する
+    List<WelfarefeeInfoEntity> getWelfarefeeInfoByYear(@Param("year") String year);
 
-  // update
-  void updateWelfarefeeInfo(WelfarefeeInfoEntity welfarefeeInfoEntity);
+    //同时检索年度和收入
+    List<WelfarefeeInfoEntity> getWelfarefeeInfoByYearAndEnterSalary(@Param("enterSalary") String enterSalary, @Param("year") String year);
 
-  // 最大のwelfarefeeIDを探す
-  String getMaxWelfarefeeID();
+    // 更新画面への検索,表示される画面の厚生保険料IDにより、検索する
+    List<WelfarefeeInfoEntity> getUpdateWelfarefeeInfoList(String welfarefeeID);
 
-  // insert
-  void insertWelfarefeeInfo(WelfarefeeInfoEntity welfarefeeInfoEntity);
+    // update
+    void updateWelfarefeeInfo(WelfarefeeInfoEntity welfarefeeInfoEntity);
 
-  // 選択枠
-  //List<WelfarefeeIDName> getWelfarefeeInfoID();
+    // 最大のwelfarefeeIDを探す
+    String getMaxWelfarefeeID();
+
+    // insert
+    void insertWelfarefeeInfo(WelfarefeeInfoEntity welfarefeeInfoEntity);
+
+    // 選択枠
+    //List<WelfarefeeIDName> getWelfarefeeInfoID();
 }

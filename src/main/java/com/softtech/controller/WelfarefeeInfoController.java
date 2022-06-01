@@ -36,12 +36,14 @@ public class WelfarefeeInfoController {
     @Resource
     private LoginService loginService;
 
-    /**概要:年度の選択枠を設定する
-    *@param:[model]
-    *@return:welfarefeeInfoList
-    *@author:孫曄@SOFTTECH
-    *@date:2022/05/29
-    */
+    /**
+     * 概要:年度の選択枠を設定する
+     *
+     * @param:[model]
+     * @return:welfarefeeInfoList
+     * @author:孫曄@SOFTTECH
+     * @date:2022/05/29
+     */
     @RequestMapping("/initWelfarefeeInfoList")
     public String toinitWelfarefeeInfoList(Model model) {
         logger.info("start index()");
@@ -52,22 +54,24 @@ public class WelfarefeeInfoController {
         //年度を任意設定
         welfarefeeInfoFormBean.setYear("2020");
 
-        model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
+        model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean);
         //年度リスト候補を画面へ渡す
-        model.addAttribute("welfarefeeIDNameList",welfarefeeIDNameList);
+        model.addAttribute("welfarefeeIDNameList", welfarefeeIDNameList);
 
         return "welfarefeeInfoList";
 
     }
 
-    /**概要:年度と入力の収入を分別検索する
-    *@param:[welfarefeeInfoFormBean, model]
-    *@return:welfarefeeInfoList
-    *@author:孫曄@SOFTTECH
-    *@date:2022/05/30
-    */
+    /**
+     * 概要:年度と入力の収入を分別検索する
+     *
+     * @param:[welfarefeeInfoFormBean, model]
+     * @return:welfarefeeInfoList
+     * @author:孫曄@SOFTTECH
+     * @date:2022/05/30
+     */
     @RequestMapping("/welfarefeeInfoList")
-    public String WelfarefeeInfo(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model){
+    public String WelfarefeeInfo(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model) {
 
         logger.debug("debug test");
         logger.info("info test");
@@ -77,46 +81,48 @@ public class WelfarefeeInfoController {
         String enterSalary = welfarefeeInfoFormBean.getEnterSalary();
 
 
-        if (!StringUtils.isEmpty(year)) {
+        if (!StringUtils.isEmpty(year) && StringUtils.isEmpty(enterSalary)) {
             //年度により、検索する
-            List<WelfarefeeInfoEntity> bList= welfarefeeInfoService.getWelfarefeeInfoByYear(year);
+            List<WelfarefeeInfoEntity> bList = welfarefeeInfoService.getWelfarefeeInfoByYear(year);
 
             //年度リスト候補生成
             List<WelfarefeeIDName> welfarefeeList = loginService.getYear();
             //年度リスト候補を画面へ渡す
-            model.addAttribute("welfarefeeList",welfarefeeList);
-            model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
-            model.addAttribute("list",bList);
+            model.addAttribute("welfarefeeList", welfarefeeList);
+            model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean);
+            model.addAttribute("list", bList);
 
 
-        }
-        else if(!StringUtils.isEmpty(enterSalary)) {
-            //enterSalaryにより、検索する
-            List<WelfarefeeInfoEntity> eList= welfarefeeInfoService.getWelfarefeeInfoByEnterSalary(enterSalary);
+        } else if (!StringUtils.isEmpty(enterSalary)) {
+            //enterSalaryと収入により、検索する
+            List<WelfarefeeInfoEntity> eList =
+                    welfarefeeInfoService.getWelfarefeeInfoByYearAndEnterSalary(enterSalary, year);
             //リスト候補を画面へ渡す
-            model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean);
-            model.addAttribute("list",eList);
+            model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean);
+            model.addAttribute("list", eList);
 
 
         }
         return "welfarefeeInfoList";
     }
 
-    /**概要:更新画面の初期表示
-    *@param:[welfarefeeInfoFormBean, model]
-    *@return:welfarefeeInfoEdit
-    *@author:孫曄@SOFTTECH
-    *@date:2022/05/30
-    */
+    /**
+     * 概要:更新画面の初期表示
+     *
+     * @param:[welfarefeeInfoFormBean, model]
+     * @return:welfarefeeInfoEdit
+     * @author:孫曄@SOFTTECH
+     * @date:2022/05/30
+     */
     @RequestMapping("/toinitWelfarefeeInfo")
-    public String initWelfarefeeInfoList(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean,Model model) {
+    public String initWelfarefeeInfoList(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model) {
         //IDを取得
         String welfarefeeID = welfarefeeInfoFormBean.getWelfarefeeID();
 
         //新規フラグを取得
         String insertFlg = welfarefeeInfoFormBean.getInsertFlg();
         //新規の場合
-        if("0".equals(insertFlg)) {
+        if ("0".equals(insertFlg)) {
             WelfarefeeInfoFormBean welfarefeeInfoFormBean1 = new WelfarefeeInfoFormBean();
 
             //welfarefeeIDを採番する（既存の最大値＋１）
@@ -125,43 +131,47 @@ public class WelfarefeeInfoController {
             //新規
             welfarefeeInfoFormBean1.setInsertFlg(insertFlg);
 
-            model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean1);
+            model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean1);
 
             //更新の場合
         } else {
             //選択された内容を取得する
             welfarefeeID = welfarefeeInfoFormBean.getWelfarefeeID();
-            List<WelfarefeeInfoEntity> bList= welfarefeeInfoService.getUpdateWelfarefeeInfoList(welfarefeeID);
+            List<WelfarefeeInfoEntity> bList =
+                    welfarefeeInfoService.getUpdateWelfarefeeInfoList(welfarefeeID);
 
-            WelfarefeeInfoFormBean welfarefeeInfoFormBean2 = welfarefeeInfoService.transforEntityToUI(bList);
+            WelfarefeeInfoFormBean welfarefeeInfoFormBean2 =
+                    welfarefeeInfoService.transforEntityToUI(bList);
             //更新
             welfarefeeInfoFormBean2.setInsertFlg(insertFlg);
-            model.addAttribute("welfarefeeInfoFormBean",welfarefeeInfoFormBean2);
+            model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean2);
         }
 
 
         //年度リスト候補生成
         //只有年度选择框，输入收入的只是输入的数值，修改和更新都没有输入收入这一项
         List<WelfarefeeIDName> year = loginService.getYear();
-        model.addAttribute("year",year);
+        model.addAttribute("year", year);
 
         return "welfarefeeInfoEdit";
     }
 
-    /**概要:更新と新規ボタン
-    *@param:[welfarefeeInfoFormBean, result, session, model]
-    *@return:welfarefeeInfoEdit
-    *@author:孫曄@SOFTTECH
-    *@date:2022/05/30
-    */
-    @RequestMapping(value ="/welfarefeeInfoEdit", method = RequestMethod.POST)
+    /**
+     * 概要:更新と新規ボタン
+     *
+     * @param:[welfarefeeInfoFormBean, result, session, model]
+     * @return:welfarefeeInfoEdit
+     * @author:孫曄@SOFTTECH
+     * @date:2022/05/30
+     */
+    @RequestMapping(value = "/welfarefeeInfoEdit", method = RequestMethod.POST)
     public String registWelfarefeeInfo(@Valid @ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, BindingResult result, HttpSession session, Model model) {
 
         //必須チェック
         if (result.hasErrors()) {
             //年度リスト候補生成
             List<WelfarefeeIDName> year = loginService.getYear();
-            model.addAttribute("year",year);
+            model.addAttribute("year", year);
 
             //年度を任意設定
             welfarefeeInfoFormBean.setYear("2020");
@@ -171,7 +181,7 @@ public class WelfarefeeInfoController {
 
         String insertFlg = welfarefeeInfoFormBean.getInsertFlg();
         //新規の場合
-        if("0".equals(insertFlg)) {
+        if ("0".equals(insertFlg)) {
             welfarefeeInfoService.insertWelfarefeeInfo(welfarefeeInfoFormBean);
         } else {
             //DBに更新入力
@@ -180,7 +190,7 @@ public class WelfarefeeInfoController {
 
         //年度リスト候補生成
         List<WelfarefeeIDName> year = loginService.getYear();
-        model.addAttribute("year",year);
+        model.addAttribute("year", year);
 
         //年度を任意設定
         welfarefeeInfoFormBean.setYear("2020");
