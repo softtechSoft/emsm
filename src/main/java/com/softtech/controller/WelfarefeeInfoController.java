@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,9 +51,24 @@ public class WelfarefeeInfoController {
     @RequestMapping("/initWelfarefeeInfoList")
     public String toinitWelfarefeeInfoList(Model model) {
         logger.info("start index()");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        String format = formatter.format(now);
+        String year = new BigDecimal(format).subtract(BigDecimal.ONE).toString();
+        String year1 = new BigDecimal(format).subtract(BigDecimal.ONE).subtract(BigDecimal.ONE).toString();
         //枠用の年度リスト候補生成
-        List<WelfarefeeIDName> welfarefeeIDNameList = loginService.getYear();
+        ArrayList<WelfarefeeIDName> welfarefeeIDNameList = new ArrayList<>();
+        WelfarefeeIDName welfarefeeIDName = new WelfarefeeIDName();
+        welfarefeeIDName.setYear(format);
+        welfarefeeIDNameList.add(welfarefeeIDName);
 
+        WelfarefeeIDName welfarefeeIDName2 = new WelfarefeeIDName();
+        welfarefeeIDName2.setYear(year);
+        welfarefeeIDNameList.add(welfarefeeIDName2);
+
+        WelfarefeeIDName welfarefeeIDName3 = new WelfarefeeIDName();
+        welfarefeeIDName3.setYear(year1);
+        welfarefeeIDNameList.add(welfarefeeIDName3);
         WelfarefeeInfoFormBean welfarefeeInfoFormBean = new WelfarefeeInfoFormBean();
         //年度を任意設定
         welfarefeeInfoFormBean.setYear("2020");
