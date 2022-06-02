@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @program
@@ -86,9 +88,9 @@ public class WelfarefeeInfoController {
             List<WelfarefeeInfoEntity> bList = welfarefeeInfoService.getWelfarefeeInfoByYear(year);
 
             //年度リスト候補生成
-            List<WelfarefeeIDName> welfarefeeList = loginService.getYear();
+            List<WelfarefeeIDName> welfarefeeIDNameList = loginService.getYear();
             //年度リスト候補を画面へ渡す
-            model.addAttribute("welfarefeeList", welfarefeeList);
+            model.addAttribute("welfarefeeIDNameList", welfarefeeIDNameList);
             model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean);
             model.addAttribute("list", bList);
 
@@ -126,10 +128,17 @@ public class WelfarefeeInfoController {
             WelfarefeeInfoFormBean welfarefeeInfoFormBean1 = new WelfarefeeInfoFormBean();
 
             //welfarefeeIDを採番する（既存の最大値＋１）
+            //获取当前时间，显示在页面上
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            String format = formatter.format(now);
+
             String maxWelfarefeeID = welfarefeeInfoService.getNextWelfarefeeID();
             welfarefeeInfoFormBean1.setWelfarefeeID(maxWelfarefeeID);
             //新規
             welfarefeeInfoFormBean1.setInsertFlg(insertFlg);
+            welfarefeeInfoFormBean1.setInsertDate(format);
+            welfarefeeInfoFormBean1.setUpdateDate(format);
 
             model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean1);
 
