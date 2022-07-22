@@ -16,7 +16,7 @@ public class ExpensesManagementEntity {
 	//精算タイプ
 	private String stmtlType;
 	//精算日
-	private String stmtlDay ;
+	private String stmtlDate ;
 	//精算ステータス
 	private String stmtlStatus;
 	//備考
@@ -64,11 +64,11 @@ public class ExpensesManagementEntity {
 	public void setStmtlType(String stmtlType) {
 		this.stmtlType = stmtlType;
 	}
-	public String getStmtlDay() {
-		return stmtlDay;
+	public String getStmtlDate() {
+		return stmtlDate;
 	}
-	public void setStmtlDay(String stmtlDay) {
-		this.stmtlDay = stmtlDay;
+	public void setStmtlDate(String stmtlDate) {
+		this.stmtlDate = stmtlDate;
 	}
 	public String getStmtlStatus() {
 		return stmtlStatus;

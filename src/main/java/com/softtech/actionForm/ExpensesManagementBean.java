@@ -22,7 +22,7 @@ public class ExpensesManagementBean {
 		private String stmtlType;
 		//精算日
 		@Size(min=1, max=30,message="精算日を入力してください。")
-		private String stmtlDay ;
+		private String stmtlDate ;
 		//精算ステータス
 		private String stmtlStatus;
 		//備考
@@ -70,11 +70,11 @@ public class ExpensesManagementBean {
 		public void setStmtlType(String stmtlType) {
 			this.stmtlType = stmtlType;
 		}
-		public String getStmtlDay() {
-			return stmtlDay;
+		public String getStmtlDate() {
+			return stmtlDate;
 		}
-		public void setStmtlDay(String stmtlDay) {
-			this.stmtlDay = stmtlDay;
+		public void setStmtlDate(String stmtlDate) {
+			this.stmtlDate = stmtlDate;
 		}
 		public String getStmtlStatus() {
 			return stmtlStatus;
@@ -88,5 +88,6 @@ public class ExpensesManagementBean {
 		public void setRemark(String remark) {
 			this.remark = remark;
 		}
+
 
 }

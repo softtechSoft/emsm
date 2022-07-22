@@ -4,17 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.FieldError;
 
 import com.softtech.actionForm.ExpensesManagementBean;
+import com.softtech.entity.Employee;
 import com.softtech.entity.ExpensesManagementEntity;
 import com.softtech.mappers.ExpensesManagementMapper;
 import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
-
+@Controller
 public class ExpensesManagementService {
+
+
 	@Autowired
 	ExpensesManagementMapper expensesManagementMapper;
+	public List<ExpensesManagementBean> queryEmployeeInfo() {
+		// DBから社員情報を取得する
+		List<Employee> employee= expensesManagementMapper.getEmployeeList();
+
+		List<ExpensesManagementBean> rtn  =new ArrayList<ExpensesManagementBean>();
+		return  rtn;
+	}
+
+	//DBから取得したデータを画面データへ変換する
+	public List<ExpensesManagementBean> getEmployee(List<Employee> employee) {
+		List<ExpensesManagementBean> rtn  = getEmployee(employee);
+		return  rtn;
+	}
+
 
 	/*
 	 * 機能概要：数字チェック
@@ -59,8 +77,8 @@ public class ExpensesManagementService {
 		}
 
 		// 精算日ではない場合、エラーメッセージ戻す
-				String stmtlDay=expensesManagementBean.getStmtlDay();
-				if(!DateUtil.isDate(stmtlDay)) {
+				String stmtlDate=expensesManagementBean.getStmtlDate();
+				if(!DateUtil.isDate(stmtlDate)) {
 
 					FieldError err1 = new FieldError("", "", "精算日に通常の日付を入力してください。");
 					errorlst.add(err1);
@@ -133,8 +151,8 @@ public class ExpensesManagementService {
 		expensesManagementEntity.setStmtlStatus(stmtlStatus);
 
 		//精算日YYYY/MM/DD→YYYYMMDD変換
-	    String stmtlDay=expensesManagementBean.getStmtlDay();
-		expensesManagementEntity.setStmtlDay(DateUtil.chgMonthToYM(stmtlDay));
+	    String stmtlDate=expensesManagementBean.getStmtlDate();
+		expensesManagementEntity.setStmtlDate(DateUtil.chgMonthToYM(stmtlDate));
 
 
 		//備考
@@ -144,6 +162,4 @@ public class ExpensesManagementService {
 		return expensesManagementEntity;
 
 	}
-
-
 }

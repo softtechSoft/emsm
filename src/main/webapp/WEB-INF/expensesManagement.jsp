@@ -16,8 +16,8 @@ function doRegist(){
 </head>
 <body>
 <h2>経費管理</h2>
-<form:form name="theForm" id="theForm" method="post" modelAttribute="expensesManagementBean" action="expensesManagement.jsp" >
-
+<form:form name="theForm" id="theForm" method="post" modelAttribute="expensesManagementBean" action="expensesManagementSubmit" >
+     <p style="color: blue;">入力したエラ</p>
     <p style="color: red;">
 	    <c:forEach items="${errors}" var="error">
 			<spring:message message="${error}" /> </br>
@@ -81,7 +81,7 @@ function doRegist(){
 			</tr>
 			<tr>
              <td></td>
-			<td style="text-align:right"><input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
+			<td style="text-align:right"><input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()"></td>
 		    </tr>
 	</table>
 	</div>
