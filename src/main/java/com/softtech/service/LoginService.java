@@ -1,15 +1,14 @@
 package com.softtech.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.softtech.actionForm.LoginBean;
 import com.softtech.common.*;
+import com.softtech.entity.LoginEntity;
+import com.softtech.mappers.LoginMappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.softtech.actionForm.LoginBean;
-import com.softtech.entity.LoginEntity;
-import com.softtech.mappers.LoginMappers;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LoginService {
@@ -104,7 +103,7 @@ public class LoginService {
 
 	}
 
-	/**概要:選択枠の年度リストを検索
+	/**概要:更新画面の年度を表示する用
 	*@param:[]
 	*@return:java.util.List<com.softtech.common.WelfarefeeIDName>
 	*@author:孫曄@SOFTTECH

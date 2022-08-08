@@ -1,11 +1,10 @@
 package com.softtech.mappers;
 
-import java.util.List;
-
 import com.softtech.common.*;
+import com.softtech.entity.LoginEntity;
 import org.apache.ibatis.annotations.Mapper;
 
-import com.softtech.entity.LoginEntity;
+import java.util.List;
 /**
  *社員情報DAO
  *

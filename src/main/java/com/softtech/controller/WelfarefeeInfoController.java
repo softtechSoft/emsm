@@ -126,7 +126,7 @@ public class WelfarefeeInfoController {
     }
 
     /**
-     * 概要:更新画面の初期表示
+     * 概要:検索と更新画面の初期表示
      *
      * @param:[welfarefeeInfoFormBean, model]
      * @return:welfarefeeInfoEdit
