@@ -16,6 +16,7 @@
          notCareRatio,
          careRatio,
          annuityRatio,
+         contributionRate,
          status,
          insertDate,
          updateDate)
@@ -29,6 +30,7 @@
             #{notCareRatio},
             #{careRatio},
             #{annuityRatio},
+            #{contributionRate},
             #{status},
             date_format(now(),'%Y%m%d'),
             date_format(now(),'%Y%m%d')
@@ -86,6 +88,7 @@
             notCareRatio=#{notCareRatio},
             careRatio=#{careRatio},
             annuityRatio=#{annuityRatio},
+            contributionRate=#{contributionRate},
             status=#{status},
             updateDate=date_format(now(), '%Y%m%d')
         where welfarefeeID = #{welfarefeeID}

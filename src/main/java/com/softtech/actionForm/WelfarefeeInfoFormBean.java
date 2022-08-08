@@ -45,6 +45,10 @@ public class WelfarefeeInfoFormBean {
   @NotEmpty(message = "厚生年金保険料率を入力してください。")
   @Pattern(message = "厚生年金保険料率小数点2位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,2})?$")
   private String annuityRatio;
+  //厚生子育拠出金率
+  @NotEmpty(message = "厚生子育拠出金率を入力してください。")
+  @Pattern(message = "厚生子育拠出金率小数点2位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,2})?$")
+  private String contributionRate;
   // 利用ステータス 0:未使用　1:使用中
   private int status;
   // 作成日
@@ -178,5 +182,13 @@ public class WelfarefeeInfoFormBean {
 
   public void setEnterSalary(String enterSalary) {
     this.enterSalary = enterSalary;
+  }
+
+  public String getContributionRate() {
+    return contributionRate;
+  }
+
+  public void setContributionRate(String contributionRate) {
+    this.contributionRate = contributionRate;
   }
 }

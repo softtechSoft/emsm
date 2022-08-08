@@ -105,6 +105,7 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
             welfarefeeInfoFormBean.setNotCareRatio(welfarefeeInfoEntity.getNotCareRatio());
             welfarefeeInfoFormBean.setCareRatio(welfarefeeInfoEntity.getCareRatio());
             welfarefeeInfoFormBean.setAnnuityRatio(welfarefeeInfoEntity.getAnnuityRatio());
+            welfarefeeInfoFormBean.setContributionRate(welfarefeeInfoEntity.getContributionRate());
             welfarefeeInfoFormBean.setStatus(welfarefeeInfoEntity.getStatus());
             welfarefeeInfoFormBean.setInsertDate(welfarefeeInfoEntity.getInsertDate());
             welfarefeeInfoFormBean.setUpdateDate(welfarefeeInfoEntity.getUpdateDate());
@@ -175,6 +176,11 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
         String annuityRatio = welfarefeeInfoFormBean.getAnnuityRatio();
         String annuityRatio1 = new BigDecimal(annuityRatio).divide(hundred).toString();
         welfarefeeInfoEntity.setAnnuityRatio(annuityRatio1);
+
+        //厚生子育拠出金率
+        String contributionRate = welfarefeeInfoFormBean.getContributionRate();
+        String contributionRate1 = new BigDecimal(contributionRate).divide(hundred).toString();
+        welfarefeeInfoEntity.setContributionRate(contributionRate1);
 
         // 利用ステータス
         int status = welfarefeeInfoFormBean.getStatus();
@@ -258,6 +264,11 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
         String annuityRatio = welfarefeeInfoFormBean.getAnnuityRatio();
         String annuityRatio1 = new BigDecimal(annuityRatio).divide(hundred).toString();
         welfarefeeInfoEntity.setAnnuityRatio(annuityRatio1);
+
+        //厚生子育拠出金率
+        String contributionRate = welfarefeeInfoFormBean.getContributionRate();
+        String contributionRate1 = new BigDecimal(contributionRate).divide(hundred).toString();
+        welfarefeeInfoEntity.setContributionRate(contributionRate1);
 
         // 利用ステータス
         int status = welfarefeeInfoFormBean.getStatus();

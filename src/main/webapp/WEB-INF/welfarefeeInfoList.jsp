@@ -76,6 +76,7 @@
             <th width="150">介護必要ない料率%</th>
             <th width="150">介護必要料率%</th>
             <th width="150">厚生年金保険料率%</th>
+            <th width="150">厚生子育拠出金率%</th>
             <th width="100">利用ステータス</th>
             <th width="100">作成日</th>
             <th width="100">更新日</th>
@@ -93,6 +94,7 @@
                 <td><c:out value="${welfarefeeInfoList.getNotCareRatio()*100}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getCareRatio()*100}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getAnnuityRatio()*100}"/></td>
+                <td><c:out value="${welfarefeeInfoList.contributionRate*100}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getStatus()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getInsertDate()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getUpdateDate()}"/></td>

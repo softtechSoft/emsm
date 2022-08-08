@@ -90,6 +90,11 @@
                                       value="${welfarefeeInfoFormBean.annuityRatio*100}" /></td>
         </tr>
 
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">厚生子育拠出金率</td>
+            <td width="200px"><input type="text" id="contributionRate" name="contributionRate"
+                                     value="${welfarefeeInfoFormBean.contributionRate*100}" /></td>
+
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">進行ステータス</td>
