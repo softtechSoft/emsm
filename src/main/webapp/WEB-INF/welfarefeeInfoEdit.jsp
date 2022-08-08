@@ -93,9 +93,9 @@
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">進行ステータス</td>
-            <td width="200px"><input type="radio" name="status" <c:if test="${welfarefeeInfoFormBean.status == '0'}">
+            <td width="200px"><input type="radio" name="status" <c:if test="${welfarefeeInfoFormBean.status == '1'}">
                 checked</c:if> value="1" /> する
-                <input type="radio" name="status" <c:if test="${welfarefeeInfoFormBean.status == '1'}">
+                <input type="radio" name="status" <c:if test="${welfarefeeInfoFormBean.status == '0'}">
                     checked</c:if> value="0" /> しない</td>
         </tr>
 
