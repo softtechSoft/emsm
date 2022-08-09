@@ -163,11 +163,11 @@ public class WelfarefeeInfoController {
         } else {
             //選択された内容を取得する
             welfarefeeID = welfarefeeInfoFormBean.getWelfarefeeID();
-            List<WelfarefeeInfoEntity> bList =
+            List<WelfarefeeInfoEntity> wList =
                     welfarefeeInfoService.getUpdateWelfarefeeInfoList(welfarefeeID);
 
             WelfarefeeInfoFormBean welfarefeeInfoFormBean2 =
-                    welfarefeeInfoService.transforEntityToUI(bList);
+                    welfarefeeInfoService.transforEntityToUI(wList);
             //更新
             welfarefeeInfoFormBean2.setInsertFlg(insertFlg);
             model.addAttribute("welfarefeeInfoFormBean", welfarefeeInfoFormBean2);
