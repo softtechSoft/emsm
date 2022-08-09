@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.EmplyinsrateMapper">
+    <insert id="insertEmplyinsrate" parameterType="com.softtech.entity.EmplyinsrateInfoEntity">
+        insert into m_emplyinsrate
+        (emplyinsrateID,
+         year,
+         laborBurdenRate,
+         employerBurdenRate,
+         employmentInsuranceRate,
+         industrialAccidentInsuranceRate,
+         laborInsuranceRate,
+         contributionRate,
+         status,
+         insertDate,
+         updateDate)
+            value
+            ( #{emplyinsrateID},
+            #{year},
+            #{laborBurdenRate},
+            #{employerBurdenRate},
+            #{employerBurdenRate}+#{laborBurdenRate},
+            #{industrialAccidentInsuranceRate},
+            #{industrialAccidentInsuranceRate}+#{employerBurdenRate}+#{laborBurdenRate},
+            #{contributionRate},
+            #{status},
+            date_format(now(),'%Y%m%d'),
+            date_format(now(),'%Y%m%d')
+            )
+    </insert>
+    <!--画面表示用のquery,入力の年度により、検索する-->
+    <select id="getEmplyinsrateInfoByYear" parameterType="String"
+            resultType="com.softtech.entity.EmplyinsrateInfoEntity">
+        select *
+        from m_emplyinsrate
+        where
+            year = #{year}
+    </select>
+    <!--更新画面への検索,表示される画面の厚生保険料IDにより、検索する-->
+    <select id="getUpdateEmplyinsrateInfoList" parameterType="String"
+            resultType="com.softtech.entity.EmplyinsrateInfoEntity">
+        select *
+        from m_emplyinsrate
+        where emplyinsrateID = #{emplyinsrateID}
+    </select>
+    <!--最大のemplyinsrateIDを取得、+1用-->
+    <select id="getMaxEmplyinsrateID" resultType="String">
+        select MAX(emplyinsrateID)
+        from m_emplyinsrate
+    </select>
+    <!--更新の時、更新画面の年度を表示用-->
+    <select id="getYear" resultType="com.softtech.common.EmplyinsrateIDName">
+        select year
+        from m_emplyinsrate
+        where status='1'
+    </select>
+    <!--データ更新-->
+    <update id="updateEmplyinsrate" parameterType="com.softtech.entity.EmplyinsrateInfoEntity">
+        update m_emplyinsrate
+        set year                            = #{year},
+            laborBurdenRate                 = #{laborBurdenRate},
+            employerBurdenRate              = #{employerBurdenRate},
+            employmentInsuranceRate         = #{employerBurdenRate}+#{laborBurdenRate},
+            industrialAccidentInsuranceRate = #{industrialAccidentInsuranceRate},
+            laborInsuranceRate              = #{industrialAccidentInsuranceRate}+#{employerBurdenRate}+#{laborBurdenRate},
+            contributionRate                = #{contributionRate},
+            status                          = #{status},
+            updateDate                      = date_format(now(), '%Y%m%d')
+        where emplyinsrateID = #{emplyinsrateID}
+    </update>
+</mapper>
