@@ -64,17 +64,17 @@
 
     <table border="1" class="emplyinsrateInfoList-table">
         <tr>
-            <th width="100">雇用保険ID</th>
-            <th width="100">対象年度</th>
-            <th width="100">雇用保険労働者負担料率‰</th>
-            <th width="100">雇用保険事業主負担料率‰</th>
-            <th width="100">雇用保険料率‰</th>
+            <th width="95">雇用保険ID</th>
+            <th width="80">対象年度</th>
+            <th width="150">雇用保険労働者負担料率‰</th>
+            <th width="150">雇用保険事業主負担料率‰</th>
+            <th width="125">雇用保険料率‰</th>
             <th width="150">労災保険料率(全額事業主)‰</th>
-            <th width="150">労働保険料率‰</th>
+            <th width="125">労働保険料率‰</th>
             <th width="150">一般拠出金料率(全額事業主)‰</th>
             <th width="100">利用ステータス</th>
-            <th width="100">作成日</th>
-            <th width="100">更新日</th>
+            <th width="70">作成日</th>
+            <th width="70">更新日</th>
             <th width="45">更新</th>
 
 
