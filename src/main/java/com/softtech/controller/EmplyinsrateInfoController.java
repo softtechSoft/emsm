@@ -32,7 +32,7 @@ import java.util.List;
 @Controller
 public class EmplyinsrateInfoController {
     //logger
-    static protected Logger logger = LogManager.getLogger(WelfarefeeInfoController.class);
+    static protected Logger logger = LogManager.getLogger(EmplyinsrateInfoController.class);
     //IOC Service
     @Autowired
     EmplyinsrateInfoService emplyinsrateInfoService;
