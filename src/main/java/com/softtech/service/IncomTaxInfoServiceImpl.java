@@ -1,11 +1,13 @@
 package com.softtech.service;
 
 import com.softtech.actionForm.IncomeTaxInfoFormBean;
+import com.softtech.common.IncomeTaxIDName;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import com.softtech.mappers.IncomeTaxInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,15 +71,20 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
     /**
      * 概要:更新の時、更新画面の年度を表示する用
      *
-     * @param year
+     * @param[]
      * @param:[year]
      * @return:java.util.List<com.softtech.entity.IncomeTaxInfoEntity>
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
     @Override
-    public List<IncomeTaxInfoEntity> getYear(String year) {
-        return null;
+    public List<IncomeTaxIDName> getYear() {
+        List<IncomeTaxIDName> incomeTaxIDNameList = new ArrayList<>();
+        // DBから年度を取得
+        incomeTaxIDNameList = incomeTaxInfoMapper.getYear();
+
+        return incomeTaxIDNameList;
+
     }
 
     /**

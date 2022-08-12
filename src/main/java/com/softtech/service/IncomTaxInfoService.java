@@ -1,6 +1,7 @@
 package com.softtech.service;
 
 import com.softtech.actionForm.IncomeTaxInfoFormBean;
+import com.softtech.common.IncomeTaxIDName;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,7 @@ public interface IncomTaxInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-    List<IncomeTaxInfoEntity> getYear(String year);
+    List<IncomeTaxIDName> getYear();
 
     /**概要:
     *@param:[eList]
