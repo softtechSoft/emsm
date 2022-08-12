@@ -24,7 +24,7 @@ public interface IncomeTaxInfoMapper {
     List<IncomeTaxInfoEntity> getUpdateIncomeTaxByIncomeTaxID(@Param("incomeTaxID") String incomeTaxID);
 
     //最大のIncomeTaxIDを取得、+1用
-    String getMaxIncomeTaxID(@Param("incomeTaxID") String incomeTaxID);
+    String getMaxIncomeTaxID();
 
     //更新の時、更新画面の年度を表示する用
     List<IncomeTaxIDName> getYear(@Param("year") String year);

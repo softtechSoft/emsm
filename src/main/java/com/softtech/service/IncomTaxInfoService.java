@@ -1,5 +1,6 @@
 package com.softtech.service;
 
+import com.softtech.actionForm.IncomeTaxInfoFormBean;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +36,14 @@ public interface IncomTaxInfoService {
     List<IncomeTaxInfoEntity> getUpdateIncomeTaxByIncomeTaxID(String incomeTaxID);
 
     /**
-     * 概要:最大のIncomeTaxIDを取得、+1用
+     * 概要:ID最大値+1を取得
      *
-     * @param:[incomeTaxID]
+     * @param:[]
      * @return:java.lang.String
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-    String getMaxIncomeTaxID(String incomeTaxID);
+    String getNextIncomeTaxID();
 
     /**
      * 概要:更新の時、更新画面の年度を表示する用
@@ -54,6 +55,14 @@ public interface IncomTaxInfoService {
      */
     List<IncomeTaxInfoEntity> getYear(String year);
 
+    /**概要:
+    *@param:[eList]
+    *@return:com.softtech.actionForm.IncomeTaxInfoFormBean
+    *@author:孫曄@SOFTTECH
+    *@date:2022/08/12
+    */
+    IncomeTaxInfoFormBean transforEntityToUI(List<IncomeTaxInfoEntity> eList);
+
     /**
      * 概要:update
      *
@@ -62,7 +71,7 @@ public interface IncomTaxInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-    void updateIncomeTax(IncomeTaxInfoEntity incomeTaxInfoEntity);
+    void updateIncomeTax(IncomeTaxInfoFormBean incomeTaxInfoFormBean);
 
     /**
      * 概要:insert
@@ -72,5 +81,5 @@ public interface IncomTaxInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-    void insertIncomeTaxInfo(IncomeTaxInfoEntity incomeTaxInfoEntity);
+    void insertIncomeTaxInfo(IncomeTaxInfoFormBean incomeTaxInfoFormBean);
 }
