@@ -7,11 +7,14 @@ import org.apache.ibatis.annotations.Mapper;
 import com.softtech.entity.Employee;
 import com.softtech.entity.ExpensesManagementEntity;
 
+
 @Mapper
 public interface ExpensesManagementMapper {
 	public void insertExpensesManagement(ExpensesManagementEntity expensesManagementEntity);
-	List<Employee> getEmployeeList();
-	
+	//画面データをDBデータ登録
+    public void updateExpensesManagement(ExpensesManagementEntity expensesManagementEntity);
+
+	public List<Employee> getEmployee();
 
 
 }

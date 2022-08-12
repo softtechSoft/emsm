@@ -1,6 +1,7 @@
 package com.softtech.actionForm;
 import javax.validation.constraints.Size;
 public class ExpensesManagementBean {
+	     private String employeeID;
 	    //発生日
 		@Size(min=1, max=30,message="発生日を入力してください。")
 		private String accrualDate ;
@@ -13,21 +14,24 @@ public class ExpensesManagementBean {
 		//経費種別
 		@Size(min=1, max=30,message="経費種別を入力してください。")
 		private String expensesType ;
+		//経費種別明細
+		private String expensesTypeDetail ;
 		//場所
-		@Size(min=1, max=30,message="場所を入力してください。")
-		private String happenAdderss;
+		@Size(min=1, max=15,message="場所の長さが15文字を越えています。")
+		private String happenAddress;
 		//承認ステータス
-		private String confirmStatus;
+		private String confirmStaus;
 		//精算タイプ
 		private String stmtlType;
 		//精算日
 		@Size(min=1, max=30,message="精算日を入力してください。")
 		private String stmtlDate ;
 		//精算ステータス
-		private String stmtlStatus;
+		private String stmtlStaus;
 		//備考
-		@Size(min=1, max=30,message="備考を入力してください。")
+		@Size(min=1, max=15,message="備考の長さが15文字を越えています。")
 		private String remark;
+
 		public String getAccrualDate() {
 			return accrualDate;
 		}
@@ -46,24 +50,6 @@ public class ExpensesManagementBean {
 		public void setCost(String cost) {
 			this.cost = cost;
 		}
-		public String getExpensesType() {
-			return expensesType;
-		}
-		public void setExpensesType(String expensesType) {
-			this.expensesType = expensesType;
-		}
-		public String getHappenAdderss() {
-			return happenAdderss;
-		}
-		public void setHappenAdderss(String happenAdderss) {
-			this.happenAdderss = happenAdderss;
-		}
-		public String getConfirmStatus() {
-			return confirmStatus;
-		}
-		public void setConfirmStatus(String confirmStatus) {
-			this.confirmStatus = confirmStatus;
-		}
 		public String getStmtlType() {
 			return stmtlType;
 		}
@@ -76,18 +62,94 @@ public class ExpensesManagementBean {
 		public void setStmtlDate(String stmtlDate) {
 			this.stmtlDate = stmtlDate;
 		}
-		public String getStmtlStatus() {
-			return stmtlStatus;
-		}
-		public void setStmtlStatus(String stmtlStatus) {
-			this.stmtlStatus = stmtlStatus;
-		}
-		public String getRemark() {
-			return remark;
-		}
+
 		public void setRemark(String remark) {
 			this.remark = remark;
 		}
+		/**
+		 * @return employeeID
+		 */
+		public String getEmployeeID() {
+			return employeeID;
+		}
+		/**
+		 * @param employeeID セットする employeeID
+		 */
+		public void setEmployeeID(String employeeID) {
+			this.employeeID = employeeID;
+		}
+		/**
+		 * @return happenAddress
+		 */
+		public String getHappenAddress() {
+			return happenAddress;
+		}
+		/**
+		 * @param happenAddress セットする happenAddress
+		 */
+		public void setHappenAddress(String happenAddress) {
+			this.happenAddress = happenAddress;
+		}
+		/**
+		 * @return paymentType
+		 */
+
+		/**
+		 * @return confirmStaus
+		 */
+		public String getConfirmStaus() {
+			return confirmStaus;
+		}
+		/**
+		 * @param confirmStaus セットする confirmStaus
+		 */
+		public void setConfirmStaus(String confirmStaus) {
+			this.confirmStaus = confirmStaus;
+		}
+		/**
+		 * @return stmtlStaus
+		 */
+		public String getStmtlStaus() {
+			return stmtlStaus;
+		}
+		/**
+		 * @param stmtlStaus セットする stmtlStaus
+		 */
+		public void setStmtlStaus(String stmtlStaus) {
+			this.stmtlStaus = stmtlStaus;
+		}
+		/**
+		 * @return remark
+		 */
+		public String getRemark() {
+			return remark;
+		}
+		/**
+		 * @return expensesType
+		 */
+		public String getExpensesType() {
+			return expensesType;
+		}
+		/**
+		 * @param expensesType セットする expensesType
+		 */
+		public void setExpensesType(String expensesType) {
+			this.expensesType = expensesType;
+		}
+		/**
+		 * @return expensesTypeDetail
+		 */
+		public String getExpensesTypeDetail() {
+			return expensesTypeDetail;
+		}
+		/**
+		 * @param expensesTypeDetail セットする expensesTypeDetail
+		 */
+		public void setExpensesTypeDetail(String expensesTypeDetail) {
+			this.expensesTypeDetail = expensesTypeDetail;
+		}
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.softtech.entity;
 
 public class ExpensesManagementEntity {
+	private String employeeID;
 	 //発生日
 	private String accrualDate ;
 	//担当者
@@ -10,17 +11,21 @@ public class ExpensesManagementEntity {
 	//経費種別
 	private String expensesType ;
 	//場所
-	private String happenAdderss;
+	private String happenAddress;
 	//承認ステータス
-	private String confirmStatus;
+	private String confirmStaus;
 	//精算タイプ
-	private String stmtlType;
+	//private String stmtlType;
 	//精算日
 	private String stmtlDate ;
 	//精算ステータス
-	private String stmtlStatus;
+	private String stmtlStaus;
 	//備考
 	private String remark;
+    //経費種別明細
+	private String expensesTypeDetail;
+    //出金タイプ
+	private String paymentType;
 
 	public String getAccrualDate() {
 		return accrualDate;
@@ -40,47 +45,105 @@ public class ExpensesManagementEntity {
 	public void setCost(String cost) {
 		this.cost = cost;
 	}
-	public String getExpensesType() {
-		return expensesType;
+
+	public String getHappenAddress() {
+		return happenAddress;
 	}
-	public void setExpensesType(String expensesType) {
-		this.expensesType = expensesType;
+	public void setHappenAddress(String happenAddress) {
+		this.happenAddress = happenAddress;
 	}
-	public String getHappenAdderss() {
-		return happenAdderss;
-	}
-	public void setHappenAdderss(String happenAdderss) {
-		this.happenAdderss = happenAdderss;
-	}
-	public String getConfirmStatus() {
-		return confirmStatus;
-	}
-	public void setConfirmStatus(String confirmStatus) {
-		this.confirmStatus = confirmStatus;
-	}
-	public String getStmtlType() {
+
+	/*public String getStmtlType() {
 		return stmtlType;
 	}
 	public void setStmtlType(String stmtlType) {
 		this.stmtlType = stmtlType;
-	}
+	}*/
 	public String getStmtlDate() {
 		return stmtlDate;
 	}
 	public void setStmtlDate(String stmtlDate) {
 		this.stmtlDate = stmtlDate;
 	}
-	public String getStmtlStatus() {
-		return stmtlStatus;
-	}
-	public void setStmtlStatus(String stmtlStatus) {
-		this.stmtlStatus = stmtlStatus;
-	}
+
 	public String getRemark() {
 		return remark;
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	/**
+	 * @return employeeID
+	 */
+	public String getEmployeeID() {
+		return employeeID;
+	}
+	/**
+	 * @param employeeID セットする employeeID
+	 */
+	public void setEmployeeID(String employeeID) {
+		this.employeeID = employeeID;
+	}
+
+	/**
+	 * @return confirmStaus
+	 */
+	public String getConfirmStaus() {
+		return confirmStaus;
+	}
+	/**
+	 * @param confirmStaus セットする confirmStaus
+	 */
+	public void setConfirmStaus(String confirmStaus) {
+		this.confirmStaus = confirmStaus;
+	}
+	/**
+	 * @return stmtlStaus
+	 */
+	public String getStmtlStaus() {
+		return stmtlStaus;
+	}
+	/**
+	 * @param stmtlStaus セットする stmtlStaus
+	 */
+	public void setStmtlStaus(String stmtlStaus) {
+		this.stmtlStaus = stmtlStaus;
+	}
+	/**
+	 * @return expensesType
+	 */
+	public String getExpensesType() {
+		return expensesType;
+	}
+	/**
+	 * @param expensesType セットする expensesType
+	 */
+	public void setExpensesType(String expensesType) {
+		this.expensesType = expensesType;
+	}
+	/**
+	 * @return expensesTypeDetail
+	 */
+	public String getExpensesTypeDetail() {
+		return expensesTypeDetail;
+	}
+	/**
+	 * @param expensesTypeDetail セットする expensesTypeDetail
+	 */
+	public void setExpensesTypeDetail(String expensesTypeDetail) {
+		this.expensesTypeDetail = expensesTypeDetail;
+	}
+	/**
+	 * @return paymentType
+	 */
+	public String getPaymentType() {
+		return paymentType;
+	}
+	/**
+	 * @param paymentType セットする paymentType
+	 */
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 
 
