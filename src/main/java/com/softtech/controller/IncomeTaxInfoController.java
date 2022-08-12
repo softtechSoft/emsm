@@ -104,7 +104,7 @@ public class IncomeTaxInfoController {
         model.addAttribute("incomeTaxIDNameList", incomeTaxIDNameList);
         model.addAttribute("incomeTaxInfoFormBean", incomeTaxInfoFormBean);
         model.addAttribute("list", bList);
-        return "emplyinsrateInfoList";
+        return "incomeTaxInfoList";
     }
 
     /**概要:検索と更新画面の初期表示
