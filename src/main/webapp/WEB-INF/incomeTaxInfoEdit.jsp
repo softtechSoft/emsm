@@ -43,9 +43,9 @@
         </tr>
 
         <tr style="background-color:#dcfeeb">
-            <td width="200px">氏名</td>
-            <td width="200px"><input type="text" id="name" name="name"
-                                     value="${incomeTaxInfoFormBean.name}"/></td>
+            <td width="200px">社員ID</td>
+            <td width="200px"><input type="text" id="employeeID" name="employeeID"
+                                     value="${incomeTaxInfoFormBean.employeeID}"/></td>
         </tr>
         <tr style="background-color:#dcfeeb">
 

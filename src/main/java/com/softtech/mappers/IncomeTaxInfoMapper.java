@@ -1,6 +1,7 @@
 package com.softtech.mappers;
 
 import com.softtech.common.IncomeTaxIDName;
+import com.softtech.entity.Employee;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,8 +18,8 @@ import java.util.List;
 @Mapper
 public interface IncomeTaxInfoMapper {
 
-    //画面表示用のquery,入力の年度により、検索する
-    List<IncomeTaxInfoEntity> getIncomeTaxByYear(@Param("year") String year);
+    //検索用のquery,社員IDにより、検索する
+    List<IncomeTaxInfoEntity> getIncomeTaxByEmployeeID(@Param("employeeID") String employeeID);
 
     //更新画面への検索,表示される画面の所得税IDにより、検索する
     List<IncomeTaxInfoEntity> getUpdateIncomeTaxByIncomeTaxID(@Param("incomeTaxID") String incomeTaxID);
@@ -32,6 +33,9 @@ public interface IncomeTaxInfoMapper {
     void updateIncomeTax(IncomeTaxInfoEntity incomeTaxInfoEntity);
 
     void insertIncomeTaxInfo(IncomeTaxInfoEntity incomeTaxInfoEntity);
+
+    //DBから社員リスト生成
+    List<Employee> getEmployee();
 
 
 }

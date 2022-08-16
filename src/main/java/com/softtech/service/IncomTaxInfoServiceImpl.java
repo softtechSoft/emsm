@@ -1,7 +1,9 @@
 package com.softtech.service;
 
+import com.softtech.actionForm.EmployeeActionForm;
 import com.softtech.actionForm.IncomeTaxInfoFormBean;
 import com.softtech.common.IncomeTaxIDName;
+import com.softtech.entity.Employee;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import com.softtech.mappers.IncomeTaxInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +25,19 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
     //IOC Mapper
     @Autowired
     private IncomeTaxInfoMapper incomeTaxInfoMapper;
+
     /**
-     * 概要:画面表示用のquery,入力の年度により、検索する
+     * 概要:画面表示用のquery,入力の社員IDにより、検索する
      *
-     * @param year
+     * @param employeeID
      * @param:[year]
      * @return:java.util.List<com.softtech.entity.IncomeTaxInfoEntity>
      * @author:孫曄@SOFTTECH
      */
     @Override
-    public List<IncomeTaxInfoEntity> getIncomeTaxByYear(String year) {
-        List<IncomeTaxInfoEntity> incomeTaxInfoByYear = incomeTaxInfoMapper.getIncomeTaxByYear(year);
-        return incomeTaxInfoByYear;
+    public List<IncomeTaxInfoEntity> getIncomeTaxByEmployeeID(String employeeID) {
+        List<IncomeTaxInfoEntity> incomeTaxByEmployeeID = incomeTaxInfoMapper.getIncomeTaxByEmployeeID(employeeID);
+        return incomeTaxByEmployeeID;
     }
 
     /**
@@ -102,7 +105,7 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
         for (IncomeTaxInfoEntity incomeTaxInfoEntity : eList) {
             incomeTaxInfoFormBean.setIncomeTaxID(incomeTaxInfoEntity.getIncomeTaxID());
             incomeTaxInfoFormBean.setYear(incomeTaxInfoEntity.getYear());
-            incomeTaxInfoFormBean.setName(incomeTaxInfoEntity.getName());
+            incomeTaxInfoFormBean.setEmployeeID(incomeTaxInfoEntity.getEmployeeID());
             incomeTaxInfoFormBean.setIncomeTax1(incomeTaxInfoEntity.getIncomeTax1());
             incomeTaxInfoFormBean.setIncomeTax2(incomeTaxInfoEntity.getIncomeTax2());
             incomeTaxInfoFormBean.setIncomeTax3(incomeTaxInfoEntity.getIncomeTax3());
@@ -135,16 +138,19 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
     }
 
 
-    /**概要:更新用BeanToEntity
-    *@param:[incomeTaxInfoFormBean]
-    *@return:com.softtech.entity.IncomeTaxInfoEntity
-    *@author:孫曄@SOFTTECH
-    *@date:2022/08/12
-    */
+    /**
+     * 概要:更新用BeanToEntity
+     *
+     * @param:[incomeTaxInfoFormBean]
+     * @return:com.softtech.entity.IncomeTaxInfoEntity
+     * @author:孫曄@SOFTTECH
+     * @date:2022/08/12
+     */
     public IncomeTaxInfoEntity transforUItoEntityByUpDate(IncomeTaxInfoFormBean incomeTaxInfoFormBean) {
         IncomeTaxInfoEntity incomeTaxInfoEntity = new IncomeTaxInfoEntity();
+        incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
         incomeTaxInfoEntity.setYear(incomeTaxInfoFormBean.getYear());
-        incomeTaxInfoEntity.setName(incomeTaxInfoFormBean.getName());
+        incomeTaxInfoEntity.setEmployeeID(incomeTaxInfoFormBean.getEmployeeID());
         incomeTaxInfoEntity.setIncomeTax1(incomeTaxInfoFormBean.getIncomeTax1());
         incomeTaxInfoEntity.setIncomeTax2(incomeTaxInfoFormBean.getIncomeTax2());
         incomeTaxInfoEntity.setIncomeTax3(incomeTaxInfoFormBean.getIncomeTax3());
@@ -192,8 +198,9 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
 
     public IncomeTaxInfoEntity transforUItoEntityByInsert(IncomeTaxInfoFormBean incomeTaxInfoFormBean) {
         IncomeTaxInfoEntity incomeTaxInfoEntity = new IncomeTaxInfoEntity();
+        incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
         incomeTaxInfoEntity.setYear(incomeTaxInfoFormBean.getYear());
-        incomeTaxInfoEntity.setName(incomeTaxInfoFormBean.getName());
+        incomeTaxInfoEntity.setEmployeeID(incomeTaxInfoFormBean.getEmployeeID());
         incomeTaxInfoEntity.setIncomeTax1(incomeTaxInfoFormBean.getIncomeTax1());
         incomeTaxInfoEntity.setIncomeTax2(incomeTaxInfoFormBean.getIncomeTax2());
         incomeTaxInfoEntity.setIncomeTax3(incomeTaxInfoFormBean.getIncomeTax3());
@@ -237,5 +244,39 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
     public void insertIncomeTaxInfo(IncomeTaxInfoFormBean incomeTaxInfoFormBean) {
         IncomeTaxInfoEntity incomeTaxInfoEntity = transforUItoEntityByInsert(incomeTaxInfoFormBean);
         incomeTaxInfoMapper.insertIncomeTaxInfo(incomeTaxInfoEntity);
+    }
+
+    /**
+     * 概要:社員情報をactionformへ変換
+     * @param:[employees]
+     * @return:java.util.List<com.softtech.actionForm.EmployeeActionForm>
+     * @author:孫曄@SOFTTECH
+     * @date:2022/08/12
+     */
+    public List<EmployeeActionForm> transferDBTOUI(List<Employee> employees) {
+
+        List<EmployeeActionForm> employeeAactionForms = new ArrayList();
+        for (Employee employee : employees) {
+            EmployeeActionForm employeeAactionForm = new EmployeeActionForm();
+            employeeAactionForm.setEmployeeID(employee.getEmployeeID());
+            employeeAactionForm.setEmployeeName(employee.getEmployeeName());
+            employeeAactionForms.add(employeeAactionForm);
+        }
+        return employeeAactionForms;
+    }
+
+    /**
+     * 概要:DBから社員情報を取得する,画面の社員ID選択
+     *
+     * @param:[]
+     * @return:java.util.List<com.softtech.actionForm.EmployeeActionForm>
+     * @author:孫曄@SOFTTECH
+     * @date:2022/08/12
+     */
+    @Override
+    public List<EmployeeActionForm> queryEmployeeInfo() {
+        List<Employee> employee = incomeTaxInfoMapper.getEmployee();
+        List<EmployeeActionForm> rtn = transferDBTOUI(employee);
+        return rtn;
     }
 }

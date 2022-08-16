@@ -8,7 +8,7 @@
     <insert id="insertIncomeTaxInfo" parameterType="com.softtech.entity.IncomeTaxInfoEntity">
         insert into m_incomeTax
         (incomeTaxID,
-         name,
+         employeeID,
          year,
          incomeTax1,
          incomeTax2,
@@ -39,7 +39,7 @@
          updateDate)
             value
             (#{incomeTaxID},
-             #{name},
+             #{employeeID},
              #{year},
              #{incomeTax1},
              #{incomeTax2},
@@ -70,11 +70,13 @@
              date_format(now(), '%Y%m%d')
                 )
     </insert>
-    <!--画面表示getIncomeTax用のquery,入力の年度により、検索する-->
-    <select id="getIncomeTaxByYear" parameterType="string" resultType="com.softtech.entity.IncomeTaxInfoEntity">
+    <!--画面表示getIncomeTax用のquery,入力の社員IDにより、検索する-->
+    <select id="getIncomeTaxByEmployeeID" parameterType="string" resultType="com.softtech.entity.IncomeTaxInfoEntity">
         select *
         from m_incomeTax
-        where year = #{year}
+                 LEFT JOIN employee
+                           on m_incomeTax.employeeID = employee.employeeID
+        where employee.employeeID = #{employeeID}
     </select>
 
     <!--更新画面への検索,表示される画面の所得税IDにより、検索する-->
@@ -100,7 +102,7 @@
 
     <update id="updateIncomeTax" parameterType="com.softtech.entity.IncomeTaxInfoEntity">
         update m_incomeTax
-        set name          = #{name},
+        set employeeID    = #{employeeID},
             year          = #{year},
             incomeTax1    = #{incomeTax1},
             incomeTax2    = #{incomeTax2},
@@ -130,4 +132,9 @@
             updateDate    = date_format(now(), '%Y%m%d')
         where incomeTaxID = #{incomeTaxID}
     </update>
+    <!--画面の社員ID選択-->
+    <select id="getEmployee" resultType="com.softtech.entity.Employee">
+        select employeeName, employeeID
+        FROM employee;
+    </select>
 </mapper>

@@ -10,8 +10,8 @@ package com.softtech.actionForm;
 public class IncomeTaxInfoBean {
     //所得税ID
     private String incomeTaxID;
-    //氏名
-    private String name;
+    //社員ID
+    private String employeeID;
     //年度
     private String year;
     //所得税
@@ -55,12 +55,12 @@ public class IncomeTaxInfoBean {
         this.incomeTaxID = incomeTaxID;
     }
 
-    public String getName() {
-        return name;
+    public String getEmployeeID() {
+        return employeeID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
     }
 
     public String getYear() {
