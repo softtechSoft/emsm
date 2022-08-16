@@ -36,7 +36,7 @@ public class IncomeTaxInfoController {
     //logger
     static protected Logger logger = LogManager.getLogger(IncomeTaxInfoController.class);
 
-    /**概要:年度の選択枠を設定する
+    /**概要:社員IDの選択枠を設定する
     *@param:[model]
     *@return:java.lang.String
     *@author:孫曄@SOFTTECH
@@ -176,7 +176,7 @@ public class IncomeTaxInfoController {
         model.addAttribute("year", year);
 
         //年度を任意設定
-        incomeTaxInfoFormBean.setYear("2020");
+        //incomeTaxInfoFormBean.setYear("2020");
         return "incomeTaxInfoEdit";
     }
 

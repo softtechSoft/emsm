@@ -133,7 +133,7 @@
         where incomeTaxID = #{incomeTaxID}
     </update>
     <!--画面の社員ID選択-->
-    <select id="getEmployee" parameterType="String" resultType="com.softtech.entity.Employee">
+    <select id="getEmployee" resultType="com.softtech.entity.Employee">
         select employeeName, employeeID
         FROM employee;
     </select>
