@@ -11,13 +11,11 @@ import javax.validation.constraints.Pattern;
  * @return:
  */
 public class IncomeTaxInfoFormBean {
+    //社員ID
+    private String employeeID;
     //所得税ID
     @NotEmpty(message = "所得税IDを入力してください。")
     private String incomeTaxID;
-    //氏名
-    @NotEmpty(message = "氏名を入力してください。")
-    @Pattern(message = "氏名に漢字のみを入力してください。", regexp = "^[\\u4E00-\\u9FFF]+$")
-    private String name;
     //年度
     @NotEmpty(message = "年度を入力してください。")
     @Pattern(message = "年度に数値のみを入力してください。", regexp = "^[0-9]*$")
@@ -111,14 +109,6 @@ public class IncomeTaxInfoFormBean {
 
     public void setIncomeTaxID(String incomeTaxID) {
         this.incomeTaxID = incomeTaxID;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getYear() {
@@ -351,5 +341,13 @@ public class IncomeTaxInfoFormBean {
 
     public void setInsertFlg(String insertFlg) {
         this.insertFlg = insertFlg;
+    }
+
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
     }
 }

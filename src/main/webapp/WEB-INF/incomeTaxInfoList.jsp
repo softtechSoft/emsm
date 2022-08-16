@@ -47,9 +47,9 @@
     <input type="hidden" id="insertFlg" name="insertFlg"
            value="${incomeTaxInfoFormBean.insertFlg}"/>
 
-    <b>年度:</b>
-    <form:select path="year">
-        <form:options items="${incomeTaxIDNameList}" itemLabel="year" itemValue="year"/>
+    <b>社員ID:</b>
+    <form:select path="employeeID">
+        <form:options items="${employeeList}" itemLabel="employeeName" itemValue="employeeID"/>
     </form:select>
     <td></td>
     <input type="button" name="search" value="検索" onclick="toSearchJsp()"/>
@@ -64,7 +64,6 @@
     <table border="1" class="incomeTaxInfoList-table">
         <tr>
             <th width="95">所得税ID</th>
-            <th width="95">氏名</th>
             <th width="80">対象年度</th>
             <th width="150">一月所得税</th>
             <th width="150">二月所得税</th>
@@ -102,7 +101,6 @@
             <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
                     <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
                 <td><c:out value="${incomeTaxInfoList.incomeTaxID}"/></td>
-                <td><c:out value="${incomeTaxInfoList.name}"/></td>
                 <td><c:out value="${incomeTaxInfoList.year}"/></td>
                 <td><c:out value="${incomeTaxInfoList.incomeTax1}"/></td>
                 <td><c:out value="${incomeTaxInfoList.incomeTax2}"/></td>
