@@ -21,11 +21,11 @@ public class LoginServiceTest {
 	
 	@Mock
 	private LoginMappers loginMappers;
-	
-	@SuppressWarnings("deprecation")
+
+
 	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 	}
 	
 	@Test
