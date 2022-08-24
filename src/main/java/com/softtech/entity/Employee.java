@@ -226,6 +226,14 @@ public class Employee {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+	@Override
+	public String toString() {
+		return "Employee [employeeID=" + employeeID + ", employeeName=" + employeeName + ", password=" + password
+				+ ", status=" + status + ", sex=" + sex + ", birthday=" + birthday + ", age=" + age + ", joinedDate="
+				+ joinedDate + ", joinedTime=" + joinedTime + ", postCode=" + postCode + ", address=" + address
+				+ ", phoneNumber=" + phoneNumber + ", authority=" + authority + ", mailAdress=" + mailAdress
+				+ ", remark=" + remark + ", insertDate=" + insertDate + ", updateDate=" + updateDate + "]";
+	}
 
 
 }

@@ -10,6 +10,7 @@ import com.softtech.entity.ExpensesManagementEntity;
 
 @Mapper
 public interface ExpensesManagementMapper {
+
 	public void insertExpensesManagement(ExpensesManagementEntity expensesManagementEntity);
 	//画面データをDBデータ登録
     public void updateExpensesManagement(ExpensesManagementEntity expensesManagementEntity);

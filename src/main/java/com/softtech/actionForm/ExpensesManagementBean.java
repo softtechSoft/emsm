@@ -2,6 +2,8 @@ package com.softtech.actionForm;
 import javax.validation.constraints.Size;
 public class ExpensesManagementBean {
 	     private String employeeID;
+
+	     private String employeeName;
 	    //発生日
 		@Size(min=1, max=30,message="発生日を入力してください。")
 		private String accrualDate ;
@@ -147,6 +149,26 @@ public class ExpensesManagementBean {
 		 */
 		public void setExpensesTypeDetail(String expensesTypeDetail) {
 			this.expensesTypeDetail = expensesTypeDetail;
+		}
+		/**
+		 * @return employeeName
+		 */
+		public String getEmployeeName() {
+			return employeeName;
+		}
+		/**
+		 * @param employeeName セットする employeeName
+		 */
+		public void setEmployeeName(String employeeName) {
+			this.employeeName = employeeName;
+		}
+		@Override
+		public String toString() {
+			return "ExpensesManagementBean [employeeID=" + employeeID + ", employeeName=" + employeeName
+					+ ", accrualDate=" + accrualDate + ", tantouName=" + tantouName + ", cost=" + cost
+					+ ", expensesType=" + expensesType + ", expensesTypeDetail=" + expensesTypeDetail
+					+ ", happenAddress=" + happenAddress + ", confirmStaus=" + confirmStaus + ", stmtlType=" + stmtlType
+					+ ", stmtlDate=" + stmtlDate + ", stmtlStaus=" + stmtlStaus + ", remark=" + remark + "]";
 		}
 
 

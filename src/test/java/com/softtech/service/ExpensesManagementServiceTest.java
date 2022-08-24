@@ -3,7 +3,7 @@ package com.softtech.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,13 +13,18 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
 import com.softtech.actionForm.ExpensesManagementBean;
+import com.softtech.entity.Employee;
+import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.ExpensesManagementEntity;
+import com.softtech.mappers.EmplyinsrateMapper;
 import com.softtech.mappers.ExpensesManagementMapper;
 
 
 
 public class ExpensesManagementServiceTest {
 
+	@Spy
+	private ExpensesManagementService expensesManagementService;
 	@InjectMocks
     private ExpensesManagementService target;
 
@@ -35,16 +40,27 @@ public class ExpensesManagementServiceTest {
 	List<ExpensesManagementEntity> eme = new ArrayList<>();
 
 
+	@Mock
+    private EmplyinsrateMapper emplyinsrateMapper;
+    @Mock
+    private EmplyinsrateInfoEntity emplyinsrateInfoEntity;
+
+    @Mock
+    private ExpensesManagementBean expensesManagementBean;
+
+    @Spy
+    List<EmplyinsrateInfoEntity> emplyinsrateInfoByYear = new ArrayList<>();
+
 	@BeforeEach
-	public void setup() {
+	void setup() {
 		MockitoAnnotations.openMocks(this);
 	}
 	@Test
-	public void testExpensesManagement() {
-		Mockito.when(expensesManagementMapper.getInsertExpensesManagement(Mockito.anyString())).thenReturn(insertExpensesManagement);
+	void insertExpensesManagement() {
 
+		Mockito.verify(expensesManagementMapper).insertExpensesManagement(expensesManagementEntity);
 
-		List<ExpensesManagementEntity>  insertExpensesManagement1 = target.getInsertExpensesManagement(Mockito.anyString());
+		List<ExpensesManagementEntity>  insertExpensesManagement1 = expensesManagementService.tranferBeanToEntity(expensesManagementBean);
 		Assertions.assertEquals(insertExpensesManagement, insertExpensesManagement1);
 		/*
 		 * ①　対象関数のパラメータ準備
@@ -56,44 +72,29 @@ public class ExpensesManagementServiceTest {
 	}
 
 	@Test
-    void transforDBToUI() {
+    void transferDBTOUI() {
         //foreach循环遍历将从DB取出来的数据，一个Entity的List转换成EntityBean，然后再赋给画面需要的那个Bean
         //input　パラメータを準備
-		List<ExpensesManagementEntity> expensesManagementEntity1 = new ArrayList<>();
-		ExpensesManagementEntity testEntity = new ExpensesManagementEntity();
-		expensesManagementEntity1.add(testEntity);
-		expensesManagementEntity1.forEach(expensesManagementEntity -> {
-			expensesManagementEntity.setAccrualDate("20220512");
-			expensesManagementEntity.setTantouName("社員１");
-			expensesManagementEntity.setCost("500");
-			expensesManagementEntity.setExpensesType("種別");
-			expensesManagementEntity.setHappenAddress("豊島区池袋");
-			expensesManagementEntity.setConfirmStaus("承認");
-			expensesManagementEntity.setStmtlDate("20220412");
-			expensesManagementEntity.setStmtlStaus("精算");
-			expensesManagementEntity.setRemark("chitone");//expensesManagementEntity.setPaymentType("口座");
+		List<Employee> employee1 = new ArrayList<>();
+		Employee testEntity = new Employee();
+		employee1.add(testEntity);
+		employee1.forEach(employee -> {
+			employee.setEmployeeID(employee.getEmployeeID());
+			employee.setEmployeeName(employee.getEmployeeName());
+
+
         });
 
         ExpensesManagementBean expensesManagementBean = new ExpensesManagementBean();
-        expensesManagementBean.setAccrualDate("20220512");
-        expensesManagementBean.setTantouName("社員１");
-        expensesManagementBean.setCost("500");
-		expensesManagementBean.setExpensesType("種別");
-		expensesManagementBean.setHappenAddress("豊島区池袋");
-		expensesManagementBean.setConfirmStaus("承認");
-		expensesManagementBean.setStmtlDate("20220412");
-		expensesManagementBean.setStmtlStaus("精算");
-		expensesManagementBean.setRemark("chitone");
-	
+        expensesManagementBean.setEmployeeID(expensesManagementBean.getEmployeeID());
+        expensesManagementBean.setEmployeeName(expensesManagementBean.getEmployeeName());
+
         // 比較用クラスと戻り値と比較
         Assertions.assertEquals(expensesManagementBean.toString(),
-                target.transforDBToUI(expensesManagementEntity1).toString());
+                target.transferDBTOUI(employee1).toString());
     }
 
 
-	@Test
-    void insertExpensesManagement() {
-    }
 
 	@Test
     void tranferBeanToEntity() {
