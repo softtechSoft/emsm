@@ -59,9 +59,11 @@ class EmplyinsrateInfoServiceImplTest {
 
     @Test
     void transforEntityToUI() {
-        //foreach循环遍历将从DB取出来的数据，一个Entity的List转换成EntityBean，然后再赋给画面需要的哪个Bean
-        //　input　パラメータを準備
+        //foreach循环遍历将从DB取出来的数据，一个Entity的List转换成EntityBean，然后再赋给画面需要的那个Bean
+        //input　パラメータを準備
         List<EmplyinsrateInfoEntity> emplyinsrateInfoByYear = new ArrayList<>();
+        EmplyinsrateInfoEntity testEntity = new EmplyinsrateInfoEntity();
+        emplyinsrateInfoByYear.add(testEntity);
         emplyinsrateInfoByYear.forEach(emplyinsrateInfoEntity -> {
             emplyinsrateInfoEntity.setEmplyinsrateID("1");
             emplyinsrateInfoEntity.setYear("2020");
@@ -75,10 +77,10 @@ class EmplyinsrateInfoServiceImplTest {
             emplyinsrateInfoEntity.setUpdateDate("8");
             emplyinsrateInfoEntity.setInsertDate("9");
         });
-
-
         // 比較用クラスと戻り値と比較
         Assertions.assertNotNull(target.transforEntityToUI(emplyinsrateInfoByYear));
+
+
     }
 
     @Test
