@@ -153,4 +153,23 @@ public class EmplyinsrateInfoFormBean {
     public void setEmplyinsrateIDNameList(ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList) {
         this.emplyinsrateIDNameList = emplyinsrateIDNameList;
     }
+
+    @Override
+    public String toString() {
+        return "EmplyinsrateInfoFormBean{" +
+                "emplyinsrateID='" + emplyinsrateID + '\'' +
+                ", year='" + year + '\'' +
+                ", laborBurdenRate='" + laborBurdenRate + '\'' +
+                ", employerBurdenRate='" + employerBurdenRate + '\'' +
+                ", employmentInsuranceRate='" + employmentInsuranceRate + '\'' +
+                ", industrialAccidentInsuranceRate='" + industrialAccidentInsuranceRate + '\'' +
+                ", laborInsuranceRate='" + laborInsuranceRate + '\'' +
+                ", contributionRate='" + contributionRate + '\'' +
+                ", status='" + status + '\'' +
+                ", insertDate='" + insertDate + '\'' +
+                ", updateDate='" + updateDate + '\'' +
+                ", insertFlg='" + insertFlg + '\'' +
+                ", emplyinsrateIDNameList=" + emplyinsrateIDNameList +
+                '}';
+    }
 }

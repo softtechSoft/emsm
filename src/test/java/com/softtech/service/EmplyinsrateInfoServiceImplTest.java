@@ -4,6 +4,8 @@ import com.softtech.actionForm.EmplyinsrateInfoFormBean;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.mockito.Mockito.verify;
 
 import com.softtech.mappers.EmplyinsrateMapper;
@@ -77,10 +79,21 @@ class EmplyinsrateInfoServiceImplTest {
             emplyinsrateInfoEntity.setUpdateDate("8");
             emplyinsrateInfoEntity.setInsertDate("9");
         });
+        EmplyinsrateInfoFormBean emplyinsrateInfoFormBean = new EmplyinsrateInfoFormBean();
+        emplyinsrateInfoFormBean.setEmplyinsrateID("1");
+        emplyinsrateInfoFormBean.setYear("2020");
+        emplyinsrateInfoFormBean.setLaborBurdenRate("1");
+        emplyinsrateInfoFormBean.setEmployerBurdenRate("2");
+        emplyinsrateInfoFormBean.setEmploymentInsuranceRate("3");
+        emplyinsrateInfoFormBean.setIndustrialAccidentInsuranceRate("4");
+        emplyinsrateInfoFormBean.setLaborInsuranceRate("5");
+        emplyinsrateInfoFormBean.setContributionRate("6");
+        emplyinsrateInfoFormBean.setStatus("7");
+        emplyinsrateInfoFormBean.setUpdateDate("8");
+        emplyinsrateInfoFormBean.setInsertDate("9");
         // 比較用クラスと戻り値と比較
-        Assertions.assertNotNull(target.transforEntityToUI(emplyinsrateInfoByYear));
-
-
+        Assertions.assertEquals(emplyinsrateInfoFormBean.toString(),
+                target.transforEntityToUI(emplyinsrateInfoByYear).toString());
     }
 
     @Test
