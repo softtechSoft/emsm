@@ -3,6 +3,7 @@ package com.softtech.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.softtech.actionForm.EmployeeActionForm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ public class ExpensesManagementServiceTest {
     private ExpensesManagementService target;
 	@Mock
 	private ExpensesManagementMapper expensesManagementMapper;
+
+	@Mock
+	List<Employee> employeeList = new ArrayList<>();
 
 	@BeforeEach
 	void setup() {
@@ -74,18 +78,20 @@ public class ExpensesManagementServiceTest {
 		Employee testEntity = new Employee();
 		employee1.add(testEntity);
 		employee1.forEach(employee -> {
-			employee.setEmployeeID(employee.getEmployeeID());
-			employee.setEmployeeName(employee.getEmployeeName());
+			employee.setEmployeeID("1");
+			employee.setEmployeeName("1");
 
 
         });
 
-        ExpensesManagementBean expensesManagementBean = new ExpensesManagementBean();
-        expensesManagementBean.setEmployeeID(expensesManagementBean.getEmployeeID());
-        expensesManagementBean.setEmployeeName(expensesManagementBean.getEmployeeName());
+		EmployeeActionForm employeeActionForm1 = new EmployeeActionForm();
+		employeeActionForm1.setEmployeeID("1");
+		employeeActionForm1.setEmployeeName("1");
+		ArrayList<EmployeeActionForm> employeeActionFormList1 = new ArrayList<>();
+		employeeActionFormList1.add(employeeActionForm1);
 
         // 比較用クラスと戻り値と比較
-        Assertions.assertEquals(expensesManagementBean.toString(),
+        Assertions.assertEquals(employeeActionFormList1.toString(),
                 target.transferDBTOUI(employee1).toString());
     }
 

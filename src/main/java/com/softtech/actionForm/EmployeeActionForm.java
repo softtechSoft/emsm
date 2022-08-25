@@ -33,4 +33,11 @@ public class EmployeeActionForm implements Serializable {
 		this.employeeName = employeeName;
 	}
 
+	@Override
+	public String toString() {
+		return "EmployeeActionForm{" +
+				"employeeID='" + employeeID + '\'' +
+				", employeeName='" + employeeName + '\'' +
+				'}';
+	}
 }
