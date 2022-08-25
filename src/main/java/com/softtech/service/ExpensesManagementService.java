@@ -132,7 +132,7 @@ public class ExpensesManagementService {
 			 * @return Entityクラス
 			 */
 
-	private ExpensesManagementEntity tranferBeanToEntity(ExpensesManagementBean expensesManagementBean) {
+	protected ExpensesManagementEntity tranferBeanToEntity(ExpensesManagementBean expensesManagementBean) {
 		ExpensesManagementEntity expensesManagementEntity = new ExpensesManagementEntity();
 		//日付YYYY/MM/DD→YYYYMMDD変換
 				//発生日YYYY/MM/DD→YYYYMMDD変換
@@ -140,8 +140,8 @@ public class ExpensesManagementService {
 				expensesManagementEntity.setAccrualDate(DateUtil.chgMonthToYM(accrualDate));
 
 				//金額のComa(,)を除くDataUtil.deleteComma(accrualDate)
-				String cost=expensesManagementBean.getCost();
-				expensesManagementEntity.setCost(DataUtil.deleteComma(cost));
+				//String cost=expensesManagementBean.getCost();
+				//expensesManagementEntity.setCost(DataUtil.deleteComma(cost));
 
 				//担当者
 				String tantouName =expensesManagementBean.getTantouName();

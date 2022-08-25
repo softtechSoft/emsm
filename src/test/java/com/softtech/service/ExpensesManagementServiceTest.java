@@ -58,7 +58,11 @@ public class ExpensesManagementServiceTest {
 	@Test
 	void insertExpensesManagement() {
 
-		Mockito.verify(expensesManagementMapper).insertExpensesManagement(expensesManagementEntity);
+		ExpensesManagementEntity  expensesManagementEntity1 = expensesManagementService.tranferBeanToEntity(expensesManagementBean);
+
+		Mockito.verify(expensesManagementMapper).insertExpensesManagement(expensesManagementEntity1);
+
+		//Assertions.assertEquals(insertExpensesManagement, insertExpensesManagement1);
 		/*
 		 * ①　対象関数のパラメータ準備
 		 * ②　対象関数を呼び出す
@@ -89,13 +93,12 @@ public class ExpensesManagementServiceTest {
         // 比較用クラスと戻り値と比較
         Assertions.assertEquals(expensesManagementBean.toString(),
                 target.transferDBTOUI(employee1).toString());
-	}
+    }
 
 
 
 	@Test
     void tranferBeanToEntity() {
-
     }
 
 
