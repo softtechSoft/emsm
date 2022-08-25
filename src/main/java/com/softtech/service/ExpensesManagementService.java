@@ -140,8 +140,8 @@ public class ExpensesManagementService {
 				expensesManagementEntity.setAccrualDate(DateUtil.chgMonthToYM(accrualDate));
 
 				//金額のComa(,)を除くDataUtil.deleteComma(accrualDate)
-				//String cost=expensesManagementBean.getCost();
-				//expensesManagementEntity.setCost(DataUtil.deleteComma(cost));
+				String cost=expensesManagementBean.getCost();
+				expensesManagementEntity.setCost(DataUtil.deleteComma(cost));
 
 				//担当者
 				String tantouName =expensesManagementBean.getTantouName();

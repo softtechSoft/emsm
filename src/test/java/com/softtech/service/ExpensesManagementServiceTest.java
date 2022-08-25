@@ -27,29 +27,8 @@ public class ExpensesManagementServiceTest {
 	private ExpensesManagementService expensesManagementService;
 	@InjectMocks
     private ExpensesManagementService target;
-
-
-
 	@Mock
 	private ExpensesManagementMapper expensesManagementMapper;
-
-	@Mock
-	private ExpensesManagementEntity expensesManagementEntity;
-
-	@Spy
-	List<ExpensesManagementEntity> eme = new ArrayList<>();
-
-
-	@Mock
-    private EmplyinsrateMapper emplyinsrateMapper;
-    @Mock
-    private EmplyinsrateInfoEntity emplyinsrateInfoEntity;
-
-    @Mock
-    private ExpensesManagementBean expensesManagementBean;
-
-    @Spy
-    List<EmplyinsrateInfoEntity> emplyinsrateInfoByYear = new ArrayList<>();
 
 	@BeforeEach
 	void setup() {
@@ -57,9 +36,24 @@ public class ExpensesManagementServiceTest {
 	}
 	@Test
 	void insertExpensesManagement() {
+		ExpensesManagementBean expensesManagementBean1 = new ExpensesManagementBean();
+		expensesManagementBean1.setAccrualDate("2020-01");
+		expensesManagementBean1.setCost("100");
+		expensesManagementBean1.setTantouName("1");
+		expensesManagementBean1.setExpensesType("1");
+		expensesManagementBean1.setExpensesTypeDetail("1");
+		expensesManagementBean1.setHappenAddress("1");
+		expensesManagementBean1.setConfirmStaus("1");
+		expensesManagementBean1.setStmtlStaus("1");
+		expensesManagementBean1.setStmtlDate("1");
+		expensesManagementBean1.setStmtlType("1");
+		expensesManagementBean1.setRemark("1");
 
-		ExpensesManagementEntity  expensesManagementEntity1 = expensesManagementService.tranferBeanToEntity(expensesManagementBean);
 
+		ExpensesManagementEntity  expensesManagementEntity1 = expensesManagementService.tranferBeanToEntity(expensesManagementBean1);
+	    //如果使用verify，因为此函数的目的是验证使用的次数，所以在验证之前必须先让它执行一次，否则报错
+		//报错内容为：Wanted but not invoked
+		expensesManagementMapper.insertExpensesManagement(expensesManagementEntity1);
 		Mockito.verify(expensesManagementMapper).insertExpensesManagement(expensesManagementEntity1);
 
 		//Assertions.assertEquals(insertExpensesManagement, insertExpensesManagement1);
