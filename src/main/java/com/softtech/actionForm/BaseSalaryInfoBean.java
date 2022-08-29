@@ -22,6 +22,10 @@ public class BaseSalaryInfoBean {
 	private String wkPeriodFrom;
 	//稼働期間To
 	private String wkPeriodTo;
+	//残業単価
+	private String overtimePay;
+	//控除単価
+	private String insufficienttimePay;
 	//利用ステータス
 	private int status;
 	//作成日
@@ -109,5 +113,21 @@ public class BaseSalaryInfoBean {
 
 	public void setBaseSalaryID(String baseSalaryID) {
 		this.baseSalaryID = baseSalaryID;
+	}
+
+	public String getOvertimePay() {
+		return overtimePay;
+	}
+
+	public void setOvertimePay(String overtimePay) {
+		this.overtimePay = overtimePay;
+	}
+
+	public String getInsufficienttimePay() {
+		return insufficienttimePay;
+	}
+
+	public void setInsufficienttimePay(String insufficienttimePay) {
+		this.insufficienttimePay = insufficienttimePay;
 	}
 }

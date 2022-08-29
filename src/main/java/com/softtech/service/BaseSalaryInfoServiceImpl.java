@@ -72,6 +72,12 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		String wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
 		baseSalaryInfoEntity.setWkPeriodTo(wkPeriodTo);
 
+		//残業単価
+		//baseSalaryInfoEntity.setOvertimePay(baseSalaryInfoBean.getOvertimePay());
+
+		//控除単価
+		//baseSalaryInfoEntity.setInsufficienttimePay(baseSalaryInfoBean.getInsufficienttimePay());
+
 		//利用ステータス
 		int status = baseSalaryInfoBean.getStatus();
 		baseSalaryInfoEntity.setStatus(status);
@@ -136,6 +142,11 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		//稼働期間To
 		String wkPeriodTo = baseSalaryInfoBean.getWkPeriodTo();
 		baseSalaryInfoEntity.setWkPeriodTo(wkPeriodTo);
+
+		//残業単価
+		if (wkPeriodTo != null && wkPeriodTo != "" && wkPeriodTo !="0") {
+			baseSalaryInfoEntity.setOvertimePay(baseSalaryInfoBean.getOvertimePay());
+		}
 
 		//利用ステータス
 		int status = baseSalaryInfoBean.getStatus();
@@ -211,6 +222,8 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 			baseSalaryInfoFormBean.setPlusHour(baseSalaryInfoEntity.getPlusHour());
 			baseSalaryInfoFormBean.setWkPeriodFrom(baseSalaryInfoEntity.getWkPeriodFrom());
 			baseSalaryInfoFormBean.setWkPeriodTo(baseSalaryInfoEntity.getWkPeriodTo());
+			baseSalaryInfoFormBean.setOvertimePay(baseSalaryInfoEntity.getOvertimePay());
+			baseSalaryInfoFormBean.setInsufficienttimePay(baseSalaryInfoEntity.getInsufficienttimePay());
 			baseSalaryInfoFormBean.setStatus(baseSalaryInfoEntity.getStatus());
 			baseSalaryInfoFormBean.setEmployeeID(baseSalaryInfoEntity.getEmployeeID());
 			baseSalaryInfoFormBean.setInsertDate(baseSalaryInfoEntity.getInsertDate());

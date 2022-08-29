@@ -81,6 +81,16 @@
 									value="${baseSalaryInfoBean.wkPeriodTo}" /></td>
 			</tr>
 
+			<tr style="background-color:#dcfeeb">
+				<td width="200px">残業単価</td>
+				<td width="200px"><c:out  value="${baseSalaryInfoBean.overtimePay}"/></td>
+			</tr>
+
+			<tr style="background-color:#dcfeeb">
+				<td width="200px">控除単価</td>
+				<td width="200px"><c:out  value="${baseSalaryInfoBean.insufficienttimePay}"/></td>
+			</tr>
+
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">進行ステータス</td>

@@ -34,6 +34,10 @@ public class BaseSalaryInfoFormBean {
 	@NotEmpty(message = "稼働期間Toを入力してください。")
 	@Pattern(message = "稼働期間Toに数値のみを入力してください。", regexp = "^[0-9]*$")
 	private String wkPeriodTo;
+	//残業単価
+	private String overtimePay;
+	//控除単価
+	private String insufficienttimePay;
 	//利用ステータス
 	@NotNull(message = "利用ステータスを入力してください。")
 	private int status;
@@ -143,5 +147,21 @@ public class BaseSalaryInfoFormBean {
 
 	public void setEmployeeIDNameList(ArrayList<EmployeeIDName> employeeIDNameList) {
 		this.employeeIDNameList = employeeIDNameList;
+	}
+
+	public String getOvertimePay() {
+		return overtimePay;
+	}
+
+	public void setOvertimePay(String overtimePay) {
+		this.overtimePay = overtimePay;
+	}
+
+	public String getInsufficienttimePay() {
+		return insufficienttimePay;
+	}
+
+	public void setInsufficienttimePay(String insufficienttimePay) {
+		this.insufficienttimePay = insufficienttimePay;
 	}
 }
