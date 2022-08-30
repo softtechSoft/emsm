@@ -87,13 +87,11 @@ public interface SalaryAutomaticCalculationMapper {
      */
     List<TransportEntity> getTransportExpenseAndBusinessTripByEmployeeID(@Param("employeeID") String employeeID);
 
-    /**
-     * 概要:查询员工ID
-     *
-     * @param:[]
-     * @return:java.lang.String
-     * @author:孫曄
-     * @date:2022/08/30
-     */
-    String getEmployeeID();
+    /**概要:根据画面的年份检索员工ID
+    *@param:[year]
+    *@return:java.lang.String
+    *@author:孫曄
+    *@date:2022/08/30
+    */
+    String getEmployeeIDByYear(@Param("year") String year);
 }

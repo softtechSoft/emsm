@@ -1,6 +1,7 @@
 package com.softtech.service;
 
 import com.softtech.entity.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,11 +72,11 @@ public interface SalaryAutomaticCalculation {
      */
     List<TransportEntity> getTransportExpenseAndBusinessTripByEmployeeID(String employeeID);
 
-    /**概要:查询员工ID
-     *@param:[]
+    /**概要:根据画面的年份检索员工ID
+     *@param:[year]
      *@return:java.lang.String
      *@author:孫曄
      *@date:2022/08/30
      */
-    String getEmployeeID();
+    String getEmployeeIDByYear(String year);
 }

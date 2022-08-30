@@ -64,7 +64,8 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
     }
 
     /**
-     * 概要:查询所得税，住民税，需要注意月份对应，因为不是每个月的住民税和所得税都一样，只能根据每个月单独算，所以是SELECT * 也就是把每个月数据全算出来然后java或者jsp一个个算
+     * 概要:查询所得税，住民税，需要注意月份对应，因为不是每个月的住民税和所得税都一样，
+     * 只能根据每个月单独算，所以是SELECT * 也就是把每个月数据全算出来然后java或者jsp一个个算
      *
      * @param:[]
      * @return:java.util.List<com.softtech.entity.IncomeTaxInfoEntity>
@@ -78,7 +79,8 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
     }
 
     /**
-     * 概要:厚生健康保险，厚生年金 为 给料From<基本给<=给料To 的情况下查找对应的标准报酬，然后标准报酬乘保险率：注意和你的实际收入没关系，只和对应的那一档标准报酬有关
+     * 概要:厚生健康保险，厚生年金 为 给料From<基本给<=给料To 的情况下查找对应的标准报酬，
+     * 然后标准报酬乘保险率：注意和你的实际收入没关系，只和对应的那一档标准报酬有关
      *
      * @param employeeID
      * @param:[employeeID]
@@ -94,7 +96,8 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
     }
 
     /**
-     * 概要:根据员工ID查他的基本给，残業単価和控除単価，残業単価和控除単価这俩必然有一个没有或者干脆都没有，在没有的情况下查出来的是0，不影响计算也就无所谓了
+     * 概要:根据员工ID查他的基本给，残業単価和控除単価，残業単価和控除単価这俩必然有一个没有或者干脆都没有，
+     * 在没有的情况下查出来的是0，不影响计算也就无所谓了
      *
      * @param employeeID
      * @param:[employeeID]
@@ -126,16 +129,19 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
     }
 
     /**
-     * 概要:查询员工ID
+     * 概要:根据画面的年份检索员工ID
      *
-     * @param:[]
+     * @param year
+     * @param:[year]
      * @return:java.lang.String
      * @author:孫曄
      * @date:2022/08/30
      */
     @Override
-    public String getEmployeeID() {
-        String employeeID = salaryAutomaticCalculationMapper.getEmployeeID();
+    public String getEmployeeIDByYear(String year) {
+        String employeeID = salaryAutomaticCalculationMapper.getEmployeeIDByYear(year);
         return employeeID;
     }
+
+
 }

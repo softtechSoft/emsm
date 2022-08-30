@@ -69,9 +69,9 @@
                                               FROM transport)
     </select>
 
-    <!--查询员工ID-->
-    <select id="getEmployeeID" resultType="string">
-        SELECT employeeID
-        FROM employee
+    <!--根据画面的年份检索员工ID-->
+    <select id="getEmployeeIDByYear" parameterType="string" resultType="string">
+        select employeeID FROM m_incometax
+        WHERE year = #{year}
     </select>
 </mapper>
