@@ -1,6 +1,7 @@
 package com.softtech.mappers;
 
 import com.softtech.entity.*;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
  * @作成日:2022-08-30
  * @return:
  */
-public interface SalaryAutomaticCalculation {
+@Mapper
+public interface SalaryAutomaticCalculationMapper {
 
     /**概要:找到最大主键ID对应的数据，查出最新的一条关于厚生保险率的数据
     *@param:[]

@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.softtech.mappers.SalaryAutomaticCalculation">
+<mapper namespace="com.softtech.mappers.SalaryAutomaticCalculationMapper">
     <!--相关子查询 找到最大主键ID对应的数据，查出最新的一条关于厚生保险率的数据-->
     <select id="getWelfarefeeData" resultType="com.softtech.entity.EmplyinsrateInfoEntity">
         select *
