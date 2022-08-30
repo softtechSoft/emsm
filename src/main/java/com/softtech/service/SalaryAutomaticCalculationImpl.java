@@ -18,6 +18,7 @@ import java.util.List;
 public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculation {
     @Autowired
     private SalaryAutomaticCalculationMapper salaryAutomaticCalculationMapper;
+
     /**
      * 概要:找到最大主键ID对应的数据，查出最新的一条关于厚生保险率的数据
      *
@@ -28,7 +29,8 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public List<EmplyinsrateInfoEntity> getWelfarefeeData() {
-        return null;
+        List<EmplyinsrateInfoEntity> emplyinsrateInfoEntityList = salaryAutomaticCalculationMapper.getWelfarefeeData();
+        return emplyinsrateInfoEntityList;
     }
 
     /**
@@ -42,7 +44,8 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public String getAgeByEmployeeID(String employeeID) {
-        return null;
+        String age = salaryAutomaticCalculationMapper.getAgeByEmployeeID(employeeID);
+        return age;
     }
 
     /**
@@ -56,7 +59,8 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public String getLaborBurdenRate() {
-        return null;
+        String laborBurdenRate = salaryAutomaticCalculationMapper.getLaborBurdenRate();
+        return laborBurdenRate;
     }
 
     /**
@@ -69,7 +73,8 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public List<IncomeTaxInfoEntity> getIncomeTax() {
-        return null;
+        List<IncomeTaxInfoEntity> incomeTaxInfoEntityList = salaryAutomaticCalculationMapper.getIncomeTax();
+        return incomeTaxInfoEntityList;
     }
 
     /**
@@ -83,7 +88,9 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public List<WelfarefeeInfoEntity> getStandSalaryByEmployeeID(String employeeID) {
-        return null;
+        List<WelfarefeeInfoEntity> welfarefeeInfoEntityList =
+                salaryAutomaticCalculationMapper.getStandSalaryByEmployeeID(employeeID);
+        return welfarefeeInfoEntityList;
     }
 
     /**
@@ -97,7 +104,9 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public List<BaseSalaryInfoEntity> getBaseSalaryAndOvertimePayAndInsufficienttimePayByEmployeeID(String employeeID) {
-        return null;
+        List<BaseSalaryInfoEntity> baseSalaryInfoEntityList =
+                salaryAutomaticCalculationMapper.getBaseSalaryAndOvertimePayAndInsufficienttimePayByEmployeeID(employeeID);
+        return baseSalaryInfoEntityList;
     }
 
     /**
@@ -111,7 +120,9 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public List<TransportEntity> getTransportExpenseAndBusinessTripByEmployeeID(String employeeID) {
-        return null;
+        List<TransportEntity> transportEntityList =
+                salaryAutomaticCalculationMapper.getTransportExpenseAndBusinessTripByEmployeeID(employeeID);
+        return transportEntityList;
     }
 
     /**
@@ -124,6 +135,7 @@ public class SalaryAutomaticCalculationImpl implements SalaryAutomaticCalculatio
      */
     @Override
     public String getEmployeeID() {
-        return null;
+        String employeeID = salaryAutomaticCalculationMapper.getEmployeeID();
+        return employeeID;
     }
 }
