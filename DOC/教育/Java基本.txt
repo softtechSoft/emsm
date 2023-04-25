@@ -29,6 +29,7 @@ Java:
 基本クラス：
  （下記JavaDocを毎日30分間見る事は大事！！！
  https://docs.oracle.com/javase/jp/10/docs/api/index.html?java/lang/Integer.html）
+
 １）String
 　　・length
 　　・substr
