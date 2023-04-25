@@ -1,0 +1,5 @@
+
+drop view welfare;
+create view welfare
+as
+select a.*,b.employeeName from welfareinfo a, employee b where a.employeeID=b.employeeID;
