@@ -30,7 +30,7 @@ Java:
  （下記JavaDocを毎日30分間見る事は大事！！！
  https://docs.oracle.com/javase/jp/10/docs/api/index.html?java/lang/Integer.html）
 
-１）String
+１）String                                  基本
 　　・length
 　　・substr
 　　・+
@@ -38,17 +38,19 @@ Java:
 　　・replace
 　　1-1)StringBuffer
 
-２）Integer int ⇔　String
+２）Integer (int) ⇔　String　　　　　　　　数値
 　　・intValue()
 　　・parseInt()
+
 　　2-1)Double、Float
 
-３）List（ArrayList）
+３）List（ArrayList）/Iterator　　　　　　　集合系
 
-４）HashTable/HashMap
+
+４）HashTable/HashMap　　　　　　　　　　　Hash系
 　　　Key=Value式のデータを使う時、利用する
 
-５）Date/Calendar
+５）Date/Calendar　　　　　　　　　　　　　日付
 　　日付の機能
 
 JSPタグ：
