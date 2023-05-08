@@ -58,7 +58,14 @@ Insert into ofcfunction values
 ('B1','expenses','&#xe60c;&emsp;一般経費','1','/emsm/initExpensesManagement','1' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('B2','basesalary','&#xe60c;&emsp;基本給情報リスト','1','/emsm/initBaseSalaryList','2' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('S8','welfarefee','&#xe60c;&emsp;厚生保険料マスタ','1','/emsm/initWelfarefeeInfoList','8' ,'0',date_format(now(),'%Y%m%d') ,null),
-('S9','emplyinsrate','&#xe60c;&emsp;雇用保険率テーブル','1','/emsm/initEmplyinsrateInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null);
+('S9','emplyinsrate','&#xe60c;&emsp;雇用保険率テーブル','1','/emsm/initEmplyinsrateInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null),
+('M1','incomeTax','&#xe60c;&emsp;消費税テーブル','1','/emsm/initIncomeTaxInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null);
+insert into ofcfunction('functionID','functionName','functionText','authority','functionLink','deleteFlg')
+values
+('M1','incomeTax','&#xe60c;&emsp;消費税テーブル','1','/emsm/initIncomeTaxInfoList','0');
+
+
+
 alter table ofcfunction add column sysType varchar(1);
 
 drop table if exists company;
