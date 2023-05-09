@@ -1,3 +1,46 @@
+5/10
+  MVC
+　・Controller↔Service層↔Dao（MyBatis）層
+　・Eclipse Debug（YADANAR）
+
+5/9
+　MVC
+　JSP↔Controller
+
+ シャラパティさん、
+　マスタ系：リスト、新規、更新。
+  ・基本給管理
+  　リスト画面：
+　　  Controller:BaseSalaryControl.java
+    　基本給ボンタン　⇒　toinitBaseSalaryList（）
+
+　　　JSP:baseSalaryInfoList.jsp
+    　　タグ：Select
+    　　　　　button
+          　　table
+          　　list
+          　　Form
+              text
+              radio button
+              check box
+
+      ControllerからJspへデータを渡す方法
+       validation check
+
+    　新規/更新画面：
+    　　Controller:BaseSalaryControl.java#initBaseSalaryInfoList()
+    　　JSP:baseSlaryInfoEdit.jsp
+    　JspからControllerへデータ
+
+  ・厚生保険料管理
+
+ スさん
+  雇用保険率管理
+  税管理
+
+ ヤダナ-さん
+  給料情報自動作成
+
 5/8
 　ヤダナ-さん、シャラパティさん、スさん
 　①各自担当する内容のソースを確認する。
