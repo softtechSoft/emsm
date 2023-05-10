@@ -2,6 +2,15 @@
   MVC
 　・Controller↔Service層↔Dao（MyBatis）層
 　・Eclipse Debug（YADANAR）
+    障害の事象の説明済み
+　デバッグ方法説明済み
+　①ブレークポイント設定方法
+　②行単位実行　（F6）
+　③次のブレークポイントまで実行（F8）
+　④変数の確認および値の修正方法
+　⑤式の値確認方法（ウオッチ）
+
+
 
 5/9
 　MVC
