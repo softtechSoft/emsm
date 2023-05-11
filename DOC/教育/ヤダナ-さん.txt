@@ -1,3 +1,13 @@
+5/11
+ 単価計算：
+ 　更新画面JSP：salaryInfoEdit.jsp
+    イベント：基本給項目Text　の　onchange="tokeisan"
+              稼働期間From　　の　onchange="tokeisan"
+              稼働期間To　　　の　onchange="tokeisan"
+　　計算：
+　　　　　残業単価＝基本給/稼働期間To
+　　　　　控除単価＝基本給/稼働期間From
+　　　
 5/10
   MVC
 　・Controller↔Service層↔Dao（MyBatis）層
