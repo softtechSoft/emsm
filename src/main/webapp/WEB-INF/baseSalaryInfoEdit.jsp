@@ -25,8 +25,11 @@
 
 		//計算
 		var overtimePay=baseSalray/wkPeriodTo;
+		var insufficienttimePay=baseSalray/wkPeriodFrom
 
 		document.getElementById('overtimePay').value=overtimePay;
+		document.getElementById('insufficienttimePay').value=insufficienttimePay;
+
 
 
 	}
@@ -103,14 +106,17 @@
 				<td width="200px">残業単価</td>
 				<td>
 				 <input type="text" id="overtimePay" name="overtimePay"
-									value="${baseSalaryInfoBean.overtimePay}" />
+									value="${baseSalaryInfoBean.baseSalary/baseSalaryInfoBean.wkPeriodTo}" />
 
 				</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">控除単価</td>
-				<td width="200px"><c:out  value="${baseSalaryInfoBean.insufficienttimePay}"/></td>
+				<td>
+				<input type ="text" id ="insufficienttimePay" name = "insufficienttimePay"
+				                    value="${baseSalaryInfoBean.insufficienttimePay}"/>
+				</td>
 			</tr>
 
 

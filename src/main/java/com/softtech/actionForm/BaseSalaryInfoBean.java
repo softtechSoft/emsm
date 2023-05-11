@@ -1,7 +1,5 @@
 package com.softtech.actionForm;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * 概要：基本給情報リストの区別用
  *
@@ -9,6 +7,7 @@ import javax.validation.constraints.NotNull;
  * 作成日：2022/5/5
  */
 
+@SuppressWarnings("unused")
 public class BaseSalaryInfoBean {
 	//社員ID
 	private String employeeID;
@@ -82,6 +81,22 @@ public class BaseSalaryInfoBean {
 	public void setWkPeriodTo(String wkPeriodTo) {
 		this.wkPeriodTo = wkPeriodTo;
 	}
+
+	public String overtimePay() {
+		return overtimePay;
+	}
+
+	public void setovertimePay(String overtimePay) {
+		this.overtimePay = overtimePay;
+
+		public String insufficienttimePay() {
+			return insufficienttimePay;
+		}
+
+		public void setinsufficienttimePay(String insufficienttimePay) {
+			this.insufficienttimePay = insufficienttimePay;
+
+
 
 	public int getStatus() {
 		return status;
