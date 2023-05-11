@@ -7,7 +7,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import com.softtech.common.CompanyIDName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ import com.softtech.service.LoginService;
  * 作成日：2022/05/05
  *
  */
+@SuppressWarnings("unused")
 @Controller
 public class BaseSalaryControl {
 	static protected Logger logger = LogManager.getLogger(BaseSalaryControl.class);

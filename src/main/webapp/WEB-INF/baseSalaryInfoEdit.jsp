@@ -34,6 +34,44 @@
 
 	}
 
+	function tokeisan1(){
+		//基本給取得
+		var baseSalray=document.getElementById('baseSalary').value;
+		//稼働From取得
+		var wkPeriodFrom=document.getElementById('wkPeriodFrom').value;
+		//稼働To取得
+		var wkPeriodTo=document.getElementById('wkPeriodTo').value;
+
+		//計算
+		var overtimePay=baseSalray/wkPeriodTo;
+		var insufficienttimePay=baseSalray/wkPeriodFrom
+
+		document.getElementById('overtimePay').value=overtimePay;
+		document.getElementById('insufficienttimePay').value=insufficienttimePay;
+
+	}
+
+	function tokeisan2(){
+		//基本給取得
+		var baseSalray=document.getElementById('baseSalary').value;
+		//稼働From取得
+		var wkPeriodFrom=document.getElementById('wkPeriodFrom').value;
+		//稼働To取得
+		var wkPeriodTo=document.getElementById('wkPeriodTo').value;
+
+		//計算
+		var overtimePay=baseSalray/wkPeriodTo;
+		var insufficienttimePay=baseSalray/wkPeriodFrom
+
+		document.getElementById('overtimePay').value=overtimePay;
+		document.getElementById('insufficienttimePay').value=insufficienttimePay;
+
+	}
+
+
+
+
+
 </script>
 </head>
 <body>
@@ -90,16 +128,22 @@
 									value="${baseSalaryInfoBean.plusHour}" /></td>
 
 			</tr>
+
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">稼働時間From</td>
-				<td width="200px"><input type="text" id="wkPeriodFrom" name="wkPeriodFrom"
-									value="${baseSalaryInfoBean.wkPeriodFrom}" /></td>
+				<td width="200px">
+				<input type="text" id="wkPeriodFrom" name="wkPeriodFrom"
+									value="${baseSalaryInfoBean.wkPeriodFrom}" onchange="tokeisan1()" />
+			 </td>
 			</tr>
+
+
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">稼働時間To</td>
 				<td width="200px"> <input type="text" id="wkPeriodTo" name="wkPeriodTo"
-									value="${baseSalaryInfoBean.wkPeriodTo}" /></td>
+									value="${baseSalaryInfoBean.wkPeriodTo}" onchange="tokeisan2()"/>
+			</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
