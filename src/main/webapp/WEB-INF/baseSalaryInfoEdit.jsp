@@ -10,9 +10,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title> ソフトテク株式会社-社内管理システム </title>
 <script type="text/javascript" >
-		//登録ボタンのクリック処理
-		function doRegist(){
-			document.theForm.submit();
+	//登録ボタンのクリック処理
+	function doRegist(){
+		document.theForm.submit();
+	}
+
+	function toKeisan(){
+		//基本給取得
+		var baseSalray=document.getElementById('baseSalary').value;
+		//稼働From取得
+		var wkPeriodFrom=document.getElementById('wkPeriodFrom').value;
+		//稼働To取得
+		var wkPeriodTo=document.getElementById('wkPeriodTo').value;
+
+		//計算
+		var overtimePay=baseSalray/wkPeriodTo;
+
+		document.getElementById('overtimePay').value=overtimePay;
+
+
 	}
 
 </script>
@@ -53,8 +69,10 @@
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">基本給</td>
-				<td width="200px"><input type="text" id="baseSalary" name="baseSalary"
-									value="${baseSalaryInfoBean.baseSalary}" /></td>
+				<td width="200px">
+				 <input type="text" id="baseSalary" name="baseSalary"
+				 					value="${baseSalaryInfoBean.baseSalary}" onchange="toKeisan()"/>
+				</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
@@ -83,7 +101,11 @@
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">残業単価</td>
-				<td width="200px"><c:out  value="${baseSalaryInfoBean.overtimePay}"/></td>
+				<td>
+				 <input type="text" id="overtimePay" name="overtimePay"
+									value="${baseSalaryInfoBean.overtimePay}" />
+
+				</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
