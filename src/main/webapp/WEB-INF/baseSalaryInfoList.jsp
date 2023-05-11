@@ -76,7 +76,7 @@
                 <td><c:out value="${baseSalaryInfoList.wkPeriodTo}"/></td>
                 <td><c:out value="${baseSalaryInfoList.minusHour}"/></td>
                 <td><c:out value="${baseSalaryInfoList.plusHour}"/></td>
-                <td><c:out value="${overtimePay}"/></td>
+                <td><c:out value="${baseSalaryInfoList.overtimePay}"/></td>
                 <td><c:out value="${baseSalaryInfoList.insufficienttimePay}"/></td>
                 <td><c:out value="${baseSalaryInfoList.status}"/></td>
                 <td><c:out value="${baseSalaryInfoList.insertDate}"/></td>

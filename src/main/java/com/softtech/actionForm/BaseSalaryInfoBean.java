@@ -33,116 +33,149 @@ public class BaseSalaryInfoBean {
 	private String updateDate;
 	//基本給ID
 	private String baseSalaryID;
-
+	/**
+	 * @return employeeID
+	 */
 	public String getEmployeeID() {
 		return employeeID;
 	}
-
+	/**
+	 * @param employeeID セットする employeeID
+	 */
 	public void setEmployeeID(String employeeID) {
 		this.employeeID = employeeID;
 	}
-
+	/**
+	 * @return baseSalary
+	 */
 	public String getBaseSalary() {
 		return baseSalary;
 	}
-
+	/**
+	 * @param baseSalary セットする baseSalary
+	 */
 	public void setBaseSalary(String baseSalary) {
 		this.baseSalary = baseSalary;
 	}
-
+	/**
+	 * @return minusHour
+	 */
 	public String getMinusHour() {
 		return minusHour;
 	}
-
+	/**
+	 * @param minusHour セットする minusHour
+	 */
 	public void setMinusHour(String minusHour) {
 		this.minusHour = minusHour;
 	}
-
+	/**
+	 * @return plusHour
+	 */
 	public String getPlusHour() {
 		return plusHour;
 	}
-
+	/**
+	 * @param plusHour セットする plusHour
+	 */
 	public void setPlusHour(String plusHour) {
 		this.plusHour = plusHour;
 	}
-
+	/**
+	 * @return wkPeriodFrom
+	 */
 	public String getWkPeriodFrom() {
 		return wkPeriodFrom;
 	}
-
+	/**
+	 * @param wkPeriodFrom セットする wkPeriodFrom
+	 */
 	public void setWkPeriodFrom(String wkPeriodFrom) {
 		this.wkPeriodFrom = wkPeriodFrom;
 	}
-
+	/**
+	 * @return wkPeriodTo
+	 */
 	public String getWkPeriodTo() {
 		return wkPeriodTo;
 	}
-
+	/**
+	 * @param wkPeriodTo セットする wkPeriodTo
+	 */
 	public void setWkPeriodTo(String wkPeriodTo) {
 		this.wkPeriodTo = wkPeriodTo;
 	}
-
-	public String overtimePay() {
+	/**
+	 * @return overtimePay
+	 */
+	public String getOvertimePay() {
 		return overtimePay;
 	}
-
-	public void setovertimePay(String overtimePay) {
+	/**
+	 * @param overtimePay セットする overtimePay
+	 */
+	public void setOvertimePay(String overtimePay) {
 		this.overtimePay = overtimePay;
-
-		public String insufficienttimePay() {
-			return insufficienttimePay;
-		}
-
-		public void setinsufficienttimePay(String insufficienttimePay) {
-			this.insufficienttimePay = insufficienttimePay;
-
-
-
+	}
+	/**
+	 * @return insufficienttimePay
+	 */
+	public String getInsufficienttimePay() {
+		return insufficienttimePay;
+	}
+	/**
+	 * @param insufficienttimePay セットする insufficienttimePay
+	 */
+	public void setInsufficienttimePay(String insufficienttimePay) {
+		this.insufficienttimePay = insufficienttimePay;
+	}
+	/**
+	 * @return status
+	 */
 	public int getStatus() {
 		return status;
 	}
-
+	/**
+	 * @param status セットする status
+	 */
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
+	/**
+	 * @return insertDate
+	 */
 	public String getInsertDate() {
 		return insertDate;
 	}
-
+	/**
+	 * @param insertDate セットする insertDate
+	 */
 	public void setInsertDate(String insertDate) {
 		this.insertDate = insertDate;
 	}
-
+	/**
+	 * @return updateDate
+	 */
 	public String getUpdateDate() {
 		return updateDate;
 	}
-
+	/**
+	 * @param updateDate セットする updateDate
+	 */
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
-
+	/**
+	 * @return baseSalaryID
+	 */
 	public String getBaseSalaryID() {
 		return baseSalaryID;
 	}
-
+	/**
+	 * @param baseSalaryID セットする baseSalaryID
+	 */
 	public void setBaseSalaryID(String baseSalaryID) {
 		this.baseSalaryID = baseSalaryID;
 	}
 
-	public String getOvertimePay() {
-		return overtimePay;
-	}
-
-	public void setOvertimePay(String overtimePay) {
-		this.overtimePay = overtimePay;
-	}
-
-	public String getInsufficienttimePay() {
-		return insufficienttimePay;
-	}
-
-	public void setInsufficienttimePay(String insufficienttimePay) {
-		this.insufficienttimePay = insufficienttimePay;
-	}
 }

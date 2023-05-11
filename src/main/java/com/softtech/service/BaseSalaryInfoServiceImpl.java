@@ -73,10 +73,10 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		baseSalaryInfoEntity.setWkPeriodTo(wkPeriodTo);
 
 		//残業単価
-		//baseSalaryInfoEntity.setOvertimePay(baseSalaryInfoBean.getOvertimePay());
+		baseSalaryInfoEntity.setOvertimePay(baseSalaryInfoBean.getOvertimePay());
 
 		//控除単価
-		//baseSalaryInfoEntity.setInsufficienttimePay(baseSalaryInfoBean.getInsufficienttimePay());
+		baseSalaryInfoEntity.setInsufficienttimePay(baseSalaryInfoBean.getInsufficienttimePay());
 
 		//利用ステータス
 		int status = baseSalaryInfoBean.getStatus();

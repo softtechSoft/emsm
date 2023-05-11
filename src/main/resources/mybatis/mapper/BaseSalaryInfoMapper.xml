@@ -60,13 +60,9 @@
             wkPeriodFrom=#{wkPeriodFrom},
             wkPeriodTo=#{wkPeriodTo},
             status=#{status},
-            updateDate=date_format(now(), '%Y%m%d'),
-            <if test="plusHour != 0">
-                overtimePay=#{baseSalary} / #{wkPeriodTo} * #{plusHour},
-            </if>
-            <if test="minusHour != 0">
-            insufficienttimePay=#{baseSalary} / #{wkPeriodFrom} * #{minusHour}
-            </if>
+            overtimePay=#{overtimePay},
+            insufficienttimePay=#{insufficienttimePay},
+            updateDate=date_format(now(), '%Y%m%d')
         where baseSalaryID = #{baseSalaryID}
     </select>
     <!--最大ID取得。-->
