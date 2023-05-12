@@ -1,4 +1,32 @@
 5/11
+function toKeisan(){
+		//基本給取得
+		var baseSalary=document.getElementById('baseSalary').value;
+
+		//残業単価
+		if (baseSalary != null && baseSalary != "") {
+		    //稼働To取得
+			var wkPeriodTo=document.getElementById('wkPeriodTo').value;
+
+			if (wkPeriodTo != null && wkPeriodTo != "") {
+				var overtimePay=baseSalary/wkPeriodTo;
+				document.getElementById('overtimePay').value=overtimePay;
+			}
+		}
+		//控除単価
+		if (baseSalary != null && baseSalary != "") {
+		    //稼働From取得
+			var wkPeriodFrom=document.getElementById('wkPeriodFrom').value;
+
+			if (wkPeriodFrom != null && wkPeriodFrom != "") {
+				var insufficienttimePay=baseSalary/wkPeriodFrom;
+				document.getElementById('insufficienttimePay').value=insufficienttimePay;
+			}
+		}
+
+	}
+
+
  単価計算：
  　更新画面JSP：salaryInfoEdit.jsp
     イベント：基本給項目Text　の　onchange="tokeisan"
