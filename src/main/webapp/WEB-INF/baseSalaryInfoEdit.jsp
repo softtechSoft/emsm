@@ -51,7 +51,7 @@
 			<form:errors path="baseSalaryID" />
 			<form:errors path="baseSalary" />
 			<form:errors path="employeeID" />
-			<form:errors path=" year" />
+			<form:errors path="year" />
 			<form:errors path="wkPeriodFrom" />
 			<form:errors path="wkPeriodTo" />
 			<form:errors path="minusHour" />
