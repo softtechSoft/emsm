@@ -45,16 +45,12 @@
     </form:select>
 
     <input type="button" name="search" value="検索" onclick="toSearchJsp();"/>
-    <!--エラーメッセージ-->
-    <p style="color: red;">
-        <c:forEach items="${errors}" var="error">
-            <spring:message message="${error}"/>
-        </c:forEach>
-    </p>
+
     <table border="1" class="baseSalaryInfoList-table">
         <tr>
             <th width="100">基本給ID</th>
             <th width="200">基本給</th>
+            <th width="200">対象年度</th>
             <th width="100">稼働期間From</th>
             <th width="100">稼働期間To</th>
             <th width="100">不足減単価(h)</th>
@@ -72,6 +68,7 @@
                     <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
                 <td><c:out value="${baseSalaryInfoList.baseSalaryID}"/></td>
                 <td><c:out value="${baseSalaryInfoList.baseSalary}"/></td>
+                <td><c:out value="${baseSalaryInfoList.year}"/></td>
                 <td><c:out value="${baseSalaryInfoList.wkPeriodFrom}"/></td>
                 <td><c:out value="${baseSalaryInfoList.wkPeriodTo}"/></td>
                 <td><c:out value="${baseSalaryInfoList.minusHour}"/></td>

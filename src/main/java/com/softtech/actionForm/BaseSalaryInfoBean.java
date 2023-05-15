@@ -13,6 +13,8 @@ public class BaseSalaryInfoBean {
 	private String employeeID;
 	//基本給
 	private String baseSalary;
+	//対象年度
+	private String  year;
 	//残業不足時間
 	private String minusHour;
 	//残業時間

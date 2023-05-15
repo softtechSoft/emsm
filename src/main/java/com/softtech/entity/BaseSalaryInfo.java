@@ -7,6 +7,8 @@ public class BaseSalaryInfo {
 		private String employeeID;
 		//基本給
 		private int baseSalary;
+		//対象年度
+		private String year;
 		//不足減単価(h)
 		private int minusHour;
 		//残業加単価(h)
@@ -104,5 +106,11 @@ public class BaseSalaryInfo {
 
 	public void setInsufficienttimePay(String insufficienttimePay) {
 		this.insufficienttimePay = insufficienttimePay;
+	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

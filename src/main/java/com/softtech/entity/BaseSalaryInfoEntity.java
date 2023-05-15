@@ -14,7 +14,9 @@ public class BaseSalaryInfoEntity {
     private String employeeID;
     //基本給
     private String baseSalary;
-    //不足減単価(h)
+    //対象年度
+    private String year;
+     //不足減単価(h)
     private String minusHour;
     //残業加単価(h)
     private String plusHour;
@@ -53,7 +55,13 @@ public class BaseSalaryInfoEntity {
     public void setBaseSalary(String baseSalary) {
         this.baseSalary = baseSalary;
     }
+    public String getYear() {
+		return year;
+	}
 
+	public void setYear(String year) {
+		this.year = year;
+	}
     public String getMinusHour() {
         return minusHour;
     }
@@ -123,6 +131,7 @@ public class BaseSalaryInfoEntity {
         return "BaseSalaryInfoEntity{" +
                 "employeeID='" + employeeID + '\'' +
                 ", baseSalary='" + baseSalary + '\'' +
+                ", year='" + year + '\'' +
                 ", minusHour='" + minusHour + '\'' +
                 ", plusHour='" + plusHour + '\'' +
                 ", wkPeriodFrom='" + wkPeriodFrom + '\'' +
@@ -140,7 +149,7 @@ public class BaseSalaryInfoEntity {
         if (o == null || getClass() != o.getClass()) return false;
         BaseSalaryInfoEntity that = (BaseSalaryInfoEntity) o;
         return status == that.status && Objects.equals(employeeID, that.employeeID) && Objects.equals(baseSalary,
-                that.baseSalary) && Objects.equals(minusHour, that.minusHour) && Objects.equals(plusHour,
+                that.baseSalary) && Objects.equals(year,that.year)&& Objects.equals(minusHour, that.minusHour) && Objects.equals(plusHour,
                 that.plusHour) && Objects.equals(wkPeriodFrom, that.wkPeriodFrom) && Objects.equals(wkPeriodTo,
                 that.wkPeriodTo) && Objects.equals(insertDate, that.insertDate) && Objects.equals(updateDate,
                 that.updateDate) && Objects.equals(baseSalaryID, that.baseSalaryID);
@@ -148,7 +157,7 @@ public class BaseSalaryInfoEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeID, baseSalary, minusHour, plusHour, wkPeriodFrom, wkPeriodTo, status, insertDate,
+        return Objects.hash(employeeID, baseSalary,year, minusHour, plusHour, wkPeriodFrom, wkPeriodTo, status, insertDate,
                 updateDate, baseSalaryID);
     }
 
@@ -167,4 +176,6 @@ public class BaseSalaryInfoEntity {
     public void setInsufficienttimePay(String insufficienttimePay) {
         this.insufficienttimePay = insufficienttimePay;
     }
+
+
 }

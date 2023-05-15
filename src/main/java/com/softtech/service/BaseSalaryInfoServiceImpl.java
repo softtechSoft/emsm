@@ -35,6 +35,12 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		return  baseSalaryInfo;
 	}
 
+	public BaseSalaryInfoMapper getBaseSalaryInfoMapper() {
+		return baseSalaryInfoMapper;
+	}
+	public void setBaseSalaryInfoMapper(BaseSalaryInfoMapper baseSalaryInfoMapper) {
+		this.baseSalaryInfoMapper = baseSalaryInfoMapper;
+	}
 	@Override
 	public boolean updateBaseSalaryInfoList(BaseSalaryInfoFormBean baseSalaryInfoBean) {
 
@@ -55,6 +61,10 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		//基本給
 		String baseSalary = baseSalaryInfoBean.getBaseSalary();
 		baseSalaryInfoEntity.setBaseSalary(baseSalary);
+
+		//対象年度
+		String  year = baseSalaryInfoBean.getYear();
+		baseSalaryInfoEntity.setBaseSalary( year);
 
 		//残業不足時間
 		String minusHour = baseSalaryInfoBean.getMinusHour();
@@ -126,6 +136,10 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		//基本給
 		String baseSalary = baseSalaryInfoBean.getBaseSalary();
 		baseSalaryInfoEntity.setBaseSalary(baseSalary);
+
+		//対象年度
+				String year = baseSalaryInfoBean.getYear();
+				baseSalaryInfoEntity.setBaseSalary(year);
 
 		//残業不足時間
 		String minusHour = baseSalaryInfoBean.getMinusHour();
@@ -218,6 +232,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		for(BaseSalaryInfoEntity baseSalaryInfoEntity:bList){
 			baseSalaryInfoFormBean.setBaseSalaryID(baseSalaryInfoEntity.getBaseSalaryID());
 			baseSalaryInfoFormBean.setBaseSalary(baseSalaryInfoEntity.getBaseSalary());
+			baseSalaryInfoFormBean.setYear(baseSalaryInfoEntity.getYear());
 			baseSalaryInfoFormBean.setMinusHour(baseSalaryInfoEntity.getMinusHour());
 			baseSalaryInfoFormBean.setPlusHour(baseSalaryInfoEntity.getPlusHour());
 			baseSalaryInfoFormBean.setWkPeriodFrom(baseSalaryInfoEntity.getWkPeriodFrom());

@@ -2,13 +2,11 @@ package com.softtech.actionForm;
 
 import java.util.ArrayList;
 
-import com.softtech.common.EmployeeIDName;
-import org.hibernate.validator.constraints.Range;
-
-import javax.swing.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import com.softtech.common.EmployeeIDName;
 
 public class BaseSalaryInfoFormBean {
 	//基本給ID
@@ -18,6 +16,10 @@ public class BaseSalaryInfoFormBean {
 	@NotEmpty(message = "基本給を入力してください。")
 	@Pattern(message = "基本給に数値のみを入力してください。", regexp = "^[0-9]*$")
 	private String baseSalary;
+	//対象年度
+	@NotEmpty(message = "対象年度を入力してください。")
+	@Pattern(message = "対象年度のみを入力してください。", regexp = "^[0-9]*$")
+	private String  year;
 	//残業不足時間
 	@NotEmpty(message = "残業不足時間を入力してください。")
 	@Pattern(message = "残業不足時間に数値のみを入力してください。", regexp = "^[0-9]*$")
@@ -67,6 +69,15 @@ public class BaseSalaryInfoFormBean {
 
 	public void setBaseSalary(String baseSalary) {
 		this.baseSalary = baseSalary;
+	}
+
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 	public String getMinusHour() {
