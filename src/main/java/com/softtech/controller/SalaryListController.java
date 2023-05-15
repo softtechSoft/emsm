@@ -1,5 +1,6 @@
 package com.softtech.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -103,6 +104,27 @@ public class SalaryListController {
 
 		    return "salaryInfo";
 		 }
+		return "salarylist";
+	}
+
+	/**
+	 *  一括作成
+	 * @param  モデル
+	 */
+	@RequestMapping(value = "/autoCreate", method = RequestMethod.POST)
+	public String autoCreate(Model model) {
+		//給料自動作成
+
+
+		//自動作成した内容を再表示
+		String month = DateUtil.getNowMonth();
+		model.addAttribute("month",month);
+		// DBから給料情報を取得
+		List<SalaryInfo> sl= new ArrayList<SalaryInfo>();
+		SalaryInfo kara = new SalaryInfo();
+		sl.add(kara);
+		model.addAttribute("list",sl);
+
 		return "salarylist";
 	}
 }

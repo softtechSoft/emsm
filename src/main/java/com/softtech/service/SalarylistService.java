@@ -48,8 +48,30 @@ public class SalarylistService {
 		return nextMonth;
 
 	}
+	/*
+	 * 機能：給料の自動作成
+	 *
+	 * @param なし
+	 * @return True：成功、False：失敗
+	 *
+	 * @author YADANAR@ソフトテク
+	 */
+	public boolean autoCreate() {
+		//①年月採番
+			//給料テーブルから最大年月（month）を取得
+
+		    //最大年月の次の年月を取得
+
+		//②社員リストを取得
 
 
+		//③~ｎ 各マスタからデータを取得
+
+		//給料テーブルに新規追加
+
+		return true;
+
+	}
 
 	/*public List<MenuBean> queryOfcfunction(String string) {
 		// 機能リストを取得する

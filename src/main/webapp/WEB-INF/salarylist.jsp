@@ -29,11 +29,12 @@ function tosalaryInfoJsp(salaryInfoID){
 	EmployeeIDFlg.value= salaryInfoID;
 	document.theForm.submit();
 }
-function toCreate(){
-	var downloadFlg =document.getElementById('downloadFlg');
-	downloadFlg.value= 4;
-	document.theForm.submit();
-}
+
+	//一括作成
+	function toCreate(){
+		document.theForm.action = "autoCreate";
+        document.theForm.submit();
+	}
 
 
 </script>
