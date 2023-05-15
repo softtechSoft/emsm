@@ -114,7 +114,7 @@ public class SalaryListController {
 	@RequestMapping(value = "/autoCreate", method = RequestMethod.POST)
 	public String autoCreate(Model model) {
 		//給料自動作成
-
+		
 
 		//自動作成した内容を再表示
 		String month = DateUtil.getNowMonth();
