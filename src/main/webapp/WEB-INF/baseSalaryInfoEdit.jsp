@@ -151,7 +151,6 @@
 				<td>
 				 <input type="text" id="overtimePay" name="overtimePay"
 									value="${baseSalaryInfoBean.baseSalary/baseSalaryInfoBean.wkPeriodTo}" />
-
 				</td>
 			</tr>
 

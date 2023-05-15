@@ -81,6 +81,13 @@ public class SalaryListController {
 		 } else if(salarylistBean2.getDownloadFlg()==1){
 			     model.addAttribute("list", sl);
 		 // 画面の給料リスト中の社員IDを押す時。
+
+		 } else if(salarylistBean2.getDownloadFlg()==4) {
+			 model.addAttribute("list",sl);
+			 model.addAttribute("create","作成完了しました。");
+
+
+
 		 }else if(salarylistBean2.getDownloadFlg()==3) {
 			 SalaryInfoRecord em = new SalaryInfoRecord();
 			//社員ID

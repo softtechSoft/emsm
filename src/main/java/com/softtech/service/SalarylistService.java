@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.softtech.entity.SalaryInfo;
 import com.softtech.mappers.SalarylistMapper;
+import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
 /**
  * 概要：Salarylistのservice
@@ -39,6 +40,13 @@ public class SalarylistService {
 		List<SalaryInfo> salaryinfolist =  salarylistMapper.getSalaryinfolist(monthP);
 
 		return  salaryinfolist;
+	}
+
+	public String getNextMonth() {
+		String maxMonth=salarylistMapper.getMaxMonth();
+		String nextMonth=DataUtil.getNextMonth(maxMonth);
+		return nextMonth;
+
 	}
 
 

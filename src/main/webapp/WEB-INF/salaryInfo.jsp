@@ -319,13 +319,13 @@ function chageMonth(){
 			<input type="hidden" id="employeeName" name="employeeName" value="${salaryInfoBean.employeeName}"/>
 			</td>
 			</tr>
-			<tr  style="background-color:#bfe1ff">
+			<%-- <tr  style="background-color:#bfe1ff">
 			<td>住所：</td>
 			<td>${salaryInfoBean.address}
 			<!--社員住所を転送 -->
 			<input type="hidden" id="address" name="address" value="${salaryInfoBean.address}"/>
 			</td>
-			</tr>
+			</tr> --%>
 			<tr style="background-color:#dcfeeb">
 			<td>対象月：</td>
 			<td><input id="month"name="month" type="text" value="${salaryInfoBean.month}" onchange="chageMonth()"></td>
