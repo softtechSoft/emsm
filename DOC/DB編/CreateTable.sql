@@ -405,7 +405,7 @@ alter table m_department modify departmentName varchar(5) NOT NULL COMMENT '部�
 drop table if exists m_basesalary;
 create table m_basesalary(
 baseSalary int not null comment'基本給',
-year varchar(4) not null comment'対象年月',
+year varchar(4) not null comment'対象年度',
 minusHour int not null comment'残業不足時間',
 plusHour int not null comment'残業時間',
 wkPeriodFrom int not null comment'稼働期間From',
