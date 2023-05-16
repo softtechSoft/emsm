@@ -19,7 +19,7 @@ public class BaseSalaryInfoFormBean {
 	//対象年度
 	@NotEmpty(message = "対象年度を入力してください。")
 	@Pattern(message = "対象年度のみを入力してください。", regexp = "^[0-9]*$")
-	private String  year;
+	private String year;
 	//残業不足時間
 	@NotEmpty(message = "残業不足時間を入力してください。")
 	@Pattern(message = "残業不足時間に数値のみを入力してください。", regexp = "^[0-9]*$")

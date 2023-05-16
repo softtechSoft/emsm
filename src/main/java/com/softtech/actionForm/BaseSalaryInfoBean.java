@@ -14,7 +14,7 @@ public class BaseSalaryInfoBean {
 	//基本給
 	private String baseSalary;
 	//対象年度
-	private String  year;
+	private String year;
 	//残業不足時間
 	private String minusHour;
 	//残業時間
@@ -52,6 +52,12 @@ public class BaseSalaryInfoBean {
 	 */
 	public String getBaseSalary() {
 		return baseSalary;
+	}
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
 	}
 	/**
 	 * @param baseSalary セットする baseSalary

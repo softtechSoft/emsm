@@ -63,8 +63,8 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		baseSalaryInfoEntity.setBaseSalary(baseSalary);
 
 		//対象年度
-		String  year = baseSalaryInfoBean.getYear();
-		baseSalaryInfoEntity.setBaseSalary( year);
+		String year = baseSalaryInfoBean.getYear();
+		baseSalaryInfoEntity.setBaseSalary(year);
 
 		//残業不足時間
 		String minusHour = baseSalaryInfoBean.getMinusHour();

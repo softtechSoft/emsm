@@ -10,6 +10,7 @@
         (baseSalaryID,
          employeeID,
          baseSalary,
+         year,
          minusHour,
          plusHour,
          wkPeriodFrom,
@@ -22,6 +23,7 @@
         values (#{baseSalaryID},
                 #{employeeID},
                 #{baseSalary},
+                #{year},
                 #{wkPeriodFrom},
                 #{wkPeriodTo},
                 #{minusHour},
@@ -55,6 +57,7 @@
             m_basesalary
         set employeeID=#{employeeID},
             baseSalary=#{baseSalary},
+            year=#{year},
             minusHour=#{minusHour},
             plusHour=#{plusHour},
             wkPeriodFrom=#{wkPeriodFrom},

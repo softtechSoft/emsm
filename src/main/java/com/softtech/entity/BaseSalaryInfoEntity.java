@@ -44,7 +44,7 @@ public class BaseSalaryInfoEntity {
         return employeeID;
     }
 
-    public void setEmployeeID(String employeeID) {
+	public void setEmployeeID(String employeeID) {
         this.employeeID = employeeID;
     }
 
@@ -55,6 +55,7 @@ public class BaseSalaryInfoEntity {
     public void setBaseSalary(String baseSalary) {
         this.baseSalary = baseSalary;
     }
+
     public String getYear() {
 		return year;
 	}
