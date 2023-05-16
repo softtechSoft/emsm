@@ -419,3 +419,4 @@ baseSalaryID varchar(8) not null PRIMARY KEY comment'基本給ID',
 employeeID varchar(8) not null comment'社員ID'
 )comment'基本給_マスタ機能';
 
+
