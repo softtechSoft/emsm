@@ -1,9 +1,13 @@
 package com.softtech.controller;
 
-import com.softtech.actionForm.EmplyinsrateInfoFormBean;
-import com.softtech.common.EmplyinsrateIDName;
-import com.softtech.entity.EmplyinsrateInfoEntity;
-import com.softtech.service.EmplyinsrateInfoService;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +18,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import com.softtech.actionForm.EmplyinsrateInfoFormBean;
+import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.entity.EmplyinsrateInfoEntity;
+import com.softtech.service.EmplyInsrateInfoService;
 
 /**
  * @program
@@ -30,15 +31,15 @@ import java.util.List;
  * @return:
  */
 @Controller
-public class EmplyinsrateInfoController {
+public class EmplyInsrateInfoController {
     //logger
-    static protected Logger logger = LogManager.getLogger(EmplyinsrateInfoController.class);
+    static protected Logger logger = LogManager.getLogger(EmplyInsrateInfoController.class);
     //IOC Service
     @Autowired
-    EmplyinsrateInfoService emplyinsrateInfoService;
+    EmplyInsrateInfoService emplyinsrateInfoService;
 
     /**
-     * 概要:年度の選択枠を設定する
+     * 概要:雇用保険リスト画面の初期表示
      *
      * @param:[model]
      * @return:java.lang.String
@@ -48,32 +49,15 @@ public class EmplyinsrateInfoController {
     @RequestMapping("/initEmplyinsrateInfoList")
     public String toinitEmplyinsrateInfoList(Model model) {
         logger.info("start index()");
-        //枠用の年度を生成
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-        String format = formatter.format(now);
-        String year = new BigDecimal(format).subtract(BigDecimal.ONE).toString();
-        String year1 =
-                new BigDecimal(format).subtract(BigDecimal.ONE).subtract(BigDecimal.ONE).toString();
-        //枠用の年度リスト候補生成
-        ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList = new ArrayList<>();
-        EmplyinsrateIDName emplyinsrateIDName = new EmplyinsrateIDName();
-        emplyinsrateIDName.setYear(format);
-        emplyinsrateIDNameList.add(emplyinsrateIDName);
-
-        EmplyinsrateIDName emplyinsrateIDName1 = new EmplyinsrateIDName();
-        emplyinsrateIDName1.setYear(year);
-        emplyinsrateIDNameList.add(emplyinsrateIDName1);
-
-        EmplyinsrateIDName emplyinsrateIDName2 = new EmplyinsrateIDName();
-        emplyinsrateIDName2.setYear(year1);
-        emplyinsrateIDNameList.add(emplyinsrateIDName2);
 
         EmplyinsrateInfoFormBean emplyinsrateInfoFormBean = new EmplyinsrateInfoFormBean();
         //年度を任意設定
         emplyinsrateInfoFormBean.setYear("2020");
-
         model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean);
+
+        //枠用の年度を生成
+        ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList =
+                emplyinsrateInfoService.getOldYears(3);
         //年度リスト候補を画面へ渡す
         model.addAttribute("emplyinsrateIDNameList", emplyinsrateIDNameList);
 
@@ -81,7 +65,7 @@ public class EmplyinsrateInfoController {
     }
 
     /**
-     * 概要:年度により、検索する
+     * 概要:検索する
      *
      * @param:[emplyinsrateInfoFormBean, model]
      * @return:java.lang.String
@@ -101,16 +85,18 @@ public class EmplyinsrateInfoController {
         List<EmplyinsrateInfoEntity> bList =
                 emplyinsrateInfoService.getEmplyinsrateInfoByYear(year);
         //年度リスト候補生成
-        List<EmplyinsrateIDName> emplyinsrateIDNameList = emplyinsrateInfoService.getYear();
+        ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList =
+                emplyinsrateInfoService.getOldYears(3);
 
         model.addAttribute("emplyinsrateIDNameList", emplyinsrateIDNameList);
         model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean);
         model.addAttribute("list", bList);
+
         return "emplyinsrateInfoList";
     }
 
     /**
-     * 概要:検索と更新画面の初期表示
+     * 概要:新規/更新画面の初期表示
      *
      * @param:[emplyinsrateInfoFormBean]
      * @return:java.lang.String

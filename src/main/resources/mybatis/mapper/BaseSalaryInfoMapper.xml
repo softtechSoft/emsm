@@ -10,7 +10,6 @@
         (baseSalaryID,
          employeeID,
          baseSalary,
-         year,
          minusHour,
          plusHour,
          wkPeriodFrom,
@@ -19,11 +18,11 @@
          insertDate,
          updateDate,
          overtimePay,
-         insufficienttimePay)
+         insufficienttimePay,
+         year)
         values (#{baseSalaryID},
                 #{employeeID},
                 #{baseSalary},
-                #{year},
                 #{wkPeriodFrom},
                 #{wkPeriodTo},
                 #{minusHour},
@@ -32,7 +31,7 @@
                 date_format(now(), '%Y%m%d'),
                 date_format(now(), '%Y%m%d'),
                 #{baseSalary} / #{wkPeriodTo} * #{plusHour},
-                #{baseSalary} / #{wkPeriodFrom} * #{minusHour})
+                #{baseSalary} / #{wkPeriodFrom} * #{minusHour},#{year})
 
 
     </select>

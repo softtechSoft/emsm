@@ -1,11 +1,13 @@
 package com.softtech.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.softtech.actionForm.EmplyinsrateInfoFormBean;
 import com.softtech.common.EmplyinsrateIDName;
 import com.softtech.entity.EmplyinsrateInfoEntity;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @program
@@ -15,7 +17,7 @@ import java.util.List;
  * @return:
  */
 @Service
-public interface EmplyinsrateInfoService {
+public interface EmplyInsrateInfoService {
 
     /**
      * 概要:画面表示用のquery,入力の年度により、検索する
@@ -86,5 +88,14 @@ public interface EmplyinsrateInfoService {
      * @date:2022/08/08
      */
     List<EmplyinsrateIDName> getYear();
+
+    /*
+     * 機能：指定数の過去年度リストを生成する
+	 *
+	 * @param 過去年度数
+	 * @return 過去年度リスト
+	 * @exception なし
+     */
+    ArrayList<EmplyinsrateIDName> getOldYears(int oldYear);
 
 }

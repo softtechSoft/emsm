@@ -1,14 +1,20 @@
 
 package com.softtech.util;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import com.softtech.common.EmplyinsrateIDName;
 
 /**
  * 概要：データ処理機能
@@ -44,6 +50,41 @@ public class DateUtil {
 		 b = a.format(dNow);
 		return b;
 	}
+	/**
+	 * 機能：指定数の過去年度リストを生成する
+	 *
+	 * @param 過去年度数
+	 * @return 過去年度リスト
+	 * @exception なし
+	 * @author 馬@ソフトテク
+	 */
+	public static List<EmplyinsrateIDName> getYears(int yearNumber) {
+
+		ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList = new ArrayList<>();
+
+		if (yearNumber < 1) return emplyinsrateIDNameList;
+
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
+        //当年度
+        String thisYear = formatter.format(now);
+        EmplyinsrateIDName emplyinsrateIDName = new EmplyinsrateIDName();
+        emplyinsrateIDName.setYear(thisYear);
+        emplyinsrateIDNameList.add(emplyinsrateIDName);
+        String wkYear=thisYear;
+
+        for(int i=0;i<yearNumber-1;i++) {
+        	String oldYear =new BigDecimal(wkYear).subtract(BigDecimal.ONE).toString();
+        	EmplyinsrateIDName emplyinsrateIDNameOld = new EmplyinsrateIDName();
+        	emplyinsrateIDNameOld.setYear(oldYear);
+            emplyinsrateIDNameList.add(emplyinsrateIDNameOld);
+            wkYear=oldYear;
+        }
+
+        return emplyinsrateIDNameList;
+
+	}
+
 	/**
 	 * 機能：YYYY/MMからYYYMMに変更
 	 *

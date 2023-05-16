@@ -1,18 +1,20 @@
 package com.softtech.service;
 
-import com.softtech.actionForm.EmplyinsrateInfoFormBean;
-import com.softtech.common.EmplyinsrateIDName;
-import com.softtech.entity.EmplyinsrateInfoEntity;
-import com.softtech.mappers.EmplyinsrateMapper;
-import com.softtech.util.DataUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.softtech.actionForm.EmplyinsrateInfoFormBean;
+import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.entity.EmplyinsrateInfoEntity;
+import com.softtech.mappers.EmplyinsrateMapper;
+import com.softtech.util.DataUtil;
+import com.softtech.util.DateUtil;
 
 /**
  * @program
@@ -22,7 +24,7 @@ import java.util.List;
  * @return:
  */
 @Service
-public class EmplyinsrateInfoServiceImpl implements EmplyinsrateInfoService {
+public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
     //IOCMapper
     @Autowired
     private EmplyinsrateMapper emplyinsrateMapper;
@@ -285,6 +287,16 @@ public class EmplyinsrateInfoServiceImpl implements EmplyinsrateInfoService {
         emplyinsrateIDNameList = emplyinsrateMapper.getYear();
 
         return emplyinsrateIDNameList;
+    }
+    /*
+     * 機能：指定数の過去年度リストを生成する
+	 *
+	 * @param 過去年度数
+	 * @return 過去年度リスト
+	 * @exception なし
+     */
+    public ArrayList<EmplyinsrateIDName> getOldYears(int oldYear){
+    	return (ArrayList<EmplyinsrateIDName>) DateUtil.getYears(oldYear);
     }
 }
 
