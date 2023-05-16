@@ -301,7 +301,7 @@ updateDate varchar(8) not null comment'更新日',
 baseSalaryID varchar(8) not null PRIMARY KEY comment'基本給ID',
 employeeID varchar(8) not null comment'社員ID'
 )comment'基本給_マスタ機能';
-
+ALTER TABLE m_basesalary ADD year varchar(4) NOT NULL comment'対象年度';
 
 drop table if exists m_welfarefee;
 create table m_welfarefee(
