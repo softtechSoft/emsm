@@ -18,7 +18,7 @@ import com.softtech.actionForm.SalarylistBean2;
 import com.softtech.common.SalaryInfoRecord;
 import com.softtech.entity.SalaryInfo;
 import com.softtech.service.SalaryInfoService;
-import com.softtech.service.SalarylistService;
+import com.softtech.service.SalaryListService;
 import com.softtech.util.DateUtil;
 import com.softtech.util.FileUtil;
 /**
@@ -32,7 +32,7 @@ import com.softtech.util.FileUtil;
 public class SalaryListController {
 
 	@Autowired
-	SalarylistService salarylistService;
+	SalaryListService salarylistService;
 	@Autowired
 	SalaryInfoService salaryInfoService;
 
@@ -82,10 +82,10 @@ public class SalaryListController {
 		 } else if(salarylistBean2.getDownloadFlg()==1){
 			     model.addAttribute("list", sl);
 		 // 画面の給料リスト中の社員IDを押す時。
-
-		 } else if(salarylistBean2.getDownloadFlg()==4) {
-			 model.addAttribute("list",sl);
-			 model.addAttribute("create","作成完了しました。");
+//
+//		 } else if(salarylistBean2.getDownloadFlg()==4) {
+//			 model.addAttribute("list",sl);
+//			 model.addAttribute("create","作成完了しました。");
 
 
 
@@ -114,7 +114,7 @@ public class SalaryListController {
 	@RequestMapping(value = "/autoCreate", method = RequestMethod.POST)
 	public String autoCreate(Model model) {
 		//給料自動作成
-		
+
 
 		//自動作成した内容を再表示
 		String month = DateUtil.getNowMonth();

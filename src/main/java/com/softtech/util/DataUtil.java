@@ -103,20 +103,6 @@ public class DataUtil {
 		return nextID;
 	}
 
-	public static String getNextMonth(String nowYear) {
-
-		String yearMonth=nowYear.substring(0,6);
-		String year=yearMonth.substring(0,4);
-		String nextMonth = Integer.toString(Integer.parseInt(yearMonth.substring(4,6))+1);
-
-		String newMonth=year + nextMonth;
-
-		return newMonth;
-
-
-
-	}
-
 
 
 

@@ -11,7 +11,14 @@ public interface SalarylistMapper {
 
 	List<SalaryInfo> getSalaryinfolist(String month);
 
-	//年度大値+1を取得
+	//年度最大値を取得
 	String getMaxMonth();
+
+	/**
+	 * @return
+	 */
+	String getBaseSalary(String employeeID,String year);
+
+	String getPayMonth(String month);
 
 }
