@@ -402,6 +402,23 @@ alter table m_eptype modify epTypeName varchar(5) NOT NULL COMMENT '社員タイ
 alter table m_department modify departmentID varchar(2) NOT NULL COMMENT '部門ID';
 alter table m_department modify departmentName varchar(5) NOT NULL COMMENT '部門名称';
 
+drop table if exists m_basesalary;
+create table m_basesalary(
+baseSalary int not null comment'基本給',
+year varchar(4) not null comment'対象年月',
+minusHour int not null comment'残業不足時間',
+plusHour int not null comment'残業時間',
+wkPeriodFrom int not null comment'稼働期間From',
+wkPeriodTo int not null comment'稼働期間To',
+overtimePay DECIMAL(7,1) not null comment'残業単価',
+insufficienttimePay DECIMAL(7,1) not null comment'控除単価',
+status int not null comment'利用ステータス',
+insertDate varchar(8) not null comment'作成日',
+updateDate varchar(8) not null comment'更新日',
+baseSalaryID varchar(8) not null PRIMARY KEY comment'基本給ID',
+employeeID varchar(8) not null comment'社員ID'
+)comment'基本給_マスタ機能';
+
 
 
 
