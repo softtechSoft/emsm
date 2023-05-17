@@ -1,3 +1,13 @@
+5/17
+ DF(DataFlow)
+ JSP ⇒　（Java）　Controller　⇒　Service　⇒　DAO（MyBatis）（DB更新）
+　　FormBeanの変数名は画面項目名と同じ
+
+
+ JSP ←　（Java）　Controller　←　Service　←　DAO（MyBatis）（DB更新）
+　　　　　　　　　　　　　　　　　　　　　EntityBeanの変数名はテーブル名と同じ
+
+
 5/11
 function toKeisan(){
 		//基本給取得
