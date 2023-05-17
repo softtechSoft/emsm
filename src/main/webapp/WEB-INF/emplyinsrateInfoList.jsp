@@ -85,13 +85,13 @@
                     <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
                 <td><c:out value="${emplyinsrateInfoList.emplyinsrateID}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.year}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.laborBurdenRate*1000}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.employerBurdenRate*1000}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.employmentInsuranceRate*1000}"/></td>
+                <td><c:out value="${emplyinsrateInfoList.laborBurdenRate}"/></td>
+                <td><c:out value="${emplyinsrateInfoList.employerBurdenRate}"/></td>
+                <td><c:out value="${emplyinsrateInfoList.employmentInsuranceRate}"/></td>
                 <td><c:out
-                        value="${emplyinsrateInfoList.industrialAccidentInsuranceRate*1000}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.laborInsuranceRate*1000}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.contributionRate*1000}"/></td>
+                        value="${emplyinsrateInfoList.industrialAccidentInsuranceRate}"/></td>
+                <td><c:out value="${emplyinsrateInfoList.laborInsuranceRate}"/></td>
+                <td><c:out value="${emplyinsrateInfoList.contributionRate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.status}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.insertDate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.updateDate}"/></td>
