@@ -6,7 +6,7 @@
 
  JSP ←　（Java）　Controller　←　Service　←　DAO（MyBatis）（DB更新）
 　　　　　　　　　　　　　　　　　　　　　EntityBeanの変数名はテーブル名と同じ
-
+test
 
 5/11
 function toKeisan(){
