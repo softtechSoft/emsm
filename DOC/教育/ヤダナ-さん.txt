@@ -1,3 +1,35 @@
+バリデーション用のアノテーションには以下のものがあります。
+
+アノテーション	説明
+@NotNull	nullでないことを検証する。
+@Null	nullであることを検証する。
+@NotEmpty	文字数または配列の要素数が 0 でないことを検証する。
+@NotBlank	文字列がnullでないかつ空文字でないことを検証する。
+@Size(min=, max= )	文字数または配列の要素数が範囲内であることを検証する。
+@Length(min=, max= )	文字数が範囲内であることを検証する。
+@Max()	整数が指定値以下であることを検証する。
+@Min()	整数が指定値以上であることを検証する。
+@Range(min=, max= )	整数が範囲内であることを検証する。
+@Positive	数値が正であることを検証する。
+@PositiveOrZero	数値が正か 0 であることを検証する。
+@Negative	数値が負であることを検証する
+@NegativeOrZero	数値が負か 0 であることを検証する。
+@DecimalMax	数値が指定値以下であることを検証する。
+@DecimalMin	数値が指定値以上であることを検証する。
+@Digits(integer= ,fraction= )	整数部（integer）と小数部（fraction）が指定した桁数以内であることを検証する。
+@AssertFalse	falseであることを検証する。
+@AssertTrue	trueであることを検証する。
+@Future	日付が未来であることを検証する。
+@FutureOrPresent	日付が未来であるか今日であるかを検証する。
+@Past	日付が過去であることを検証する。
+@PastOrPresent	日付が過去であるか今日であるかを検証する。
+@URL	文字列が正しい URL（RFC2396）であることを検証する。
+@Email	文字列が正しいメールアドレス（RFC2822）であることを検証する。
+@CreditCardNumber	文字列が正しいクレジットカード番号であることを検証する。
+@Pattern(regexp= )	文字列が正規表現にマッチすることを検証する。
+@Valid	ネストしたクラスのバリデーションを実行する。
+
+
 5/17
  DF(DataFlow)
  JSP ⇒　（Java）　Controller　⇒　Service　⇒　DAO（MyBatis）（DB更新）
