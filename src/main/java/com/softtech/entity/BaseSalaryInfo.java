@@ -6,17 +6,13 @@ public class BaseSalaryInfo {
 		//社員ID
 		private String employeeID;
 		//基本給
-		private int baseSalary;
+		private String baseSalary;
 		//対象年度
 		private String year;
-		//不足減単価(h)
-		private int minusHour;
-		//残業加単価(h)
-		private int plusHour;
 		//稼働期間From
-		private int wkPeriodFrom;
+		private String wkPeriodFrom;
 		//稼働期間To
-		private int wkPeriodTo;
+		private String wkPeriodTo;
 		//残業単価
 		private String overtimePay;
 		//控除単価
@@ -37,34 +33,31 @@ public class BaseSalaryInfo {
 		public void setEmployeeID(String employeeID) {
 			this.employeeID = employeeID;
 		}
-		public int getBaseSalary() {
+
+		public String getBaseSalary() {
 			return baseSalary;
 		}
-		public void setBaseSalary(int baseSalary) {
+		public void setBaseSalary(String baseSalary) {
 			this.baseSalary = baseSalary;
 		}
-		public int getMinusHour() {
-			return minusHour;
+		public String getYear() {
+			return year;
 		}
-		public void setMinusHour(int minusHour) {
-			this.minusHour = minusHour;
+		public void setYear(String year) {
+			this.year = year;
 		}
-		public int getPlusHour() {
-			return plusHour;
-		}
-		public void setPlusHour(int plusHour) {
-			this.plusHour = plusHour;
-		}
-		public int getWkPeriodFrom() {
+
+		public String getWkPeriodFrom() {
 			return wkPeriodFrom;
 		}
-		public void setWkPeriodFrom(int wkPeriodFrom) {
+		public void setWkPeriodFrom(String wkPeriodFrom) {
 			this.wkPeriodFrom = wkPeriodFrom;
 		}
-		public int getWkPeriodTo() {
+
+		public String getWkPeriodTo() {
 			return wkPeriodTo;
 		}
-		public void setWkPeriodTo(int wkPeriodTo) {
+		public void setWkPeriodTo(String wkPeriodTo) {
 			this.wkPeriodTo = wkPeriodTo;
 		}
 		public int getStatus() {
@@ -107,10 +100,5 @@ public class BaseSalaryInfo {
 	public void setInsufficienttimePay(String insufficienttimePay) {
 		this.insufficienttimePay = insufficienttimePay;
 	}
-	public String getYear() {
-		return year;
-	}
-	public void setYear(String year) {
-		this.year = year;
-	}
+
 }

@@ -15,10 +15,6 @@ public class BaseSalaryInfoBean {
 	private String baseSalary;
 	//対象年度
 	private String year;
-	//残業不足時間
-	private String minusHour;
-	//残業時間
-	private String plusHour;
 	//稼働期間From
 	private String wkPeriodFrom;
 	//稼働期間To
@@ -53,6 +49,9 @@ public class BaseSalaryInfoBean {
 	public String getBaseSalary() {
 		return baseSalary;
 	}
+	/**
+	 * @return year
+	 */
 	public String getYear() {
 		return year;
 	}
@@ -66,29 +65,9 @@ public class BaseSalaryInfoBean {
 		this.baseSalary = baseSalary;
 	}
 	/**
-	 * @return minusHour
-	 */
-	public String getMinusHour() {
-		return minusHour;
-	}
-	/**
-	 * @param minusHour セットする minusHour
-	 */
-	public void setMinusHour(String minusHour) {
-		this.minusHour = minusHour;
-	}
-	/**
-	 * @return plusHour
-	 */
-	public String getPlusHour() {
-		return plusHour;
-	}
-	/**
-	 * @param plusHour セットする plusHour
-	 */
-	public void setPlusHour(String plusHour) {
-		this.plusHour = plusHour;
-	}
+
+
+
 	/**
 	 * @return wkPeriodFrom
 	 */

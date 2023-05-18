@@ -10,28 +10,25 @@
         (baseSalaryID,
          employeeID,
          baseSalary,
-         minusHour,
-         plusHour,
+         year,
          wkPeriodFrom,
          wkPeriodTo,
-         status,
-         insertDate,
-         updateDate,
          overtimePay,
          insufficienttimePay,
-         year)
+         status,
+         insertDate,
+         updateDate )
         values (#{baseSalaryID},
                 #{employeeID},
                 #{baseSalary},
+                #{year},
                 #{wkPeriodFrom},
                 #{wkPeriodTo},
-                #{minusHour},
-                #{plusHour},
+                 #{overtimePay},
+                #{insufficienttimePay},
                 #{status},
                 date_format(now(), '%Y%m%d'),
-                date_format(now(), '%Y%m%d'),
-                #{baseSalary} / #{wkPeriodTo} * #{plusHour},
-                #{baseSalary} / #{wkPeriodFrom} * #{minusHour},#{year})
+                date_format(now(), '%Y%m%d') )
 
 
     </select>
@@ -57,13 +54,12 @@
         set employeeID=#{employeeID},
             baseSalary=#{baseSalary},
             year=#{year},
-            minusHour=#{minusHour},
-            plusHour=#{plusHour},
             wkPeriodFrom=#{wkPeriodFrom},
             wkPeriodTo=#{wkPeriodTo},
-            status=#{status},
-            overtimePay=#{overtimePay},
+             overtimePay=#{overtimePay},
             insufficienttimePay=#{insufficienttimePay},
+            status=#{status},
+            insertDate=date_format(now(), '%Y%m%d'),
             updateDate=date_format(now(), '%Y%m%d')
         where baseSalaryID = #{baseSalaryID}
     </select>

@@ -64,15 +64,8 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 
 		//対象年度
 		String year = baseSalaryInfoBean.getYear();
-		baseSalaryInfoEntity.setBaseSalary(year);
+		baseSalaryInfoEntity.setYear(year);
 
-		//残業不足時間
-		String minusHour = baseSalaryInfoBean.getMinusHour();
-		baseSalaryInfoEntity.setMinusHour(minusHour);
-
-		//残業時間
-		String plusHour= baseSalaryInfoBean.getPlusHour();
-		baseSalaryInfoEntity.setPlusHour(plusHour);
 
 		//稼働期間From
 		String wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
@@ -95,8 +88,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		//基本給ID
 		String baseSalaryID = baseSalaryInfoBean.getBaseSalaryID();
 		baseSalaryInfoEntity.setBaseSalaryID(baseSalaryID);
-
-		//社員ID
+        //社員ID
 		String employeeID = baseSalaryInfoBean.getEmployeeID();
 		baseSalaryInfoEntity.setEmployeeID(employeeID);
 
@@ -139,15 +131,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 
 		//対象年度
 				String year = baseSalaryInfoBean.getYear();
-				baseSalaryInfoEntity.setBaseSalary(year);
-
-		//残業不足時間
-		String minusHour = baseSalaryInfoBean.getMinusHour();
-		baseSalaryInfoEntity.setMinusHour(minusHour);
-
-		//残業時間
-		String plusHour= baseSalaryInfoBean.getPlusHour();
-		baseSalaryInfoEntity.setPlusHour(plusHour);
+				baseSalaryInfoEntity.setYear(year);
 
 		//稼働期間From
 		String wkPeriodFrom = baseSalaryInfoBean.getWkPeriodFrom();
@@ -161,6 +145,11 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		if (wkPeriodTo != null && wkPeriodTo != "" && wkPeriodTo !="0") {
 			baseSalaryInfoEntity.setOvertimePay(baseSalaryInfoBean.getOvertimePay());
 		}
+		//控除単価
+		if (wkPeriodFrom != null && wkPeriodFrom != "" && wkPeriodFrom !="0") {
+			baseSalaryInfoEntity.setInsufficienttimePay(baseSalaryInfoBean.getInsufficienttimePay());
+		}
+
 
 		//利用ステータス
 		int status = baseSalaryInfoBean.getStatus();
@@ -187,8 +176,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 
 		return baseSalaryInfoEntity;
 	}
-
-	/**
+/**
 	 * @Description: baseSalaryIDの最大値+1を取得,登録時用のPK
 	 * @author 孫曄
 	 * @date 2022-05-13
@@ -233,8 +221,6 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 			baseSalaryInfoFormBean.setBaseSalaryID(baseSalaryInfoEntity.getBaseSalaryID());
 			baseSalaryInfoFormBean.setBaseSalary(baseSalaryInfoEntity.getBaseSalary());
 			baseSalaryInfoFormBean.setYear(baseSalaryInfoEntity.getYear());
-			baseSalaryInfoFormBean.setMinusHour(baseSalaryInfoEntity.getMinusHour());
-			baseSalaryInfoFormBean.setPlusHour(baseSalaryInfoEntity.getPlusHour());
 			baseSalaryInfoFormBean.setWkPeriodFrom(baseSalaryInfoEntity.getWkPeriodFrom());
 			baseSalaryInfoFormBean.setWkPeriodTo(baseSalaryInfoEntity.getWkPeriodTo());
 			baseSalaryInfoFormBean.setOvertimePay(baseSalaryInfoEntity.getOvertimePay());

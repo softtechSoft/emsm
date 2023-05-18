@@ -20,14 +20,7 @@ public class BaseSalaryInfoFormBean {
 	@NotEmpty(message = "対象年度を入力してください。")
 	@Pattern(message = "対象年度のみを入力してください。", regexp = "^[0-9]*$")
 	private String year;
-	//残業不足時間
-	@NotEmpty(message = "残業不足時間を入力してください。")
-	@Pattern(message = "残業不足時間に数値のみを入力してください。", regexp = "^[0-9]*$")
-	private String minusHour;
-	//残業時間
-	@NotEmpty(message = "残業時間を入力してください。")
-	@Pattern(message = "残業時間に数値のみを入力してください。", regexp = "^[0-9]*$")
-	private String plusHour;
+
 	//稼働期間From
 	@NotEmpty(message = "稼働期間Fromを入力してください。")
 	@Pattern(message = "稼働期間Fromに数値のみを入力してください。", regexp = "^[0-9]*$")
@@ -71,7 +64,6 @@ public class BaseSalaryInfoFormBean {
 		this.baseSalary = baseSalary;
 	}
 
-
 	public String getYear() {
 		return year;
 	}
@@ -80,27 +72,10 @@ public class BaseSalaryInfoFormBean {
 		this.year = year;
 	}
 
-	public String getMinusHour() {
-		return minusHour;
-	}
-
-	public void setMinusHour(String minusHour) {
-		this.minusHour = minusHour;
-	}
-
-	public String getPlusHour() {
-		return plusHour;
-	}
-
-	public void setPlusHour(String plusHour) {
-		this.plusHour = plusHour;
-	}
-
 	public String getWkPeriodFrom() {
 		return wkPeriodFrom;
 	}
-
-	public void setWkPeriodFrom(String wkPeriodFrom) {
+   public void setWkPeriodFrom(String wkPeriodFrom) {
 		this.wkPeriodFrom = wkPeriodFrom;
 	}
 
@@ -111,6 +86,7 @@ public class BaseSalaryInfoFormBean {
 	public void setWkPeriodTo(String wkPeriodTo) {
 		this.wkPeriodTo = wkPeriodTo;
 	}
+
 
 	public int getStatus() {
 		return status;
@@ -159,6 +135,7 @@ public class BaseSalaryInfoFormBean {
 	public void setEmployeeIDNameList(ArrayList<EmployeeIDName> employeeIDNameList) {
 		this.employeeIDNameList = employeeIDNameList;
 	}
+
 
 	public String getOvertimePay() {
 		return overtimePay;

@@ -293,8 +293,8 @@ function chageMonth(){
 	<!--input入力できるかどうか、判断用データ -->
 	<input type="hidden" id="gamenMode" name="gamenMode" value="${salaryInfoBean.gamenMode}"/>
 	<!--エラーメッセージ-->
-	<p style="color: red;">
-    	<c:forEach  items="${errors}" var="error">
+ 	<p style="color: red;">
+    	<c:forEach  items="${errors}" var="error">　　　　　　　
 			<spring:message message="${error}" /><br/>
 		</c:forEach>
 	</p>
