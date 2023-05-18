@@ -455,4 +455,3 @@ create table m_taxetc (
 )COMMENT='マスタ_諸税(控除）';
 
 
-
