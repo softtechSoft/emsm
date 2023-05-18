@@ -375,7 +375,7 @@ updateDate varchar(8) NOT NULL COMMENT '更新日'
 drop table if exists m_department;
 create table m_department(
     departmentID varchar(2) not null primary key comment'部門ID' ,
-    departmentName varchar(5) not null comment '部門名称',
+    departmentName varchar(5) not null comment '部門名称'
 ) comment '部門_マスタ機能';
 Insert into m_department values ('1','開発一部') , ('2','開発二部') , ('3','管理部');
 
@@ -418,5 +418,41 @@ updateDate varchar(8) not null comment'更新日',
 baseSalaryID varchar(8) not null PRIMARY KEY comment'基本給ID',
 employeeID varchar(8) not null comment'社員ID'
 )comment'基本給_マスタ機能';
+
+drop table if exists m_welfarebabyrate;
+create table m_welfarebabyrate(
+    rateID int not null primary key comment'徴収ID',
+    year varchar(4) not null comment'対処年度',
+    area varchar(8) not null comment'対処エリア',
+    rate decimal(6,5) NOT NULL COMMENT '徴収率',
+    status int NOT NULL COMMENT '利用ステータス',
+    insertDate varchar(8) NOT NULL COMMENT '作成日',
+    updateDate varchar(8) NOT NULL COMMENT '更新日'
+    )comment 'マスタ＿厚生子育徴収率';
+
+drop table if exists m_taxetc;
+create table m_taxetc (
+  employeeID varchar(6) NOT NULL primary key COMMENT '社員ID',
+  year varchar(4) NOT NULL COMMENT '対象年度',
+  withholdingTax int NOT NULL COMMENT '源泉控除',
+  municipalTax1 int NOT NULL COMMENT '1月住民税控除',
+  municipalTax2 int NOT NULL COMMENT '2月住民税控除',
+  municipalTax3 int NOT NULL COMMENT '3月住民税控除',
+  municipalTax4 int NOT NULL COMMENT '4月住民税控除',
+  municipalTax5 int NOT NULL COMMENT '5月住民税控除',
+  municipalTax6 int NOT NULL COMMENT '6月住民税控除',
+  municipalTax7 int NOT NULL COMMENT '7月住民税控除',
+  municipalTax8 int NOT NULL COMMENT '8月住民税控除',
+  municipalTax9 int NOT NULL COMMENT '9月住民税控除',
+  municipalTax10 int NOT NULL COMMENT '10月住民税控除',
+  municipalTax11 int NOT NULL COMMENT '11月住民税控除',
+  municipalTax12 int NOT NULL COMMENT '12月住民税控除',
+  rental int NOT NULL COMMENT '社宅家賃控除',
+  rentalMgmtFee int NOT NULL COMMENT '社宅管理費控除',
+  status varchar(1) NOT NULL COMMENT '控除ステータス',
+  insertDate varchar(8) NOT NULL COMMENT '作成日',
+  updateDate varchar(8) NOT NULL COMMENT '更新日'
+)COMMENT='マスタ_諸税(控除）';
+
 
 
