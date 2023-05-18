@@ -121,8 +121,12 @@
         <tr style="background-color:#dcfeeb">
             <td></td>
             <td style="text-align: right;">
-                <input type="button" id="Registration" name="Registration" value="登録"
-                       onclick="doRegist()"/></td>
+                 <input type="button" id="Registration" name="Registration" value="登録"
+                       onclick="doRegist()"/>
+
+            </td>
+
+
         </tr>
 
     </table>

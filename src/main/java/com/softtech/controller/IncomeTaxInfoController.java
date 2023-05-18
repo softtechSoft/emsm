@@ -1,10 +1,12 @@
 package com.softtech.controller;
 
-import com.softtech.actionForm.EmployeeActionForm;
-import com.softtech.actionForm.IncomeTaxInfoFormBean;
-import com.softtech.common.IncomeTaxIDName;
-import com.softtech.entity.IncomeTaxInfoEntity;
-import com.softtech.service.IncomTaxInfoService;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import com.softtech.actionForm.EmployeeActionForm;
+import com.softtech.actionForm.IncomeTaxInfoFormBean;
+import com.softtech.common.IncomeTaxIDName;
+import com.softtech.entity.IncomeTaxInfoEntity;
+import com.softtech.service.IncomTaxInfoService;
 
 /**
  * @program
@@ -134,7 +136,7 @@ public class IncomeTaxInfoController {
 
 
         //更新画面の年度を表示する用リスト候補生成
-        List<IncomeTaxIDName> year = incomTaxInfoService.getYear();
+        List<IncomeTaxIDName> year = incomTaxInfoService.getYear(); 
         model.addAttribute("year", year);
 
         return "incomeTaxInfoEdit";
