@@ -1,6 +1,5 @@
 package com.softtech.service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -122,14 +121,14 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
 
         //雇用保険労働者負担料率‰
         String laborBurdenRate = emplyinsrateInfoFormBean.getLaborBurdenRate();
-        BigDecimal thousand = new BigDecimal(1000);
-        String laborBurdenRate1 = new BigDecimal(laborBurdenRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setLaborBurdenRate(laborBurdenRate1);
+        //BigDecimal thousand = new BigDecimal(1000);
+       // String laborBurdenRate1 = new BigDecimal(laborBurdenRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setLaborBurdenRate(laborBurdenRate);
 
         //雇用保険事業主負担料率‰
         String employerBurdenRate = emplyinsrateInfoFormBean.getEmployerBurdenRate();
-        String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setEmployerBurdenRate(employerBurdenRate1);
+        //String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setEmployerBurdenRate(employerBurdenRate);
 
         //雇用保険料率‰
         //String employmentInsuranceRate = emplyinsrateInfoFormBean.getEmploymentInsuranceRate();
@@ -140,9 +139,9 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
         //労災保険料率(全額事業主)‰
         String industrialAccidentInsuranceRate =
                 emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate();
-        String industrialAccidentInsuranceRate1 =
-                new BigDecimal(industrialAccidentInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(industrialAccidentInsuranceRate1);
+        //String industrialAccidentInsuranceRate1 =
+               // new BigDecimal(industrialAccidentInsuranceRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(industrialAccidentInsuranceRate);
 
         //労働保険料率‰
         //String laborInsuranceRate = emplyinsrateInfoFormBean.getLaborInsuranceRate();
@@ -151,8 +150,8 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
 
         //一般拠出金料率(全額事業主)‰
         String contributionRate = emplyinsrateInfoFormBean.getContributionRate();
-        String contributionRate1 = new BigDecimal(contributionRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setContributionRate(contributionRate1);
+       // String contributionRate1 = new BigDecimal(contributionRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setContributionRate(contributionRate);
 
         //利用ステータス
         String status = emplyinsrateInfoFormBean.getStatus();
@@ -204,14 +203,14 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
 
         //雇用保険労働者負担料率‰
         String laborBurdenRate = emplyinsrateInfoFormBean.getLaborBurdenRate();
-        BigDecimal thousand = new BigDecimal(1000);
-        String laborBurdenRate1 = new BigDecimal(laborBurdenRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setLaborBurdenRate(laborBurdenRate1);
+        //BigDecimal thousand = new BigDecimal(1000);
+        //String laborBurdenRate1 = new BigDecimal(laborBurdenRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setLaborBurdenRate(laborBurdenRate);
 
         //雇用保険事業主負担料率‰
         String employerBurdenRate = emplyinsrateInfoFormBean.getEmployerBurdenRate();
-        String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setEmployerBurdenRate(employerBurdenRate1);
+       // String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setEmployerBurdenRate(employerBurdenRate);
 
         //雇用保険料率‰
         //String employmentInsuranceRate = emplyinsrateInfoFormBean.getEmploymentInsuranceRate();
@@ -222,9 +221,9 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
         //労災保険料率(全額事業主)‰
         String industrialAccidentInsuranceRate =
                 emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate();
-        String industrialAccidentInsuranceRate1 =
-                new BigDecimal(industrialAccidentInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(industrialAccidentInsuranceRate1);
+       // String industrialAccidentInsuranceRate1 =
+           //     new BigDecimal(industrialAccidentInsuranceRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(industrialAccidentInsuranceRate);
 
         //労働保険料率‰
         //String laborInsuranceRate = emplyinsrateInfoFormBean.getLaborInsuranceRate();
@@ -233,8 +232,8 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
 
         //一般拠出金料率(全額事業主)‰
         String contributionRate = emplyinsrateInfoFormBean.getContributionRate();
-        String contributionRate1 = new BigDecimal(contributionRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setContributionRate(contributionRate1);
+       // String contributionRate1 = new BigDecimal(contributionRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setContributionRate(contributionRate);
 
         //利用ステータス
         String status = emplyinsrateInfoFormBean.getStatus();

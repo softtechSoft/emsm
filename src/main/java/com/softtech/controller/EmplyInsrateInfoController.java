@@ -52,7 +52,7 @@ public class EmplyInsrateInfoController {
 
         EmplyinsrateInfoFormBean emplyinsrateInfoFormBean = new EmplyinsrateInfoFormBean();
         //年度を任意設定
-        emplyinsrateInfoFormBean.setYear("2020");
+       // emplyinsrateInfoFormBean.setYear("2020");
         model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean);
 
         //枠用の年度を生成
@@ -169,7 +169,7 @@ public class EmplyInsrateInfoController {
             model.addAttribute("year", year);
 
             //年度を任意設定
-            emplyinsrateInfoFormBean.setYear("2020");
+            //emplyinsrateInfoFormBean.setYear("2020");
 
             return "emplyinsrateInfoEdit";
         }
@@ -188,7 +188,7 @@ public class EmplyInsrateInfoController {
         model.addAttribute("year", year);
 
         //年度を任意設定
-        emplyinsrateInfoFormBean.setYear("2020");
+        //emplyinsrateInfoFormBean.setYear("");
         return "emplyinsrateInfoEdit";
     }
 

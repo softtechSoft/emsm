@@ -53,21 +53,21 @@
 
             <td width="200px">雇用保険労働者負担料率‰</td>
             <td width="200px"><input type="text" id="laborBurdenRate" name="laborBurdenRate"
-                                     value="${emplyinsrateInfoFormBean.laborBurdenRate*1000}"/></td>
+                                     value="${emplyinsrateInfoFormBean.laborBurdenRate}"/></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
 
             <td width="200px">雇用保険事業主負担料率‰</td>
             <td width="200px"><input type="text" id="employerBurdenRate" name="employerBurdenRate"
-                                     value="${emplyinsrateInfoFormBean.employerBurdenRate*1000}"/>
+                                     value="${emplyinsrateInfoFormBean.employerBurdenRate}"/>
             </td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">雇用保険料率‰</td>
             <td width="200px"><c:out
-                    value="${emplyinsrateInfoFormBean.employmentInsuranceRate*1000}"/></td>
+                    value="${emplyinsrateInfoFormBean.employmentInsuranceRate}"/></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
@@ -75,21 +75,21 @@
             <td width="200px">労災保険料率(全額事業主)‰</td>
             <td width="200px"><input type="text" id="industrialAccidentInsuranceRate"
                                      name="industrialAccidentInsuranceRate"
-                                     value="${emplyinsrateInfoFormBean.industrialAccidentInsuranceRate*1000}"/>
+                                     value="${emplyinsrateInfoFormBean.industrialAccidentInsuranceRate}"/>
             </td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">労働保険料率‰</td>
             <td width="200px"><c:out
-                    value="${emplyinsrateInfoFormBean.laborInsuranceRate*1000}"/></td>
+                    value="${emplyinsrateInfoFormBean.laborInsuranceRate}"/></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
 
             <td width="200px">一般拠出金料率(全額事業主)‰</td>
             <td width="200px"><input type="text" id="contributionRate" name="contributionRate"
-                                     value="${emplyinsrateInfoFormBean.contributionRate*1000}"/>
+                                     value="${emplyinsrateInfoFormBean.contributionRate}"/>
             </td>
         </tr>
 
