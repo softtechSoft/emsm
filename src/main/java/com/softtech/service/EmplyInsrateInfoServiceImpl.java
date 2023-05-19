@@ -115,6 +115,7 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
     private EmplyinsrateInfoEntity transforBeanToEntityByUpdate(EmplyinsrateInfoFormBean emplyinsrateInfoFormBean) {
         EmplyinsrateInfoEntity emplyinsrateInfoEntity = new EmplyinsrateInfoEntity();
 
+        emplyinsrateInfoEntity.setEmplyinsrateID(emplyinsrateInfoFormBean.getEmplyinsrateID());
         //年度
         String year = emplyinsrateInfoFormBean.getYear();
         emplyinsrateInfoEntity.setYear(year);

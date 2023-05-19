@@ -53,8 +53,6 @@
             <th width="200">対象年度</th>
             <th width="100">稼働期間From</th>
             <th width="100">稼働期間To</th>
-            <th width="100">不足減単価(h)</th>
-            <th width="100">残業加単価(h)</th>
             <th width="150">残業単価</th>
             <th width="150">控除単価</th>
             <th width="100">利用ステータス</th>
@@ -71,8 +69,6 @@
                 <td><c:out value="${baseSalaryInfoList.year}"/></td>
                 <td><c:out value="${baseSalaryInfoList.wkPeriodFrom}"/></td>
                 <td><c:out value="${baseSalaryInfoList.wkPeriodTo}"/></td>
-                <td><c:out value="${baseSalaryInfoList.minusHour}"/></td>
-                <td><c:out value="${baseSalaryInfoList.plusHour}"/></td>
                 <td><c:out value="${baseSalaryInfoList.overtimePay}"/></td>
                 <td><c:out value="${baseSalaryInfoList.insufficienttimePay}"/></td>
                 <td><c:out value="${baseSalaryInfoList.status}"/></td>

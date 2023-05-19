@@ -141,12 +141,14 @@ public class EmplyInsrateInfoController {
             //更新
             emplyinsrateInfoFormBean2.setInsertFlg(insertFlg);
             model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean2);
+
         }
 
 
         //更新画面の年度を表示する用リスト候補生成
-        List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
+        	List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
         model.addAttribute("year", year);
+
 
         return "emplyinsrateInfoEdit";
     }
@@ -169,7 +171,7 @@ public class EmplyInsrateInfoController {
             model.addAttribute("year", year);
 
             //年度を任意設定
-            //emplyinsrateInfoFormBean.setYear("2020");
+            emplyinsrateInfoFormBean.setYear("2020");
 
             return "emplyinsrateInfoEdit";
         }
@@ -177,12 +179,17 @@ public class EmplyInsrateInfoController {
         String insertFlg = emplyinsrateInfoFormBean.getInsertFlg();
         //新規の場合
         if ("0".equals(insertFlg)) {
+        	//画面年度を条件で、てーぶるを、検索、既に存在する場合、処理中止.
+
+			/*EmplyinsrateInfoFormBean emplyinsrateInfoFormBean1 = new EmplyinsrateInfoFormBean();
+			model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean1);
+			emplyinsrateInfoFormBean1.setInsertFlg(insertFlg);*/
+
             emplyinsrateInfoService.insertEmplyinsrateInfo(emplyinsrateInfoFormBean);
         } else {
             //DBに更新入力
             emplyinsrateInfoService.updateEmplyinsrateInfo(emplyinsrateInfoFormBean);
         }
-
         //DBから年度リスト生成
         List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
         model.addAttribute("year", year);

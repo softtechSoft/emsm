@@ -44,24 +44,21 @@
 
 </script>
 </head>
+
 <body>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoEdit" >
 				<h1>基本給情報更新</h1>
 		<p style="color: red;">
-			<form:errors path="baseSalaryID" />
-			<form:errors path="baseSalary" />
-			<form:errors path="employeeID" />
-			<form:errors path="year" />
-			<form:errors path="wkPeriodFrom" />
-			<form:errors path="wkPeriodTo" />
-			<form:errors path="minusHour" />
-			<form:errors path="plusHour" />
-			<form:errors path="status" />
+        <!--エラーメッセージ-->
+    	<c:forEach  items="${errors}" var="error">
+			<spring:message message="${error}" /><br/>
+		</c:forEach>
 		</p>
 
 		<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoBean.baseSalaryID}"/>
 		<!--新規フラグ　０　新規　１　更新-->
 		<input type="hidden" id="insertFlg" name="insertFlg" value="${baseSalaryInfoBean.insertFlg}"/>
+
 
 		<table  border="1">
 			<tr style="background-color:#dcfeeb">
@@ -88,22 +85,12 @@
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			 <td width="200px">対象年度</td>
-				<td width="200px"><input type="text" id="year" name="year"
+				<td width="200px">
+				<input type="text" id="year" name="year"
 						value="${baseSalaryInfoBean.year}" /></td>
 			</tr>
 
-			<tr style="background-color:#dcfeeb">
-				<td width="200px">残業不足時間</td>
-				<td width="200px"><input type="text" id="minusHour" name="minusHour"
-									value="${baseSalaryInfoBean.minusHour}" /></td>
 
-			</tr>
-				<tr style="background-color:#dcfeeb">
-				<td width="200px">残業時間</td>
-				<td width="200px"><input type="text" id="plusHour" name="plusHour"
-									value="${baseSalaryInfoBean.plusHour}" /></td>
-
-			</tr>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">稼働時間From</td>
@@ -122,9 +109,9 @@
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">残業単価</td>
-				<td>
+				<td width="200px">
 				 <input type="text" id="overtimePay" name="overtimePay"
-									value="${baseSalaryInfoBean.baseSalary/baseSalaryInfoBean.wkPeriodTo}" />
+									value="${baseSalaryInfoList.overtimePay}" />
 
 				</td>
 			</tr>
@@ -133,7 +120,7 @@
 				<td width="200px">控除単価</td>
 				<td>
 				<input type ="text" id ="insufficienttimePay" name = "insufficienttimePay"
-				                    value="${baseSalaryInfoBean.insufficienttimePay}"/>
+				                    value="${baseSalaryInfoList.insufficienttimePay}"/>
 				</td>
 			</tr>
 

@@ -1,7 +1,6 @@
 package com.softtech.controller;
 
-
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -155,13 +155,17 @@ public class BaseSalaryControl {
 
 		//必須チェック
 		if (result.hasErrors()) {
+			 // エラーチェック用リスト
+			List<FieldError> errorlst = new ArrayList<FieldError>();
+
+			//エラーメッセージ。
+			errorlst.addAll(result.getFieldErrors());
+			//エラーメッセージ
+			model.addAttribute("errors", errorlst);
+			model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
 			//社員IDリスト候補生成
-			List<EmployeeIDName> employeeList = loginService.getEmployeeID();
+			List<EmployeeIDName> employeeList = loginService.getEmployeeList();
 			model.addAttribute("employeeList",employeeList);
-
-			//社員項目IDを任意設定
-			baseSalaryInfoBean.setEmployeeID("1");
-
 			return "baseSalaryInfoEdit";
 		}
 
