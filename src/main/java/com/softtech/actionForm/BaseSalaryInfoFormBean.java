@@ -9,8 +9,8 @@ import javax.validation.constraints.Pattern;
 import com.softtech.common.EmployeeIDName;
 
 public class BaseSalaryInfoFormBean {
-	//基本給ID
-	@NotEmpty(message = "基本給IDを入力してください。")
+	//社員ID
+	@NotEmpty(message = "社員IDを入力してください。")
 	private String employeeID;
 	//基本給
 	@NotEmpty(message = "基本給を入力してください。")

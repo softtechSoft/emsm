@@ -44,31 +44,21 @@
 
 </script>
 </head>
+
 <body>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoEdit" >
 				<h1>基本給情報更新</h1>
 		<p style="color: red;">
-			<form:errors path="baseSalaryID" />
-			<form:errors path="baseSalary" />
-			<form:errors path="employeeID" />
-			<form:errors path="year" />
-			<form:errors path="wkPeriodFrom" />
-			<form:errors path="wkPeriodTo" />
-			<form:errors path="overtimePay" />
-			<form:errors path="insufficienttimePay" />
-			<form:errors path="status" />
+        <!--エラーメッセージ-->
+    	<c:forEach  items="${errors}" var="error">
+			<spring:message message="${error}" /><br/>
+		</c:forEach>
 		</p>
 
 		<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoBean.baseSalaryID}"/>
 		<!--新規フラグ　０　新規　１　更新-->
 		<input type="hidden" id="insertFlg" name="insertFlg" value="${baseSalaryInfoBean.insertFlg}"/>
 
-		<!--エラーメッセージ-->
- 		<p style="color: red;">
-    	<c:forEach  items="${errors}" var="error">　　　　　　　
-			<spring:message message="${error}" /><br/>
-		</c:forEach>
-		</p>
 
 		<table  border="1">
 			<tr style="background-color:#dcfeeb">

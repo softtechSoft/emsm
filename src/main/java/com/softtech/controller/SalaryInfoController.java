@@ -102,7 +102,7 @@ public class SalaryInfoController {
 
 		//登録ボタンを押す
 		}else if("2".equals(salaryInfoBean.getMake())) {
-			// 数値に変更
+			// 数値に変更i
 			salaryInfoService.deleteComma(salaryInfoBean);
 			// 必須チェック
 			if (result.hasErrors()) {
