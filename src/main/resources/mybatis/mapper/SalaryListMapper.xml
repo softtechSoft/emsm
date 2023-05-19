@@ -67,7 +67,7 @@
 	From m_incometax where employeeID=#{employeeID} AND year=#{year}
 </select>
 
-<select id="getDate" parameterType="String" resultType="com.softtech.entity.SalaryInfo">
+<select id="getDate" parameterType="String" resultType="com.softtech.entity.SalaryInfoEntity">
 	SELECT insertDate , updateDate
 	From salaryInfo
 </select>

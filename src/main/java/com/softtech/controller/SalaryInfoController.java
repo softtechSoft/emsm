@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.WelfareBean;
 import com.softtech.common.SalaryInfoRecord;
-import com.softtech.entity.SalaryInfo;
+import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.service.SalaryInfoService;
 import com.softtech.service.WelfareListService;
 import com.softtech.util.DateUtil;
@@ -56,7 +56,7 @@ public class SalaryInfoController {
 			//社員ID
 			em.setEmployeeID(salaryInfoBean.getEmployeeID());
 			// DBから次月給料情報を取得
-			SalaryInfo salaryInfoDB= salaryInfoService.querySalaryInfo(em);
+			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 
 			//次月のデータまだ存在していない場合、給料新規作成
 			if(null == salaryInfoDB) {
@@ -102,7 +102,7 @@ public class SalaryInfoController {
 
 		//登録ボタンを押す
 		}else if("2".equals(salaryInfoBean.getMake())) {
-			// 数値に変更i
+			// 数値に変更
 			salaryInfoService.deleteComma(salaryInfoBean);
 			// 必須チェック
 			if (result.hasErrors()) {
@@ -135,7 +135,7 @@ public class SalaryInfoController {
 			//社員ID
 			em.setEmployeeID(salaryInfoBean.getEmployeeID());
 			// DBから次月給料情報を取得
-			SalaryInfo salaryInfoDB= salaryInfoService.querySalaryInfo(em);
+			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 
 
 			//給料新規作成処理

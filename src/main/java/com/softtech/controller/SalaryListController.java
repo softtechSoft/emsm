@@ -1,5 +1,6 @@
 package com.softtech.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.SalarylistBean2;
 import com.softtech.common.SalaryInfoRecord;
-import com.softtech.entity.SalaryInfo;
+import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.service.SalaryInfoService;
 import com.softtech.service.SalaryListService;
 import com.softtech.util.DateUtil;
@@ -47,7 +48,7 @@ public class SalaryListController {
 		String month = DateUtil.getNowMonth();
 		model.addAttribute("month",month);
 		// DBから給料情報を取得
-		List<SalaryInfo> sl= salarylistService.querySalarylist(month);
+		List<SalaryInfoEntity> sl= salarylistService.querySalarylist(month);
 		model.addAttribute("list",sl);
 		return "salarylist";
 	}
@@ -66,7 +67,7 @@ public class SalaryListController {
 				 }
         model.addAttribute("month",salarylistBean2.getMonth());
 		// 入力した年月を持っち、DBから給料情報を取得
-	     List<SalaryInfo> sl = salarylistService.querySalarylist(salarylistBean2.getMonth());
+	     List<SalaryInfoEntity> sl = salarylistService.querySalarylist(salarylistBean2.getMonth());
 
 		// データダウンロード場合
 		if(salarylistBean2.getDownloadFlg()==2){
@@ -96,7 +97,7 @@ public class SalaryListController {
 			//対象年月と対象年月YYYY/MM→yyyymmに変換
 			em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
 			// DBから社員IDの対象年月の給料情報を取得
-			SalaryInfo salaryInfoDB= salaryInfoService.querySalaryInfo(em);
+			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
 			// 初期モードに設定
 			salaryInfoBean.setGamenMode("0");
@@ -110,23 +111,46 @@ public class SalaryListController {
 	/**
 	 *  一括作成
 	 * @param  モデル
+	 * @throws ParseException
 	 */
+//	@Autowired
+//	LoginService loginService;
 	@RequestMapping(value = "/autoCreate", method = RequestMethod.POST)
-	public String autoCreate(Model model) {
+	public String autoCreate(Model model) throws ParseException {
 		//給料自動作成
+
+		boolean rtn=salarylistService.autoCreate();
+		model.addAttribute(salarylistService);
+
+//		try {
+//			boolean rtn = salarylistService.autoCreate();
+//
+//		} catch (ParseException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//		}
+
+
 
 
 		//自動作成した内容を再表示
 		String month = DateUtil.getNowMonth();
 		model.addAttribute("month",month);
 		// DBから給料情報を取得
-		List<SalaryInfo> sl= new ArrayList<SalaryInfo>();
-		SalaryInfo kara = new SalaryInfo();
+		List<SalaryInfoEntity> sl= new ArrayList<SalaryInfoEntity>();
+		SalaryInfoEntity kara = new SalaryInfoEntity();
 		sl.add(kara);
 		model.addAttribute("list",sl);
 
+
 		return "salarylist";
 	}
+
+
+
+
+
+
 }
 
 

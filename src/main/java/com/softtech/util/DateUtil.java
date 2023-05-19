@@ -259,7 +259,7 @@ public class DateUtil {
 
 	//支払20日に固定
 	public static String getPayMonth(String month) throws ParseException {
-		SimpleDateFormat ft = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat ft = new SimpleDateFormat("yyyyMM");
 		// 対象年月string型-->date型。
 		Date date = ft.parse(month);
 

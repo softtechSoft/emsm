@@ -5,7 +5,7 @@
 
 <mapper namespace="com.softtech.mappers.SalaryInfoMapper">
 	<!--給料作成情報を取得する。給料情報-->
-	<select id="getSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfoRecord" resultType="com.softtech.entity.SalaryInfo">
+	<select id="getSalaryInfoDetail" parameterType="com.softtech.common.SalaryInfoRecord" resultType="com.softtech.entity.SalaryInfoEntity">
 		select ss.*,
 		       ee.employeeID,
 		       ee.employeeName,

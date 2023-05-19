@@ -10,7 +10,7 @@ import org.springframework.validation.FieldError;
 import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.WelfareBean;
 import com.softtech.common.SalaryInfoRecord;
-import com.softtech.entity.SalaryInfo;
+import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.entity.WelfareInfo;
 import com.softtech.mappers.SalaryInfoMapper;
 import com.softtech.util.DataUtil;
@@ -34,9 +34,9 @@ public class SalaryInfoService {
 	 * @param  em 検索パラメータ
 	 * @return 給料情報
 	 */
-	public SalaryInfo querySalaryInfo(SalaryInfoRecord em) {
+	public SalaryInfoEntity querySalaryInfo(SalaryInfoRecord em) {
 		// DBから給料作成情報を取得する
-		SalaryInfo salaryInfo= salaryInfoMapper.getSalaryInfoDetail(em);
+		SalaryInfoEntity salaryInfo= salaryInfoMapper.getSalaryInfoDetail(em);
 		if(salaryInfo==null) {
 			return null;
 		}
@@ -240,7 +240,7 @@ public class SalaryInfoService {
 	 * @param  salaryInfo DBデータ
 	 * @return DB登録用Entity
 	 */
-	public SalaryInfoBean transferToGamen(SalaryInfo salaryInfo) {
+	public SalaryInfoBean transferToGamen(SalaryInfoEntity salaryInfo) {
 		// DBから社員ID福祉情報を取得
 		WelfareInfo welfareInfoDB= queryWelfare(salaryInfo.getEmployeeID());
 		if(welfareInfoDB==null) {

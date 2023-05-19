@@ -12,7 +12,7 @@ import org.springframework.util.MimeTypeUtils;
 import com.softtech.actionForm.WelfareBean;
 import com.softtech.actionForm.WorkDetailBean;
 import com.softtech.entity.ClaimInfo;
-import com.softtech.entity.SalaryInfo;
+import com.softtech.entity.SalaryInfoEntity;
 
 /**
  * 概要：対象月処理機能
@@ -31,7 +31,7 @@ public class FileUtil {/**
 	 * @exception なし
 	 * @author @ソフトテク
 	 */
-	public boolean salaryDownload(HttpServletResponse  response,List<SalaryInfo> sl2){
+	public boolean salaryDownload(HttpServletResponse  response,List<SalaryInfoEntity> sl2){
 		//エンコーディング設定
 		response.setContentType(MimeTypeUtils.APPLICATION_OCTET_STREAM_VALUE + ";charset=Shift-JIS");
 		//ダウンロードファイル名設定
@@ -41,7 +41,7 @@ public class FileUtil {/**
 			PrintWriter pw = response.getWriter();
 			String outputString1 ="社員ID,"+"社員氏名,"+"対象年月,"+"支払日,"+"基本給(単位:円),"+"残業時間,"+"不足時間,"+"残業加算(単位:円),"+"稼働不足減(単位:円),"+"交通費(単位:円),"+"手当加算(単位:円),"+"手当減算(単位:円),"+"手当理由,"+"厚生年金控除個人(単位:円),"+"厚生健康控除個人(単位:円),"+"厚生年金控除会社(単位:円),"+"厚生健康控除会社(単位:円),"+"厚生控除子育(会社)(単位:円),"+"雇用保険個人負担(単位:円),"+"雇用保険会社負担(単位:円),"+"雇用保拠出金（会社)(単位:円),"+"労災保険（会社負担のみ）(単位:円),"+"源泉控除(単位:円),"+"住民税控除(単位:円),"+"社宅家賃控除(単位:円),"+"社宅共益費控除(単位:円),"+"総額(単位:円),"+"総費用(単位:円),"+"備考,"+ "\r\n";
 			pw.print(outputString1);
-    for(SalaryInfo wl:sl2) {
+    for(SalaryInfoEntity wl:sl2) {
     	String employeeID = wl.getEmployeeID();
         String employeeName = wl.getEmployeeName();
         String month = wl.getMonth();
