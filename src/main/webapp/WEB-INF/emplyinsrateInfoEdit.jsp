@@ -27,7 +27,7 @@
     <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
-            <spring:message message="${error}"/>
+            <spring:message message="${error}"/><br/>
         </c:forEach>
     </p>
     <input type="hidden" id="emplyinsrateID" name="emplyinsrateID"
@@ -66,8 +66,12 @@
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">雇用保険料率‰</td>
-            <td width="200px"><c:out
-                    value="${emplyinsrateInfoFormBean.employmentInsuranceRate}"/></td>
+            <td width="200px"><%-- <c:out
+                    value="${emplyinsrateInfoFormBean.employmentInsuranceRate}"/> --%>
+                    <input type="text" id="employmentInsuranceRate"
+                                     name="employmentInsuranceRate"
+                                     value="${emplyinsrateInfoFormBean.employmentInsuranceRate}"/>
+            </td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
@@ -81,8 +85,12 @@
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">労働保険料率‰</td>
-            <td width="200px"><c:out
-                    value="${emplyinsrateInfoFormBean.laborInsuranceRate}"/></td>
+            <td width="200px"><%-- <c:out
+                    value="${emplyinsrateInfoFormBean.laborInsuranceRate}"/> --%>
+                    <input type="text" id="laborInsuranceRate"
+                                     name="laborInsuranceRate"
+                                     value="${emplyinsrateInfoFormBean.laborInsuranceRate}"/>
+            </td>
         </tr>
 
         <tr style="background-color:#dcfeeb">

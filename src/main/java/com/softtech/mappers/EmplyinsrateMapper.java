@@ -1,11 +1,12 @@
 package com.softtech.mappers;
 
-import com.softtech.common.EmplyinsrateIDName;
-import com.softtech.entity.EmplyinsrateInfoEntity;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.entity.EmplyinsrateInfoEntity;
 
 /**
  * @program
@@ -33,5 +34,7 @@ public interface EmplyinsrateMapper {
 
     //insert
     void insertEmplyinsrate(EmplyinsrateInfoEntity emplyinsrateInfoEntity);
+
+
 
 }

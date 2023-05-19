@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -165,39 +166,30 @@ public class EmplyInsrateInfoController {
     public String registEmplyinsrateInfo(@Valid @ModelAttribute("emplyinsrateInfoFormBean") EmplyinsrateInfoFormBean emplyinsrateInfoFormBean, BindingResult result, HttpSession session, Model model) {
 
         //必須チェック
-        if (result.hasErrors()) {
+    	if (result.hasErrors()) {
+		    // エラーチェック用リスト
+			List<FieldError> errorlst = new ArrayList<FieldError>();
+
+			//エラーメッセージ。
+			errorlst.addAll(result.getFieldErrors());
+			//エラーメッセージ
+			model.addAttribute("errors", errorlst);
+			model.addAttribute("emplyinsrateInfoFormBean",emplyinsrateInfoFormBean);
+
+			return "emplyinsrateInfoEdit";
+		 }
+
+        {
             //DBから年度リスト生成
             List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
             model.addAttribute("year", year);
 
             //年度を任意設定
-            emplyinsrateInfoFormBean.setYear("2020");
+           // emplyinsrateInfoFormBean.setYear("2020");
 
             return "emplyinsrateInfoEdit";
         }
 
-        String insertFlg = emplyinsrateInfoFormBean.getInsertFlg();
-        //新規の場合
-        if ("0".equals(insertFlg)) {
-        	//画面年度を条件で、てーぶるを、検索、既に存在する場合、処理中止.
-
-			/*EmplyinsrateInfoFormBean emplyinsrateInfoFormBean1 = new EmplyinsrateInfoFormBean();
-			model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean1);
-			emplyinsrateInfoFormBean1.setInsertFlg(insertFlg);*/
-
-            emplyinsrateInfoService.insertEmplyinsrateInfo(emplyinsrateInfoFormBean);
-        } else {
-            //DBに更新入力
-            emplyinsrateInfoService.updateEmplyinsrateInfo(emplyinsrateInfoFormBean);
-        }
-        //DBから年度リスト生成
-        List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
-        model.addAttribute("year", year);
-
-        //年度を任意設定
-        //emplyinsrateInfoFormBean.setYear("");
-        return "emplyinsrateInfoEdit";
     }
-
 }
 
