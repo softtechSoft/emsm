@@ -5,11 +5,10 @@
 
 <mapper namespace="com.softtech.mappers.SalarylistMapper">
 
-<select id="getSalaryinfolist" parameterType="String" resultType="com.softtech.entity.SalaryInfo">
+<select id="getSalaryinfolist" parameterType="String" resultType="com.softtech.entity.SalaryInfoEntity">
  <!--給料情報を取得する。-->
 		 select s.*,
 		       e.employeeName
-
 		from salaryinfo s
 		left join ems.employee e on s.employeeID = e.employeeID
 		where s.month=#{month}
@@ -18,22 +17,60 @@
 	<!-- 最大年月を取得 -->
  <select id="getMaxMonth" resultType="String">
  	select Max(month) from salaryinfo
+</select>
 
+
+ <select id="getBaseSalary" parameterType="String" resultType="com.softtech.entity.BaseSalaryInfoEntity">
+ 	select * from m_basesalary where employeeID=#{employeeID} AND year=#{year}
+</select>
+
+
+ <select id="getWkTime" parameterType="String" resultType="com.softtech.entity.WorkInfo">
+ 	 SELECT w.workTime FROM workinfo w
+ 	INNER JOIN contract c ON c.contractID = w.contractID
+	INNER JOIN employee e ON e.employeeID = c.employeeID
+	WHERE c.employeeID = #{employeeID} AND w.workmonth = #{month}
  </select>
 
- <select id="getBaseSalary" parameterType="String" resultType="com.softtech.entity.SalaryInfo">
- 	select baseSalary from m_basesalary where employeeID=#{employeeID} AND year={#year}
 
- </select>
-
- <select id="getOverTime" resultType="com.softtech.entity.SalaryInfo">
- 	select w.workTime from workinfo w join contract c on  where c.employeeID=#{employeeID} AND  c.contractID=w.contractID
- 	<!-- workinfoのworkTime　-　m_basesalaryのwkPeriodTo　マイナスの場合、０とする
- 		条件：contractの社員ID＝No.1　AND　contractのcontractID＝　workinfoのcontractID　 -->
+ <select id="getTransportExpense" parameterType="String" resultType="com.softtech.entity.TransportEntity">
+	SELECT *
+	From transport t,employee e where e.employeeID=#{employeeID} AND t.workmonth=#{month}
  </select>
 
 
+ <select id= "getWfPension" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
+ 	 SELECT *
+ 	From m_welfarefee
+ 	 where year = #{year}
+</select>
 
+
+<select id="getAge"  parameterType="String" resultType="String">
+ SELECT age
+ From employee where employeeID=#{employeeID}
+</select>
+
+
+<select id="getWfBaby"  parameterType="String" resultType="com.softtech.entity.WelfareBabyInfoEntity">
+	SELECT rate
+	From m_welfarebabyrate where year=#{year}
+</select>
+
+<select id="getEmplyinsrate"  parameterType="String" resultType="com.softtech.entity.EmplyinsrateInfoEntity">
+	SELECT *
+	From m_emplyinsrate where year=#{year}
+</select>
+
+<select id="getTax" parameterType="String" resultType="com.softtech.entity.IncomeTaxInfoEntity">
+	SELECT *
+	From m_incometax where employeeID=#{employeeID} AND year=#{year}
+</select>
+
+<select id="getDate" parameterType="String" resultType="com.softtech.entity.SalaryInfo">
+	SELECT insertDate , updateDate
+	From salaryInfo
+</select>
 
 
 
