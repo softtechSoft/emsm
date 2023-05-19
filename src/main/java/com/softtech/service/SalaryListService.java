@@ -62,6 +62,7 @@ public class SalaryListService {
 	@Autowired
 	LoginService loginService;
 	public boolean autoCreate() throws ParseException {
+
 		//①年月採番
 		//給料テーブルから最大年月（month）を取得
 		String maxMonth=salarylistMapper.getMaxMonth();
@@ -69,34 +70,48 @@ public class SalaryListService {
 		//最大年月の次の年月を取得
 		String nextMonth=DateUtil.monthplus(maxMonth);
 
-		//②社員リストを取得
+		//対象年度
+		 String year=DateUtil.getNowYear() ;
 
+		//支払日
+		 String paymentDate=DateUtil.getPayMonth(nextMonth);
+
+		//②社員リストを取得
 		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
 
-		 for(EmployeeIDName employeeIDName:employeeList){
+		for(EmployeeIDName employeeIDName:employeeList){
+			//給料明細新規
+			SalaryInfoEntity salaryInfoEntity = new SalaryInfoEntity();
+
 			 //社員ID
 			 String employeeID=employeeIDName.getEmployeeID();
-			 //対象年度
-			 String year=DateUtil.getNowYear() ;
+			 salaryInfoEntity.setEmployeeID(employeeID);
+
+			//対象月
+			 salaryInfoEntity.setMonth(nextMonth);
+
 			 //支払日
-			 String paymentDate=DateUtil.getPayMonth(nextMonth);
+			 salaryInfoEntity.setPaymentDate(paymentDate);
+
 			 //③基本給を取得
 			 BaseSalaryInfoEntity baseSalaryInfoEntity=salarylistMapper.getBaseSalary(employeeID,year);
 			 String basesalary = baseSalaryInfoEntity.getBaseSalary();
+			 salaryInfoEntity.setBase(basesalary);
 
 			 //残業時間
 			 WorkInfo workInfo=salarylistMapper.getWkTime(employeeID,maxMonth);
+			 // 稼働時間-稼働時間TO
 			 float overTime= Float.parseFloat( workInfo.getWorkTime()) -   Float.parseFloat(baseSalaryInfoEntity.getWkPeriodTo());
-			 if (overTime < 0) {
+			 if (overTime <= 0) {
 				    overTime = 0;
-				}
+			 }
 //			 salaryInfoEntity.setoverTime(overTime);
 
-			 //不足時間
+			 //不足時間（稼働時間FROM-稼働時間）
 			 float shortage =Float.parseFloat(baseSalaryInfoEntity.getWkPeriodFrom())-Float.parseFloat( workInfo.getWorkTime());
-			 if (shortage < 0) {
+			 if (shortage <= 0) {
 				 shortage = 0;
-				}
+			 }
 
 			 //残業加算
 			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getPlusHour()) *  overTime;
@@ -109,48 +124,47 @@ public class SalaryListService {
 			 float transportExpense = transportEntity.getTransport() + Float.parseFloat( transportEntity.getBusinessTrip());
 
 			 //特別加算
-			 String specialAddition = " 0" ;
+			 String specialAddition = "0" ;
 			 //手当加算
-			 String allowancePlus = " 0" ;
+			 String allowancePlus = "0" ;
 			 //手当減算
-			 String allowanceReduce = " 0" ;
+			 String allowanceReduce = "0" ;
 			 //理由
-			 String allowanceReason = " 0" ;
+			 String allowanceReason = "" ;
 
+			 //厚生マスタを取る
 			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(year);
 			//厚生年金控除個人
-			 float wfPensionSelf =
-					 Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(basesalary );
-
-			 //厚生年金控除会社
-			 float wfPensionComp	=
+			float wfPensionSelf =
 					 Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(basesalary);
 
-			 String age=salarylistMapper.getAge(employeeID);
+			 //厚生年金控除会社
+			float wfPensionComp = wfPensionSelf;
+
+			 //社員年齢を取る
+			String age=salarylistMapper.getAge(employeeID);
 			 //厚生健康控除個人
-			 float wfHealthSelf;
-			 if ( Float.parseFloat(age) >= 40) {
+			float wfHealthSelf;
+			//厚生健康控除会社
+			float wfHealthComp;
+			if ( Float.parseFloat(age) >= 40) {
 				 wfHealthSelf =
 						 Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(basesalary);
-				}else {
+				 wfHealthComp =wfHealthSelf;
+
+			}else {
 					wfHealthSelf =
 							Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(basesalary);
-				}
-			 //厚生健康控除会社
-			 float wfHealthComp;
-			 if ( Float.parseFloat(age) < 40) {
-				 wfHealthComp =
-						 Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio()) * Float.parseFloat(basesalary);
-				}else {
-					wfHealthComp =
-							Float.parseFloat(welfarefeeInfoEntity.getCareRatio())* Float.parseFloat(basesalary);
-				}
+					wfHealthComp=wfHealthSelf;
+			}
 
 			 //厚生控除子育(会社)
 			 WelfareBabyInfoEntity welfareBabyInfoEntity = salarylistMapper.getWfBaby(year) ;
 			 float welfareBaby =
 					 Float.parseFloat(welfareBabyInfoEntity.getRate()) * Float.parseFloat(basesalary) ;
 
+
+			//雇用保険率を取る
 			 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
 
 			 //雇用保険個人負担
@@ -172,6 +186,7 @@ public class SalaryListService {
 			 //源泉控除
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
 			 String month = maxMonth.substring(4, 6);
+			 //源泉
 			 String incomeTax = "" ;
 			 if (month .equals ("01")) {
 				 incomeTax = incomeTaxInfoEntity.getIncomeTax1();
@@ -198,7 +213,7 @@ public class SalaryListService {
 			 }else if (month.equals ( "12")) {
 				 incomeTax = incomeTaxInfoEntity.getIncomeTax12();
 			 }
-
+			//住民税
 			 String residentTax ="";
 			 if (month .equals ("01")){
 				 residentTax = incomeTaxInfoEntity.getResidentTax1();
@@ -250,10 +265,9 @@ public class SalaryListService {
 			 //削除フラグ
 			 String deleteFlg = "0";
 
-			 //作成日
-			 SalaryInfoEntity salaryInfoEntity = salarylistMapper.getDate();
-			 String insertDate = salaryInfoEntity.getInsertDate();
-			 String updateDate = salaryInfoEntity.getUpdateDate();
+
+
+
 
 		 }
 
