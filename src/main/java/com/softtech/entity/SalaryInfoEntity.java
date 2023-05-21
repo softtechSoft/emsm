@@ -35,9 +35,11 @@ public class SalaryInfoEntity {
 	private String welfareComp;
 
 	private String specialAddition;
-	private String specialControl;
+	private String specialReduce;
+
 
 	private String year;
+	private String deleteFlg;
 
 	private String insertDate;
 	private String updateDate;
@@ -333,18 +335,12 @@ public class SalaryInfoEntity {
 		this.specialAddition = specialAddition;
 	}
 
-	/**
-	 * @return specialControl
-	 */
-	public String getSpecialControl() {
-		return specialControl;
+	public String getSpecialReduce() {
+		return specialReduce;
 	}
 
-	/**
-	 * @param specialControl セットする specialControl
-	 */
-	public void setSpecialControl(String specialControl) {
-		this.specialControl = specialControl;
+	public void setSpecialReduce(String specialReduce) {
+		this.specialReduce = specialReduce;
 	}
 
 	public String getYear() {
@@ -369,6 +365,14 @@ public class SalaryInfoEntity {
 
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public String getDeleteFlg() {
+		return deleteFlg;
+	}
+
+	public void setDeleteFlg(String deleteFlg) {
+		this.deleteFlg = deleteFlg;
 	}
 
 
