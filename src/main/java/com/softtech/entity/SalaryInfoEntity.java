@@ -375,6 +375,4 @@ public class SalaryInfoEntity {
 		this.deleteFlg = deleteFlg;
 	}
 
-
-
 }
