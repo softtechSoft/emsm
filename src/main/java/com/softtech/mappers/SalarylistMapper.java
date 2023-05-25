@@ -45,6 +45,7 @@ public interface SalarylistMapper {
 
 	SalaryInfoEntity getDate() ;
 
+//	SalaryInfoEntity insertSalaryList();
 
-
+	SalaryInfoEntity insertSalaryList(SalaryInfoEntity salaryInfoEntity);
 }

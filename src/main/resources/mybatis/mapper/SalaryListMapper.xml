@@ -72,9 +72,89 @@
 	From salaryInfo
 </select>
 
+<!-- <insert id="insertSalaryList" parameterType="com.softtech.common.SalaryInfoRecord">
+	insert into ems.salaryinfo
+	(employeeID,
+	month,
+	paymentDate,
+	base,
+	overTime,
+	shortage,
+	overTimePlus,
+	shortageReduce,
+	transportExpense,
+	specialAddition,
+	allowancePlus,
+	allowanceReduce,
+	allowanceReason,
+	welfarePensionSelf,
+	welfarePensionComp,
+	welfareHealthComp,
+	welfareHealthSelf,
+	welfareBaby,
+	eplyInsSelf,
+	eplyInsComp,
+	eplyInsWithdraw,
+	wkAcccpsIns,
+	withholdingTax,
+	municipalTax,
+	rental,
+	rentalMgmtFee,
+	specialReduce,
+	sum,
+	totalFee,
+	remark,
+	deleteFlg,
+	insertDate,
+	updateDate)
+		values
+		( #{employeeID},
+		  #{month},
+		  #{paymentDate},
+		  #{base},
+		  #{overTime},
+		  #{shortage},
+		  #{overTimePlus},
+		  #{shortageReduce},
+		  #{transportExpense},
+		  #{specialAddition},
+		  #{allowancePlus},
+		  #{allowanceReduce},
+		  #{allowanceReason},
+		  #{welfarePensionSelf},
+		  #{welfarePensionComp},
+		  #{welfareHealthComp},
+		  #{welfareHealthSelf},
+		  #{welfareBaby},
+		  #{eplyInsSelf},
+		  #{eplyInsComp},
+		  #{eplyInsWithdraw},
+		  #{wkAcccpsIns},
+		  #{withholdingTax},
+		  #{municipalTax},
+		  #{rental},
+		  #{rentalMgmtFee},
+		  #{specialReduce},
+		  #{sum},
+		  #{totalFee},
+		  #{remark},
+		  #{deleteFlg},
+		  #{insertDate},
+		  #{updateDate}
+		  )
+</insert>
+ -->
+<select id="insertSalaryList" parameterType="com.softtech.common.SalaryInfoRecord" >
+		insert into
+			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
+			transportExpense,specialAddition,allowancePlus,allowanceReduce,allowanceReason,welfarePensionSelf,welfareHealthSelf,welfarePensionComp,welfareHealthComp,welfareBaby,eplyInsSelf,
+			eplyInsComp,eplyInsWithdraw,wkAcccpsIns,withholdingTax,municipalTax,rental,rentalMgmtFee,specialReduce,sum,totalFee,remark)
+		values(#{employeeID},#{month},#{paymentDate},#{base},#{overTime},#{shortage},#{overTimePlus},#{shortageReduce},
+			#{transportExpense},#{specialAddition},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfarePensionSelf},#{welfareHealthSelf},#{welfarePensionComp},#{welfareHealthComp},#{welfareBaby},
+			#{eplyInsSelf},#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},#{specialReduce},
+			#{sum},#{totalFee},#{remark})
 
-
-
+</select>
 
 
 </mapper>
