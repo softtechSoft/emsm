@@ -120,13 +120,13 @@ public class SalaryListController {
 		//給料自動作成
 
 		boolean rtn=salarylistService.autoCreate();
-		if(rtn) {
-			model.addAttribute("list",rtn);
+//		if(rtn) {
+//			model.addAttribute("list",rtn);
+//
+//			return"salaryInfo" ;
+//		 }else {
 
-			return"salarylist" ;
-		 }else {
-
-		 }
+//		 }
 
 
 //		try {

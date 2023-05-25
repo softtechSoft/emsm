@@ -84,7 +84,7 @@ public class SalaryInfoEntity {
 	}
 
 	public void setBase(String base) {
-		this.base = String.format("%,d", Integer.parseInt(base));
+		this.base = String.format("%,d",Integer.parseInt( base));
 	}
 
 	public String getOverTimePlus() {

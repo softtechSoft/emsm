@@ -65,6 +65,7 @@ public class SalaryListService {
 
 		//①年月採番
 		//給料テーブルから最大年月（month）を取得
+
 		String maxMonth=salarylistMapper.getMaxMonth();
 
 		//最大年月の次の年月を取得
@@ -115,27 +116,30 @@ public class SalaryListService {
 			 salaryInfoEntity.setShortage(Float.toString(shortage));
 
 			 //残業加算
+//			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getPlusHour()) *  overTime;
+//			 salaryInfoEntity.setOverTimePlus(Float.toString(overTimePlus));
+
 			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getPlusHour()) *  overTime;
-			 salaryInfoEntity.setOverTimePlus(Float.toString(overTimePlus));
+			 salaryInfoEntity.setOverTimePlus (String.format("%,d", (int)overTimePlus));
 
 			 //稼働不足減
 			 float shortageReduce=Float.parseFloat(baseSalaryInfoEntity.getMinusHour()) * shortage ;
-			 salaryInfoEntity.setShortageReduce(Float.toString(shortageReduce));
+			 salaryInfoEntity.setShortageReduce (String.format("%,d", (int) shortageReduce));
 
-			 //交通費  transportinfoのtransport　＋　transportinfoのbusinessTrip  条件①対象社員、②monthの前月
+			 //交通費
 			 TransportEntity transportEntity=salarylistMapper.getTransportExpense(employeeID, maxMonth);
-			 float transportExpense = transportEntity.getTransport() + Float.parseFloat( transportEntity.getBusinessTrip());
-			 salaryInfoEntity.setTransportExpense(Float.toString(transportExpense));
+			 float transportExpense =transportEntity.getTransport() + Float.parseFloat(transportEntity.getBusinessTrip());
+			 salaryInfoEntity.setTransportExpense(String.format("%d",(int)transportExpense));
 
 			 //特別加算
-			 String specialAddition = "0" ;
-			 salaryInfoEntity.setSpecialAddition(specialAddition);
+			 float specialAddition = 0 ;
+			 salaryInfoEntity.setSpecialAddition (String.format("%,d", (int)specialAddition));
 			 //手当加算
-			 String allowancePlus = "0" ;
-			 salaryInfoEntity.setAllowancePlus(allowancePlus);
+			 float allowancePlus = 0 ;
+			 salaryInfoEntity.setAllowancePlus(String.format("%,d", (int) allowancePlus));
 			 //手当減算
-			 String allowanceReduce = "0" ;
-			 salaryInfoEntity.setAllowanceReduce(allowanceReduce);
+			 float allowanceReduce = 0 ;
+			 salaryInfoEntity.setAllowanceReduce (String.format("%,d", (int)allowanceReduce));
 			 //理由
 			 String allowanceReason = "" ;
 			 salaryInfoEntity.setAllowanceReason(allowanceReason);
@@ -145,11 +149,11 @@ public class SalaryListService {
 			//厚生年金控除個人
 			float wfPensionSelf =
 					 Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(basesalary);
-			salaryInfoEntity.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+			salaryInfoEntity.setWelfarePensionSelf(String.format("%d", (int)wfPensionSelf));
 
 			 //厚生年金控除会社
 			float wfPensionComp = wfPensionSelf;
-			salaryInfoEntity.setWelfarePensionComp(Float.toString(wfPensionComp));
+			salaryInfoEntity.setWelfarePensionComp(String.format("%d", (int)wfPensionComp));
 
 			 //社員年齢を取る
 			String age=salarylistMapper.getAge(employeeID);
@@ -160,150 +164,149 @@ public class SalaryListService {
 			if ( Float.parseFloat(age) >= 40) {
 				 wfHealthSelf =
 						 Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(basesalary);
-				 salaryInfoEntity.setWelfareHealthSelf(Float.toString(wfHealthSelf));
+				 salaryInfoEntity.setWelfareHealthSelf(String.format("%d", (int)wfHealthSelf));
 				 wfHealthComp =wfHealthSelf;
-				 salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
+				 salaryInfoEntity.setWelfareHealthComp(String.format("%d", (int)wfHealthComp));
 
 			}else {
 					wfHealthSelf =
 							Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(basesalary);
-					salaryInfoEntity.setWelfareHealthSelf(Float.toString(wfHealthSelf));
+					salaryInfoEntity.setWelfareHealthSelf(String.format("%d", (int)wfHealthSelf));
 					wfHealthComp=wfHealthSelf;
-					salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
+					salaryInfoEntity.setWelfareHealthComp(String.format("%d", (int)wfHealthComp));
 			}
 
 			 //厚生控除子育(会社)
 			 WelfareBabyInfoEntity welfareBabyInfoEntity = salarylistMapper.getWfBaby(year) ;
 			 float welfareBaby =
 					 Float.parseFloat(welfareBabyInfoEntity.getRate()) * Float.parseFloat(basesalary) ;
-			 salaryInfoEntity.setWelfareBaby(Float.toString(welfareBaby));
+			 salaryInfoEntity.setWelfareBaby(String.format("%d", (int)welfareBaby));
 
 			//雇用保険率を取る
 			 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
 			 //雇用保険個人負担
 			 float LaborBurden =
 					 Float.parseFloat(emplyinsrateInfoEntity.getLaborBurdenRate())*Float.parseFloat(basesalary) ;
-			 salaryInfoEntity.setEplyInsSelf(Float.toString(LaborBurden));
+			 salaryInfoEntity.setEplyInsSelf(String.format("%d", (int)LaborBurden));
 
 			 //雇用保険会社負担
 			 float employerBurden =
 					 Float.parseFloat(emplyinsrateInfoEntity.getEmployerBurdenRate())*Float.parseFloat(basesalary) ;
-			 salaryInfoEntity.setEplyInsComp(Float.toString(employerBurden));
+			 salaryInfoEntity.setEplyInsComp(String.format("%d", (int)employerBurden));
 
 			 //雇用保拠出金（会社)
 			 float employmentInsurance =
 					 Float.parseFloat(emplyinsrateInfoEntity.getEmploymentInsuranceRate())*Float.parseFloat(basesalary) ;
-			 salaryInfoEntity.setEplyInsWithdraw(Float.toString(employmentInsurance));
+			 salaryInfoEntity.setEplyInsWithdraw(String.format("%d", (int)employmentInsurance));
 
 			 //労災保険（会社負担のみ）
 			 float industrialAccidentInsurance =
 			 Float.parseFloat(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate())*Float.parseFloat(basesalary) ;
-			 salaryInfoEntity.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
+			 salaryInfoEntity.setWkAcccpsIns(String.format("%d", (int)industrialAccidentInsurance));
 
 			 //源泉控除
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
 			 String month = maxMonth.substring(4, 6);
 			 //源泉
-			 String incomeTax = "" ;
+			 float incomeTax = 0;
 			 if (month .equals ("01")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax1();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax1());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "02")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax2();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax2());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "03")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax3();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax3());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "04")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax4();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax4());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "05")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax5();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax5());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "06")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax6();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax6());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "07")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax7();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax7());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "08")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax8();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax = Float.parseFloat( incomeTaxInfoEntity.getIncomeTax8());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "09")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax9();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax9());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "10")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax10();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax10());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "11")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax11();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax11());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }else if (month.equals ( "12")) {
-				 incomeTax = incomeTaxInfoEntity.getIncomeTax12();
-				 salaryInfoEntity.setWithholdingTax(incomeTax);
+				 incomeTax = Float.parseFloat( incomeTaxInfoEntity.getIncomeTax12());
+				 salaryInfoEntity.setWithholdingTax(String.format("%d", (int)incomeTax));
 			 }
 			//住民税
-			 String residentTax ="";
+			 float residentTax =0;
 			 if (month .equals ("01")){
-				 residentTax = incomeTaxInfoEntity.getResidentTax1();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax1());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "02")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax2();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax2());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "03")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax3();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax3());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "04")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax4();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax4());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "05")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax5();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax =Float.parseFloat( incomeTaxInfoEntity.getResidentTax5());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "06")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax6();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax6());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "07")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax7();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax7());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "08")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax8();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax =Float.parseFloat( incomeTaxInfoEntity.getResidentTax8());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "09")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax9();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax9());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "10")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax10();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax = Float.parseFloat(incomeTaxInfoEntity.getResidentTax10());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "11")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax11();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax =Float.parseFloat( incomeTaxInfoEntity.getResidentTax11());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }else if (month.equals ( "12")) {
-				 residentTax = incomeTaxInfoEntity.getResidentTax12();
-				 salaryInfoEntity.setMunicipalTax(residentTax);
+				 residentTax =Float.parseFloat( incomeTaxInfoEntity.getResidentTax12());
+				 salaryInfoEntity.setMunicipalTax(String.format("%d", (int)residentTax));
 			 }
 			 //社宅家賃控除
-			 String rental  = " 0" ;
-			 salaryInfoEntity.setRental(rental);
+			 float rental  = 0 ;
+			 salaryInfoEntity.setRental(String.format("%d", (int)rental));
 			 //社宅共益費控除
-			 String rentalMgmtFee = " 0" ;
-			 salaryInfoEntity.setRentalMgmtFee(rentalMgmtFee);
+			 float rentalMgmtFee = 0 ;
+			 salaryInfoEntity.setRentalMgmtFee(String.format("%d", (int)rentalMgmtFee));
 			//特別控除
-			 String specialReduce	 = " 0" ;
-			 salaryInfoEntity.setSpecialReduce(specialReduce);
+			 float specialReduce = 0 ;
+			 salaryInfoEntity.setSpecialReduce(String.format("%d", (int)specialReduce));
 
 			 //総額
-			 float sum= (Float.parseFloat(basesalary) -  shortageReduce -Float.parseFloat(allowanceReduce) -
-					 	 wfPensionSelf- wfHealthSelf- LaborBurden -
-					 	 Float.parseFloat(incomeTax)-Float.parseFloat( residentTax ) -
-					 	 Float.parseFloat(rental)-Float.parseFloat(rentalMgmtFee) - Float.parseFloat(specialReduce)) +
-					 	 overTimePlus + transportExpense  + Float.parseFloat(specialAddition) +
-					 	Float.parseFloat(allowancePlus) ;
-			 salaryInfoEntity.setSum(Float.toString(sum));
+			 float sum= Float.parseFloat(basesalary) - shortageReduce - allowanceReduce  -
+					 	wfPensionSelf- wfHealthSelf- LaborBurden -
+					 	incomeTax- residentTax -
+					 	 rental-rentalMgmtFee- specialReduce +
+					 	 overTimePlus +transportExpense+ specialAddition + allowancePlus   ;
+			 salaryInfoEntity.setSum(String.format("%d", (int)sum));
 
 			 //総費用
 			 float totalFee = sum + wfPensionComp + wfHealthComp + welfareBaby + employerBurden + employmentInsurance
 					 + industrialAccidentInsurance ;
-			 salaryInfoEntity.setTotalFee(Float.toString(totalFee));
+			 salaryInfoEntity.setTotalFee(String.format("%d", (int)totalFee));
 
 			 //備考
 			 String remark = "" ;
@@ -313,15 +316,15 @@ public class SalaryListService {
 			 String deleteFlg = "0";
 			 salaryInfoEntity.setDeleteFlg(deleteFlg);
 
-		 }
 
-		//給料テーブルに新規追加
-		if(employeeList != null){
-			return true;
-		}else {
-			   return false;
-		   }
+
+		}
+
+
+//		給料テーブルに新規追加
+		 return true;
 	}
+
 
 	/*public List<MenuBean> queryOfcfunction(String string) {
 		// 機能リストを取得する
