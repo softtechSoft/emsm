@@ -123,9 +123,9 @@ public class SalaryListController {
 //		if(rtn) {
 //			model.addAttribute("list",rtn);
 //
-//			return"salaryInfo" ;
+//			return"salarylist" ;
 //		 }else {
-
+//
 //		 }
 
 
@@ -137,9 +137,6 @@ public class SalaryListController {
 //			e.printStackTrace();
 //		}
 
-
-
-
 		//自動作成した内容を再表示
 		String month = DateUtil.getNowMonth();
 		model.addAttribute("month",month);
@@ -147,8 +144,8 @@ public class SalaryListController {
 		List<SalaryInfoEntity> sl= new ArrayList<SalaryInfoEntity>();
 		SalaryInfoEntity kara = new SalaryInfoEntity();
 		sl.add(kara);
-		model.addAttribute("list",sl);
 
+		model.addAttribute("list",sl);
 
 		return "salarylist";
 	}

@@ -35,7 +35,8 @@
 
  <select id="getTransportExpense" parameterType="String" resultType="com.softtech.entity.TransportEntity">
 	SELECT *
-	From transport t,employee e where e.employeeID=#{employeeID} AND t.workmonth=#{month}
+	From transport
+	where employeeID=#{employeeID} AND workmonth=#{month}
  </select>
 
 
@@ -72,87 +73,18 @@
 	From salaryInfo
 </select>
 
-<!-- <insert id="insertSalaryList" parameterType="com.softtech.common.SalaryInfoRecord">
-	insert into ems.salaryinfo
-	(employeeID,
-	month,
-	paymentDate,
-	base,
-	overTime,
-	shortage,
-	overTimePlus,
-	shortageReduce,
-	transportExpense,
-	specialAddition,
-	allowancePlus,
-	allowanceReduce,
-	allowanceReason,
-	welfarePensionSelf,
-	welfarePensionComp,
-	welfareHealthComp,
-	welfareHealthSelf,
-	welfareBaby,
-	eplyInsSelf,
-	eplyInsComp,
-	eplyInsWithdraw,
-	wkAcccpsIns,
-	withholdingTax,
-	municipalTax,
-	rental,
-	rentalMgmtFee,
-	specialReduce,
-	sum,
-	totalFee,
-	remark,
-	deleteFlg,
-	insertDate,
-	updateDate)
-		values
-		( #{employeeID},
-		  #{month},
-		  #{paymentDate},
-		  #{base},
-		  #{overTime},
-		  #{shortage},
-		  #{overTimePlus},
-		  #{shortageReduce},
-		  #{transportExpense},
-		  #{specialAddition},
-		  #{allowancePlus},
-		  #{allowanceReduce},
-		  #{allowanceReason},
-		  #{welfarePensionSelf},
-		  #{welfarePensionComp},
-		  #{welfareHealthComp},
-		  #{welfareHealthSelf},
-		  #{welfareBaby},
-		  #{eplyInsSelf},
-		  #{eplyInsComp},
-		  #{eplyInsWithdraw},
-		  #{wkAcccpsIns},
-		  #{withholdingTax},
-		  #{municipalTax},
-		  #{rental},
-		  #{rentalMgmtFee},
-		  #{specialReduce},
-		  #{sum},
-		  #{totalFee},
-		  #{remark},
-		  #{deleteFlg},
-		  #{insertDate},
-		  #{updateDate}
-		  )
-</insert>
- -->
-<select id="insertSalaryList" parameterType="com.softtech.common.SalaryInfoRecord" >
+<select id="insertSalaryList" parameterType="String" resultType="com.softtech.entity.SalaryInfoEntity" >
 		insert into
 			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
-			transportExpense,specialAddition,allowancePlus,allowanceReduce,allowanceReason,welfarePensionSelf,welfareHealthSelf,welfarePensionComp,welfareHealthComp,welfareBaby,eplyInsSelf,
-			eplyInsComp,eplyInsWithdraw,wkAcccpsIns,withholdingTax,municipalTax,rental,rentalMgmtFee,specialReduce,sum,totalFee,remark)
+			transportExpense,specialAddition,allowancePlus,allowanceReduce,allowanceReason,welfarePensionSelf,
+			welfareHealthSelf,welfarePensionComp,welfareHealthComp,welfareBaby,eplyInsSelf,
+			eplyInsComp,eplyInsWithdraw,wkAcccpsIns,withholdingTax,municipalTax,rental,rentalMgmtFee,
+			specialReduce,sum,totalFee,remark,deleteFlg,insertDate,updateDate)
 		values(#{employeeID},#{month},#{paymentDate},#{base},#{overTime},#{shortage},#{overTimePlus},#{shortageReduce},
-			#{transportExpense},#{specialAddition},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfarePensionSelf},#{welfareHealthSelf},#{welfarePensionComp},#{welfareHealthComp},#{welfareBaby},
-			#{eplyInsSelf},#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},#{specialReduce},
-			#{sum},#{totalFee},#{remark})
+			#{transportExpense},#{specialAddition},#{allowancePlus},#{allowanceReduce},#{allowanceReason},#{welfarePensionSelf},
+			#{welfareHealthSelf},#{welfarePensionComp},#{welfareHealthComp},#{welfareBaby},#{eplyInsSelf},
+			#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},
+			#{specialReduce},#{sum},#{totalFee},#{remark},#{deleteFlg},date_format(now(),'%Y%m%d'),date_format(now(),'%Y%m%d') )
 
 </select>
 

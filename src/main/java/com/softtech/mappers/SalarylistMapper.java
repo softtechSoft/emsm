@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.softtech.common.SalaryInfoRecord;
 import com.softtech.entity.BaseSalaryInfoEntity;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.IncomeTaxInfoEntity;
@@ -46,7 +45,6 @@ public interface SalarylistMapper {
 
 	SalaryInfoEntity getDate() ;
 
-//	SalaryInfoEntity insertSalaryList();
+	SalaryInfoEntity insertSalaryList(SalaryInfoEntity salaryInfoEntity);
 
-	SalaryInfoRecord insertSalaryList(SalaryInfoRecord salaryInfoRecord);
 }
