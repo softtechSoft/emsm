@@ -1,4 +1,5 @@
 package com.softtech.common;
+
 /**
  * 概要：給料作成パラメータ用クラス
  *
@@ -41,6 +42,10 @@ public class SalaryInfoRecord {
 	private String address ;
 	private int welfareSelf ;
 	private int welfareComp ;
+
+	private String deleteFlg ;
+
+
 	/**
 	 * @return employeeID
 	 */
@@ -449,5 +454,14 @@ public class SalaryInfoRecord {
 	public void setSpecialReduce(int specialReduce) {
 		this.specialReduce = specialReduce;
 	}
+	public String getDeleteFlg() {
+		return deleteFlg;
+	}
+	public void setDeleteFlg(String deleteFlg) {
+		this.deleteFlg = deleteFlg;
+	}
+
+
+
 
 }
