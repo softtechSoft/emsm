@@ -119,8 +119,6 @@ public class SalaryListService {
 			 salaryInfoEntity.setShortage(Float.toString(shortage));
 
 			 //残業加算
-//			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getPlusHour()) *  overTime;
-//			 salaryInfoEntity.setOverTimePlus(Float.toString(overTimePlus));
 
 			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getPlusHour()) *  overTime;
 			 salaryInfoEntity.setOverTimePlus (Float.toString(overTimePlus));
@@ -327,9 +325,11 @@ public class SalaryListService {
 
 		     salaryInfoEntity.setUpdateDate(format);
 
-			 salarylistMapper.insertSalaryList(salaryInfoEntity);
+			 int insert= salarylistMapper.insertSalaryList(salaryInfoEntity);
+		     if(insert != 1) {
+		    	 return false;
+		     }
 		}
-
 
 //		給料テーブルに新規追加
 		 return true;

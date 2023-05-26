@@ -73,7 +73,7 @@
 	From salaryInfo
 </select>
 
-<select id="insertSalaryList" parameterType="String" resultType="com.softtech.entity.SalaryInfoEntity" >
+<insert id="insertSalaryList" parameterType="String">
 		insert into
 			ems.salaryinfo(employeeID,month,paymentDate,base,overTime,shortage,overTimePlus,shortageReduce,
 			transportExpense,specialAddition,allowancePlus,allowanceReduce,allowanceReason,welfarePensionSelf,
@@ -86,7 +86,7 @@
 			#{eplyInsComp},#{eplyInsWithdraw},#{wkAcccpsIns},#{withholdingTax}, #{municipalTax},#{rental},#{rentalMgmtFee},
 			#{specialReduce},#{sum},#{totalFee},#{remark},#{deleteFlg},date_format(now(),'%Y%m%d'),date_format(now(),'%Y%m%d') )
 
-</select>
+</insert>
 
 
 </mapper>
