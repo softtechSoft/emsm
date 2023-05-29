@@ -1,7 +1,6 @@
 package com.softtech.controller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -89,7 +88,6 @@ public class SalaryListController {
 //			 model.addAttribute("create","作成完了しました。");
 
 
-
 		 }else if(salarylistBean2.getDownloadFlg()==3) {
 			 SalaryInfoRecord em = new SalaryInfoRecord();
 			//社員ID
@@ -113,40 +111,29 @@ public class SalaryListController {
 	 * @param  モデル
 	 * @throws ParseException
 	 */
-//	@Autowired
-//	LoginService loginService;
 	@RequestMapping(value = "/autoCreate", method = RequestMethod.POST)
-	public String autoCreate(Model model) throws ParseException {
-		//給料自動作成
+	public String autoCreate(Model model) {
+		//年月採番取得
+		String newMonth;
+		try {
+			newMonth = salarylistService.getNextMonth();
 
-		boolean rtn=salarylistService.autoCreate();
-//		if(rtn) {
-//			model.addAttribute("list",rtn);
-//
-//			return"salarylist" ;
-//		 }else {
-//
-//		 }
+			//給料自動作成
+			boolean rtn=salarylistService.autoCreate(newMonth);
+			if(rtn) {
+				model.addAttribute("month",newMonth);
+				// DBから給料情報を取得
+				List<SalaryInfoEntity> sl= salarylistService.querySalarylist(newMonth);
+				model.addAttribute("list",sl);
+				return "salarylist";
 
-
-//		try {
-//			boolean rtn = salarylistService.autoCreate();
-//
-//		} catch (ParseException e) {
-//			// TODO 自動生成された catch ブロック
-//			e.printStackTrace();
-//		}
-
-		//自動作成した内容を再表示
-		String month = DateUtil.getNowMonth();
-		model.addAttribute("month",month);
-		// DBから給料情報を取得
-		List<SalaryInfoEntity> sl= new ArrayList<SalaryInfoEntity>();
-		SalaryInfoEntity kara = new SalaryInfoEntity();
-		sl.add(kara);
-
-		model.addAttribute("list",sl);
-
+			 }else {
+				 // 一括作成失敗時エラーメッセージ画面表示
+				 model.addAttribute("errors","作成に失敗しました。");
+			 }
+		} catch (ParseException e) {
+			model.addAttribute("errors","作成に失敗しました。");
+			}
 		return "salarylist";
 	}
 

@@ -60,12 +60,7 @@ public class SalaryListService {
 	 *
 	 * @author YADANAR@ソフトテク
 	 */
-
-	@Autowired
-	LoginService loginService;
-
-	public boolean autoCreate() throws ParseException {
-
+	public String getNextMonth() throws ParseException {
 		//①年月採番
 		//給料テーブルから最大年月（month）を取得
 
@@ -73,6 +68,15 @@ public class SalaryListService {
 
 		//最大年月の次の年月を取得
 		String nextMonth=DateUtil.monthplus(maxMonth);
+		return nextMonth;
+	}
+	@Autowired
+	LoginService loginService;
+	public boolean autoCreate(String nextMonth) throws ParseException {
+
+		//①年月採番
+		//給料テーブルから最大年月（month）を取得
+		String maxMonth=salarylistMapper.getMaxMonth();
 
 		//対象年度
 		 String year=DateUtil.getNowYear() ;
@@ -334,6 +338,7 @@ public class SalaryListService {
 //		給料テーブルに新規追加
 		 return true;
 	}
+
 
 
 	/*public List<MenuBean> queryOfcfunction(String string) {
