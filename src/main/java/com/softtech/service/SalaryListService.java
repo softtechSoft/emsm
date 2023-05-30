@@ -29,7 +29,8 @@ import com.softtech.util.DateUtil;
 public class SalaryListService {
 	@Autowired
 	SalarylistMapper salarylistMapper;
-
+	@Autowired
+	LoginService loginService;
 
 	/**
 	 * 機能：DBから取得したデータを取得する。
@@ -70,8 +71,7 @@ public class SalaryListService {
 		String nextMonth=DateUtil.monthplus(maxMonth);
 		return nextMonth;
 	}
-	@Autowired
-	LoginService loginService;
+
 	public boolean autoCreate(String nextMonth) throws ParseException {
 
 		//①年月採番
