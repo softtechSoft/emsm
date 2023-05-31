@@ -74,10 +74,7 @@ public class SalaryListService {
 
 	public boolean autoCreate(String nextMonth) throws ParseException {
 
-		//①年月採番
-		//給料テーブルから最大年月（month）を取得
-		String maxMonth=salarylistMapper.getMaxMonth();
-
+		//年月採番
 		//対象年度
 		 String year=DateUtil.getNowYear() ;
 
@@ -107,7 +104,7 @@ public class SalaryListService {
 			 salaryInfoEntity.setBase(basesalary);
 
 			 //残業時間
-			 WorkInfo workInfo=salarylistMapper.getWkTime(employeeID,maxMonth);
+			 WorkInfo workInfo=salarylistMapper.getWkTime(employeeID,nextMonth);
 			 // 稼働時間-稼働時間TO
 			 float overTime= Float.parseFloat( workInfo.getWorkTime()) -   Float.parseFloat(baseSalaryInfoEntity.getWkPeriodTo());
 			 if (overTime <= 0) {
@@ -132,7 +129,7 @@ public class SalaryListService {
 			 salaryInfoEntity.setShortageReduce ( Float.toString( shortageReduce));
 
 			 //交通費
-			 TransportEntity transportEntity=salarylistMapper.getTransportExpense(employeeID, maxMonth);
+			 TransportEntity transportEntity=salarylistMapper.getTransportExpense(employeeID, nextMonth);
 			 float transportExpense =transportEntity.getTransport() + Float.parseFloat(transportEntity.getBusinessTrip());
 			 salaryInfoEntity.setTransportExpense(Float.toString(transportExpense));
 
@@ -211,7 +208,7 @@ public class SalaryListService {
 
 			 //源泉控除
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
-			 String month = maxMonth.substring(4, 6);
+			 String month = nextMonth.substring(4, 6);
 			 //源泉
 			 float incomeTax = 0;
 			 if (month .equals ("01")) {
