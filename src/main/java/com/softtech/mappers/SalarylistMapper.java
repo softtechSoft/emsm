@@ -33,7 +33,7 @@ public interface SalarylistMapper {
 
 	TransportEntity getTransportExpense(@Param("employeeID") String employeeID,@Param("month") String month) ;
 
-	WelfarefeeInfoEntity getWfPension (@Param("year") String year);
+	WelfarefeeInfoEntity getWfPension (String basesalary);
 
 	String getAge(String employeeID);
 

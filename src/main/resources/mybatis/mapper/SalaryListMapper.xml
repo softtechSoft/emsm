@@ -43,7 +43,7 @@
  <select id= "getWfPension" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
  	 SELECT *
  	From m_welfarefee
- 	 where year = #{year}
+ 	where #{basesalary} > salaryFrom AND salaryTo >= #{basesalary}
 </select>
 
 

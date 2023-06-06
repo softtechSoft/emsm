@@ -455,3 +455,9 @@ create table m_taxetc (
 )COMMENT='マスタ_諸税(控除）';
 
 
+alter table m_welfarefee modify notCareRatio decimal(6,3) NOT NULL COMMENT '介護必要ない料率';
+alter table m_welfarefee modify careRatio decimal(6,3) NOT NULL COMMENT '介護必要料率';
+alter table m_welfarefee modify annuityRatio decimal(6,3) NOT NULL COMMENT '厚生年金保険料率';
+
+
+

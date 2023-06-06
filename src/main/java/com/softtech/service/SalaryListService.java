@@ -147,11 +147,12 @@ public class SalaryListService {
 			 salaryInfoEntity.setAllowanceReason(allowanceReason);
 
 			 //厚生マスタを取る
-			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(year);
+			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
 			//厚生年金控除個人
 			float wfPensionSelf =
-					 Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(basesalary);
+					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
 			salaryInfoEntity.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+
 
 			 //厚生年金控除会社
 			float wfPensionComp = wfPensionSelf;
@@ -165,14 +166,14 @@ public class SalaryListService {
 			float wfHealthComp;
 			if ( Float.parseFloat(age) >= 40) {
 				 wfHealthSelf =
-						 Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(basesalary);
+						 ((Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
 				 salaryInfoEntity.setWelfareHealthSelf( Float.toString(wfHealthSelf));
 				 wfHealthComp =wfHealthSelf;
 				 salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
 
 			}else {
 					wfHealthSelf =
-							Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(basesalary);
+							((Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
 					salaryInfoEntity.setWelfareHealthSelf(Float.toString(wfHealthSelf));
 					wfHealthComp=wfHealthSelf;
 					salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
@@ -181,29 +182,29 @@ public class SalaryListService {
 			 //厚生控除子育(会社)
 			 WelfareBabyInfoEntity welfareBabyInfoEntity = salarylistMapper.getWfBaby(year) ;
 			 float welfareBaby =
-					 Float.parseFloat(welfareBabyInfoEntity.getRate()) * Float.parseFloat(basesalary) ;
+					 (Float.parseFloat(welfareBabyInfoEntity.getRate()) * Float.parseFloat(basesalary)) / 100 ;
 			 salaryInfoEntity.setWelfareBaby(Float.toString(welfareBaby));
 
 			//雇用保険率を取る
 			 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
 			 //雇用保険個人負担
 			 float laborBurden =
-					 Float.parseFloat(emplyinsrateInfoEntity.getLaborBurdenRate())*Float.parseFloat(basesalary) ;
+					( Float.parseFloat(emplyinsrateInfoEntity.getLaborBurdenRate())*Float.parseFloat(basesalary))/1000 ;
 			 salaryInfoEntity.setEplyInsSelf(Float.toString(laborBurden));
 
 			 //雇用保険会社負担
 			 float employerBurden =
-					 Float.parseFloat(emplyinsrateInfoEntity.getEmployerBurdenRate())*Float.parseFloat(basesalary) ;
+					 (Float.parseFloat(emplyinsrateInfoEntity.getEmployerBurdenRate())*Float.parseFloat(basesalary))/1000 ;
 			 salaryInfoEntity.setEplyInsComp(Float.toString(employerBurden));
 
 			 //雇用保拠出金（会社)
 			 float employmentInsurance =
-					 Float.parseFloat(emplyinsrateInfoEntity.getEmploymentInsuranceRate())*Float.parseFloat(basesalary) ;
+					 (Float.parseFloat(emplyinsrateInfoEntity.getEmploymentInsuranceRate())*Float.parseFloat(basesalary))/1000 ;
 			 salaryInfoEntity.setEplyInsWithdraw(Float.toString(employmentInsurance));
 
 			 //労災保険（会社負担のみ）
 			 float industrialAccidentInsurance =
-			 Float.parseFloat(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate())*Float.parseFloat(basesalary) ;
+			 (Float.parseFloat(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate())*Float.parseFloat(basesalary))/1000 ;
 			 salaryInfoEntity.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
 
 			 //源泉控除
