@@ -178,8 +178,10 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
      */
     @Override
     public boolean updateEmplyinsrateInfo(EmplyinsrateInfoFormBean emplyinsrateInfoFormBean) {
+    	//画面データをEntityに設定する。
         EmplyinsrateInfoEntity emplyinsrateInfoEntity =
                 transforBeanToEntityByUpdate(emplyinsrateInfoFormBean);
+     // DB登録
         emplyinsrateMapper.updateEmplyinsrate(emplyinsrateInfoEntity);
         return false;
     }

@@ -53,7 +53,7 @@ public class EmplyInsrateInfoController {
 
         EmplyinsrateInfoFormBean emplyinsrateInfoFormBean = new EmplyinsrateInfoFormBean();
         //年度を任意設定
-       // emplyinsrateInfoFormBean.setYear("2020");
+        //emplyinsrateInfoFormBean.setYear("2020");
         model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean);
 
         //枠用の年度を生成
@@ -115,12 +115,12 @@ public class EmplyInsrateInfoController {
         if ("0".equals(insertFlg)) {
             EmplyinsrateInfoFormBean emplyinsrateInfoFormBean1 = new EmplyinsrateInfoFormBean();
 
-            //emplyinsrateIDを採番する（既存の最大値＋１）
+
             //获取当前时间，显示在页面上
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             String format = formatter.format(now);
-
+          //emplyinsrateIDを採番する（既存の最大値＋１）
             String maxEmplyinsrateID = emplyinsrateInfoService.getNextEmplyinsrateID();
             emplyinsrateInfoFormBean1.setEmplyinsrateID(maxEmplyinsrateID);
             //新規
@@ -180,6 +180,15 @@ public class EmplyInsrateInfoController {
 		 }
 
         {
+        	String insertFlg = emplyinsrateInfoFormBean.getInsertFlg();
+        	//新規の場合
+        	if ("0".equals(insertFlg)) {
+                emplyinsrateInfoService .insertEmplyinsrateInfo(emplyinsrateInfoFormBean);
+        	}else {
+        		//DBに更新入力
+        		emplyinsrateInfoService.updateEmplyinsrateInfo(emplyinsrateInfoFormBean);
+        	}
+
             //DBから年度リスト生成
             List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
             model.addAttribute("year", year);
