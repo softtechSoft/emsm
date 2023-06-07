@@ -459,5 +459,13 @@ alter table m_welfarefee modify notCareRatio decimal(6,3) NOT NULL COMMENT '介�
 alter table m_welfarefee modify careRatio decimal(6,3) NOT NULL COMMENT '介護必要料率';
 alter table m_welfarefee modify annuityRatio decimal(6,3) NOT NULL COMMENT '厚生年金保険料率';
 
+alter table salaryinfo modify overTime float NOT NULL DEFAULT '0' COMMENT '残業時間';
+alter table salaryinfo modify shortage float NOT NULL DEFAULT '0' COMMENT '不足時間';
 
+alter table m_welfarefee drop column contributionRate;
+alter table m_basesalary drop column minusHour;
+alter table m_basesalary drop column plusHour;
+
+alter table m_emplyinsrate drop column employmentInsuranceRate;
+alter table m_emplyinsrate drop column laborInsuranceRate;
 
