@@ -121,11 +121,11 @@ public class SalaryListService {
 
 			 //残業加算
 
-			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getPlusHour()) *  overTime;
+			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) *  overTime;
 			 salaryInfoEntity.setOverTimePlus (Float.toString(overTimePlus));
 
 			 //稼働不足減
-			 float shortageReduce=Float.parseFloat(baseSalaryInfoEntity.getMinusHour()) * shortage ;
+			 float shortageReduce=Float.parseFloat(baseSalaryInfoEntity.getInsufficienttimePay()) * shortage ;
 			 salaryInfoEntity.setShortageReduce ( Float.toString( shortageReduce));
 
 			 //交通費
@@ -182,7 +182,7 @@ public class SalaryListService {
 			 //厚生控除子育(会社)
 			 WelfareBabyInfoEntity welfareBabyInfoEntity = salarylistMapper.getWfBaby(year) ;
 			 float welfareBaby =
-					 (Float.parseFloat(welfareBabyInfoEntity.getRate()) * Float.parseFloat(basesalary)) / 100 ;
+					 (Float.parseFloat(welfareBabyInfoEntity.getRate()) * Float.parseFloat(basesalary)) / 1000 ;
 			 salaryInfoEntity.setWelfareBaby(Float.toString(welfareBaby));
 
 			//雇用保険率を取る
@@ -199,7 +199,7 @@ public class SalaryListService {
 
 			 //雇用保拠出金（会社)
 			 float employmentInsurance =
-					 (Float.parseFloat(emplyinsrateInfoEntity.getEmploymentInsuranceRate())*Float.parseFloat(basesalary))/1000 ;
+					 (Float.parseFloat(emplyinsrateInfoEntity.getContributionRate())*Float.parseFloat(basesalary))/1000 ;
 			 salaryInfoEntity.setEplyInsWithdraw(Float.toString(employmentInsurance));
 
 			 //労災保険（会社負担のみ）
