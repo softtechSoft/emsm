@@ -10,6 +10,11 @@
 ヤダナ-さん：
 　　単体テスト：JUNIT
 　　Java-Batch
+     ・ファイル操作（読取、書き出すなど）
+     ・Log4j
+     ・JDBC
+　　URL:https://github.com/softtechSoft/CommonDataInput.git
+　　
 　　Linux（AWS上）
 
 5/29
