@@ -16,6 +16,9 @@
 　　URL:https://github.com/softtechSoft/CommonDataInput.git
 　　
 　　Linux（AWS上）
+     Teraterm
+     Winscp
+     ダウンロードして、Linuxと接続する。
 
 5/29
  シャラパティさん（YADANARさんサポート）
