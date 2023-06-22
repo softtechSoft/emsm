@@ -19,6 +19,7 @@
      Teraterm
      Winscp
      ダウンロードして、Linuxと接続する。
+     AJAX
 
 5/29
  シャラパティさん（YADANARさんサポート）
