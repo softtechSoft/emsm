@@ -318,7 +318,7 @@ contributionRate DECIMAL(6,5) not null comment'厚生子育拠出金率',
 status int not null comment'利用ステータス',
 insertDate varchar(8) not null comment'作成日',
 updateDate varchar(8) not null comment'更新日'
-) comment '厚生保険料マスタ'
+) comment '厚生保険料マスタ';
 
 
 drop table if exists m_emplyinsrate;
@@ -334,7 +334,7 @@ contributionRate DECIMAL(6,5) not null comment'一般拠出金料率(全額事�
 status int not null comment'利用ステータス',
 insertDate varchar(8) not null comment'作成日',
 updateDate varchar(8) not null comment'更新日'
-) comment '雇用保険率テーブル'
+) comment '雇用保険率テーブル';
 
 
 drop table if exists m_incometax;
@@ -369,7 +369,7 @@ residentTax12 int NOT NULL COMMENT '十二月住民税',
 status int NOT NULL COMMENT '利用ステータス',
 insertDate varchar(8) NOT NULL COMMENT '作成日',
 updateDate varchar(8) NOT NULL COMMENT '更新日'
-) comment '所得税と住民税マスター管理'
+) comment '所得税と住民税マスター管理';
 
 
 drop table if exists m_department;
@@ -385,7 +385,7 @@ create table m_eptype (
     epTypeID varchar (2) not null primary key comment '社員タイプID' ,
     epTypeName varchar (5) not null comment '社員タイプ名称'
 )comment '社員タイプ_マスタ機能' ;
-Insert into m_eptype values ('0','正社員') , ('1','契約社員') , ('2','個人')　;
+Insert into m_eptype values ('0','正社員') , ('1','契約社員') , ('2','個人');
 
 
 --employee table 社員タイプの桁数変更
