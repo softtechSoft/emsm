@@ -469,3 +469,99 @@ alter table m_basesalary drop column plusHour;
 alter table m_emplyinsrate drop column employmentInsuranceRate;
 alter table m_emplyinsrate drop column laborInsuranceRate;
 
+---------プロシージャ------
+CREATE  PROCEDURE `makewelfare`(in gamenMode VarChar(1)
+,in employeeID1 VarChar(6)
+,in startDate1 VarChar(8)
+,in base Int
+,in welfarePensionSelf1 Int
+,in welfarePensionComp1 Int
+,in welfareHealthComp1 Int
+,in welfareHealthSelf1 Int
+,in welfareBaby1 Int
+,in eplyInsSelf1 Int
+,in eplyInsComp1 Int
+,in eplyInsWithdraw1 Int
+,in wkAcccpsIns1 Int
+,in withholdingTax1 Int
+,in municipalTax1 Int
+,in rental1 Int
+,in rentalMgmtFee1 Int
+,in status1 VarChar(1)
+,in insertEmployee1 VarChar(6)
+,in updateEmployee1 VarChar(6)
+)
+BEGIN
+
+IF (gamenMode='2') then
+update welfareinfo set
+base=base,
+welfarePensionSelf=welfarePensionSelf1,
+welfarePensionComp=welfarePensionComp1,
+welfareHealthComp=welfareHealthComp1,
+welfareHealthSelf=welfareHealthSelf1,
+welfareBaby=welfareBaby1,
+eplyInsSelf=eplyInsSelf1,
+eplyInsComp=eplyInsComp1,
+eplyInsWithdraw=eplyInsWithdraw1,
+wkAcccpsIns=wkAcccpsIns1,
+withholdingTax=withholdingTax1,
+municipalTax=municipalTax1,
+rental=rental1,
+rentalMgmtFee=rentalMgmtFee1,
+status=status1,
+insertDate=CURDATE(),
+insertEmployee=insertEmployee1,
+updateDate=CURDATE(),
+updateEmployee=updateEmployee1
+where welfareinfo.employeeID=employeeID1
+and   welfareinfo.startDate=startDate1;
+
+ELSEIF (gamenMode='1') then
+insert into welfareinfo(
+employeeID
+,startDate
+,base
+,welfarePensionSelf
+,welfarePensionComp
+,welfareHealthComp
+,welfareHealthSelf
+,welfareBaby
+,eplyInsSelf
+,eplyInsComp
+,wkAcccpsIns
+,eplyInsWithdraw
+,withholdingTax
+,municipalTax
+,rental
+,rentalMgmtFee
+,status
+,insertDate
+,insertEmployee
+,updateDate
+,updateEmployee
+)
+VALUES(employeeID1
+,startDate1
+,base
+,welfarePensionSelf1
+,welfarePensionComp1
+,welfareHealthComp1
+,welfareHealthSelf1
+,welfareBaby1
+,eplyInsSelf1
+,eplyInsComp1
+,eplyInsWithdraw1
+,wkAcccpsIns1
+,withholdingTax1
+,municipalTax1
+,rental1
+,rentalMgmtFee1
+,status1
+,CURDATE()
+,insertEmployee1
+,CURDATE()
+,updateEmployee1);
+END IF;
+END
+
