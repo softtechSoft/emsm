@@ -49,7 +49,7 @@
 
     <b>社員ID:</b>
     <form:select path="employeeID">
-        <form:options items="${employeeList}" itemLabel="employeeName" itemValue="employeeID"/>
+        <form:options items="${employeeList}" itemLabel="employeeID" itemValue="employeeID"/>
     </form:select>
     <td></td>
     <input type="button" name="search" value="検索" onclick="toSearchJsp()"/>
