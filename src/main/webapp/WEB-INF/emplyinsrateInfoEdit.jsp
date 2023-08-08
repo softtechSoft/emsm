@@ -27,7 +27,7 @@
     <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
-            <spring:message message="${error}"/><br/>
+            <spring:message message="${error}"/><br>
         </c:forEach>
     </p>
     <input type="hidden" id="emplyinsrateID" name="emplyinsrateID"

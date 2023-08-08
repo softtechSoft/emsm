@@ -68,7 +68,7 @@ public interface EmplyInsrateInfoService {
      * @date:2022/08/08
      */
     boolean updateEmplyinsrateInfo(EmplyinsrateInfoFormBean emplyinsrateInfoFormBean);
-
+   
     /**
      * 概要:insert
      *

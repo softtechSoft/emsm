@@ -117,46 +117,47 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
 
         emplyinsrateInfoEntity.setEmplyinsrateID(emplyinsrateInfoFormBean.getEmplyinsrateID());
         //年度
-        String year = emplyinsrateInfoFormBean.getYear();
-        emplyinsrateInfoEntity.setYear(year);
+        //String year = emplyinsrateInfoFormBean.getYear();
+        emplyinsrateInfoEntity.setYear(emplyinsrateInfoFormBean.getYear());
 
         //雇用保険労働者負担料率‰
-        String laborBurdenRate = emplyinsrateInfoFormBean.getLaborBurdenRate();
-        //BigDecimal thousand = new BigDecimal(1000);
-       // String laborBurdenRate1 = new BigDecimal(laborBurdenRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setLaborBurdenRate(laborBurdenRate);
+        //String laborBurdenRate = emplyinsrateInfoFormBean.getLaborBurdenRate();
+       // BigDecimal thousand = new BigDecimal(1000);
+        //String laborBurdenRate1 = new BigDecimal(laborBurdenRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setLaborBurdenRate(emplyinsrateInfoFormBean.getLaborBurdenRate());
 
         //雇用保険事業主負担料率‰
-        String employerBurdenRate = emplyinsrateInfoFormBean.getEmployerBurdenRate();
-        //String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setEmployerBurdenRate(employerBurdenRate);
+       // String employerBurdenRate = emplyinsrateInfoFormBean.getEmployerBurdenRate();
+       // String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
+        emplyinsrateInfoEntity.setEmployerBurdenRate(emplyinsrateInfoFormBean.getEmployerBurdenRate());
 
         //雇用保険料率‰
-        String employmentInsuranceRate = emplyinsrateInfoFormBean.getEmploymentInsuranceRate();
+        //String employmentInsuranceRate = emplyinsrateInfoFormBean.getEmploymentInsuranceRate();
         //String employmentInsuranceRate1 =
         //        new BigDecimal(employmentInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setEmploymentInsuranceRate(employmentInsuranceRate);
+        emplyinsrateInfoEntity.setEmploymentInsuranceRate(emplyinsrateInfoFormBean.getEmploymentInsuranceRate());
 
         //労災保険料率(全額事業主)‰
-        String industrialAccidentInsuranceRate =
-                emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate();
+        //String industrialAccidentInsuranceRate =
+                //emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate();
         //String industrialAccidentInsuranceRate1 =
                // new BigDecimal(industrialAccidentInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(industrialAccidentInsuranceRate);
+        emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate());
 
         //労働保険料率‰
-        String laborInsuranceRate = emplyinsrateInfoFormBean.getLaborInsuranceRate();
+        //String laborInsuranceRate = emplyinsrateInfoFormBean.getLaborInsuranceRate();
         //String laborInsuranceRate1 = new BigDecimal(laborInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setLaborInsuranceRate(laborInsuranceRate);
+
+        emplyinsrateInfoEntity.setLaborInsuranceRate(emplyinsrateInfoFormBean.getLaborInsuranceRate());
 
         //一般拠出金料率(全額事業主)‰
-        String contributionRate = emplyinsrateInfoFormBean.getContributionRate();
+        //String contributionRate = emplyinsrateInfoFormBean.getContributionRate();
        // String contributionRate1 = new BigDecimal(contributionRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setContributionRate(contributionRate);
+        emplyinsrateInfoEntity.setContributionRate(emplyinsrateInfoFormBean.getContributionRate());
 
         //利用ステータス
-        String status = emplyinsrateInfoFormBean.getStatus();
-        emplyinsrateInfoEntity.setStatus(status);
+        //String status = emplyinsrateInfoFormBean.getStatus();
+        emplyinsrateInfoEntity.setStatus(emplyinsrateInfoFormBean.getStatus());
 
         //更新日
         LocalDateTime now = LocalDateTime.now();

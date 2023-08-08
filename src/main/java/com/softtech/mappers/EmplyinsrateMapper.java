@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.entity.Employee;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 
 /**
@@ -35,6 +36,7 @@ public interface EmplyinsrateMapper {
     //insert
     void insertEmplyinsrate(EmplyinsrateInfoEntity emplyinsrateInfoEntity);
 
-
+  //DBから社員リスト生成
+    List<Employee> getEmployee();
 
 }
