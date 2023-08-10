@@ -24,7 +24,7 @@
                 #{year},
                 #{wkPeriodFrom},
                 #{wkPeriodTo},
-                 #{overtimePay},
+                #{overtimePay},
                 #{insufficienttimePay},
                 #{status},
                 date_format(now(), '%Y%m%d'),

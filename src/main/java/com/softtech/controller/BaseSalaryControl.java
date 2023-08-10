@@ -1,5 +1,7 @@
 package com.softtech.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,13 +111,18 @@ public class BaseSalaryControl {
 		//新規の場合
 		if("0".equals(insertFlg)) {
 			BaseSalaryInfoFormBean baseSalaryInfoFormBean = new BaseSalaryInfoFormBean();
+			 //获取当前时间，显示在页面上
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            String format = formatter.format(now);
 
 			//baseSalaryIDを採番する（既存の最大値＋１）
 			String maxBaseSalaryID =baseSalaryInfoService.getNextBaseSalaryID();
 			baseSalaryInfoFormBean.setBaseSalaryID(maxBaseSalaryID);
 			//新規
 			baseSalaryInfoFormBean.setInsertFlg(insertFlg);
-
+			baseSalaryInfoFormBean.setInsertDate(format);
+			baseSalaryInfoFormBean.setUpdateDate(format);
 			model.addAttribute("baseSalaryInfoBean",baseSalaryInfoFormBean);
 
 		//更新の場合
@@ -134,14 +141,7 @@ public class BaseSalaryControl {
 		//社員IDリスト候補生成
 		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
 		model.addAttribute("employeeList",employeeList);
-		//社員項目IDを任意設定
-//		baseSalaryInfoBean.setEmployeeID("1");
-//		//IDリスト候補生成
-//		List<BaseSalaryIDName> baseSalaryList = loginService.getBaseSalaryList();
-//		model.addAttribute("baseSalaryList",baseSalaryList);
-//
-//		//IDを任意設定
-//		baseSalaryInfoBean.setBaseSalaryID("1");
+
 
 		return "baseSalaryInfoEdit";
 	}
@@ -182,8 +182,6 @@ public class BaseSalaryControl {
 		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
 		model.addAttribute("employeeList",employeeList);
 
-		//社員項目IDを任意設定
-		baseSalaryInfoBean.setEmployeeID("1");
 		return "baseSalaryInfoEdit";
 	}
 }

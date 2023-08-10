@@ -68,7 +68,7 @@
 
 			<tr style="background-color:#dcfeeb">
 
-				<td width="200px">社員ID</td>
+				<td width="200px">社員</td>
 				<td width="200px">
 					<form:select path="employeeID">
 						<form:options items="${employeeList}" itemLabel="employeeName"  itemValue="employeeID"/>

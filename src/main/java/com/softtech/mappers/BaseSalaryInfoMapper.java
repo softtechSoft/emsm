@@ -22,7 +22,10 @@ public interface BaseSalaryInfoMapper {
 	List<BaseSalaryInfoEntity> getBaseSalaryInfo(@Param("baseSalaryID")String baseSalaryID);
 	//update
 	public void updateBaseSalaryInfo(BaseSalaryInfoEntity baseSalaryInfoEntity);
-	//insert
+
+
+	//ID最大値+1を取得
 	public String getMaxBaseSalaryID();
+	//insert
 	public void insertBaseSalaryInfo(BaseSalaryInfoEntity baseSalaryInfoEntity);
 }

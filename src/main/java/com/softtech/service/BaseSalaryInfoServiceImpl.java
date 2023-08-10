@@ -57,7 +57,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 	*/
 	private BaseSalaryInfoEntity tranferBeanToEntity(BaseSalaryInfoFormBean baseSalaryInfoBean) {
 		BaseSalaryInfoEntity baseSalaryInfoEntity = new BaseSalaryInfoEntity();
-
+		baseSalaryInfoEntity.setEmployeeID(baseSalaryInfoBean.getEmployeeID());
 		//基本給
 		String baseSalary = baseSalaryInfoBean.getBaseSalary();
 		baseSalaryInfoEntity.setBaseSalary(baseSalary);
@@ -100,7 +100,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 		String format = formatter.format(now);
-		baseSalaryInfoEntity.setInsertDate(format);
+		baseSalaryInfoEntity.setUpdateDate(format);
 
 		return baseSalaryInfoEntity;
 	}
@@ -172,7 +172,7 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 		String format = formatter.format(now);
-		baseSalaryInfoEntity.setInsertDate(format);
+		baseSalaryInfoEntity.setUpdateDate(format);
 
 		return baseSalaryInfoEntity;
 	}
