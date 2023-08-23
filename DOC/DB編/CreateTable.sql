@@ -57,7 +57,7 @@ Insert into ofcfunction values
 ('A6','workdetailli','&#xe60c;&emsp;勤怠リスト','1','/emsm/workdetaillist','3' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('B1','expenses','&#xe60c;&emsp;一般経費','1','/emsm/initExpensesManagement','1' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('B2','basesalary','&#xe60c;&emsp;基本給情報リスト','1','/emsm/initBaseSalaryList','2' ,'0',date_format(now(),'%Y%m%d') ,null),
-('S8','welfarefee','&#xe60c;&emsp;厚生保険料マスタ','1','/emsm/initWelfarefeeInfoList','8' ,'0',date_format(now(),'%Y%m%d') ,null),
+('W1','welfarefee','&#xe60c;&emsp;マスタ_厚生保険料','1','/emsm/initWelfarefeeInfoList','8' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('S9','emplyinsrate','&#xe60c;&emsp;雇用保険率テーブル','1','/emsm/initEmplyinsrateInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('M1','incomeTax','&#xe60c;&emsp;消費税テーブル','1','/emsm/initIncomeTaxInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null);
 insert into ofcfunction('functionID','functionName','functionText','authority','functionLink','deleteFlg')
@@ -429,30 +429,6 @@ create table m_welfarebabyrate(
     insertDate varchar(8) NOT NULL COMMENT '作成日',
     updateDate varchar(8) NOT NULL COMMENT '更新日'
     )comment 'マスタ＿厚生子育徴収率';
-
-drop table if exists m_taxetc;
-create table m_taxetc (
-  employeeID varchar(6) NOT NULL primary key COMMENT '社員ID',
-  year varchar(4) NOT NULL COMMENT '対象年度',
-  withholdingTax int NOT NULL COMMENT '源泉控除',
-  municipalTax1 int NOT NULL COMMENT '1月住民税控除',
-  municipalTax2 int NOT NULL COMMENT '2月住民税控除',
-  municipalTax3 int NOT NULL COMMENT '3月住民税控除',
-  municipalTax4 int NOT NULL COMMENT '4月住民税控除',
-  municipalTax5 int NOT NULL COMMENT '5月住民税控除',
-  municipalTax6 int NOT NULL COMMENT '6月住民税控除',
-  municipalTax7 int NOT NULL COMMENT '7月住民税控除',
-  municipalTax8 int NOT NULL COMMENT '8月住民税控除',
-  municipalTax9 int NOT NULL COMMENT '9月住民税控除',
-  municipalTax10 int NOT NULL COMMENT '10月住民税控除',
-  municipalTax11 int NOT NULL COMMENT '11月住民税控除',
-  municipalTax12 int NOT NULL COMMENT '12月住民税控除',
-  rental int NOT NULL COMMENT '社宅家賃控除',
-  rentalMgmtFee int NOT NULL COMMENT '社宅管理費控除',
-  status varchar(1) NOT NULL COMMENT '控除ステータス',
-  insertDate varchar(8) NOT NULL COMMENT '作成日',
-  updateDate varchar(8) NOT NULL COMMENT '更新日'
-)COMMENT='マスタ_諸税(控除）';
 
 
 alter table m_welfarefee modify notCareRatio decimal(6,3) NOT NULL COMMENT '介護必要ない料率';
