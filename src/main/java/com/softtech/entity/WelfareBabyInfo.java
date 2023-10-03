@@ -59,6 +59,4 @@ public class WelfareBabyInfo {
 		this.updateDate = updateDate;
 	}
 
-
-
 }

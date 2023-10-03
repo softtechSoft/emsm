@@ -16,6 +16,7 @@ public class WelfareBabyInfoEntity {
 	private String insertDate;
 	//更新日
 	private String updateDate;
+
 	public String getRateID() {
 		return rateID;
 	}
