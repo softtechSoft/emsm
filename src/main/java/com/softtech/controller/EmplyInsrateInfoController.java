@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.EmplyinsrateInfoFormBean;
-import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.common.ListIDName;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.service.EmplyInsrateInfoService;
 
@@ -57,10 +57,10 @@ public class EmplyInsrateInfoController {
         model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean);
 
         //枠用の年度を生成
-        ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList =
+        ArrayList<ListIDName> ListIDNameList =
                 emplyinsrateInfoService.getOldYears(3);
         //年度リスト候補を画面へ渡す
-        model.addAttribute("emplyinsrateIDNameList", emplyinsrateIDNameList);
+        model.addAttribute("listIDNameList", ListIDNameList);
 
         return "emplyinsrateInfoList";
     }
@@ -86,10 +86,10 @@ public class EmplyInsrateInfoController {
         List<EmplyinsrateInfoEntity> bList =
                 emplyinsrateInfoService.getEmplyinsrateInfoByYear(year);
         //年度リスト候補生成
-        ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList =
+        ArrayList<ListIDName> listIDNameList =
                 emplyinsrateInfoService.getOldYears(3);
 
-        model.addAttribute("emplyinsrateIDNameList", emplyinsrateIDNameList);
+        model.addAttribute("listIDNameList", listIDNameList);
         model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean);
         model.addAttribute("list", bList);
 
@@ -147,7 +147,7 @@ public class EmplyInsrateInfoController {
 
 
         //更新画面の年度を表示する用リスト候補生成
-        	List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
+        	List<ListIDName> year = emplyinsrateInfoService.getYear();
         model.addAttribute("year", year);
 
 
@@ -189,8 +189,8 @@ public class EmplyInsrateInfoController {
         		emplyinsrateInfoService.updateEmplyinsrateInfo(emplyinsrateInfoFormBean);
         	}
 
-            //DBから年度リスト生成
-            List<EmplyinsrateIDName> year = emplyinsrateInfoService.getYear();
+        	 //DBから年度リスト生成
+            List<ListIDName> year = emplyinsrateInfoService.getYear();
             model.addAttribute("year", year);
 
             //年度を任意設定

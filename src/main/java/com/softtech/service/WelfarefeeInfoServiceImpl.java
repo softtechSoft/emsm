@@ -1,16 +1,20 @@
 package com.softtech.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.softtech.actionForm.WelfarefeeInfoFormBean;
+import com.softtech.common.ListIDName;
+import com.softtech.common.WelfarefeeIDName;
 import com.softtech.entity.WelfarefeeInfoEntity;
 import com.softtech.mappers.WelfarefeeInfoMapper;
 import com.softtech.util.DataUtil;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import com.softtech.util.DateUtil;
 
 /**
  * @program @概要: @作成者:孫曄 @作成日:2022-05-25
@@ -20,7 +24,7 @@ import java.util.List;
 public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
 
     // IOC Mapper
-    @Resource
+	 @Autowired
     private WelfarefeeInfoMapper welfarefeeInfoMapper;
 
     /**
@@ -31,12 +35,12 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/05/25
      */
-    @Override
-    public List<WelfarefeeInfoEntity> getWelfarefeeInfoByEnterSalary(String enterSalary) {
-        List<WelfarefeeInfoEntity> welfarefeeInfoByEnterSalary =
-                welfarefeeInfoMapper.getWelfarefeeInfoByEnterSalary(enterSalary);
-        return welfarefeeInfoByEnterSalary;
-    }
+ //   @Override
+//    public List<WelfarefeeInfoEntity> getWelfarefeeInfoByEnterSalary(String enterSalary) {
+//        List<WelfarefeeInfoEntity> welfarefeeInfoByEnterSalary =
+//                welfarefeeInfoMapper.getWelfarefeeInfoByEnterSalary(enterSalary);
+//        return welfarefeeInfoByEnterSalary;
+//    }
 
     /**
      * 概要:画面表示用のquery方法２：年度により、検索する
@@ -61,13 +65,13 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/06/01
      */
-    @Override
-    public List<WelfarefeeInfoEntity> getWelfarefeeInfoByYearAndEnterSalary(String enterSalary,
-                                                                            String year) {
-        List<WelfarefeeInfoEntity> welfarefeeInfoByYearAndEnterSalary =
-                welfarefeeInfoMapper.getWelfarefeeInfoByYearAndEnterSalary(enterSalary, year);
-        return welfarefeeInfoByYearAndEnterSalary;
-    }
+//    @Override
+//    public List<WelfarefeeInfoEntity> getWelfarefeeInfoByYearAndEnterSalary(String enterSalary,
+//                                                                            String year) {
+//        List<WelfarefeeInfoEntity> welfarefeeInfoByYearAndEnterSalary =
+//                welfarefeeInfoMapper.getWelfarefeeInfoByYearAndEnterSalary(enterSalary, year);
+//        return welfarefeeInfoByYearAndEnterSalary;
+//    }
 
     /**
      * 概要:更新画面への検索,表示される画面の厚生保険料IDにより、検索する
@@ -105,7 +109,6 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
             welfarefeeInfoFormBean.setNotCareRatio(welfarefeeInfoEntity.getNotCareRatio());
             welfarefeeInfoFormBean.setCareRatio(welfarefeeInfoEntity.getCareRatio());
             welfarefeeInfoFormBean.setAnnuityRatio(welfarefeeInfoEntity.getAnnuityRatio());
-            welfarefeeInfoFormBean.setContributionRate(welfarefeeInfoEntity.getContributionRate());
             welfarefeeInfoFormBean.setStatus(welfarefeeInfoEntity.getStatus());
             welfarefeeInfoFormBean.setInsertDate(welfarefeeInfoEntity.getInsertDate());
             welfarefeeInfoFormBean.setUpdateDate(welfarefeeInfoEntity.getUpdateDate());
@@ -140,6 +143,9 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
             WelfarefeeInfoFormBean welfarefeeInfoFormBean) {
         WelfarefeeInfoEntity welfarefeeInfoEntity = new WelfarefeeInfoEntity();
 
+        welfarefeeInfoEntity.setWelfarefeeID (welfarefeeInfoFormBean.getWelfarefeeID());
+
+
         // 対象年度
         String year = welfarefeeInfoFormBean.getYear();
         welfarefeeInfoEntity.setYear(year);
@@ -162,25 +168,21 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
 
         // 介護必要ない料率
         // 前端获得百分号前面的数字，所以直接除100获得对应的小数
-        String notCareRatio = welfarefeeInfoFormBean.getNotCareRatio();
-        BigDecimal hundred = new BigDecimal(100);
-        String notCareRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
-        welfarefeeInfoEntity.setNotCareRatio(notCareRatio1);
+//        String notCareRatio = welfarefeeInfoFormBean.getNotCareRatio();
+//        BigDecimal hundred = new BigDecimal(100);
+//        String notCareRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
+        welfarefeeInfoEntity.setNotCareRatio(welfarefeeInfoFormBean.getNotCareRatio());
 
         // 介護必要料率
-        String careRatio = welfarefeeInfoFormBean.getCareRatio();
-        String careRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
-        welfarefeeInfoEntity.setCareRatio(careRatio1);
+//        String careRatio = welfarefeeInfoFormBean.getCareRatio();
+//        String careRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
+        welfarefeeInfoEntity.setCareRatio(welfarefeeInfoFormBean.getCareRatio());
 
         // 厚生年金保険料率
-        String annuityRatio = welfarefeeInfoFormBean.getAnnuityRatio();
-        String annuityRatio1 = new BigDecimal(annuityRatio).divide(hundred).toString();
-        welfarefeeInfoEntity.setAnnuityRatio(annuityRatio1);
+//        String annuityRatio = welfarefeeInfoFormBean.getAnnuityRatio();
+//        String annuityRatio1 = new BigDecimal(annuityRatio).divide(hundred).toString();
+        welfarefeeInfoEntity.setAnnuityRatio(welfarefeeInfoFormBean.getAnnuityRatio());
 
-        //厚生子育拠出金率
-        String contributionRate = welfarefeeInfoFormBean.getContributionRate();
-        String contributionRate1 = new BigDecimal(contributionRate).divide(hundred).toString();
-        welfarefeeInfoEntity.setContributionRate(contributionRate1);
 
         // 利用ステータス
         int status = welfarefeeInfoFormBean.getStatus();
@@ -205,8 +207,10 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
      */
     @Override
     public boolean updateWelfarefeeInfo(WelfarefeeInfoFormBean welfarefeeInfoFormBean) {
+    	//画面データをEntityに設定する。
         WelfarefeeInfoEntity welfarefeeInfoEntity =
                 transforBeanToEntityByUpdate(welfarefeeInfoFormBean);
+     // DB登録
         welfarefeeInfoMapper.updateWelfarefeeInfo(welfarefeeInfoEntity);
         return false;
     }
@@ -250,25 +254,20 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
 
         // 介護必要ない料率
         // 前端获得百分号前面的数字，所以直接除100获得对应的小数
-        String notCareRatio = welfarefeeInfoFormBean.getNotCareRatio();
-        BigDecimal hundred = new BigDecimal(100);
-        String notCareRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
-        welfarefeeInfoEntity.setNotCareRatio(notCareRatio1);
+       String notCareRatio = welfarefeeInfoFormBean.getNotCareRatio();
+//        BigDecimal hundred = new BigDecimal(100);
+//        String notCareRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
+        welfarefeeInfoEntity.setNotCareRatio(notCareRatio);
 
         // 介護必要料率
         String careRatio = welfarefeeInfoFormBean.getCareRatio();
-        String careRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
-        welfarefeeInfoEntity.setCareRatio(careRatio1);
+//        String careRatio1 = new BigDecimal(notCareRatio).divide(hundred).toString();
+        welfarefeeInfoEntity.setCareRatio(careRatio);
 
         // 厚生年金保険料率
         String annuityRatio = welfarefeeInfoFormBean.getAnnuityRatio();
-        String annuityRatio1 = new BigDecimal(annuityRatio).divide(hundred).toString();
-        welfarefeeInfoEntity.setAnnuityRatio(annuityRatio1);
-
-        //厚生子育拠出金率
-        String contributionRate = welfarefeeInfoFormBean.getContributionRate();
-        String contributionRate1 = new BigDecimal(contributionRate).divide(hundred).toString();
-        welfarefeeInfoEntity.setContributionRate(contributionRate1);
+//        String annuityRatio1 = new BigDecimal(annuityRatio).divide(hundred).toString();
+        welfarefeeInfoEntity.setAnnuityRatio(annuityRatio);
 
         // 利用ステータス
         int status = welfarefeeInfoFormBean.getStatus();
@@ -303,4 +302,22 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
         welfarefeeInfoMapper.insertWelfarefeeInfo(welfarefeeInfoEntity1);
         return true;
     }
+
+
+	@Override
+	public List<WelfarefeeIDName> getYear() {
+		List<WelfarefeeIDName> welfarefeeIDNameList = new ArrayList<>();
+		// DBから年度を取得
+		welfarefeeIDNameList= welfarefeeInfoMapper.getYear();
+
+		return welfarefeeIDNameList;
+	}
+
+	/*public ArrayList<WelfarefeeIDName> getOldYears(int oldYear){
+		return (ArrayList<WelfarefeeIDName>) DateUtil.getYears1(oldYear);
+	}*/
+	public ArrayList<ListIDName> getOldYears(int oldYear){
+		return (ArrayList<ListIDName>) DateUtil.getYears(oldYear);
+	}
+
 }

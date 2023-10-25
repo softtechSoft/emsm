@@ -18,7 +18,7 @@
     </script>
 </head>
 <body>
-<form:form name="theForm" id="theForm" method="post" modelAttribute="welfarebabyInfoFormBean"  action="welfarebabyInfoEdit" >
+<form:form name="theForm" id="theForm" method="post" modelAttribute="welfareBabyInfoFormBean"  action="welfareBabyInfoEdit" >
     <h1>マスタ厚生子育徴収率更新</h1>
     <p style="color: red;">
         <form:errors path="year" />
@@ -27,55 +27,55 @@
 
     </p>
 
-    <input type="hidden" id="rateID" name="rateID" value="${welfarebabyInfoFormBean.rateID}"/>
+    <input type="hidden" id="rateID" name="rateID" value="${welfareBabyInfoFormBean.rateID}"/>
     <!--新規フラグ　０　新規　１　更新-->
-    <input type="hidden" id="insertFlg" name="insertFlg" value="${welfarebabyInfoFormBean.insertFlg}"/>
+    <input type="hidden" id="insertFlg" name="insertFlg" value="${welfareBabyInfoFormBean.insertFlg}"/>
 
     <table  border="1">
         <tr style="background-color:#dcfeeb">
             <td width="200px">徴収ID</td>
-            <td width="200px"><c:out  value="${welfarebabyInfoFormBean.rateID}"/></td>
+            <td width="200px"><c:out  value="${welfareBabyInfoFormBean.rateID}"/></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
 
             <td width="200px">対象年度</td>
             <td width="200px"><input type="text" id="year" name="year"
-                                     value="${welfarebabyInfoFormBean.year}" /></td>
+                                     value="${welfareBabyInfoFormBean.year}" /></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">対象エリア</td>
             <td width="200px"><input type="text" id="area" name="area"
-                                     value="${welfarebabyInfoFormBean.area}" /></td>
+                                     value="${welfareBabyInfoFormBean.area}" /></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">徴収率</td>
             <td width="200px"><input type="text" id="rate" name="rate"
-                                     value="${welfarebabyInfoFormBean.rate}" /></td>
+                                     value="${welfareBabyInfoFormBean.rate}" /></td>
 
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">利用ステータス</td>
-            <td width="200px"><input type="radio" name="status" <c:if test="${welfarebabyInfoFormBean.status == '1'}">
+            <td width="200px"><input type="radio" name="status" <c:if test="${welfareBabyInfoFormBean.status == '1'}">
                 checked</c:if> value="1" /> する
-                <input type="radio" name="status" <c:if test="${welfarebabyInfoFormBean.status == '0'}">
+                <input type="radio" name="status" <c:if test="${welfareBabyInfoFormBean.status == '0'}">
                     checked</c:if> value="0" /> しない</td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">作成日</td>
             <td width="200px">
-                <c:out  value="${welfarebabyInfoFormBean.insertDate}"/>
+                <c:out  value="${welfareBabyInfoFormBean.insertDate}"/>
             </td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">更新日</td>
             <td width="200px">
-                <c:out  value="${welfarebabyInfoFormBean.updateDate}"/>
+                <c:out  value="${welfareBabyInfoFormBean.updateDate}"/>
             </td>
         </tr>
 

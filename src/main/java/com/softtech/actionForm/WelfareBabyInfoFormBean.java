@@ -91,6 +91,10 @@ public class WelfareBabyInfoFormBean {
   return insertFlg;
  }
 
+ public void setInsertFlg(String insertFlg) {
+	    this.insertFlg = insertFlg;
+	  }
+
  public ArrayList<RateIDName> getRateIDNameArrayList() {
   return rateIDNameArrayList;
  }
@@ -98,10 +102,21 @@ public class WelfareBabyInfoFormBean {
  public void setRateIDNameArrayList(ArrayList<RateIDName> rateIDNameArrayList) {
   this.rateIDNameArrayList = rateIDNameArrayList;
  }
-public void setInsertFlg(String insertFlg2) {
-	// TODO 自動生成されたメソッド・スタブ
+ @Override
+	public String toString() {
+	    return "WelfareBabyInfoFormBean{" +
+	            "rateID='" + rateID + '\'' +
+	            ", year='" + year + '\'' +
+	            ", area='" + area + '\'' +
+	            ", rate='" +  rate + '\'' +
 
-}
+	            ", status='" + status + '\'' +
+	            ", insertDate='" + insertDate + '\'' +
+	            ", updateDate='" + updateDate + '\'' +
+	            ", insertFlg='" + insertFlg + '\'' +
+	            ", rateIDNameArrayList=" + rateIDNameArrayList +
+	            '}';
+ }
 
 }
 

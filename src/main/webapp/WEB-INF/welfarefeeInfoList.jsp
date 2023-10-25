@@ -14,16 +14,16 @@
             document.theForm.submit();
         }
 
-        function selectData(){
-            var enterSalary=document.getElementById("enterSalary").value;
-            var year = document.getElementById("year").value;
-            if (enterSalary !== null){
-                document.theForm.submit();
-            }
-            if (year !== null){
-                document.theForm.submit();
-            }
-        }
+        //function selectData(){
+            //var enterSalary=document.getElementById("enterSalary").value;
+            //var year = document.getElementById("year").value;
+            //if (enterSalary !== null){
+               // document.theForm.submit();
+            //}
+            //if (year !== null){
+                //document.theForm.submit();
+            //}
+        //}
 
         // 更新ボタン処理
         function toUpdateJsp(welfarefeeID){
@@ -53,10 +53,10 @@
 
     <b>年度:</b>
     <form:select path="year">
-        <form:options items="${welfarefeeIDNameList}" itemLabel="year"  itemValue="year"/>
+        <form:options items="${listIDNameList}" itemLabel="year"  itemValue="year"/>
     </form:select>
     <td></td>
-    <td><span>収入:<input type="text" size="8" ></span></td>
+    <!--<td><span>収入:<input type="text" size="8" ></span></td>-->
     <input type="button" name="search" value="検索" onclick="toSearchJsp()" />
 
 
@@ -69,6 +69,7 @@
     <table border="1"class="welfarefeeInfoList-table">
         <tr>
             <th width="100">厚生保険料ID</th>
+            <th width="100">対象年度</th>
             <th width="100">対象エリア</th>
             <th width="100">標準報酬</th>
             <th width="100">給料From</th>
@@ -76,7 +77,6 @@
             <th width="150">介護必要ない料率%</th>
             <th width="150">介護必要料率%</th>
             <th width="150">厚生年金保険料率%</th>
-            <th width="150">厚生子育拠出金率%</th>
             <th width="100">利用ステータス</th>
             <th width="100">作成日</th>
             <th width="100">更新日</th>
@@ -87,14 +87,14 @@
             <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
                     <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
                 <td><c:out value="${welfarefeeInfoList.getWelfarefeeID()}"/></td>
+                <td><c:out value="${welfarefeeInfoList.getYear()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getArea()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getStandSalary()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getSalaryFrom()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getSalaryTo()}"/></td>
-                <td><c:out value="${welfarefeeInfoList.getNotCareRatio()*100}"/></td>
-                <td><c:out value="${welfarefeeInfoList.getCareRatio()*100}"/></td>
-                <td><c:out value="${welfarefeeInfoList.getAnnuityRatio()*100}"/></td>
-                <td><c:out value="${welfarefeeInfoList.contributionRate*100}"/></td>
+                <td><c:out value="${welfarefeeInfoList.getNotCareRatio()}"/></td>
+                <td><c:out value="${welfarefeeInfoList.getCareRatio()}"/></td>
+                <td><c:out value="${welfarefeeInfoList.getAnnuityRatio()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getStatus()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getInsertDate()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getUpdateDate()}"/></td>

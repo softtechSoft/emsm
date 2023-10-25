@@ -23,7 +23,7 @@
 </head>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="incomeTaxInfoFormBean"
            action="incomeTaxInfoEdit">
-    <h1>雇用保険率テーブル更新</h1>
+    <h1>所得税と住民税マスター</h1>
     <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">

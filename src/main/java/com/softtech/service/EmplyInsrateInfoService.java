@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.EmplyinsrateInfoFormBean;
-import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.common.ListIDName;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 
 /**
@@ -68,7 +68,7 @@ public interface EmplyInsrateInfoService {
      * @date:2022/08/08
      */
     boolean updateEmplyinsrateInfo(EmplyinsrateInfoFormBean emplyinsrateInfoFormBean);
-   
+
     /**
      * 概要:insert
      *
@@ -87,7 +87,7 @@ public interface EmplyInsrateInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/08
      */
-    List<EmplyinsrateIDName> getYear();
+    List<ListIDName> getYear();
 
     /*
      * 機能：指定数の過去年度リストを生成する
@@ -96,6 +96,7 @@ public interface EmplyInsrateInfoService {
 	 * @return 過去年度リスト
 	 * @exception なし
      */
-    ArrayList<EmplyinsrateIDName> getOldYears(int oldYear);
+    //ArrayList<EmplyinsrateIDName> getOldYears(int oldYear);
+    ArrayList<ListIDName> getOldYears(int oldYear);
 
 }

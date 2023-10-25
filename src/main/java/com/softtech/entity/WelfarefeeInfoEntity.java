@@ -23,8 +23,6 @@ public class WelfarefeeInfoEntity {
   private String careRatio;
   // 厚生年金保険料率
   private String annuityRatio;
-  //厚生子育拠出金率
-  private String contributionRate;
   // 利用ステータス 0:未使用　1:使用中
   private int status;
   // 作成日
@@ -32,7 +30,7 @@ public class WelfarefeeInfoEntity {
   // 更新日
   private String updateDate;
   // 入力の収入
-  private String enterSalary;
+
 
   public String getWelfarefeeID() {
     return welfarefeeID;
@@ -106,14 +104,6 @@ public class WelfarefeeInfoEntity {
     this.annuityRatio = annuityRatio;
   }
 
-  public String getContributionRate() {
-    return contributionRate;
-  }
-
-  public void setContributionRate(String contributionRate) {
-    this.contributionRate = contributionRate;
-  }
-
   public int getStatus() {
     return status;
   }
@@ -138,11 +128,5 @@ public class WelfarefeeInfoEntity {
     this.updateDate = updateDate;
   }
 
-  public String getEnterSalary() {
-    return enterSalary;
-  }
 
-  public void setEnterSalary(String enterSalary) {
-    this.enterSalary = enterSalary;
-  }
 }

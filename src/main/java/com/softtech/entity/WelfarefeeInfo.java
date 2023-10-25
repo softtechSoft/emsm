@@ -31,8 +31,7 @@ public class WelfarefeeInfo {
   private String insertDate;
   // 更新日
   private String updateDate;
-  // 入力の収入
-  private String enterSalary;
+
 
   public String getWelfarefeeID() {
     return welfarefeeID;
@@ -138,11 +137,5 @@ public class WelfarefeeInfo {
     this.updateDate = updateDate;
   }
 
-  public String getEnterSalary() {
-    return enterSalary;
-  }
 
-  public void setEnterSalary(String enterSalary) {
-    this.enterSalary = enterSalary;
-  }
 }

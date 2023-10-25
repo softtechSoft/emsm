@@ -44,9 +44,9 @@ function tosalaryInfoJsp(salaryInfoID){
 <form:form name="theForm" id="theForm" method="post" action="salarylist" >
     <p>
       <b>対象年月:<input id="month"name="month" type="text" value="${month}">
-         <!--<input style="border-radius: 3px" type="submit" id="search_btn" name="search" Value="検索">
-         <input style="border-radius: 3px" type="submit" name="downLoad"id="downLoad_btn" value="ダウンロード">
-         -->
+         <!-- <input style="border-radius: 3px" type="submit" id="search_btn" name="search" Value="検索">
+         <input style="border-radius: 3px" type="submit" name="downLoad"id="downLoad_btn" value="ダウンロード"> -->
+
          <input type="button" name="search" value="検索" onclick="toSearchJsp();" />
          <input type="hidden" id="EmployeeIDFlg"name="EmployeeIDFlg"/>
          <input type="hidden" id="downloadFlg"name="downloadFlg"/>

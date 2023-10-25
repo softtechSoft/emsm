@@ -1,10 +1,14 @@
 package com.softtech.service;
 
-import com.softtech.actionForm.WelfarefeeInfoFormBean;
-import com.softtech.entity.WelfarefeeInfoEntity;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.softtech.actionForm.WelfarefeeInfoFormBean;
+import com.softtech.common.ListIDName;
+import com.softtech.common.WelfarefeeIDName;
+import com.softtech.entity.WelfarefeeInfoEntity;
 
 /**
  * @program @概要: @作成者:孫曄 @作成日:2022-05-25
@@ -20,7 +24,7 @@ public interface WelfarefeeInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/05/25
      */
-    List<WelfarefeeInfoEntity> getWelfarefeeInfoByEnterSalary(String enterSalary);
+   // List<WelfarefeeInfoEntity> getWelfarefeeInfoByEnterSalary(String enterSalary);
 
     /**
      * 概要:画面表示用のquery方法２：年度により、検索する
@@ -40,8 +44,8 @@ public interface WelfarefeeInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/06/01
      */
-    List<WelfarefeeInfoEntity> getWelfarefeeInfoByYearAndEnterSalary(String enterSalary,
-                                                                     String year);
+    //List<WelfarefeeInfoEntity> getWelfarefeeInfoByYearAndEnterSalary(String enterSalary,
+    //                                                                 String year);
 
     /**
      * 概要:更新画面への検索,表示される画面の厚生保険料IDにより、検索する
@@ -92,4 +96,23 @@ public interface WelfarefeeInfoService {
      * @date:2022/05/25
      */
     boolean insertWelfarefeeInfo(WelfarefeeInfoFormBean welfarefeeInfoFormBean);
+
+	/**
+	 * 概要:更新画面の年度を表示する用
+	 *
+	 * @param:[]
+	 * @return:java.util.List<com.softtech.entity.EmplyinsrateInfoEntity>
+	 * @author:孫曄@SOFTTECH
+	 * @date:2022/08/08
+	 */
+    List<WelfarefeeIDName> getYear();
+    /*
+     * 機能：指定数の過去年度リストを生成する
+	 *
+	 * @param 過去年度数
+	 * @return 過去年度リスト
+	 * @exception なし
+     */
+   // ArrayList<WelfarefeeIDName> getOldYears(int oldYear);
+    ArrayList<ListIDName> getOldYears(int oldYear);
 }

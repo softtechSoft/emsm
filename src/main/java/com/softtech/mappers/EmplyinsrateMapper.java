@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.common.ListIDName;
 import com.softtech.entity.Employee;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 
@@ -28,7 +28,7 @@ public interface EmplyinsrateMapper {
     String getMaxEmplyinsrateID();
 
     //更新画面の年度を表示する用
-    List<EmplyinsrateIDName> getYear();
+    List<ListIDName> getYear();
 
     //update
     void updateEmplyinsrate(EmplyinsrateInfoEntity emplyinsrateInfoEntity);

@@ -34,21 +34,11 @@ public class EmplyinsrateInfoFormBean {
 	@NotEmpty(message = "雇用保険料率‰を入力してください")
 	@Pattern(message = "雇用保険料率‰に小数点5位までの数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
 	@Pattern(message = "雇用保険料率‰に数字のみを入力してください。",  regexp ="^[0-9]+.[0-9]{0,5}")
-	private String employmentInsuranceRate;
-	//労災保険料率(全額事業主)‰
-	@NotEmpty(message = "労災保険料率(全額事業主)‰を入力してください")
-	@Pattern(message = "労災保険料率(全額事業主)‰に小数点5位までの数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
-	@Pattern(message = "労災保険料率(全額事業主)‰に数字のみを入力してください。",  regexp ="^[0-9]+.[0-9]{0,5}")
 	private String industrialAccidentInsuranceRate;
 	//労働保険料率‰
 	@NotEmpty(message = "労働保険料率‰を入力してください")
 	@Pattern(message = "労働保険料率‰に小数点5位までの数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
 	@Pattern(message = "労働保険料率‰に数字のみを入力してください。",  regexp ="^[0-9]+.[0-9]{0,5}")
-	private String laborInsuranceRate;
-	//一般拠出金料率(全額事業主)‰
-	@NotEmpty(message = "一般拠出金料率(全額事業主)‰を入力してください")
-	@Pattern(message = "一般拠出金料率(全額事業主)‰に小数点6位までの数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
-	@Pattern(message = "一般拠出金料率(全額事業主)‰に数字のみを入力してください。",  regexp ="^[0-9]+.[0-9]{0,5}")
 	private String contributionRate;
 	//利用ステータス 0:未使用　1:使用中
 	private String status;
@@ -93,13 +83,6 @@ public class EmplyinsrateInfoFormBean {
 		this.employerBurdenRate = employerBurdenRate;
 	}
 
-	public String getEmploymentInsuranceRate() {
-		return employmentInsuranceRate;
-	}
-
-	public void setEmploymentInsuranceRate(String employmentInsuranceRate) {
-		this.employmentInsuranceRate = employmentInsuranceRate;
-	}
 
 	public String getIndustrialAccidentInsuranceRate() {
 		return industrialAccidentInsuranceRate;
@@ -107,14 +90,6 @@ public class EmplyinsrateInfoFormBean {
 
 	public void setIndustrialAccidentInsuranceRate(String industrialAccidentInsuranceRate) {
 		this.industrialAccidentInsuranceRate = industrialAccidentInsuranceRate;
-	}
-
-	public String getLaborInsuranceRate() {
-		return laborInsuranceRate;
-	}
-
-	public void setLaborInsuranceRate(String laborInsuranceRate) {
-		this.laborInsuranceRate = laborInsuranceRate;
 	}
 
 	public String getContributionRate() {
@@ -172,9 +147,7 @@ public class EmplyinsrateInfoFormBean {
 		            ", year='" + year + '\'' +
 		            ", laborBurdenRate='" + laborBurdenRate + '\'' +
 		            ", employerBurdenRate='" + employerBurdenRate + '\'' +
-		            ", employmentInsuranceRate='" + employmentInsuranceRate + '\'' +
 		            ", industrialAccidentInsuranceRate='" + industrialAccidentInsuranceRate + '\'' +
-		            ", laborInsuranceRate='" + laborInsuranceRate + '\'' +
 		            ", contributionRate='" + contributionRate + '\'' +
 		            ", status='" + status + '\'' +
 		            ", insertDate='" + insertDate + '\'' +

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.WelfareBabyInfoFormBean;
+import com.softtech.common.ListIDName;
 import com.softtech.common.RateIDName;
 import com.softtech.entity.WelfareBabyInfoEntity;
 import com.softtech.service.WelfareBabyInfoService;
@@ -36,7 +37,7 @@ public class WelfareBabyInfoController {
 	static protected Logger logger = LogManager.getLogger(WelfareBabyInfoController.class);
 	 @Resource
 	 private WelfareBabyInfoService welfareBabyInfoService;
-	private WelfareBabyInfoFormBean welfareBabyInfoFormBean;
+	//private WelfareBabyInfoFormBean welfareBabyInfoFormBean;
 	  /**
 	     * 概要:年度の選択枠を設定する
 	     *
@@ -53,10 +54,11 @@ public class WelfareBabyInfoController {
 	       model.addAttribute("welfareBabyInfoFormBean", welfareBabyInfoFormBean);
 
 	     //枠用の年度を生成
-	       ArrayList<RateIDName> rateIDNameList =
+	       ArrayList<ListIDName> listIDNameList =
 	    		   welfareBabyInfoService.getOldYears(3);
 	       //年度リスト候補を画面へ渡す
-	       model.addAttribute("rateIDNameList", rateIDNameList);
+	       model.addAttribute("listIDNameList", listIDNameList);
+	      // model.addAttribute("welfarefeeIDNameList", rateIDNameList);
 
 	        return "welfareBabyInfoList";
 
@@ -83,11 +85,11 @@ public class WelfareBabyInfoController {
 	            List<WelfareBabyInfoEntity> bList =
 	            		welfareBabyInfoService.getWelfareBabyInfoByYear(year);
 	            //年度リスト候補生成
-	            ArrayList<RateIDName> rateIDNameList =
+	            ArrayList<ListIDName> listIDNameList =
 	            		welfareBabyInfoService.getOldYears(3);
 
 	            //年度リスト候補を画面へ渡す
-	            model.addAttribute("rateIDNameList", rateIDNameList);
+	            model.addAttribute("listIDNameList", listIDNameList);
 	            model.addAttribute("welfareBabyInfoFormBean", welfareBabyInfoFormBean);
 	            model.addAttribute("list", bList);
 	            return "welfareBabyInfoList";
@@ -169,18 +171,18 @@ public class WelfareBabyInfoController {
 	        	errorlst.addAll(result.getFieldErrors());
 	        	//エラーメッセージ
 	        	model.addAttribute("errors", errorlst);
-	        	model.addAttribute("welfareBabyInfoFormBean",welfareBabyInfoFormBean);
+	        	model.addAttribute("welfareBabyInfoFormBean",WelfareBabyInfoFormBean);
 	            return "welfareBabyInfoEdit";
 	        }
 
 	        {
-	        String insertFlg = welfareBabyInfoFormBean.getInsertFlg();
+	        String insertFlg = WelfareBabyInfoFormBean.getInsertFlg();
 	        //新規の場合
 	        if ("0".equals(insertFlg)) {
-	        	welfareBabyInfoService.insertWelfareBabyInfo(welfareBabyInfoFormBean);
+	        	welfareBabyInfoService.insertWelfareBabyInfo(WelfareBabyInfoFormBean);
 	        } else {
 	            //DBに更新入力
-	        	welfareBabyInfoService.updateWelfareBabyInfo(welfareBabyInfoFormBean);
+	        	welfareBabyInfoService.updateWelfareBabyInfo(WelfareBabyInfoFormBean);
 	        }
 	        //DBから年度リスト生成
 	        List<RateIDName> year =  welfareBabyInfoService.getYear();

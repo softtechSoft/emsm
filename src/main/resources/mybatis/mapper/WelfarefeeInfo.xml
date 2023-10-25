@@ -10,13 +10,12 @@
         (welfarefeeID,
          year,
          area,
+         standSalary,
          salaryFrom,
          salaryTo,
-         standSalary,
          notCareRatio,
          careRatio,
          annuityRatio,
-         contributionRate,
          status,
          insertDate,
          updateDate)
@@ -24,13 +23,12 @@
             ( #{welfarefeeID},
             #{year},
             #{area},
+            #{standSalary},
             #{salaryFrom},
             #{salaryTo},
-            #{standSalary},
             #{notCareRatio},
             #{careRatio},
             #{annuityRatio},
-            #{contributionRate},
             #{status},
             date_format(now(),'%Y%m%d'),
             date_format(now(),'%Y%m%d')
@@ -38,13 +36,13 @@
     </insert>
     <!--画面表示用のquery,入力の収入により、検索する-->
     <!--保険料を納付したいとき、検索用-->
-    <select id="getWelfarefeeInfoByEnterSalary" parameterType="String"
+    <!--<select id="getWelfarefeeInfoByEnterSalary" parameterType="String"
             resultType="com.softtech.entity.WelfarefeeInfoEntity">
         select *
         from m_welfarefee
         where #{enterSalary} >= salaryFrom
           and #{enterSalary} &lt; salaryTo
-    </select>
+    </select>-->
     <!--画面表示用のquery方法２：年度により、検索する-->
     <select id="getWelfarefeeInfoByYear" parameterType="String"
             resultType="com.softtech.entity.WelfarefeeInfoEntity">
@@ -55,14 +53,14 @@
 
     </select>
     <!--同时检索年度和收入-->
-    <select id="getWelfarefeeInfoByYearAndEnterSalary"
+    <!--<select id="getWelfarefeeInfoByYearAndEnterSalary"
             resultType="com.softtech.entity.WelfarefeeInfoEntity">
         select *
         from m_welfarefee
         where #{enterSalary} >= salaryFrom
                   and #{enterSalary} &lt; salaryTo
                   and year = #{year}
-    </select>
+    </select>-->
 
     <!--更新画面への検索,表示される画面の厚生保険料IDにより、検索する-->
     <select id="getUpdateWelfarefeeInfoList" parameterType="String"
@@ -76,10 +74,15 @@
         select MAX(welfarefeeID)
         from m_welfarefee ct
     </select>
+    <!--更新の時、更新画面の年度を表示用-->
+    <select id="getYear" resultType="com.softtech.common.WelfarefeeIDName">
+        select year
+        from m_welfarefee
+        where status='1'
+    </select>
     <!--データ更新-->
     <update id="updateWelfarefeeInfo" parameterType="com.softtech.entity.WelfarefeeInfoEntity">
-        update
-            m_welfarefee
+        update m_welfarefee
         set year=#{year},
             area=#{area},
             standSalary= #{standSalary},
@@ -88,7 +91,6 @@
             notCareRatio=#{notCareRatio},
             careRatio=#{careRatio},
             annuityRatio=#{annuityRatio},
-            contributionRate=#{contributionRate},
             status=#{status},
             updateDate=date_format(now(), '%Y%m%d')
         where welfarefeeID = #{welfarefeeID}

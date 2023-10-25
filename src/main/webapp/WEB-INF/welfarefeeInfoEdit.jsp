@@ -75,26 +75,20 @@
         <tr style="background-color:#dcfeeb">
             <td width="200px">介護必要ない料率%</td>
             <td width="200px"> <input type="text" id="notCareRatio" name="notCareRatio"
-                                      value="${welfarefeeInfoFormBean.notCareRatio*100}" /></td>
+                                      value="${welfarefeeInfoFormBean.notCareRatio}" /></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">介護必要料率%</td>
             <td width="200px"> <input type="text" id="careRatio" name="careRatio"
-                                      value="${welfarefeeInfoFormBean.careRatio*100}" /></td>
+                                      value="${welfarefeeInfoFormBean.careRatio}" /></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">厚生年金保険料率%</td>
             <td width="200px"> <input type="text" id="annuityRatio" name="annuityRatio"
-                                      value="${welfarefeeInfoFormBean.annuityRatio*100}" /></td>
+                                      value="${welfarefeeInfoFormBean.annuityRatio}" /></td>
         </tr>
-
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">厚生子育拠出金率</td>
-            <td width="200px"><input type="text" id="contributionRate" name="contributionRate"
-                                     value="${welfarefeeInfoFormBean.contributionRate*100}" /></td>
-
 
         <tr style="background-color:#dcfeeb">
             <td width="200px">利用ステータス</td>

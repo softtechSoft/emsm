@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.EmplyinsrateInfoFormBean;
-import com.softtech.common.EmplyinsrateIDName;
+import com.softtech.common.ListIDName;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.mappers.EmplyinsrateMapper;
 import com.softtech.util.DataUtil;
@@ -78,9 +78,7 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
             emplyinsrateInfoFormBean.setYear(emplyinsrateInfoEntity.getYear());
             emplyinsrateInfoFormBean.setLaborBurdenRate(emplyinsrateInfoEntity.getLaborBurdenRate());
             emplyinsrateInfoFormBean.setEmployerBurdenRate(emplyinsrateInfoEntity.getEmployerBurdenRate());
-            emplyinsrateInfoFormBean.setEmploymentInsuranceRate(emplyinsrateInfoEntity.getEmploymentInsuranceRate());
             emplyinsrateInfoFormBean.setIndustrialAccidentInsuranceRate(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate());
-            emplyinsrateInfoFormBean.setLaborInsuranceRate(emplyinsrateInfoEntity.getLaborInsuranceRate());
             emplyinsrateInfoFormBean.setContributionRate(emplyinsrateInfoEntity.getContributionRate());
             emplyinsrateInfoFormBean.setStatus(emplyinsrateInfoEntity.getStatus());
             emplyinsrateInfoFormBean.setUpdateDate(emplyinsrateInfoEntity.getUpdateDate());
@@ -103,7 +101,6 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
         String nextEmplyinsrateID = DataUtil.getNextID(maxEmplyinsrateID, 1);
         return nextEmplyinsrateID;
     }
-
     /**
      * 概要:更新用BeanToEntity
      *
@@ -131,24 +128,12 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
        // String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
         emplyinsrateInfoEntity.setEmployerBurdenRate(emplyinsrateInfoFormBean.getEmployerBurdenRate());
 
-        //雇用保険料率‰
-        //String employmentInsuranceRate = emplyinsrateInfoFormBean.getEmploymentInsuranceRate();
-        //String employmentInsuranceRate1 =
-        //        new BigDecimal(employmentInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setEmploymentInsuranceRate(emplyinsrateInfoFormBean.getEmploymentInsuranceRate());
-
         //労災保険料率(全額事業主)‰
         //String industrialAccidentInsuranceRate =
                 //emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate();
         //String industrialAccidentInsuranceRate1 =
                // new BigDecimal(industrialAccidentInsuranceRate).divide(thousand).toString();
         emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate());
-
-        //労働保険料率‰
-        //String laborInsuranceRate = emplyinsrateInfoFormBean.getLaborInsuranceRate();
-        //String laborInsuranceRate1 = new BigDecimal(laborInsuranceRate).divide(thousand).toString();
-
-        emplyinsrateInfoEntity.setLaborInsuranceRate(emplyinsrateInfoFormBean.getLaborInsuranceRate());
 
         //一般拠出金料率(全額事業主)‰
         //String contributionRate = emplyinsrateInfoFormBean.getContributionRate();
@@ -217,23 +202,12 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
        // String employerBurdenRate1 = new BigDecimal(employerBurdenRate).divide(thousand).toString();
         emplyinsrateInfoEntity.setEmployerBurdenRate(employerBurdenRate);
 
-        //雇用保険料率‰
-        String employmentInsuranceRate = emplyinsrateInfoFormBean.getEmploymentInsuranceRate();
-        //String employmentInsuranceRate1 =
-        //        new BigDecimal(employmentInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setEmploymentInsuranceRate(employmentInsuranceRate);
-
         //労災保険料率(全額事業主)‰
         String industrialAccidentInsuranceRate =
                 emplyinsrateInfoFormBean.getIndustrialAccidentInsuranceRate();
        // String industrialAccidentInsuranceRate1 =
            //     new BigDecimal(industrialAccidentInsuranceRate).divide(thousand).toString();
         emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate(industrialAccidentInsuranceRate);
-
-        //労働保険料率‰
-        String laborInsuranceRate = emplyinsrateInfoFormBean.getLaborInsuranceRate();
-        //String laborInsuranceRate1 = new BigDecimal(laborInsuranceRate).divide(thousand).toString();
-        emplyinsrateInfoEntity.setLaborInsuranceRate(laborInsuranceRate);
 
         //一般拠出金料率(全額事業主)‰
         String contributionRate = emplyinsrateInfoFormBean.getContributionRate();
@@ -285,12 +259,12 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
      * @date:2022/08/08
      */
     @Override
-    public List<EmplyinsrateIDName> getYear() {
-        List<EmplyinsrateIDName> emplyinsrateIDNameList = new ArrayList<>();
+    public List<ListIDName> getYear() {
+        List<ListIDName>listIDNameList = new ArrayList<>();
         // DBから年度を取得
-        emplyinsrateIDNameList = emplyinsrateMapper.getYear();
+        listIDNameList = emplyinsrateMapper.getYear();
 
-        return emplyinsrateIDNameList;
+        return listIDNameList;
     }
     /*
      * 機能：指定数の過去年度リストを生成する
@@ -299,8 +273,11 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
 	 * @return 過去年度リスト
 	 * @exception なし
      */
-    public ArrayList<EmplyinsrateIDName> getOldYears(int oldYear){
-    	return (ArrayList<EmplyinsrateIDName>) DateUtil.getYears(oldYear);
+	/* public ArrayList<EmplyinsrateIDName> getOldYears(int oldYear){
+		return (ArrayList<EmplyinsrateIDName>) DateUtil.getYears(oldYear);
+	}*/
+    public ArrayList<ListIDName> getOldYears(int oldYear){
+    	return (ArrayList<ListIDName>) DateUtil.getYears(oldYear);
     }
 }
 

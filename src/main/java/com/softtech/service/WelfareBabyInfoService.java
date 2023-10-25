@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.WelfareBabyInfoFormBean;
+import com.softtech.common.ListIDName;
 import com.softtech.common.RateIDName;
 import com.softtech.entity.WelfareBabyInfoEntity;
 @Service
@@ -81,7 +82,8 @@ public interface WelfareBabyInfoService {
 	 * @return 過去年度リスト
 	 * @exception なし
      */
-	ArrayList<RateIDName> getOldYears(int i);
+	//ArrayList<RateIDName> getOldYears(int oldYear);
+	ArrayList<ListIDName> getOldYears(int oldYear);
 	//boolean updateWelfareBabyInfo(WelfareBabyInfoEntity welfareBabyInfoEntity1);
 	//boolean insertWelfareBabyInfo(WelfareBabyInfoFormBean welfarebabyInfoFormBean);
 

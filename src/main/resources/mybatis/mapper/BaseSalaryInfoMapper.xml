@@ -30,7 +30,6 @@
                 date_format(now(), '%Y%m%d'),
                 date_format(now(), '%Y%m%d') )
 
-
     </select>
     <!-- 基本給リストの検索 -->
     <select id="getBaseSalaryInfoList" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">

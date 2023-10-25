@@ -1,21 +1,25 @@
 package com.softtech.actionForm;
 
-import com.softtech.common.WelfarefeeIDName;
+import java.util.ArrayList;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
+
+import com.softtech.common.WelfarefeeIDName;
+
+import lombok.Data;
 
 /**
  * @program @概要: @作成者:孫曄 @作成日:2022-05-24
  * @return:
  */
+@Data
 public class WelfarefeeInfoFormBean {
   // 厚生保険料ID PKです。
   private String welfarefeeID;
   // 対象年度
   // 年度と収入、２の１選択、@NotEmptyは必要ない
-  @Pattern(message = "対象年度に数値のみを入力してください。", regexp = "^[0-9]*$")
+  @Pattern(message = "対象年度に数値のみを入力してください。", regexp = "^[0-9]{4}$")
   private String year;
   // 対象エリア 都道府県の名前
   @Pattern(message = "対象エリアに漢字のみを入力してください。", regexp = "^[\\u4E00-\\u9FFF]+$")
@@ -35,20 +39,17 @@ public class WelfarefeeInfoFormBean {
   private String salaryTo;
   // 介護必要ない料率
   @NotEmpty(message = "介護必要ない料率を入力してください。")
-  @Pattern(message = "介護必要ない料率に小数点2位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,2})?$")
+  @Pattern(message = "介護必要ない料率に小数点3位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,3})?$")
   private String notCareRatio;
   // 介護必要料率
   @NotEmpty(message = "介護必要料率を入力してください。")
-  @Pattern(message = "介護必要料率に小数点2位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,2})?$")
+  @Pattern(message = "介護必要料率に小数点3位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,3})?$")
   private String careRatio;
   // 厚生年金保険料率
   @NotEmpty(message = "厚生年金保険料率を入力してください。")
-  @Pattern(message = "厚生年金保険料率小数点2位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,2})?$")
+  @Pattern(message = "厚生年金保険料率小数点3位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,3})?$")
   private String annuityRatio;
-  //厚生子育拠出金率
-  @NotEmpty(message = "厚生子育拠出金率を入力してください。")
-  @Pattern(message = "厚生子育拠出金率小数点2位までの数字のみを入力してください。", regexp = "^[0-9]+(.[0-9]{1,2})?$")
-  private String contributionRate;
+
   // 利用ステータス 0:未使用　1:使用中
   private int status;
   // 作成日
@@ -61,12 +62,12 @@ public class WelfarefeeInfoFormBean {
   private ArrayList<WelfarefeeIDName> welfarefeeIDNameArrayList;
   // 入力の収入
   // 年度と収入、２の１選択、、@NotEmptyは必要ない
-  @Pattern(message = "収入に整数のみを入力してください。", regexp = "^-[1-9]*$")
-  private String enterSalary;
+ // @Pattern(message = "収入に整数のみを入力してください。", regexp = "^-[1-9]*$")
+ // private String enterSalary;
 
-  public String getWelfarefeeID() {
-    return welfarefeeID;
-  }
+	/*public String getWelfarefeeID() {
+	return welfarefeeID;
+	}*/
 
   public void setWelfarefeeID(String welfarefeeID) {
     this.welfarefeeID = welfarefeeID;
@@ -176,19 +177,24 @@ public class WelfarefeeInfoFormBean {
     this.welfarefeeIDNameArrayList = welfarefeeIDNameArrayList;
   }
 
-  public String getEnterSalary() {
-    return enterSalary;
+  @Override
+	public String toString() {
+	    return "WelfarefeeInfoFormBean{" +
+	            "welfarefeeID='" + welfarefeeID + '\'' +
+	            ", year='" + year + '\'' +
+	            ", area='" + area + '\'' +
+	            ", standSalary='" + standSalary + '\'' +
+	            ", salaryFrom='" + salaryFrom + '\'' +
+	            ", salaryTo='" + salaryTo + '\'' +
+	            ", notCareRatio='" + notCareRatio + '\'' +
+	            ", careRatio='" + careRatio + '\'' +
+	            ", annuityRatio='" + annuityRatio + '\'' +
+	            ", status='" + status + '\'' +
+	            ", insertDate='" + insertDate + '\'' +
+	            ", updateDate='" + updateDate + '\'' +
+	            ", insertFlg='" + insertFlg + '\'' +
+	            ", welfarefeeIDNameArrayList=" + welfarefeeIDNameArrayList +
+	            '}';
   }
 
-  public void setEnterSalary(String enterSalary) {
-    this.enterSalary = enterSalary;
-  }
-
-  public String getContributionRate() {
-    return contributionRate;
-  }
-
-  public void setContributionRate(String contributionRate) {
-    this.contributionRate = contributionRate;
-  }
 }

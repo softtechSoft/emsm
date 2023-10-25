@@ -69,9 +69,7 @@ class EmplyInsrateInfoServiceImplTest {
             emplyinsrateInfoEntity.setYear("2020");
             emplyinsrateInfoEntity.setLaborBurdenRate("1");
             emplyinsrateInfoEntity.setEmployerBurdenRate("2");
-            emplyinsrateInfoEntity.setEmploymentInsuranceRate("3");
             emplyinsrateInfoEntity.setIndustrialAccidentInsuranceRate("4");
-            emplyinsrateInfoEntity.setLaborInsuranceRate("5");
             emplyinsrateInfoEntity.setContributionRate("6");
             emplyinsrateInfoEntity.setStatus("7");
             emplyinsrateInfoEntity.setUpdateDate("8");
@@ -82,9 +80,7 @@ class EmplyInsrateInfoServiceImplTest {
         emplyinsrateInfoFormBean.setYear("2020");
         emplyinsrateInfoFormBean.setLaborBurdenRate("1");
         emplyinsrateInfoFormBean.setEmployerBurdenRate("2");
-        emplyinsrateInfoFormBean.setEmploymentInsuranceRate("3");
         emplyinsrateInfoFormBean.setIndustrialAccidentInsuranceRate("4");
-        emplyinsrateInfoFormBean.setLaborInsuranceRate("5");
         emplyinsrateInfoFormBean.setContributionRate("6");
         emplyinsrateInfoFormBean.setStatus("7");
         emplyinsrateInfoFormBean.setUpdateDate("8");

@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.WelfareBabyInfoFormBean;
+import com.softtech.common.ListIDName;
 import com.softtech.common.RateIDName;
 import com.softtech.entity.WelfareBabyInfoEntity;
 import com.softtech.mappers.WelfareBabyInfoMapper;
@@ -100,6 +101,7 @@ public class WelfareBabyInfoServiceImpl implements WelfareBabyInfoService {
     private WelfareBabyInfoEntity transforBeanToEntityByUpdate(
     		WelfareBabyInfoFormBean welfareBabyInfoFormBean) {
     	WelfareBabyInfoEntity welfareBabyInfoEntity = new WelfareBabyInfoEntity();
+    	 welfareBabyInfoEntity.setRateID(welfareBabyInfoFormBean.getRateID());
 
         // 対象年度
         String year = welfareBabyInfoFormBean.getYear();
@@ -215,8 +217,12 @@ public class WelfareBabyInfoServiceImpl implements WelfareBabyInfoService {
 		return rateIDNameList;
 	}
 
-	public ArrayList<RateIDName> getOldYears(int oldYear){
-    	return (ArrayList<RateIDName>) DateUtil.getYears2(oldYear);
-    }
+	/*public ArrayList<RateIDName> getOldYears(int oldYear){
+		return (ArrayList<RateIDName>) DateUtil.getYears2(oldYear);
+	}*/
+	public ArrayList<ListIDName> getOldYears(int oldYear){
+		return (ArrayList<ListIDName>) DateUtil.getYears(oldYear);
+	}
+
 
 }

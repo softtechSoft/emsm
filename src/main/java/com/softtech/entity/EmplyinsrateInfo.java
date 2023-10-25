@@ -16,12 +16,8 @@ public class EmplyinsrateInfo {
     private String laborBurdenRate;
     //雇用保険事業主負担料率‰
     private String employerBurdenRate;
-    //雇用保険料率‰
-    private String employmentInsuranceRate;
     //労災保険料率(全額事業主)‰
     private String industrialAccidentInsuranceRate;
-    //労働保険料率‰
-    private String laborInsuranceRate;
     //一般拠出金料率(全額事業主)‰
     private String contributionRate;
     //利用ステータス 0:未使用　1:使用中
@@ -63,28 +59,12 @@ public class EmplyinsrateInfo {
         this.employerBurdenRate = employerBurdenRate;
     }
 
-    public String getEmploymentInsuranceRate() {
-        return employmentInsuranceRate;
-    }
-
-    public void setEmploymentInsuranceRate(String employmentInsuranceRate) {
-        this.employmentInsuranceRate = employmentInsuranceRate;
-    }
-
     public String getIndustrialAccidentInsuranceRate() {
         return industrialAccidentInsuranceRate;
     }
 
     public void setIndustrialAccidentInsuranceRate(String industrialAccidentInsuranceRate) {
         this.industrialAccidentInsuranceRate = industrialAccidentInsuranceRate;
-    }
-
-    public String getLaborInsuranceRate() {
-        return laborInsuranceRate;
-    }
-
-    public void setLaborInsuranceRate(String laborInsuranceRate) {
-        this.laborInsuranceRate = laborInsuranceRate;
     }
 
     public String getContributionRate() {

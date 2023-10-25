@@ -50,7 +50,7 @@
 
     <b>年度:</b>
     <form:select path="year">
-        <form:options items="${emplyinsrateIDNameList}" itemLabel="year" itemValue="year"/>
+        <form:options items="${listIDNameList}" itemLabel="year" itemValue="year"/>
     </form:select>
     <td></td>
     <input type="button" name="search" value="検索" onclick="toSearchJsp()"/>
@@ -68,9 +68,7 @@
             <th width="80">対象年度</th>
             <th width="150">雇用保険労働者負担料率‰</th>
             <th width="150">雇用保険事業主負担料率‰</th>
-            <th width="125">雇用保険料率‰</th>
             <th width="150">労災保険料率(全額事業主)‰</th>
-            <th width="125">労働保険料率‰</th>
             <th width="150">一般拠出金料率(全額事業主)‰</th>
             <th width="100">利用ステータス</th>
             <th width="70">作成日</th>
@@ -87,10 +85,7 @@
                 <td><c:out value="${emplyinsrateInfoList.year}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.laborBurdenRate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.employerBurdenRate}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.employmentInsuranceRate}"/></td>
-                <td><c:out
-                        value="${emplyinsrateInfoList.industrialAccidentInsuranceRate}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.laborInsuranceRate}"/></td>
+                <td><c:out value="${emplyinsrateInfoList.industrialAccidentInsuranceRate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.contributionRate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.status}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.insertDate}"/></td>

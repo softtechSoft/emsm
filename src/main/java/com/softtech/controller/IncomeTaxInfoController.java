@@ -136,7 +136,7 @@ public class IncomeTaxInfoController {
 
 
         //更新画面の年度を表示する用リスト候補生成
-        List<IncomeTaxIDName> year = incomTaxInfoService.getYear(); 
+        List<IncomeTaxIDName> year = incomTaxInfoService.getYear();
         model.addAttribute("year", year);
 
         return "incomeTaxInfoEdit";
