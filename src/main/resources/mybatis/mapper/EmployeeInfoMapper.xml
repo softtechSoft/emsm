@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.EmployeeInfoMapper">
+	<insert id = "insertEmployeeInfo" parameterType = "com.softtech.entity.EmployeeInfoEntity">
+		insert into employee
+		(employeeID,
+		 employeeName,
+		 password,
+		 status,
+		 sex,
+		 epType,
+		 birthday,
+		 age,
+		 joinedDate,
+		 joinedTime,
+		 postCode,
+		 address,
+		 phoeNumber,
+		 authority,
+		 mailAdress,
+		 insertDate,
+		 updateDate)
+
+		 value(#{employeeID},
+		 	   #{employeeName},
+		 	   #{password},
+		 	   #{status},
+		 	   #{sex},
+		 	   #{epType},
+		 	   #{birthday},
+		 	   #{age},
+		 	   #{joinedDate},
+		 	   #{joinedTime},
+		 	   #{postCode},
+		 	   #{address},
+		 	   #{phoeNumber},
+		 	   #{authority},
+		 	   #{mailAdress,
+		 	   date_format(now(), '%Y%m%d'),
+               date_format(now(), '%Y%m%d') )
+	</insert>
+	<!--画面の社員ID選択-->
+     <select id="getEmployee" resultType="com.softtech.entity.Employee">
+        select employeeName, employeeID
+        FROM employee;
+    </select>
+
+    	<!-- 社員情報リストの検索 -->
+	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
+        select *
+        from employee
+        where employeeID = #{employeeID}
+    </select>
+
+
+	<!-- 社員情報更新画面へのときの検索 -->
+	<select id="getUpdateEmployeeByEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
+        select *
+        from employee
+        where employeeID = #{employeeID}
+    </select>
+
+    <!-- 社員情報更新 -->
+    <update id="updateEmployeeInfo" parameterType="com.softtech.entity.EmployeeInfoEntity">
+    	update employee
+    	set employeeID = #{employeeID},
+    	    employeeName= #{employeeName},
+    	    password = #{password},
+    	    status = #{status},
+    	    sex = #{sex},
+    	    epType = #{epType},
+    	    birthday = #{birthday},
+    	    age = #{age},
+    	    joinedDate = #{joinedDate},
+    	    joinedTime = #{joinedTime},
+    	    postCode = #{postCode},
+    	    address = #{address},
+    	    phoneNumber = #{phoneNumber},
+    	    authority = #{authority},
+    	    mailAdress = #{mailAdress},
+    	    insertDate = date_format(now(),'%Y%m%d'),
+    	    updateDate = date_format(now(),'%Y%m%d)
+    	    where employeeID = #{employeeID}
+    </update>
+    <!--最大ID取得。-->
+       <select id="getMaxEmployeeID" resultType="string">
+        <!--社員情報IDを取得する。-->
+        select MAX(employeeID)
+        from employee;
+    </select>
+
+</mapper>

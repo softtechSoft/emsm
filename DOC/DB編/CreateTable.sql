@@ -39,7 +39,7 @@ updateDate varchar(8) comment'更新日'
 
 
 Insert into ofcfunction values
-('S1','employee','&#xe666;&emsp;社員情報管理','1','/employee','0' ,'0',date_format(now(),'%Y%m%d') ,null),
+('S1','employee','&#xe60c;&emsp;社員情報','1','/emsm/employeeInfoList','0' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('S2','company','&#xe65c;&emsp;取引先情報管理','1','/company','1' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('S3','contract','&#xe65d;&emsp;契約情報管理','1','/contract','2' ,'1',date_format(now(),'%Y%m%d') ,null),
 ('S4','workInfo','&#xe672;&emsp;勤怠情報管理','1','/workInfo','3' ,'1',date_format(now(),'%Y%m%d') ,null),
@@ -58,8 +58,9 @@ Insert into ofcfunction values
 ('B1','expenses','&#xe60c;&emsp;一般経費','1','/emsm/initExpensesManagement','1' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('B2','basesalary','&#xe60c;&emsp;基本給情報リスト','1','/emsm/initBaseSalaryList','2' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('W1','welfarefee','&#xe60c;&emsp;マスタ_厚生保険料','1','/emsm/initWelfarefeeInfoList','8' ,'0',date_format(now(),'%Y%m%d') ,null),
+('W2','welfarebaby','&#xe60c;&emsp;マスタ_厚生子育徴収率','1','/emsm/initWelfareBabyInfoList','8' ,'0',date_format(now(),'%Y%m%d') ,null),
 ('S9','emplyinsrate','&#xe60c;&emsp;雇用保険率テーブル','1','/emsm/initEmplyinsrateInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null),
-('M1','incomeTax','&#xe60c;&emsp;消費税テーブル','1','/emsm/initIncomeTaxInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null);
+('M1','incomeTax','&#xe60c;&emsp;所得税と住民税マスター','1','/emsm/initIncomeTaxInfoList','9' ,'0',date_format(now(),'%Y%m%d') ,null);
 insert into ofcfunction('functionID','functionName','functionText','authority','functionLink','deleteFlg')
 values
 ('M1','incomeTax','&#xe60c;&emsp;消費税テーブル','1','/emsm/initIncomeTaxInfoList','0');
@@ -423,8 +424,8 @@ drop table if exists m_welfarebabyrate;
 create table m_welfarebabyrate(
     rateID int not null primary key comment'徴収ID',
     year varchar(4) not null comment'対処年度',
-    area varchar(8) not null comment'対処エリア',
-    rate decimal(6,5) NOT NULL COMMENT '徴収率',
+    area varchar(20) not null comment'対処エリア',
+    rate decimal(3,2) NOT NULL COMMENT '徴収率',
     status int NOT NULL COMMENT '利用ステータス',
     insertDate varchar(8) NOT NULL COMMENT '作成日',
     updateDate varchar(8) NOT NULL COMMENT '更新日'

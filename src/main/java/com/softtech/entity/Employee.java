@@ -19,7 +19,7 @@ public class Employee {
 	 String phoneNumber;
 	 String authority;
 	 String mailAdress;
-	 String remark;
+	 String epType;
 	 String insertDate;
 	 String updateDate;
 	/**
@@ -193,14 +193,14 @@ public class Employee {
 	/**
 	 * @return remark
 	 */
-	public String getRemark() {
-		return remark;
+	public String getEpType() {
+		return epType;
 	}
 	/**
 	 * @param remark セットする remark
 	 */
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setEpType(String epType) {
+		this.epType = epType;
 	}
 	/**
 	 * @return insertDate
@@ -232,7 +232,7 @@ public class Employee {
 				+ ", status=" + status + ", sex=" + sex + ", birthday=" + birthday + ", age=" + age + ", joinedDate="
 				+ joinedDate + ", joinedTime=" + joinedTime + ", postCode=" + postCode + ", address=" + address
 				+ ", phoneNumber=" + phoneNumber + ", authority=" + authority + ", mailAdress=" + mailAdress
-				+ ", remark=" + remark + ", insertDate=" + insertDate + ", updateDate=" + updateDate + "]";
+				+ ", epType=" + epType + ", insertDate=" + insertDate + ", updateDate=" + updateDate + "]";
 	}
 
 
