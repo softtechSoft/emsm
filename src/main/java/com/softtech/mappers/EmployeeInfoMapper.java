@@ -14,6 +14,7 @@ public interface EmployeeInfoMapper {
 
     //検索用のquery,社員IDにより、検索する
     List<EmployeeInfoEntity> getEmployeeID(@Param("employeeID") String employeeID) ;
+    List<EmployeeInfoEntity> getEmployeeIDAll(@Param("employeeID") String employeeID) ;
     //更新画面への検索,表示される画面の所得税IDにより、検索する
      List<EmployeeInfoEntity> getUpdateEmployeeByEmployeeID(@Param("employeeID") String employeeID) ;
     //最大のIncomeTaxIDを取得、+1用

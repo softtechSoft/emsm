@@ -39,6 +39,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         return employeeByEmployeeID;
     }
 
+    public List<EmployeeInfoEntity> getEmployeeIDAll(String employeeID) {
+        List<EmployeeInfoEntity> employeeByEmployeeID = employeeInfoMapper.getEmployeeIDAll(employeeID);
+        return employeeByEmployeeID;
+    }
+
     /**
      * 概要:更新画面への検索,表示される画面の所得税IDにより、検索する
      *
@@ -70,14 +75,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         return nextEmployeeID;
     }
 
-	/* public List<EmployeeIDName> getYear() {
-	    List<EmployeeIDName> employeeIDNameList = new ArrayList<>();
-	    // DBから年度を取得
-	    employeeIDNameList = employeeInfoMapper.getYear();
-
-	    return employeeIDNameList;
-
-	}*/
     /**
      * 概要:DB Entityからui使用のformへ変更,更新画面の生成の時使用
      *

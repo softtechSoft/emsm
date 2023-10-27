@@ -20,6 +20,7 @@ public interface EmployeeInfoService {
      * @date:2023/10/23
      */
 	List<EmployeeInfoEntity> getEmployeeID(String employeeID);
+	List<EmployeeInfoEntity> getEmployeeIDAll(String employeeID);
     /**
      * 概要:更新画面への検索,表示される画面の所得税IDにより、検索する
      *

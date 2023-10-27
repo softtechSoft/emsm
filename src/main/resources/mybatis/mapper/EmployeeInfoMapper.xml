@@ -55,6 +55,12 @@
         where employeeID = #{employeeID}
     </select>
 
+    	<select id="getEmployeeIDAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
+		select *
+        FROM employee
+        where status = '0'
+    </select>
+
 
 	<!-- 社員情報更新画面へのときの検索 -->
 	<select id="getUpdateEmployeeByEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">

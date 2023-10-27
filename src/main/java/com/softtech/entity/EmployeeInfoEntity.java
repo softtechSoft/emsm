@@ -38,6 +38,11 @@ public class EmployeeInfoEntity {
 			private String updateDate;
 			//更新と新規区別用のFlg
 			private String insertFlg;
+			private String selectFlg;
+
+
+
+
 
 
 
@@ -184,6 +189,14 @@ public class EmployeeInfoEntity {
 
 			public void setInsertFlg(String insertFlg) {
 				this.insertFlg = insertFlg;
+			}
+
+			public String getSelectFlg() {
+				return selectFlg;
+			}
+
+			public void setSelectFlg(String selectFlg) {
+				this.selectFlg = selectFlg;
 			}
 
 

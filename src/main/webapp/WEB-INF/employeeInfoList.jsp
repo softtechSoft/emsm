@@ -10,9 +10,14 @@
     <script type="text/javascript" >
     <!--検索-->
     function toSearchJsp(){
-
-    	 document.theForm.submit();
+    	document.getElementById('selectFlg').value='0';
+    	document.theForm.submit();
     }
+
+    function toSearchJsp1(){
+    	document.getElementById('selectFlg').value='1';
+    	document.theForm.submit();
+   }
 
     // 更新ボタン処理
     function toUpdateJsp(employeeID){
@@ -49,7 +54,7 @@
     </form:select>
 	 <td></td>
     <input type="button" name="search" value="検索" onclick="toSearchJsp()"/>
-    <input type="button" name="search" value="全量検索" onclick="toSearchJsp()"/>
+    <input type="button" name="search" value="全量検索" onclick="toSearchJsp1()"/>
 	<!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">

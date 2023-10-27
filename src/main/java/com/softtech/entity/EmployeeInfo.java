@@ -39,6 +39,8 @@ public class EmployeeInfo {
 			//更新と新規区別用のFlg
 			private String insertFlg;
 
+			private String selectFlg;
+
 
 			public String getEmployeeID() {
 				return employeeID;
@@ -183,6 +185,16 @@ public class EmployeeInfo {
 			public void setInsertFlg(String insertFlg) {
 				this.insertFlg = insertFlg;
 			}
+
+			public String getSelectFlg() {
+				return selectFlg;
+			}
+
+			public void setSelectFlg(String selectFlg) {
+				this.selectFlg = selectFlg;
+			}
+
+
 
 
 

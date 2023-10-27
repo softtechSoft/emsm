@@ -77,21 +77,57 @@ public class EmployeeInfoController {
 		logger.error("error test");
 		logger.fatal("fatal test");
 
+		/*		String employeeID = employeeInfoFormBean.getEmployeeID();
+				//社員IDにより、検索する
+				List<EmployeeInfoEntity> bList=
+				employeeInfoService.getEmployeeID(employeeID);
+
+						//社員IDリスト候補生成
+						List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
+						//社員IDリスト候補を画面へ渡す
+						model.addAttribute("employeeList",employeeList);
+						model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
+						model.addAttribute("list",bList);
+
+						return "employeeInfoList";*/
 		String employeeID = employeeInfoFormBean.getEmployeeID();
-		//社員IDにより、検索する
-		List<EmployeeInfoEntity> bList=
-		employeeInfoService.getEmployeeID(employeeID);
+		List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
+		model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
+		model.addAttribute("employeeList",employeeList);
+		//return "employeeInfoList";
 
-				//社員IDリスト候補生成
-				List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
-				//社員IDリスト候補を画面へ渡す
-				model.addAttribute("employeeList",employeeList);
-				model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
-				model.addAttribute("list",bList);
+		String selectFlg = employeeInfoFormBean.getSelectFlg();
 
-				return "employeeInfoList";
+		model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
+		if("0".equals(selectFlg)) {
 
-			}
+			List<EmployeeInfoEntity> bList=
+					employeeInfoService.getEmployeeID(employeeID);
+			//List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
+			employeeInfoFormBean.setSelectFlg(selectFlg);
+			model.addAttribute("employeeList",employeeList);
+			model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
+			model.addAttribute("list",bList);
+			return "employeeInfoList";
+
+		}
+		else {
+			List<EmployeeInfoEntity> ListAll=
+					employeeInfoService.getEmployeeIDAll(employeeID);
+
+			employeeID = employeeInfoFormBean.getEmployeeID();
+			employeeInfoFormBean.setSelectFlg(selectFlg);
+			List<EmployeeActionForm> employeeListAll= employeeInfoService.queryEmployeeInfo();
+			model.addAttribute("employeeListAll",employeeListAll);
+			model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
+			model.addAttribute("list",employeeList);
+			model.addAttribute("list",ListAll);
+			return "employeeInfoList";
+
+		}
+	}
+
+
 	/**概要:検索と更新画面の初期表示
 	    *@param:[employeeInfoFormBean, model]
 	    *@return:java.lang.String
