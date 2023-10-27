@@ -48,10 +48,8 @@ public class EmployeeInfoController {
 	  */
 	@RequestMapping("/initEmployeeInfoList")
 	public String toinitEmployeeInfoList(Model model) {
-		logger.info("start index()");
 
 		//DBから社員情報を取得する,画面の社員ID選択,枠に表示する
-
 		List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
 		model.addAttribute("employeeList", employeeList);
 
@@ -70,39 +68,18 @@ public class EmployeeInfoController {
 	@RequestMapping("/employeeInfoList")
 	public String employeeInfo(@ModelAttribute("employeeInfoFormBean") EmployeeInfoFormBean employeeInfoFormBean,Model model){
 
-		logger.debug("debug test");
-		logger.info("info test");
-		logger.warn("warn test");
-		logger.error("error test");
-		logger.fatal("fatal test");
-
-		/*		String employeeID = employeeInfoFormBean.getEmployeeID();
-				//社員IDにより、検索する
-				List<EmployeeInfoEntity> bList=
-				employeeInfoService.getEmployeeID(employeeID);
-
-						//社員IDリスト候補生成
-						List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
-						//社員IDリスト候補を画面へ渡す
-						model.addAttribute("employeeList",employeeList);
-						model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
-						model.addAttribute("list",bList);
-
-						return "employeeInfoList";*/
 		String employeeID = employeeInfoFormBean.getEmployeeID();
 		List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
 		model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
 		model.addAttribute("employeeList",employeeList);
-		//return "employeeInfoList";
 
 		String selectFlg = employeeInfoFormBean.getSelectFlg();
 
 		model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
 		if("0".equals(selectFlg)) {
 
-			List<EmployeeInfoEntity> bList=
-					employeeInfoService.getEmployeeID(employeeID);
-			//List<EmployeeActionForm> employeeList = employeeInfoService.queryEmployeeInfo();
+			List<EmployeeInfoEntity> bList=employeeInfoService.getEmployeeID(employeeID);
+
 			employeeInfoFormBean.setSelectFlg(selectFlg);
 			model.addAttribute("employeeList",employeeList);
 			model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
@@ -111,8 +88,7 @@ public class EmployeeInfoController {
 
 		}
 		else {
-			List<EmployeeInfoEntity> ListAll=
-					employeeInfoService.getEmployeeIDAll(employeeID);
+			List<EmployeeInfoEntity> ListAll=employeeInfoService.getEmployeeIDAll(employeeID);
 
 			employeeID = employeeInfoFormBean.getEmployeeID();
 			employeeInfoFormBean.setSelectFlg(selectFlg);
