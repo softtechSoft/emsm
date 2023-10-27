@@ -39,6 +39,7 @@ public class EmployeeInfoFormBean {
 		//更新と新規区別用のFlg
 		private String insertFlg;
 
+		//検索区別用のFlg
 		private String selectFlg;
 
 

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.EmployeeActionForm;
 import com.softtech.actionForm.EmployeeInfoFormBean;
-import com.softtech.entity.EmployeeInfo;
 import com.softtech.entity.EmployeeInfoEntity;
 import com.softtech.service.EmployeeInfoService;
 
@@ -40,13 +39,13 @@ public class EmployeeInfoController {
 	static protected Logger logger = LogManager.getLogger(EmployeeInfoController.class);
 
 	/**
-	   * 概要:社員情報画面の初期表示
-	   *
-	   * @param:[model]
-	   * @return:java.lang.String
-	   * @author:スッ
-	   * @date:2023/10/20
-	   */
+	  * 概要:社員情報画面の初期表示
+	  *
+	  * @param:[model]
+	  * @return:java.lang.String
+	  * @author:スッ
+	  * @date:2023/10/20
+	  */
 	@RequestMapping("/initEmployeeInfoList")
 	public String toinitEmployeeInfoList(Model model) {
 		logger.info("start index()");
@@ -69,7 +68,7 @@ public class EmployeeInfoController {
 	*@date:2023/10/20
 	*/
 	@RequestMapping("/employeeInfoList")
-	public String employeeInfo(@ModelAttribute("employeeInfoFormBean") EmployeeInfo employeeInfoFormBean,Model model){
+	public String employeeInfo(@ModelAttribute("employeeInfoFormBean") EmployeeInfoFormBean employeeInfoFormBean,Model model){
 
 		logger.debug("debug test");
 		logger.info("info test");

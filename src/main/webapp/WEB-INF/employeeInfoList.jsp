@@ -42,8 +42,9 @@
 <h2>社員情報</h2>
 	<form:form name="theForm" id="theForm" method="post" modelAttribute="employeeInfoFormBean"
            action="employeeInfoList">
-   <%--  <input type="hidden" id="employeeID" name="employeeID"
-           value="${employeeInfoFormBean.employeeID}"/> --%>
+    <!--検索フラグ　０：検索　１：全量検索-->
+    <input type="hidden" id="selectFlg" name="selectFlg"
+           value="${employeeInfoFormBean.selectFlg}"/>
     <!--新規フラグ　０　新規　１　更新-->
     <input type="hidden" id="insertFlg" name="insertFlg"
            value="${employeeInfoFormBean.insertFlg}"/>
@@ -66,8 +67,6 @@
 	<tr>
 		<th width="100">社員ID</th>
 		<th width="100">社員氏名</th>
-		<!-- <th width="100">パスワード</th>
-		<th width="100">ステータス</th> -->
 		<th width="100">性別</th>
 		<th width="100">タイプ</th>
 		<th width="100">生年月日</th>
@@ -89,8 +88,6 @@
                     <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
                 <td><c:out value="${employeeInfoList.employeeID}"/></td>
                 <td><c:out value="${employeeInfoList.employeeName}"/></td>
-                <%-- <td><c:out value="${employeeInfoList.password}"/></td>
-                <td><c:out value="${employeeInfoList.status}"/></td> --%>
                 <td><c:out value="${employeeInfoList.sex}"/></td>
                 <td><c:out value="${employeeInfoList.epType}"/></td>
                 <td><c:out value="${employeeInfoList.birthday}"/></td>
@@ -102,8 +99,6 @@
                 <td><c:out value="${employeeInfoList.phoneNumber}"/></td>
                 <td><c:out value="${employeeInfoList.authority}"/></td>
                 <td><c:out value="${employeeInfoList.mailAdress}"/></td>
-                <%-- <td><c:out value="${employeeInfoList.insertDate}"/></td>
-                <td><c:out value="${employeeInfoList.updateDate}"/></td> --%>
                 <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out
                         value="${employeeInfoList.employeeID}"/>');"/></td>
             </tr>
