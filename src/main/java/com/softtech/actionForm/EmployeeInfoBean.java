@@ -12,9 +12,9 @@ public class EmployeeInfoBean {
 	//社員氏名
 	private String employeeName;
 	//パスワード
-	private String password;
+	/*private String password;
 	//ステータス
-	private String status;
+	private String status;*/
 	//性別
 	private String sex;
 	//タイプ
@@ -50,14 +50,14 @@ public class EmployeeInfoBean {
 		return employeeName;
 	}
 
-	public String getPassword() {
+	/*public String getPassword() {
 		return password;
 	}
 
 	public String getStatus(){
 		return status;
 
-	}
+	}*/
 
 	public String getSex() {
 		return sex;

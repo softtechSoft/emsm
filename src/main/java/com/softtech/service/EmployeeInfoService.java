@@ -20,7 +20,10 @@ public interface EmployeeInfoService {
      * @date:2023/10/23
      */
 	List<EmployeeInfoEntity> getEmployeeID(String employeeID);
+
+	/**　全量検索　*/
 	List<EmployeeInfoEntity> getEmployeeIDAll(String employeeID);
+
     /**
      * 概要:更新画面への検索,表示される画面の所得税IDにより、検索する
      *
@@ -72,46 +75,5 @@ public interface EmployeeInfoService {
 	 *@date:2022/08/12
 	 */
 	 List<EmployeeActionForm> queryEmployeeInfo();
-	/**
-	 * 概要:DB Entityからui使用のformへ変更,更新画面の生成の時使用
-	 *
-	 * @param eList
-	 * @param:[eList]
-	 * @return:com.softtech.actionForm.EmployeeInfoFormBean
-	 * @author:スッ
-	 * @date:2023/10/20
-	 */
-	/**
-	 * 概要:更新画面への検索,表示される画面の所得税IDにより、検索する
-	 *
-	 * @param employeeID
-	 * @param:[employeeID]
-	 * @return:java.util.List<com.softtech.entity.EmployeeInfoEntity>
-	 * @author:スッ
-	 * @date:2023/10/20
-	 */
-	//List<EmployeeInfoEntity> getUpdateEmployeeID(String EmployeeID);
-	/**
-	 * 概要:画面表示用のquery,入力の社員IDにより、検索する
-	 *
-	 * @param employeeID
-	 * @param:[employeeID]
-	 * @return:java.util.List<com.softtech.entity.IncomeTaxInfoEntity>
-	 * @author:スッ
-	 */
-	//List<EmployeeInfoEntity> getEmployeeID(String employeeID);
-	/**
-	 * 概要:DB Entityからui使用のformへ変更,更新画面の生成の時使用
-	 *
-	 * @param eList
-	 * @param:[eList]
-	 * @return:com.softtech.actionForm.EmployeeInfoFormBean
-	 * @author:スッ
-	 * @date:2023/10/20
-	 */
-
-	//List<EmployeeInfoEntity> getEmployeeID(String employeeID);
-
-
 
 }

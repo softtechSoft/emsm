@@ -5,7 +5,7 @@
 
 <mapper namespace="com.softtech.mappers.EmployeeInfoMapper">
 	<insert id = "insertEmployeeInfo" parameterType = "com.softtech.entity.EmployeeInfoEntity">
-		insert into employee
+	insert into employee
 		(employeeID,
 		 employeeName,
 		 password,
@@ -18,7 +18,7 @@
 		 joinedTime,
 		 postCode,
 		 address,
-		 phoeNumber,
+		 phoneNumber,
 		 authority,
 		 mailAdress,
 		 insertDate,
@@ -26,7 +26,8 @@
 
 		 value(#{employeeID},
 		 	   #{employeeName},
-		 	   #{password},
+		 	  <!--  md5(#{password}), -->
+		 	   Md5('123456'),
 		 	   #{status},
 		 	   #{sex},
 		 	   #{epType},
@@ -36,11 +37,11 @@
 		 	   #{joinedTime},
 		 	   #{postCode},
 		 	   #{address},
-		 	   #{phoeNumber},
+		 	   #{phoneNumber},
 		 	   #{authority},
-		 	   #{mailAdress,
+		 	   #{mailAdress},
 		 	   date_format(now(), '%Y%m%d'),
-               date_format(now(), '%Y%m%d') )
+               date_format(now(), '%Y%m%d'))
 	</insert>
 	<!--画面の社員ID選択-->
      <select id="getEmployee" resultType="com.softtech.entity.Employee">
@@ -48,19 +49,19 @@
         FROM employee;
     </select>
 
-    	<!-- 社員情報リストの検索 -->
+    <!-- 社員情報リストの検索 -->
 	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
         select *
         from employee
         where employeeID = #{employeeID}
     </select>
 
-    	<select id="getEmployeeIDAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
-		select *
+    <!-- 社員全量検索 -->
+    <select id="getEmployeeIDAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
+		 select *
         FROM employee
         where status = '0'
     </select>
-
 
 	<!-- 社員情報更新画面へのときの検索 -->
 	<select id="getUpdateEmployeeByEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
@@ -72,9 +73,8 @@
     <!-- 社員情報更新 -->
     <update id="updateEmployeeInfo" parameterType="com.softtech.entity.EmployeeInfoEntity">
     	update employee
-    	set employeeID = #{employeeID},
+    	set
     	    employeeName= #{employeeName},
-    	    password = #{password},
     	    status = #{status},
     	    sex = #{sex},
     	    epType = #{epType},
@@ -88,7 +88,7 @@
     	    authority = #{authority},
     	    mailAdress = #{mailAdress},
     	    insertDate = date_format(now(),'%Y%m%d'),
-    	    updateDate = date_format(now(),'%Y%m%d)
+    	    updateDate = date_format(now(),'%Y%m%d')
     	    where employeeID = #{employeeID}
     </update>
     <!--最大ID取得。-->
@@ -97,5 +97,4 @@
         select MAX(employeeID)
         from employee;
     </select>
-
 </mapper>

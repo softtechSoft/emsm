@@ -56,6 +56,7 @@
 	 <td></td>
     <input type="button" name="search" value="検索" onclick="toSearchJsp()"/>
     <input type="button" name="search" value="全量検索" onclick="toSearchJsp1()"/>
+
 	<!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">

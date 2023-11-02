@@ -11,8 +11,7 @@ import com.softtech.actionForm.EmployeeInfoFormBean;
 import com.softtech.entity.Employee;
 import com.softtech.entity.EmployeeInfoEntity;
 import com.softtech.mappers.EmployeeInfoMapper;
-
-
+import com.softtech.util.DataUtil;
 
 /**
  * @program
@@ -23,6 +22,7 @@ import com.softtech.mappers.EmployeeInfoMapper;
  */
 @Service
 public class EmployeeInfoServiceImpl implements EmployeeInfoService {
+	private static final EmployeeInfoServiceImpl employeeInfoService = null;
 	//IOC Mapper
     @Autowired
     private EmployeeInfoMapper employeeInfoMapper;
@@ -39,6 +39,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         return employeeByEmployeeID;
     }
 
+    //社員全量検索する
     public List<EmployeeInfoEntity> getEmployeeIDAll(String employeeID) {
         List<EmployeeInfoEntity> employeeByEmployeeID = employeeInfoMapper.getEmployeeIDAll(employeeID);
         return employeeByEmployeeID;
@@ -71,7 +72,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
     @Override
     public String getNextEmployeeID() {
         String maxEmployeeID = employeeInfoMapper.getMaxEmployeeID();
-        String nextEmployeeID = String.valueOf(Integer.parseInt(getNextEmployeeID()) + 1);
+        String nextEmployeeID = DataUtil.getNextID(maxEmployeeID, 1);
         return nextEmployeeID;
     }
 
@@ -86,6 +87,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      */
 
 	public EmployeeInfoFormBean transforEntityToUI(List<EmployeeInfoEntity> eList) {
+
         EmployeeInfoFormBean employeeInfoFormBean = new EmployeeInfoFormBean();
         for (EmployeeInfoEntity employeeInfoEntity : eList) {
             employeeInfoFormBean.setEmployeeID(employeeInfoEntity.getEmployeeID());
@@ -139,7 +141,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
          employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
          return employeeInfoEntity;
-
     }
     /**
      * 概要:update
@@ -151,7 +152,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      * @date:2023/10/20
      */
     public void updateEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean) {
+    	//画面データをEntityに設定する
         EmployeeInfoEntity employeeInfoEntity = transforBeanToEntityByUpDate(employeeInfoFormBean);
+     // DB登録
         employeeInfoMapper.updateEmployeeInfo(employeeInfoEntity);
 
     }
@@ -191,7 +194,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 
     @Override
 	public void insertEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean) {
+    	//画面からデータをEntityに伝送
         EmployeeInfoEntity employeeInfoEntity = transforBeanToEntityByInsert(employeeInfoFormBean);
+      //DBに登録
         employeeInfoMapper.insertEmployeeInfo(employeeInfoEntity);
     }
 
@@ -229,6 +234,5 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         List<EmployeeActionForm> rtn = transferDBTOUI(employee);
         return rtn;
     }
-
 
 }

@@ -10,6 +10,7 @@ public class Employee {
 	 String password;
 	 String status;
 	 String sex;
+	 String epType;
 	 String birthday;
 	 String age;
 	 String joinedDate;
@@ -19,7 +20,6 @@ public class Employee {
 	 String phoneNumber;
 	 String authority;
 	 String mailAdress;
-	 String epType;
 	 String insertDate;
 	 String updateDate;
 	/**

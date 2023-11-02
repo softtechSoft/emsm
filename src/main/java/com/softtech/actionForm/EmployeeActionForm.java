@@ -8,9 +8,6 @@ public class EmployeeActionForm implements Serializable {
 
 	private String employeeName;
 
-	private String selectFlg;
-
-
 	/**
 	 * @return employeeID
 	 */
@@ -36,10 +33,4 @@ public class EmployeeActionForm implements Serializable {
 		this.employeeName = employeeName;
 	}
 
-	public String getSelectFlg() {
-		return selectFlg;
-	}
-	public void setSelectFlg(String selectFlg) {
-		this.selectFlg = selectFlg;
-	}
 }
