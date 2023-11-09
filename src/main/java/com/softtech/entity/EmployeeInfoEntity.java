@@ -40,6 +40,7 @@ public class EmployeeInfoEntity {
 	private String insertFlg;
 	//検索と全量検索区別用のFlg
 	private String selectFlg;
+	private String EmployeeIDAll;
 
 
 	public String getEmployeeID() {
@@ -191,6 +192,14 @@ public class EmployeeInfoEntity {
 
 	public void setSelectFlg(String selectFlg) {
 		this.selectFlg = selectFlg;
+	}
+
+	public String getEmployeeIDAll() {
+		return EmployeeIDAll;
+	}
+
+	public void setEmployeeIDAll(String employeeIDAll) {
+		EmployeeIDAll = employeeIDAll;
 	}
 
 }

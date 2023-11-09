@@ -15,12 +15,12 @@ public interface EmployeeInfoMapper {
     List<Employee> getEmployee();
 
     //検索用のquery,社員IDにより、検索する
-    List<EmployeeInfoEntity> getEmployeeID(@Param("employeeID") String employeeID) ;
+	List<EmployeeInfoEntity> getEmployeeID(Object employeeID);
 
     //全量検索する
-    List<EmployeeInfoEntity> getEmployeeIDAll(@Param("employeeID") String employeeID) ;
+    List<EmployeeInfoEntity> getEmployeeIDAll() ;
 
-    //更新画面への検索,表示される画面の所得税IDにより、検索する
+    //更新画面への検索,表示される画面の社員IDにより、検索する
      List<EmployeeInfoEntity> getUpdateEmployeeByEmployeeID(@Param("employeeID") String employeeID) ;
 
     //最大のEmployeeIDを取得、+1用

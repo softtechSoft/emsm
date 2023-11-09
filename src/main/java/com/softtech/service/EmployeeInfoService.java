@@ -21,10 +21,12 @@ public interface EmployeeInfoService {
      */
 	List<EmployeeInfoEntity> getEmployeeID(String employeeID);
 
-	/**　全量検索　*/
-	List<EmployeeInfoEntity> getEmployeeIDAll(String employeeID);
+	/**　全量検索　
+	 * @param なし
+	 */
+	List<EmployeeInfoEntity> getEmployeeAll();
 
-    /**
+    /*
      * 概要:更新画面への検索,表示される画面の所得税IDにより、検索する
      *
      * @param:[incomeTaxID]
@@ -33,6 +35,7 @@ public interface EmployeeInfoService {
      * @date:2023/10/23
      */
 	List<EmployeeInfoEntity> getUpdateEmployeeByEmployeeID(String employeeID);
+
     /**
      * 概要:ID最大値+1を取得
      *
@@ -50,6 +53,7 @@ public interface EmployeeInfoService {
      * @date:2023/10/23
      */
 	EmployeeInfoFormBean transforEntityToUI(List<EmployeeInfoEntity> eList);
+
 	/**
      * 概要:update
      *
@@ -59,6 +63,7 @@ public interface EmployeeInfoService {
      * @date:2022/08/10
      */
 	void updateEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean);
+
 	/**
      * 概要:insert
      *
@@ -68,6 +73,7 @@ public interface EmployeeInfoService {
      * @date:2022/08/10
      */
 	void insertEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean);
+
 	/**概要:DBから社員情報を取得する,画面の社員ID選択
 	 *@param:[]
 	 *@return:java.util.List<com.softtech.actionForm.EmployeeActionForm>

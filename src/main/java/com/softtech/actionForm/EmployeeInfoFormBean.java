@@ -216,9 +216,4 @@ public class EmployeeInfoFormBean {
 		this.selectFlg = selectFlg;
 	}
 
-	public void getSexString(String string) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
 }

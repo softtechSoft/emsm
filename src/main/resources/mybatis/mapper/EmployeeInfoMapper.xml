@@ -93,7 +93,7 @@
     </update>
     <!--最大ID取得。-->
        <select id="getMaxEmployeeID" resultType="string">
-        <!--社員情報IDを取得する。-->
+        <!--社員情報の最大IDを取得する。-->
         select MAX(employeeID)
         from employee;
     </select>
