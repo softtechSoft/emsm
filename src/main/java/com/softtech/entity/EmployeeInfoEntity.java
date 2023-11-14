@@ -79,6 +79,7 @@ public class EmployeeInfoEntity {
 		return sex;
 	}
 
+
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
@@ -201,5 +202,6 @@ public class EmployeeInfoEntity {
 	public void setEmployeeIDAll(String employeeIDAll) {
 		EmployeeIDAll = employeeIDAll;
 	}
+
 
 }
