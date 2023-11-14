@@ -2,16 +2,13 @@ package com.softtech.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 import com.softtech.entity.EmployeeInfoEntity;
-import com.softtech.mappers.EmployeeInfoMapper;
 
 
 class EmployeeInfoServiceImplTest {
@@ -20,14 +17,6 @@ class EmployeeInfoServiceImplTest {
 	@InjectMocks
 	private EmployeeInfoServiceImpl target;
 
-	@Mock
-	private EmployeeInfoMapper employeeInfoMapper;
-
-	@Mock
-	private EmployeeInfoEntity employeeInfoEntity;
-
-	@Spy
-	List<EmployeeInfoEntity> changeSex = new ArrayList<>();
 
 	@BeforeEach
 	void setUp() {
@@ -43,7 +32,7 @@ class EmployeeInfoServiceImplTest {
 		employeeInfoEntity.add(employeeInfoEntity1);
 
 		EmployeeInfoEntity employeeInfoEntity2 = new EmployeeInfoEntity();
-		employeeInfoEntity1.setSex("0");
+		employeeInfoEntity2.setSex("0");
 		employeeInfoEntity.add(employeeInfoEntity2);
 
 		List<EmployeeInfoEntity> employeeInfoEntityRtn = target.changeSex(employeeInfoEntity);
