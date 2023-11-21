@@ -19,7 +19,6 @@
     		document.theForm.submit();
 		}
 
-
 	</script>
 </head>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="employeeInfoFormBean"

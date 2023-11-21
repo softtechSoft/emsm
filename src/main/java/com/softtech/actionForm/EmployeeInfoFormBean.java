@@ -14,6 +14,7 @@ public class EmployeeInfoFormBean {
 	//パスワード
 	private String password;
 	//ステータス
+	//ステータス0：在籍　１:離職
 	private String status;
 	//性別
 	//性別 0:男　1:女

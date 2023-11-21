@@ -38,7 +38,7 @@ class EmployeeInfoServiceImplTest {
 
 	@Test
 	void changeSexTest() {
-		//Mockito.when(changeSex(employeeInfoMapper.getEmployeeIDAll()))
+		//Mockito.when(changeSex(employeeInfoMapper.getEmployeeAll()))
 		List<EmployeeInfoEntity> employeeInfoEntity=new ArrayList<>();
 		EmployeeInfoEntity employeeInfoEntity1 = new EmployeeInfoEntity();
 		employeeInfoEntity1.setSex("1");
@@ -82,9 +82,8 @@ class EmployeeInfoServiceImplTest {
 		employeeInfoEntity2.setAddress("Osaka");
 		employeesPara.add(employeeInfoEntity2);
 
-
 		//対象メソッドを呼び出し
-		Mockito.when(employeeInfoMapper.getEmployeeIDAll()).thenReturn(employeesPara);
+		Mockito.when(employeeInfoMapper.getEmployeeAll()).thenReturn(employeesPara);
 		List<EmployeeInfoEntity> employeesRtn=target.getEmployeeAll();
 
 		//対象データ確認
@@ -107,7 +106,5 @@ class EmployeeInfoServiceImplTest {
 		Assertions.assertEquals(employeeInfoEntityrtn2.getEmployeeName(),"かきく");
 		Assertions.assertEquals(employeeInfoEntityrtn2.getAddress(),"Osaka");
 	}
-
-
 }
 

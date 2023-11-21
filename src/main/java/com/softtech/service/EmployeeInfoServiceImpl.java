@@ -45,7 +45,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      * @author:スッ
      */
     public List<EmployeeInfoEntity> getEmployeeAll() {
-        List<EmployeeInfoEntity> employeeInfoEntity = changeSex(employeeInfoMapper.getEmployeeIDAll());
+        List<EmployeeInfoEntity> employeeInfoEntity = changeSex(employeeInfoMapper.getEmployeeAll());
         return employeeInfoEntity;
     }
     /**

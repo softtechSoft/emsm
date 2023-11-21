@@ -57,7 +57,7 @@
     </select>
 
     <!-- 社員全量検索 -->
-    <select id="getEmployeeIDAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
+    <select id="getEmployeeAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
 		 select *
         FROM employee
         where status = '0'

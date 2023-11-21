@@ -18,7 +18,7 @@ public interface EmployeeInfoMapper {
 	List<EmployeeInfoEntity> getEmployeeID(Object employeeID);
 
     //全量検索する
-    List<EmployeeInfoEntity> getEmployeeIDAll() ;
+    List<EmployeeInfoEntity> getEmployeeAll() ;
 
     //更新画面への検索,表示される画面の社員IDにより、検索する
      List<EmployeeInfoEntity> getUpdateEmployeeByEmployeeID(@Param("employeeID") String employeeID) ;
