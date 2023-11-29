@@ -57,7 +57,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	public List<EmployeeInfoEntity> changeSex(List<EmployeeInfoEntity> list)
 	{
 		for(EmployeeInfoEntity employeeInfoEntity:list) {
-			if ("1".equals(employeeInfoEntity.getSex())){
+			if ("0".equals(employeeInfoEntity.getSex())){
 				employeeInfoEntity.setSex("男");
 			}
 			else {

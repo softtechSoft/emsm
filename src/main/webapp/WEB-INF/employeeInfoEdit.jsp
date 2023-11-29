@@ -55,20 +55,20 @@
 
  	 <tr style = "background-color:#dcfeeb">
 		<td width ="150px">ステータス</td>
-		<td width="250px"><input type="radio" name="status" <c:if test="${employeeInfoFormBean.status == '1'}">
-                checked</c:if> value="1" /> 離職
+		<td width="250px"><input type="radio" name="status" <c:if test="${employeeInfoFormBean.status == '0'}">
+                checked</c:if> value="0" /> 在籍
 
-                <input type="radio" name="status" <c:if test="${employeeInfoFormBean.status == '0'}">
-                    checked</c:if> value="0" /> 在籍</td>
+                <input type="radio" name="status" <c:if test="${employeeInfoFormBean.status == '1'}">
+                    checked</c:if> value="1" /> 離職</td>
 	</tr>
 
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">性別</td>
-		<td width="250px"><input type="radio" name="sex" <c:if test="${employeeInfoFormBean.sex == '1'}">
-                checked</c:if> value="1"   /> 女
+		<td width="250px"><input type="radio" name="sex" <c:if test="${employeeInfoFormBean.sex == '0'}">
+                checked</c:if> value="0"   />男
 
-                <input type="radio" name="sex" <c:if test="${employeeInfoFormBean.sex == '0'}">
-                    checked</c:if> value="0"  /> 男</td>
+                <input type="radio" name="sex" <c:if test="${employeeInfoFormBean.sex == '1'}">
+                    checked</c:if> value="1"  /> 女</td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">タイプ</td>
