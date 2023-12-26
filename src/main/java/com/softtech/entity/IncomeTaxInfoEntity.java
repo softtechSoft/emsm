@@ -46,6 +46,7 @@ public class IncomeTaxInfoEntity {
     private String insertDate;
     //更新日
     private String updateDate;
+    private String tax;
 
     public String getIncomeTaxID() {
         return incomeTaxID;
@@ -286,4 +287,20 @@ public class IncomeTaxInfoEntity {
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
+
+	/**
+	 * @return tax
+	 */
+	public String getTax() {
+		return tax;
+	}
+
+	/**
+	 * @param tax セットする tax
+	 */
+	public void setTax(String tax) {
+		this.tax = tax;
+	}
+
+
 }

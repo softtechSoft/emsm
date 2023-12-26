@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.softtech.common.AutoSalaryRtn;
 import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.BaseSalaryInfoEntity;
 import com.softtech.entity.EmplyinsrateInfoEntity;
@@ -72,7 +73,22 @@ public class SalaryListService {
 		return nextMonth;
 	}
 
-	public boolean autoCreate(String nextMonth) throws ParseException {
+	/*
+	 * 機能：給料の自動作成
+	 *
+	 * @param 対象年月
+	 * @return 結果
+	 *
+	 *
+	 * @author YADANAR@ソフトテク
+	 */
+
+	public AutoSalaryRtn autoCreate(String nextMonth) throws ParseException {
+
+		AutoSalaryRtn autoSalaryRtn= new AutoSalaryRtn();
+		//成功
+		autoSalaryRtn.setRtn("0");
+
 
 		//年月採番
 		//対象年度
@@ -98,18 +114,34 @@ public class SalaryListService {
 			 //支払日
 			 salaryInfoEntity.setPaymentDate(paymentDate);
 
-			 //③基本給を取得
+			 //④基本給を取得
 			 BaseSalaryInfoEntity baseSalaryInfoEntity=salarylistMapper.getBaseSalary(employeeID,year);
+			 if( baseSalaryInfoEntity == null ||  baseSalaryInfoEntity.getBaseSalary() == null || baseSalaryInfoEntity.getBaseSalary().length()==0) {
+				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+				 autoSalaryRtn.setYearMonth(nextMonth);
+				 autoSalaryRtn.setRtn("1");
+				 return autoSalaryRtn;
+			 }
+
 			 String basesalary = baseSalaryInfoEntity.getBaseSalary();
 			 salaryInfoEntity.setBase(basesalary);
 
 			 //残業時間
+			 //⑥勤怠情報を取得
 			 WorkInfo workInfo=salarylistMapper.getWkTime(employeeID,nextMonth);
+//			 if( workInfo == null ||  workInfo.getWkTime() == null || workInfo.getWkTime().length()==0) {
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("3");
+//				 return autoSalaryRtn;
+//			 }
+
 			 // 稼働時間-稼働時間TO
 			 float overTime= Float.parseFloat( workInfo.getWorkTime()) -   Float.parseFloat(baseSalaryInfoEntity.getWkPeriodTo());
 			 if (overTime <= 0) {
 				    overTime = 0;
 			 }
+
 			 salaryInfoEntity.setOverTime(Float.toString(overTime));
 
 			 //不足時間（稼働時間FROM-稼働時間）
@@ -117,19 +149,30 @@ public class SalaryListService {
 			 if (shortage <= 0) {
 				 shortage = 0;
 			 }
+
 			 salaryInfoEntity.setShortage(Float.toString(shortage));
 
 			 //残業加算
 
 			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) *  overTime;
+
 			 salaryInfoEntity.setOverTimePlus (Float.toString(overTimePlus));
 
 			 //稼働不足減
 			 float shortageReduce=Float.parseFloat(baseSalaryInfoEntity.getInsufficienttimePay()) * shortage ;
+
 			 salaryInfoEntity.setShortageReduce ( Float.toString( shortageReduce));
 
 			 //交通費
+			 //⑦交通情報を取得
 			 TransportEntity transportEntity=salarylistMapper.getTransportExpense(employeeID, nextMonth);
+			 if( transportEntity == null ||  transportEntity.getTransportExpense() == null || transportEntity.getTransportExpense().length()==0) {
+				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+				 autoSalaryRtn.setYearMonth(nextMonth);
+				 autoSalaryRtn.setRtn("4");
+				 return autoSalaryRtn;
+			 }
+
 			 float transportExpense =transportEntity.getTransport() + Float.parseFloat(transportEntity.getBusinessTrip());
 			 salaryInfoEntity.setTransportExpense(Float.toString(transportExpense));
 
@@ -147,7 +190,15 @@ public class SalaryListService {
 			 salaryInfoEntity.setAllowanceReason(allowanceReason);
 
 			 //厚生マスタを取る
+			 //⑤厚生保険料を取得
 			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+			 if( welfarefeeInfoEntity == null ||  welfarefeeInfoEntity.getWfPension() == null || welfarefeeInfoEntity.getWfPension().length()==0) {
+				 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+				 autoSalaryRtn.setYear(year);
+				 autoSalaryRtn.setRtn("2");
+				 return autoSalaryRtn;
+			 }
+
 			//厚生年金控除個人
 			float wfPensionSelf =
 					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
@@ -180,13 +231,28 @@ public class SalaryListService {
 			}
 
 			 //厚生控除子育(会社)
+			//⑩厚生子育徴収率を取得
 			 WelfareBabyInfoEntity welfareBabyInfoEntity = salarylistMapper.getWfBaby(year) ;
+//			 if( welfareBabyInfoEntity == null ||  welfareBabyInfoEntity.getWfBaby() == null || welfareBabyInfoEntity.getWfBaby().length()==0) {
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("7");
+//				 return autoSalaryRtn;
+//			 }
+
 			 float welfareBaby =
 					 (Float.parseFloat(welfareBabyInfoEntity.getRate()) * Float.parseFloat(basesalary)) / 1000 ;
 			 salaryInfoEntity.setWelfareBaby(Float.toString(welfareBaby));
 
-			//雇用保険率を取る
+			//⑧雇用保険率をを取得
 			 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
+//			 if( emplyinsrateInfoEntity == null ||  emplyinsrateInfoEntity.getEmplyinsrate() == null || emplyinsrateInfoEntity.getEmplyinsrate().length()==0) {
+//				 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYear(nextMonth);
+//				 autoSalaryRtn.setRtn("5");
+//				 return autoSalaryRtn;
+//			 }
+
 			 //雇用保険個人負担
 			 float laborBurden =
 					( Float.parseFloat(emplyinsrateInfoEntity.getLaborBurdenRate())*Float.parseFloat(basesalary))/1000 ;
@@ -208,7 +274,16 @@ public class SalaryListService {
 			 salaryInfoEntity.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
 
 			 //源泉控除
+			 //所得税と住民税を取得
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
+//			 if( incomeTaxInfoEntity == null ||  incomeTaxInfoEntity.getTax() == null || incomeTaxInfoEntity.getTax().length()==0) {
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("6");
+//				 return autoSalaryRtn;
+//			 }
+
+
 			 String month = nextMonth.substring(4, 6);
 			 //源泉
 			 float incomeTax = 0;
@@ -329,12 +404,15 @@ public class SalaryListService {
 
 			 int insert= salarylistMapper.insertSalaryList(salaryInfoEntity);
 		     if(insert != 1) {
-		    	 return false;
+		    	 //return false;
+		    	 autoSalaryRtn.setRtn("99");
 		     }
+
 		}
 
 //		給料テーブルに新規追加
-		 return true;
+		 //return true;
+		 return autoSalaryRtn;
 	}
 
 

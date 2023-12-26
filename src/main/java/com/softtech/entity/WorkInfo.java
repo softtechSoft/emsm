@@ -18,6 +18,7 @@ public class WorkInfo {
 	private String workEndDay = "";
 	private String workTime = "";
 	private String workMonth = "0";
+	private String WkTime;
 
 	public String getEmployeeName() {
 		return employeeName;
@@ -107,4 +108,19 @@ public class WorkInfo {
 	public void setWorkInfoID(String workInfoID) {
 		this.workInfoID = workInfoID;
 	}
+
+	/**
+	 * @return wkTime
+	 */
+	public String getWkTime() {
+		return WkTime;
+	}
+
+	/**
+	 * @param wkTime セットする wkTime
+	 */
+	public void setWkTime(String wkTime) {
+		WkTime = wkTime;
+	}
+
 }

@@ -31,7 +31,7 @@ public class TransportEntity {
 	private float transportExpense1;
 	// 稼働時間
 	private float workTime;
-	
+
 	public String getStartStation() {
 		return startStation;
 	}
@@ -68,7 +68,7 @@ public class TransportEntity {
 		return midStation2;
 	}
 
-	public void setMidStation2(String midStation2) { 
+	public void setMidStation2(String midStation2) {
 		this.midStation2 = midStation2;
 	}
 

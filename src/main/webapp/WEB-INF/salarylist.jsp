@@ -54,18 +54,17 @@ function tosalaryInfoJsp(salaryInfoID){
 		 <input style="float:right" type="button" name="create" value="一括作成" onclick="toCreate()">
        </b>
        <p style="color: red;">
-          <c:forEach items="${errors}" var="error">
+		<c:forEach items="${errors}" var="error">
 						<spring:message message="${error}" />
-					</c:forEach>
-
-		</p>
+		</c:forEach>
+	    </p>
 
 		 <p style="color: red; text-align:center ;">
           <c:out value="${create}" />
 		</p>
 
 
-	<table border="1"class="salrylist-table">
+	<table border="1"class="salarylist-table">
 		<tr>
 		    <th rowspan="3" width="200">社員ID</th>
             <th width="100">社員氏名</th>

@@ -30,6 +30,7 @@ public class WelfarefeeInfoEntity {
   // 更新日
   private String updateDate;
   // 入力の収入
+  private String WfPension;
 
 
   public String getWelfarefeeID() {
@@ -127,6 +128,22 @@ public class WelfarefeeInfoEntity {
   public void setUpdateDate(String updateDate) {
     this.updateDate = updateDate;
   }
+
+/**
+ * @return wfPension
+ */
+public String getWfPension() {
+	return WfPension;
+}
+
+/**
+ * @param wfPension セットする wfPension
+ */
+public void setWfPension(String wfPension) {
+	WfPension = wfPension;
+}
+
+
 
 
 }

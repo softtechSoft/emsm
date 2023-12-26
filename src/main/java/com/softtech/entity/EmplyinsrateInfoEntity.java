@@ -26,6 +26,7 @@ public class EmplyinsrateInfoEntity {
     private String insertDate;
     //更新日
     private String updateDate;
+    private String Emplyinsrate;
 
     public String getEmplyinsrateID() {
         return emplyinsrateID;
@@ -98,5 +99,21 @@ public class EmplyinsrateInfoEntity {
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
+
+	/**
+	 * @return emplyinsrate
+	 */
+	public String getEmplyinsrate() {
+		return Emplyinsrate;
+	}
+
+	/**
+	 * @param emplyinsrate セットする emplyinsrate
+	 */
+	public void setEmplyinsrate(String emplyinsrate) {
+		Emplyinsrate = emplyinsrate;
+	}
+
+
 
 }

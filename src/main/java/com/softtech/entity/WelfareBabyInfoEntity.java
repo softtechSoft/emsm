@@ -17,6 +17,8 @@ public class WelfareBabyInfoEntity {
 	//更新日
 	private String updateDate;
 
+	private String WfBaby;
+
 	public String getRateID() {
 		return rateID;
 	}
@@ -59,5 +61,18 @@ public class WelfareBabyInfoEntity {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+	/**
+	 * @return wfBaby
+	 */
+	public String getWfBaby() {
+		return WfBaby;
+	}
+	/**
+	 * @param wfBaby セットする wfBaby
+	 */
+	public void setWfBaby(String wfBaby) {
+		WfBaby = wfBaby;
+	}
+
 
 }
