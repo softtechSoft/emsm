@@ -1,0 +1,18 @@
+2024/4/2
+～4/5　下記資料を読んでください。
+
+EMS/EMSM
+DB:MySQL
+フレームワーク：SpringBoot
+DB接続フレームワーク：MyBatis（iBatis)
+UI（画面）：EMS-thymleaf
+　　　　　　EMSM-JSP
+Backend:Java
+資料：
+　emsm\DOC\教育\
+　 MyBatis入門.docx
+　 SpringBoot入門.docx
+　 Thymleaf入門.docx
+　ソフトテク教育資料.xlsのHTMLJSシート
+
+
