@@ -29,3 +29,22 @@ Backend:Java
 
 今回：コーティング⇒詳細設計⇒基本設計⇒テスト（単体、結合）
 
+4/4
+ SpringBoot-Mybatis
+ EMS,DEBUG
+EMS:
+  Java\
+    controller\  
+    service\
+    mapper\
+    
+    actionform\　画面とコントローラーとの間にデータ転送クラス、validationチェック
+    entity\　　　サービスとDBとの間にデータ転送クラス
+    
+  resource\
+    mybatis\　SQLを記入するXMLファイル
+    
+    static\
+    
+　　templates\   画面
+
