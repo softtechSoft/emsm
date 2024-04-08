@@ -19,11 +19,42 @@ Backend:Java
 フン：社員情報機能（参照画面があり、再利用でOK）
 　　　EMSM:新規、変更、リスト
 　　　EMS:変更
+EMSM
+ ①新規登録（必要な情報だけ。社員ID（自動採番）、氏名、メールアドレス、初期パスワード）
+ 　4/8-4/9
+ 　　フロンエンド（UI--JSP）
+ 　4/10
+ 　　バックエンド（Java、MyBatis）
+
+ 4/11-12
+ ③リスト、更新
+ 　リストして、更新。
+ 　　フロンエンド（UI--JSP）
+ 　　バックエンド（Java、MyBatis）
+EMS
+ ②社員更新（他の必要な情報）
+ 　4/11
+ 　フロンエンド（UI--thymleaf）
+ 　　個人番号項目を画面最後に移動。
+ 　4/11
+ 　　バックエンド（Java、MyBatis）
+
 孫：有給管理（参照画面がない）
 　　　DB:有給管理Tableを作成
 　　　EMSM:変更、リスト
 　　　EMS:変更
+4/8
+①テーブル定義
+4/9-10
+②EMS
+ フロンエンド（UI--thymleaf）
+ バックエンド（Java、MyBatis）
+4/11-12
+③EMSM
+フロンエンド（UI--JSP）
+バックエンド（Java、MyBatis）
 
+----------------------------------
 工程：
 本来：基本設計⇒詳細設計⇒コーティング⇒テスト（単体、結合）
 
@@ -33,18 +64,31 @@ Backend:Java
  SpringBoot-Mybatis
  EMS,DEBUG
 EMS:
-  Java\
-    controller\  
+  Java\（src\main\java)
+
+    controller\
     service\
     mapper\
-    
+
     actionform\　画面とコントローラーとの間にデータ転送クラス、validationチェック
     entity\　　　サービスとDBとの間にデータ転送クラス
-    
+
   resource\
     mybatis\　SQLを記入するXMLファイル
-    
-    static\
-    
-　　templates\   画面
 
+    static\  (Thymleaf)
+
+　　templates\   画面
+EMSM：
+　Java:（src\main\java)
+
+    controller\
+    service\
+    mapper\
+
+    actionform\　画面とコントローラーとの間にデータ転送クラス、validationチェック
+    entity\　　　サービスとDBとの間にデータ転送クラス
+　resource\
+    mybatis\　SQLを記入するXMLファイル
+
+  src\main\webapp\WEB-INF\   JSPファイル
