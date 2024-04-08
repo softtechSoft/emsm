@@ -455,6 +455,9 @@ create table yukyu (
     updateDate varchar(8),
     primary key (employeeID,nendo)
 );
+insert into yukyu values
+('E001','2024','18','12','2024-4-8','2024-4-8'),
+('E002','2023','20','10','2024-4-8','2024-4-8');
 
 ---------プロシージャ------
 CREATE  PROCEDURE `makewelfare`(in gamenMode VarChar(1)
