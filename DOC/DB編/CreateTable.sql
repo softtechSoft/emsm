@@ -446,6 +446,12 @@ alter table m_basesalary drop column plusHour;
 alter table m_emplyinsrate drop column employmentInsuranceRate;
 alter table m_emplyinsrate drop column laborInsuranceRate;
 
+-テーブルを作成するSQL（DDL）
+-drop table if exists XXXX;
+-create table XXXX(
+-テスト要データ新規追加SQL（DML）
+-Insert into XXX (XXXX) values (XXXXX)
+
 ---------プロシージャ------
 CREATE  PROCEDURE `makewelfare`(in gamenMode VarChar(1)
 ,in employeeID1 VarChar(6)
