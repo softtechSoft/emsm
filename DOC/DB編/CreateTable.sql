@@ -446,6 +446,8 @@ alter table m_basesalary drop column plusHour;
 alter table m_emplyinsrate drop column employmentInsuranceRate;
 alter table m_emplyinsrate drop column laborInsuranceRate;
 
+
+drop table if exists yukyu;
 create table yukyu (
     employeeID varchar(6),
     nendo varchar(4),
