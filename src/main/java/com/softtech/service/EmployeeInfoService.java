@@ -81,5 +81,10 @@ public interface EmployeeInfoService {
 	 *@date:2022/08/12
 	 */
 	 List<EmployeeActionForm> queryEmployeeInfo();
+	  /**
+	     * ユーザ情報登録
+
+	     */
+	  void save(EmployeeInfoFormBean employeeInfoFormBean);
 
 }

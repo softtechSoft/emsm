@@ -1,7 +1,5 @@
 package com.softtech.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,14 +107,10 @@ public class EmployeeInfoController {
 	      //employeeIDを採番する（既存の最大値＋１）
 	      String maxEmployeeID = employeeInfoService.getNextEmployeeID();
 	      employeeInfoFormBean1.setEmployeeID(maxEmployeeID);
-	      //日付け
-	      LocalDateTime now = LocalDateTime.now();
-	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-	      String format = formatter.format(now);
 	      //新規
 	      employeeInfoFormBean1.setInsertFlg(insertFlg);
-	      employeeInfoFormBean1.setInsertDate(format);
-	      employeeInfoFormBean1.setUpdateDate(format);
+	      /* employeeInfoFormBean1.setInsertDate(format);
+	      employeeInfoFormBean1.setUpdateDate(format); */
 
 	      //更新の場合
 	  } else {
@@ -142,27 +136,24 @@ public class EmployeeInfoController {
     *@date:2023/10/30
     */
 	@RequestMapping(value = "/employeeInfoEdit", method = RequestMethod.POST)
-	public String registEmployeeInfo(@Valid @ModelAttribute("employeeInfoFormBean") EmployeeInfoFormBean employeeInfoFormBean,
+	public String registEmployeeInfo(@Valid @ModelAttribute EmployeeInfoFormBean employeeInfoFormBean,
 	                                BindingResult result, HttpSession session, Model model) {
-	  //必須チェック
-	  if (result.hasErrors()) {
-		// エラーチェック用リスト
-		  List<FieldError> errorlst = new ArrayList<FieldError>();
-		//エラーメッセージ。
-		  errorlst.addAll(result.getFieldErrors());
-		  //エラーメッセージ
-		  model.addAttribute("errors", errorlst);
-		  model.addAttribute("employeeInfoFormBean",employeeInfoFormBean);
-	     return "employeeInfoEdit";
-	  }
-	  String insertFlg = employeeInfoFormBean.getInsertFlg();
-	  //新規の場合
-	  if ("0".equals(insertFlg)) {
-	  	employeeInfoService.insertEmployeeInfo(employeeInfoFormBean);
-	  } else {
-	      //DBに更新入力
-	  	employeeInfoService.updateEmployeeInfo(employeeInfoFormBean);
-	  }
-	  return "employeeInfoEdit";
+
+		 if (result.hasErrors()) {
+				// エラーチェック用リスト
+				  List<FieldError> errorlst = new ArrayList<FieldError>();
+				//エラーメッセージ。
+				  errorlst.addAll(result.getFieldErrors());
+				  //エラーメッセージ
+				  model.addAttribute("errors", errorlst);
+
+			     return "employeeInfoEdit";
+		 }
+	        // ユーザー情報の登録
+		 employeeInfoService.save(employeeInfoFormBean);
+
+		 return "employeeInfoList";
+
 	}
+
 }

@@ -4,97 +4,65 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.EmployeeInfoMapper">
-	<insert id = "insertEmployeeInfo" parameterType = "com.softtech.entity.EmployeeInfoEntity">
-	insert into employee
+	<insert id="save" parameterType="com.softtech.entity.EmployeeInfoEntity">
+		insert into employee
 		(employeeID,
 		 employeeName,
 		 password,
-		 status,
-		 sex,
-		 epType,
-		 birthday,
-		 age,
-		 joinedDate,
-		 joinedTime,
-		 postCode,
-		 address,
-		 phoneNumber,
-		 authority,
-		 mailAdress,
-		 insertDate,
-		 updateDate)
-
-		 value(#{employeeID},
-		 	   #{employeeName},
-		 	  <!--  md5(#{password}), -->
-		 	   Md5('123456'),
-		 	   #{status},
-		 	   #{sex},
-		 	   #{epType},
-		 	   #{birthday},
-		 	   #{age},
-		 	   #{joinedDate},
-		 	   #{joinedTime},
-		 	   #{postCode},
-		 	   #{address},
-		 	   #{phoneNumber},
-		 	   #{authority},
-		 	   #{mailAdress},
-		 	   date_format(now(), '%Y%m%d'),
-               date_format(now(), '%Y%m%d'))
+		 mailAdress
+		)
+		values
+		(#{employeeID},
+		 #{employeeName},
+		 #{password},
+		 #{mailAdress}
+		)
 	</insert>
-	<!--画面の社員ID選択-->
-     <select id="getEmployee" resultType="com.softtech.entity.Employee">
-        select employeeName, employeeID
-        FROM employee;
-    </select>
 
-    <!-- 社員情報リストの検索 -->
+	<select id="getEmployee" resultType="com.softtech.entity.Employee">
+		select employeeName, employeeID
+		FROM employee;
+	</select>
+
 	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
-        select *
-        from employee
-        where employeeID = #{employeeID}
-    </select>
+		select *
+		from employee
+		where employeeID = #{employeeID}
+	</select>
 
-    <!-- 社員全量検索 -->
-    <select id="getEmployeeAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
-		 select *
-        FROM employee
-        where status = '0'
-    </select>
+	<select id="getEmployeeAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
+		select *
+		FROM employee
+	</select>
 
-	<!-- 社員情報更新画面へのときの検索 -->
 	<select id="getUpdateEmployeeByEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
-        select *
-        from employee
-        where employeeID = #{employeeID}
-    </select>
+		select *
+		from employee
+		where employeeID = #{employeeID}
+	</select>
 
-    <!-- 社員情報更新 -->
-    <update id="updateEmployeeInfo" parameterType="com.softtech.entity.EmployeeInfoEntity">
-    	update employee
-    	set
-    	    employeeName= #{employeeName},
-    	    status = #{status},
-    	    sex = #{sex},
-    	    epType = #{epType},
-    	    birthday = #{birthday},
-    	    age = #{age},
-    	    joinedDate = #{joinedDate},
-    	    joinedTime = #{joinedTime},
-    	    postCode = #{postCode},
-    	    address = #{address},
-    	    phoneNumber = #{phoneNumber},
-    	    authority = #{authority},
-    	    mailAdress = #{mailAdress},
-    	    insertDate = date_format(now(),'%Y%m%d'),
-    	    updateDate = date_format(now(),'%Y%m%d')
-    	    where employeeID = #{employeeID}
-    </update>
-    <!--最大ID取得。-->
-       <select id="getMaxEmployeeID" resultType="string">
-        <!--社員情報の最大IDを取得する。-->
-        select MAX(employeeID)
-        from employee;
-    </select>
+	<update id="updateEmployeeInfo" parameterType="com.softtech.entity.EmployeeInfoEntity">
+		update employee
+		set
+		employeeName = #{employeeName},
+		sex = #{sex},
+		epType = #{epType},
+		birthday = #{birthday},
+		age = #{age},
+		joinedDate = #{joinedDate},
+		joinedTime = #{joinedTime},
+		postCode = #{postCode},
+		address = #{address},
+		phoneNumber = #{phoneNumber},
+		authority = #{authority},
+		mailAdress = #{mailAdress},
+		insertDate = date_format(now(), '%Y%m%d'),
+		updateDate = date_format(now(), '%Y%m%d')
+		where employeeID = #{employeeID}
+	</update>
+
+	<select id="getMaxEmployeeID" resultType="string">
+		select MAX(employeeID) from ems.employee
+		WHERE employeeID LIKE 'E%' ;
+	</select>
 </mapper>

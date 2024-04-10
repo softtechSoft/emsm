@@ -26,46 +26,44 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
 	//IOC Mapper
     @Autowired
     private EmployeeInfoMapper employeeInfoMapper;
-	private EmployeeInfoMapper employeeInfoService;
-
-    /**
+	/**
      * 概要:社員IDより、検索する
      * @param employeeID
      * @return:社員リスト
      * @author:スッ
      */
-    public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
-        List<EmployeeInfoEntity> employeeInfoEntity = changeSex( employeeInfoMapper.getEmployeeID(employeeID));
-        return employeeInfoEntity;
-    }
+//    public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
+//        List<EmployeeInfoEntity> employeeInfoEntity = changeSex( employeeInfoMapper.getEmployeeID(employeeID));
+//        return employeeInfoEntity;
+//    }
     /**
      * 概要:社員全量検索する
      * @param
      * @return:社員リスト
      * @author:スッ
      */
-    public List<EmployeeInfoEntity> getEmployeeAll() {
-        List<EmployeeInfoEntity> employeeInfoEntity = changeSex(employeeInfoMapper.getEmployeeAll());
-        return employeeInfoEntity;
-    }
+//    public List<EmployeeInfoEntity> getEmployeeAll() {
+//        List<EmployeeInfoEntity> employeeInfoEntity = changeSex(employeeInfoMapper.getEmployeeAll());
+//        return employeeInfoEntity;
+//    }
     /**
      * 概要:性別変換
      * @param 社員リスト
      * @return:社員リスト
      * @author:スッ
      */
-	public List<EmployeeInfoEntity> changeSex(List<EmployeeInfoEntity> list)
-	{
-		for(EmployeeInfoEntity employeeInfoEntity:list) {
-			if ("0".equals(employeeInfoEntity.getSex())){
-				employeeInfoEntity.setSex("男");
-			}
-			else {
-				employeeInfoEntity.setSex("女");
-			}
-		}
-		return list;
-	}
+//	public List<EmployeeInfoEntity> changeSex(List<EmployeeInfoEntity> list)
+//	{
+//		for(EmployeeInfoEntity employeeInfoEntity:list) {
+//			if ("0".equals(employeeInfoEntity.getSex())){
+//				employeeInfoEntity.setSex("男");
+//			}
+//			else {
+//				employeeInfoEntity.setSex("女");
+//			}
+//		}
+//		return list;
+//	}
     /**
      * 概要:更新画面への検索,表示される画面の社員IDにより、検索する
      * @param:[employeeID]
@@ -91,8 +89,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
             employeeInfoFormBean.setEmployeeID(employeeInfoEntity.getEmployeeID());
             employeeInfoFormBean.setEmployeeName(employeeInfoEntity.getEmployeeName());
             employeeInfoFormBean.setPassword(employeeInfoEntity.getPassword());
-            employeeInfoFormBean.setStatus(employeeInfoEntity.getStatus());
-            employeeInfoFormBean.setSex(employeeInfoEntity.getSex());
+//            employeeInfoFormBean.setStatus(employeeInfoEntity.getStatus());
+            employeeInfoFormBean.setMailAdress(employeeInfoEntity.getMailAdress());
+            /*       employeeInfoFormBean.setSex(employeeInfoEntity.getSex());
             employeeInfoFormBean.setEpType(employeeInfoEntity.getEpType());
             employeeInfoFormBean.setBirthday(employeeInfoEntity.getBirthday());
             employeeInfoFormBean.setAge(employeeInfoEntity.getAge());
@@ -102,9 +101,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
             employeeInfoFormBean.setAddress(employeeInfoEntity.getAddress());
             employeeInfoFormBean.setPhoneNumber(employeeInfoEntity.getPhoneNumber());
             employeeInfoFormBean.setAuthority(employeeInfoEntity.getAuthority());
-            employeeInfoFormBean.setMailAdress(employeeInfoEntity.getMailAdress());
+
             employeeInfoFormBean.setInsertDate(employeeInfoEntity.getInsertDate());
-            employeeInfoFormBean.setUpdateDate(employeeInfoEntity.getUpdateDate());
+            employeeInfoFormBean.setUpdateDate(employeeInfoEntity.getUpdateDate());*/
         }
         return employeeInfoFormBean;
     }
@@ -120,8 +119,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
     	 employeeInfoEntity.setEmployeeID(employeeInfoFormBean.getEmployeeID());
          employeeInfoEntity.setEmployeeName(employeeInfoFormBean.getEmployeeName());
          employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
-         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
-         employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
+//         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
+         employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
+         /*    employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
          employeeInfoEntity.setEpType(employeeInfoFormBean.getEpType());
          employeeInfoEntity.setBirthday(employeeInfoFormBean.getBirthday());
          employeeInfoEntity.setAge(employeeInfoFormBean.getAge());
@@ -131,9 +131,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setAddress(employeeInfoFormBean.getAddress());
          employeeInfoEntity.setPhoneNumber(employeeInfoFormBean.getPhoneNumber());
          employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
-         employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
+
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
-         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
+         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());*/
          return employeeInfoEntity;
     }
     /**
@@ -174,8 +174,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
     	 employeeInfoEntity.setEmployeeID(employeeInfoFormBean.getEmployeeID());
     	 employeeInfoEntity.setEmployeeName(employeeInfoFormBean.getEmployeeName());
          employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
-         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
-         employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
+//         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
+         employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
+         /*   employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
          employeeInfoEntity.setEpType(employeeInfoFormBean.getEpType());
          employeeInfoEntity.setBirthday(employeeInfoFormBean.getBirthday());
          employeeInfoEntity.setAge(employeeInfoFormBean.getAge());
@@ -185,9 +186,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setAddress(employeeInfoFormBean.getAddress());
          employeeInfoEntity.setPhoneNumber(employeeInfoFormBean.getPhoneNumber());
          employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
-         employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
+
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
-         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
+         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());*/
 		 return employeeInfoEntity;
     }
     @Override
@@ -206,7 +207,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      */
     public List<EmployeeActionForm> transferDBTOUI(List<Employee> employees) {
 
-        List<EmployeeActionForm> employeeAactionForms = new ArrayList();
+        List<EmployeeActionForm> employeeAactionForms = new ArrayList<EmployeeActionForm>();
         for (Employee employee : employees) {
             EmployeeActionForm employeeAactionForm = new EmployeeActionForm();
             employeeAactionForm.setEmployeeID(employee.getEmployeeID());
@@ -229,5 +230,24 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         List<EmployeeActionForm> rtn = transferDBTOUI(employee);
         return rtn;
     }
+	@Override
+	public void save(EmployeeInfoFormBean employeeInfoFormBean) {
+
+	        employeeInfoMapper.save(employeeInfoFormBean);
+
+
+
+	}
+	@Override
+	public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+	@Override
+	public List<EmployeeInfoEntity> getEmployeeAll() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
 
 }
