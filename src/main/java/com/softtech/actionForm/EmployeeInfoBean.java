@@ -1,115 +1,83 @@
 package com.softtech.actionForm;
-/**
- * @program
- * @概要:
- * @作成者:スッ
- * @作成日:2023-10-20
- * @return:
- */
-public class EmployeeInfoBean {
+
+import java.io.Serializable;
+
+import javax.validation.constraints.NotEmpty;
+
+public class EmployeeInfoBean implements Serializable{
+
 	//社員ID
+	@NotEmpty(message = "社員IDを入力してください。")
 	private String employeeID;
 	//社員氏名
+	@NotEmpty(message = "社員氏名を入力してください。")
 	private String employeeName;
 	//パスワード
-	/*private String password;
-	//ステータス
-	private String status;*/
-	//性別
-	private String sex;
-	//タイプ
-	private String epType;
-	//生年月日
-	private String birthday;
-	//年齢
-	private String age;
-	//入社年月日
-	private String joinedDate;
-	//社齢
-	private String joinedTime;
-	//郵便番号
-	private String postCode;
-	//住所
-	private String address;
-	//電話番号
-	private String phoneNumber;
-	//権限
-	private String authority;
+
+	private String password;
+
 	//メール
+	@NotEmpty(message = "メールを入力してください。")
 	private String mailAdress;
 	//作成日
-	private String insertDate;
+	/* private String insertDate;
 	//更新日
 	private String updateDate;
+	*/
+	//更新と新規区別用のFlg
+	private String insertFlg;
+
+	//検索区別用のFlg
+	private String selectFlg;
 
 	public String getEmployeeID() {
 		return employeeID;
+	}
+
+	public void setEmployeeID(String employeeID) {
+		this.employeeID = employeeID;
 	}
 
 	public String getEmployeeName() {
 		return employeeName;
 	}
 
-	/*public String getPassword() {
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getPassword() {
 		return password;
 	}
 
-	public String getStatus(){
-		return status;
-
-	}*/
-
-	public String getSex() {
-		return sex;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getEpType(){
-		return epType;
-	}
-
-	public String getbirthday() {
-		return birthday;
-	}
-	public String getAge() {
-		return age;
-	}
-
-	public String getJoinedDate() {
-		return joinedDate;
-	}
-
-	public String getJoinedTime(){
-		return joinedTime;
-
-	}
-
-	public String getPostCode() {
-		return postCode;
-	}
-
-	public String getAddress(){
-		return address;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public String getAuthority(){
-		return authority;
-
-	}
 
 	public String getMailAdress() {
 		return mailAdress;
 	}
 
-	public String getInsertDate(){
-		return insertDate;
+	public void setMailAdress(String mailAdress) {
+		this.mailAdress = mailAdress;
 	}
 
-	public String getUpdateDate() {
-		return updateDate;
+
+	public String getInsertFlg() {
+		return insertFlg;
+	}
+
+	public void setInsertFlg(String insertFlg) {
+		this.insertFlg = insertFlg;
+	}
+
+	public String getSelectFlg() {
+		return selectFlg;
+	}
+
+	public void setSelectFlg(String selectFlg) {
+		this.selectFlg = selectFlg;
 	}
 
 }

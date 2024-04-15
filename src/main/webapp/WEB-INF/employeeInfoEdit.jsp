@@ -63,5 +63,10 @@
 	<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()"  />
 
 </form:form>
+ <c:if test="${not empty successMessage}">
+    <div style="color: red;">
+        <p><c:out value="${successMessage}" /></p>
+    </div>
+</c:if>
 </body>
 </html>

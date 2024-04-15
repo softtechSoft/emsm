@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.softtech.actionForm.EmployeeInfoBean;
 import com.softtech.actionForm.EmployeeInfoFormBean;
 import com.softtech.entity.Employee;
 import com.softtech.entity.EmployeeInfoEntity;
@@ -28,11 +29,13 @@ public interface EmployeeInfoMapper {
      String getMaxEmployeeID();
 
     // update
-     void updateEmployeeInfo(EmployeeInfoEntity employeeInfoEntity) ;
+     void updateEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean) ;
 
     // insert
      void insertEmployeeInfo(EmployeeInfoEntity employeeInfoEntity) ;
      // save
-     void save(EmployeeInfoFormBean employeeInfoFormBean);
+     void save(EmployeeInfoBean employeeInfoBean);
+     //update
+	void update(EmployeeInfoFormBean employeeInfoFormBean);
 
 }

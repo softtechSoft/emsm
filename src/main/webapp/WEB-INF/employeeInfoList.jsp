@@ -63,7 +63,19 @@
 	<tr>
 		<th width="100">社員ID</th>
 		<th width="100">社員氏名</th>
-
+		<th width="100">性別</th>
+		<th width="100">タイプ</th>
+		<th width="100">生年月日</th>
+		<th width="100">年齢</th>
+		<th width="100">入社年月日</th>
+		<th width="100">社齢</th>
+		<th width="100">郵便番号</th>
+		<th width="100">住所</th>
+		<th width="100">電話番号</th>
+		<th width="100">権限</th>
+		<th width="100">メール</th>
+		<!-- <th width="100">作成日</th>
+		<th width="100">更新日</th> -->
 		<th width="45">更新</th>
 	</tr>
 	<c:forEach items="${list}" var="employeeInfoList" varStatus="status">
@@ -71,7 +83,16 @@
                     <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
                 <td><c:out value="${employeeInfoList.employeeID}"/></td>
                 <td><c:out value="${employeeInfoList.employeeName}"/></td>
-
+                <td><c:out value="${employeeInfoList.sex}"/></td>
+                <td><c:out value="${employeeInfoList.epType}"/></td>
+                <td><c:out value="${employeeInfoList.birthday}"/></td>
+                <td><c:out value="${employeeInfoList.age}"/></td>
+                <td><c:out value="${employeeInfoList.joinedDate}"/></td>
+                <td><c:out value="${employeeInfoList.joinedTime}"/></td>
+                <td><c:out value="${employeeInfoList.postCode}"/></td>
+                <td><c:out value="${employeeInfoList.address}"/></td>
+                <td><c:out value="${employeeInfoList.phoneNumber}"/></td>
+                <td><c:out value="${employeeInfoList.authority}"/></td>
                 <td><c:out value="${employeeInfoList.mailAdress}"/></td>
                 <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out
                         value="${employeeInfoList.employeeID}"/>');"/></td>

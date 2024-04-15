@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.EmployeeActionForm;
+import com.softtech.actionForm.EmployeeInfoBean;
 import com.softtech.actionForm.EmployeeInfoFormBean;
 import com.softtech.entity.EmployeeInfoEntity;
 
@@ -85,6 +86,7 @@ public interface EmployeeInfoService {
 	     * ユーザ情報登録
 
 	     */
-	  void save(EmployeeInfoFormBean employeeInfoFormBean);
+	  void save(EmployeeInfoBean employeeInfoBean);
+	  void update(EmployeeInfoFormBean employeeInfoFormBean);
 
 }

@@ -38,7 +38,7 @@ class EmployeeInfoServiceImplTest {
 
 	@Test
 	void changeSexTest() {
-		//Mockito.when(changeSex(employeeInfoMapper.getEmployeeAll()))
+		Mockito.when(changeSex(employeeInfoMapper.getEmployeeAll()));
 		List<EmployeeInfoEntity> employeeInfoEntity=new ArrayList<>();
 		EmployeeInfoEntity employeeInfoEntity1 = new EmployeeInfoEntity();
 		employeeInfoEntity1.setSex("1");
@@ -67,9 +67,14 @@ class EmployeeInfoServiceImplTest {
 		Assertions.assertEquals(employeeInfoEntityrtn2.getSex(),"女");
 	}
 
+	private Object changeSex(List<EmployeeInfoEntity> employeeAll) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
 	@Test
 	void getEmployeeAllTest() {
-		// パラメータの準備
+//		 パラメータの準備
 		EmployeeInfoEntity employeeInfoEntity1 = new EmployeeInfoEntity();
 		employeeInfoEntity1.setSex("1");
 		employeeInfoEntity1.setEmployeeName("あいう");
@@ -82,11 +87,11 @@ class EmployeeInfoServiceImplTest {
 		employeeInfoEntity2.setAddress("Osaka");
 		employeesPara.add(employeeInfoEntity2);
 
-		//対象メソッドを呼び出し
+//		対象メソッドを呼び出し
 		Mockito.when(employeeInfoMapper.getEmployeeAll()).thenReturn(employeesPara);
 		List<EmployeeInfoEntity> employeesRtn=target.getEmployeeAll();
 
-		//対象データ確認
+//		対象データ確認
 		EmployeeInfoEntity employeeInfoEntityrtn1 = new EmployeeInfoEntity();
 		EmployeeInfoEntity employeeInfoEntityrtn2 = new EmployeeInfoEntity();
 		int i = 0;

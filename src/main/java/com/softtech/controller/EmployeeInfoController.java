@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.EmployeeActionForm;
+import com.softtech.actionForm.EmployeeInfoBean;
 import com.softtech.actionForm.EmployeeInfoFormBean;
 import com.softtech.entity.EmployeeInfoEntity;
 import com.softtech.service.EmployeeInfoService;
@@ -111,7 +112,7 @@ public class EmployeeInfoController {
 	      employeeInfoFormBean1.setInsertFlg(insertFlg);
 	      /* employeeInfoFormBean1.setInsertDate(format);
 	      employeeInfoFormBean1.setUpdateDate(format); */
-
+	  return "employeeInfoEdit";
 	      //更新の場合
 	  } else {
 
@@ -126,7 +127,7 @@ public class EmployeeInfoController {
 	      employeeInfoFormBean1.setInsertFlg(insertFlg);
 	      model.addAttribute("employeeInfoFormBean", employeeInfoFormBean1);
 	  }
-	  return "employeeInfoEdit";
+	  return "infoEdit";
 
 	}
     /**概要:更新と新規ボタン
@@ -136,7 +137,7 @@ public class EmployeeInfoController {
     *@date:2023/10/30
     */
 	@RequestMapping(value = "/employeeInfoEdit", method = RequestMethod.POST)
-	public String registEmployeeInfo(@Valid @ModelAttribute EmployeeInfoFormBean employeeInfoFormBean,
+	public String registEmployeeInfo(@Valid @ModelAttribute EmployeeInfoBean employeeInfoBean,
 	                                BindingResult result, HttpSession session, Model model) {
 
 		 if (result.hasErrors()) {
@@ -150,7 +151,27 @@ public class EmployeeInfoController {
 			     return "employeeInfoEdit";
 		 }
 	        // ユーザー情報の登録
-		 employeeInfoService.save(employeeInfoFormBean);
+		 employeeInfoService.save(employeeInfoBean);
+		 model.addAttribute("successMessage", "登録完了");
+		 return "employeeInfoEdit";
+
+	}
+	@RequestMapping(value = "/employeeInfoEdit1", method = RequestMethod.POST)
+	public String update(@Valid @ModelAttribute EmployeeInfoFormBean employeeInfoFormBean,
+	                                BindingResult result, HttpSession session, Model model) {
+
+		 if (result.hasErrors()) {
+				// エラーチェック用リスト
+				  List<FieldError> errorlst = new ArrayList<FieldError>();
+				//エラーメッセージ。
+				  errorlst.addAll(result.getFieldErrors());
+				  //エラーメッセージ
+				  model.addAttribute("errors", errorlst);
+
+			     return "infoEdit";
+		 }
+	        // ユーザー情報の登録
+		 employeeInfoService.update(employeeInfoFormBean);
 
 		 return "employeeInfoList";
 

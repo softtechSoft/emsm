@@ -41,24 +41,25 @@
 		where employeeID = #{employeeID}
 	</select>
 
-	<update id="updateEmployeeInfo" parameterType="com.softtech.entity.EmployeeInfoEntity">
+	<update id="update" parameterType="com.softtech.entity.EmployeeInfoEntity">
 		update employee
-		set
-		employeeName = #{employeeName},
-		sex = #{sex},
-		epType = #{epType},
-		birthday = #{birthday},
-		age = #{age},
-		joinedDate = #{joinedDate},
-		joinedTime = #{joinedTime},
-		postCode = #{postCode},
-		address = #{address},
-		phoneNumber = #{phoneNumber},
-		authority = #{authority},
-		mailAdress = #{mailAdress},
-		insertDate = date_format(now(), '%Y%m%d'),
-		updateDate = date_format(now(), '%Y%m%d')
-		where employeeID = #{employeeID}
+    	set
+    	    employeeName= #{employeeName},
+    	    status = #{status},
+    	    sex = #{sex},
+    	    epType = #{epType},
+    	    birthday = #{birthday},
+    	    age = #{age},
+    	    joinedDate = #{joinedDate},
+    	    joinedTime = #{joinedTime},
+    	    postCode = #{postCode},
+    	    address = #{address},
+    	    phoneNumber = #{phoneNumber},
+    	    authority = #{authority},
+    	    mailAdress = #{mailAdress},
+    	    insertDate = date_format(now(),'%Y%m%d'),
+    	    updateDate = date_format(now(),'%Y%m%d')
+    	    where employeeID = #{employeeID}
 	</update>
 
 	<select id="getMaxEmployeeID" resultType="string">

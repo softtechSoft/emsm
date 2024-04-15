@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.EmployeeActionForm;
+import com.softtech.actionForm.EmployeeInfoBean;
 import com.softtech.actionForm.EmployeeInfoFormBean;
 import com.softtech.entity.Employee;
 import com.softtech.entity.EmployeeInfoEntity;
@@ -32,38 +33,38 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      * @return:社員リスト
      * @author:スッ
      */
-//    public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
-//        List<EmployeeInfoEntity> employeeInfoEntity = changeSex( employeeInfoMapper.getEmployeeID(employeeID));
-//        return employeeInfoEntity;
-//    }
+    public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
+        List<EmployeeInfoEntity> employeeInfoEntity = changeSex( employeeInfoMapper.getEmployeeID(employeeID));
+        return employeeInfoEntity;
+    }
     /**
      * 概要:社員全量検索する
      * @param
      * @return:社員リスト
      * @author:スッ
      */
-//    public List<EmployeeInfoEntity> getEmployeeAll() {
-//        List<EmployeeInfoEntity> employeeInfoEntity = changeSex(employeeInfoMapper.getEmployeeAll());
-//        return employeeInfoEntity;
-//    }
+    public List<EmployeeInfoEntity> getEmployeeAll() {
+        List<EmployeeInfoEntity> employeeInfoEntity = changeSex(employeeInfoMapper.getEmployeeAll());
+        return employeeInfoEntity;
+    }
     /**
      * 概要:性別変換
      * @param 社員リスト
      * @return:社員リスト
      * @author:スッ
      */
-//	public List<EmployeeInfoEntity> changeSex(List<EmployeeInfoEntity> list)
-//	{
-//		for(EmployeeInfoEntity employeeInfoEntity:list) {
-//			if ("0".equals(employeeInfoEntity.getSex())){
-//				employeeInfoEntity.setSex("男");
-//			}
-//			else {
-//				employeeInfoEntity.setSex("女");
-//			}
-//		}
-//		return list;
-//	}
+	public List<EmployeeInfoEntity> changeSex(List<EmployeeInfoEntity> list)
+	{
+		for(EmployeeInfoEntity employeeInfoEntity:list) {
+			if ("0".equals(employeeInfoEntity.getSex())){
+				employeeInfoEntity.setSex("男");
+			}
+			else {
+				employeeInfoEntity.setSex("女");
+			}
+		}
+		return list;
+	}
     /**
      * 概要:更新画面への検索,表示される画面の社員IDにより、検索する
      * @param:[employeeID]
@@ -145,9 +146,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      */
     public void updateEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean) {
     	//画面データをEntityに設定する
-        EmployeeInfoEntity employeeInfoEntity = transforBeanToEntityByUpDate(employeeInfoFormBean);
+
      // DB登録
-        employeeInfoMapper.updateEmployeeInfo(employeeInfoEntity);
+        employeeInfoMapper.updateEmployeeInfo(employeeInfoFormBean);
     }
     /**
      * 概要:社員ID最大値+1を取得
@@ -231,23 +232,29 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         return rtn;
     }
 	@Override
-	public void save(EmployeeInfoFormBean employeeInfoFormBean) {
+	public void save(EmployeeInfoBean employeeInfoBean) {
 
-	        employeeInfoMapper.save(employeeInfoFormBean);
+	        employeeInfoMapper.save(employeeInfoBean);
 
 
 
 	}
-	@Override
-	public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-	@Override
-	public List<EmployeeInfoEntity> getEmployeeAll() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
+	public void update(EmployeeInfoFormBean employeeInfoFormBean) {
+
+        employeeInfoMapper.update(employeeInfoFormBean);
+
 
 
 }
+//	@Override
+//	public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
+//		// TODO 自動生成されたメソッド・スタブ
+//		return null;
+//	}
+//	@Override
+//	public List<EmployeeInfoEntity> getEmployeeAll() {
+//		// TODO 自動生成されたメソッド・スタブ
+//		return null;
+	}
+
+
