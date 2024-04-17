@@ -14,7 +14,7 @@
 		values
 		(#{employeeID},
 		 #{employeeName},
-		 #{password},
+		 MD5(#{password}),
 		 #{mailAdress}
 		)
 	</insert>

@@ -35,25 +35,25 @@
 <table border="1" >
 	<tr style = "background-color:#f4f4f4">
 		<td width ="150px">社員ID</td>
-		<td width="250px"><c:out  value="${employeeInfoFormBean.employeeID}"/></td>
+		<td  width ="250px"><c:out  value="${employeeInfoFormBean.employeeID}" /></td>
 	</tr>
 	<tr style = "background-color:#f4f4f4">
 		<td width ="150px">社員氏名</td>
-		<td width="250px"><input type="text" id="employeeName" name="employeeName"
-                                     value="${employeeInfoFormBean.employeeName}" /></td>
+		<td  width ="250px"><input type="text" id="employeeName" name="employeeName"
+                                     value="${employeeInfoFormBean.employeeName}" style="width: 98%;" /></td>
 	</tr>
 
 
 
 	<tr style = "background-color:#f4f4f4">
 		<td width ="150px">メール</td>
-		<td width="250px"><input type="text" id="mailAdress" name="mailAdress"
-                                     value="${employeeInfoFormBean.mailAdress}" /></td>
+		<td  width ="150px"><input type="text" id="mailAdress" name="mailAdress"
+                                     value="${employeeInfoFormBean.mailAdress}" style="width: 98%;" /></td>
 	</tr>
 	<tr style = "background-color:#f4f4f4">
 		<td width ="150px">初期パスワード</td>
-		<td width="250px"><input type="password" id="password" name="password"
-                                     value="${employeeInfoFormBean.password}" /></td>
+		<td  width ="250px"><input type="password" id="password" name="password"
+                                     value="${employeeInfoFormBean.password}"   style="width: 98%;"/></td>
 	</tr>
 
 

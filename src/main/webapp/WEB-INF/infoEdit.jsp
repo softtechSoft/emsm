@@ -45,7 +45,7 @@
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">社員氏名</td>
 		<td width="250px"><input type="text" id="employeeName" name="employeeName"
-                                     value="${employeeInfoFormBean.employeeName}" /></td>
+                                     value="${employeeInfoFormBean.employeeName}" style="width: 98%;"/></td>
 	</tr>
 <%-- 	 <tr style = "background-color:#dcfeeb">
 		<td width ="150px">パスワード</td>
@@ -55,66 +55,103 @@
 
  	 <tr style = "background-color:#dcfeeb">
 		<td width ="150px">ステータス</td>
-		<td width="250px"><input type="radio" name="status" <c:if test="${employeeInfoFormBean.status == '0'}">
-                checked</c:if> value="0" /> 在籍
-
-                <input type="radio" name="status" <c:if test="${employeeInfoFormBean.status == '1'}">
-                    checked</c:if> value="1" /> 離職</td>
+		<td width="250px">
+        <input type="radio" name="status"
+               <c:choose>
+                   <c:when test="${empty employeeInfoFormBean.status || employeeInfoFormBean.status == '0'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="0" />在籍
+        <input type="radio" name="status"
+               <c:choose>
+                   <c:when test="${employeeInfoFormBean.status == '1'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="1" /> 離職
+    </td>
 	</tr>
 
 	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">性別</td>
-		<td width="250px"><input type="radio" name="sex" <c:if test="${employeeInfoFormBean.sex == '0'}">
-                checked</c:if> value="0"   />男
-
-                <input type="radio" name="sex" <c:if test="${employeeInfoFormBean.sex == '1'}">
-                    checked</c:if> value="1"  /> 女</td>
+		 <td width="150px">性別</td>
+    <td width="250px">
+        <input type="radio" name="sex"
+               <c:choose>
+                   <c:when test="${empty employeeInfoFormBean.sex || employeeInfoFormBean.sex == '0'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="0" /> 男
+        <input type="radio" name="sex"
+               <c:choose>
+                   <c:when test="${employeeInfoFormBean.sex == '1'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="1" /> 女
+    </td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">タイプ</td>
 		<td width="250px">
-		<input type="radio" name="epType" <c:if test="${employeeInfoFormBean.epType == '0'}">
-                    checked</c:if> value="0" />正社員
-                <input type="radio" name="epType" <c:if test="${employeeInfoFormBean.epType == '1'}">
-                checked</c:if> value="1" />契約社員
-                <input type="radio" name="epType" <c:if test="${employeeInfoFormBean.epType == '2'}">
-                    checked</c:if> value="2" />個人事業
-        </td>
+        <input type="radio" name="epType"
+               <c:choose>
+                   <c:when test="${empty employeeInfoFormBean.epType || employeeInfoFormBean.epType == '0'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="0" /> 正社員
+        <input type="radio" name="epType"
+               <c:choose>
+                   <c:when test="${employeeInfoFormBean.epType == '1'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="1" /> 契約社員
+         <input type="radio" name="epType"
+               <c:choose>
+                   <c:when test="${employeeInfoFormBean.epType == '2'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="2" /> 個人事業
+    </td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">生年月日</td>
 		<td width="250px"><input type="text" id="birthday" name="birthday"
-                                     value="${employeeInfoFormBean.birthday}" /></td>
+                                     value="${employeeInfoFormBean.birthday}"  style="width: 98%;"/></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">年齢</td>
 		<td width="250px"><input type="text" id="age" name="age"
-                                     value="${employeeInfoFormBean.age}" /></td>
+                                     value="${employeeInfoFormBean.age}"  style="width: 98%;"/></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">入社年月日</td>
 		<td width="250px"><input type="text" id="joinedDate" name="joinedDate"
-                                     value="${employeeInfoFormBean.joinedDate}" /></td>
+                                     value="${employeeInfoFormBean.joinedDate}" style="width: 98%;" /></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">社齢</td>
 		<td width="250px"><input type="text" id="joinedTime" name="joinedTime"
-                                     value="${employeeInfoFormBean.joinedTime}" /></td>
+                                     value="${employeeInfoFormBean.joinedTime}" style="width: 98%;" /></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">郵便番号</td>
 		<td width="250px"><input type="text" id="postCode" name="postCode"
-                                     value="${employeeInfoFormBean.postCode}" /></td>
+                                     value="${employeeInfoFormBean.postCode}" style="width: 98%;"/></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">住所</td>
 		<td width="250px"><input type="text" id="address" name="address"
-                                     value="${employeeInfoFormBean.address}" /></td>
+                                     value="${employeeInfoFormBean.address}" style="width: 98%;"/></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">電話番号</td>
 		<td width="250px"><input type="text" id="phoneNumber" name="phoneNumber"
-                                     value="${employeeInfoFormBean.phoneNumber}" /></td>
+                                     value="${employeeInfoFormBean.phoneNumber}"style="width: 98%;" /></td>
 
 	</tr>
 	<tr style = "background-color:#dcfeeb">
@@ -127,7 +164,7 @@
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">メール</td>
 		<td width="250px"><input type="text" id="mailAdress" name="mailAdress"
-                                     value="${employeeInfoFormBean.mailAdress}" /></td>
+                                     value="${employeeInfoFormBean.mailAdress}"style="width: 98%;" /></td>
 	</tr>
 <%-- 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">作成日</td>

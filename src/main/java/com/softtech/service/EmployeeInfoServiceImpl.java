@@ -53,14 +53,55 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      * @return:社員リスト
      * @author:スッ
      */
-	public List<EmployeeInfoEntity> changeSex(List<EmployeeInfoEntity> list)
+    public List<EmployeeInfoEntity> changeSex(List<EmployeeInfoEntity> list) {
+        for (EmployeeInfoEntity employeeInfoEntity : list) {
+            String sex = employeeInfoEntity.getSex();
+            if (sex != null && !sex.isEmpty()) {
+                if ("0".equals(sex)) {
+                    employeeInfoEntity.setSex("男");
+                } else {
+                    employeeInfoEntity.setSex("女");
+                }
+            }
+        }
+        return list;
+    }
+	/**
+     * 概要:taipu変換
+     * @param 社員リスト
+     * @return:社員リスト
+     * @author:
+     */
+
+	public List<EmployeeInfoEntity> changeepType(List<EmployeeInfoEntity> list)
 	{
 		for(EmployeeInfoEntity employeeInfoEntity:list) {
-			if ("0".equals(employeeInfoEntity.getSex())){
-				employeeInfoEntity.setSex("男");
+			if ("0".equals(employeeInfoEntity.getEpType())){
+				employeeInfoEntity.setEpType("正社員");
+			}
+			else if("1".equals(employeeInfoEntity.getEpType())){
+				employeeInfoEntity.setEpType("契約社員");
 			}
 			else {
-				employeeInfoEntity.setSex("女");
+				employeeInfoEntity.setEpType("個人事業");
+			}
+		}
+		return list;
+	}
+	/**
+     * 概要:権限変換
+     * @param 社員リスト
+     * @return:社員リスト
+     * @author:
+     */
+	public List<EmployeeInfoEntity> changeauthority(List<EmployeeInfoEntity> list)
+	{
+		for(EmployeeInfoEntity employeeInfoEntity:list) {
+			if ("0".equals(employeeInfoEntity.getAuthority())){
+				employeeInfoEntity.setAuthority("普通");
+			}
+			else {
+				employeeInfoEntity.setAuthority("管理者");
 			}
 		}
 		return list;
@@ -90,9 +131,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
             employeeInfoFormBean.setEmployeeID(employeeInfoEntity.getEmployeeID());
             employeeInfoFormBean.setEmployeeName(employeeInfoEntity.getEmployeeName());
             employeeInfoFormBean.setPassword(employeeInfoEntity.getPassword());
-//            employeeInfoFormBean.setStatus(employeeInfoEntity.getStatus());
+            employeeInfoFormBean.setStatus(employeeInfoEntity.getStatus());
             employeeInfoFormBean.setMailAdress(employeeInfoEntity.getMailAdress());
-            /*       employeeInfoFormBean.setSex(employeeInfoEntity.getSex());
+           employeeInfoFormBean.setSex(employeeInfoEntity.getSex());
             employeeInfoFormBean.setEpType(employeeInfoEntity.getEpType());
             employeeInfoFormBean.setBirthday(employeeInfoEntity.getBirthday());
             employeeInfoFormBean.setAge(employeeInfoEntity.getAge());
@@ -104,7 +145,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
             employeeInfoFormBean.setAuthority(employeeInfoEntity.getAuthority());
 
             employeeInfoFormBean.setInsertDate(employeeInfoEntity.getInsertDate());
-            employeeInfoFormBean.setUpdateDate(employeeInfoEntity.getUpdateDate());*/
+            employeeInfoFormBean.setUpdateDate(employeeInfoEntity.getUpdateDate());
         }
         return employeeInfoFormBean;
     }
@@ -120,9 +161,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
     	 employeeInfoEntity.setEmployeeID(employeeInfoFormBean.getEmployeeID());
          employeeInfoEntity.setEmployeeName(employeeInfoFormBean.getEmployeeName());
          employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
-//         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
+         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
          employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
-         /*    employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
+         employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
          employeeInfoEntity.setEpType(employeeInfoFormBean.getEpType());
          employeeInfoEntity.setBirthday(employeeInfoFormBean.getBirthday());
          employeeInfoEntity.setAge(employeeInfoFormBean.getAge());
@@ -134,7 +175,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
 
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
-         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());*/
+         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
          return employeeInfoEntity;
     }
     /**
@@ -175,9 +216,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
     	 employeeInfoEntity.setEmployeeID(employeeInfoFormBean.getEmployeeID());
     	 employeeInfoEntity.setEmployeeName(employeeInfoFormBean.getEmployeeName());
          employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
-//         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
+         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
          employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
-         /*   employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
+         employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
          employeeInfoEntity.setEpType(employeeInfoFormBean.getEpType());
          employeeInfoEntity.setBirthday(employeeInfoFormBean.getBirthday());
          employeeInfoEntity.setAge(employeeInfoFormBean.getAge());
@@ -189,7 +230,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
 
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
-         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());*/
+         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
 		 return employeeInfoEntity;
     }
     @Override
