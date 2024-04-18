@@ -88,6 +88,9 @@ public class DataUtil {
 		if( nowID==null || nowID.length() <=headerIndex) return nowID;
 		// 桁数取得
 		int length=nowID.length();
+		if (length<6){
+			length= 6 ;
+		}
 		// ヘッダ
 		String header = nowID.substring(0, headerIndex);
 		// +1 にする
