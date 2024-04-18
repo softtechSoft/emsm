@@ -18,7 +18,7 @@
 </head>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="employeeInfoFormBean"
            action="employeeInfoEdit">
-<h2>社員情報</h2>
+<h2>社員新規登録</h2>
  <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
@@ -35,7 +35,8 @@
 <table border="1" >
 	<tr style = "background-color:#f4f4f4">
 		<td width ="150px">社員ID</td>
-		<td  width ="250px"><c:out  value="${employeeInfoFormBean.employeeID}" /></td>
+		<td  width ="250px"><input type="text" id="employeeID" name="employeeID"
+                                     value="${employeeInfoFormBean.employeeID}" style="width: 98%;" /></td>
 	</tr>
 	<tr style = "background-color:#f4f4f4">
 		<td width ="150px">社員氏名</td>

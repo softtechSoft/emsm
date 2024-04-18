@@ -66,46 +66,6 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         }
         return list;
     }
-	/**
-     * 概要:taipu変換
-     * @param 社員リスト
-     * @return:社員リスト
-     * @author:
-     */
-
-	public List<EmployeeInfoEntity> changeepType(List<EmployeeInfoEntity> list)
-	{
-		for(EmployeeInfoEntity employeeInfoEntity:list) {
-			if ("0".equals(employeeInfoEntity.getEpType())){
-				employeeInfoEntity.setEpType("正社員");
-			}
-			else if("1".equals(employeeInfoEntity.getEpType())){
-				employeeInfoEntity.setEpType("契約社員");
-			}
-			else {
-				employeeInfoEntity.setEpType("個人事業");
-			}
-		}
-		return list;
-	}
-	/**
-     * 概要:権限変換
-     * @param 社員リスト
-     * @return:社員リスト
-     * @author:
-     */
-	public List<EmployeeInfoEntity> changeauthority(List<EmployeeInfoEntity> list)
-	{
-		for(EmployeeInfoEntity employeeInfoEntity:list) {
-			if ("0".equals(employeeInfoEntity.getAuthority())){
-				employeeInfoEntity.setAuthority("普通");
-			}
-			else {
-				employeeInfoEntity.setAuthority("管理者");
-			}
-		}
-		return list;
-	}
     /**
      * 概要:更新画面への検索,表示される画面の社員IDにより、検索する
      * @param:[employeeID]
