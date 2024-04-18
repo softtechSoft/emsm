@@ -1,4 +1,4 @@
-package com.softtech.actionForm;
+package com.softtech.entity;
 
 import javax.validation.constraints.Pattern;
 

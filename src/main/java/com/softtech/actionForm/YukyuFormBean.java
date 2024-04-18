@@ -1,4 +1,4 @@
-package com.softtech.entity;
+package com.softtech.actionForm;
 
 import javax.validation.constraints.Pattern;
 
@@ -9,6 +9,8 @@ public class YukyuFormBean {
 
 		//年度
 	    private String nendo;
+
+
 
 	    //総日数
 	    private String totalDay;

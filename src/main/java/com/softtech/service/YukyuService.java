@@ -2,7 +2,8 @@ package com.softtech.service;
 
 import java.util.List;
 
-import com.softtech.actionForm.Yukyu;
+import com.softtech.actionForm.YukyuFormBean;
+import com.softtech.entity.Yukyu;
 
 public interface YukyuService {
 
@@ -16,7 +17,10 @@ public interface YukyuService {
 	List<Yukyu> getEmployee();
 
 
-	void update(Yukyu yukyu);
+	void update(YukyuFormBean yukyuFormBean);
+
+
+	void save(YukyuFormBean yukyuFormBean);
 
 
 

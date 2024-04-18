@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.softtech.actionForm.Yukyu;
-import com.softtech.entity.YukyuFormBean;
+import com.softtech.actionForm.YukyuFormBean;
+import com.softtech.entity.Yukyu;
 import com.softtech.mappers.YukyuMapper;
 
 
@@ -16,9 +16,7 @@ public class YukyuServiceImpl implements YukyuService {
     @Autowired
     private YukyuMapper yukyuMapper;
 
-    public YukyuServiceImpl(YukyuMapper yukyuMapper) {
-    	this.yukyuMapper=yukyuMapper;
-    }
+
 
     /**
      * 概要:社員IDより、検索する
@@ -54,8 +52,14 @@ public class YukyuServiceImpl implements YukyuService {
 	}
 
 	@Override
-	public void update(Yukyu yukyu) {
-		// TODO 自動生成されたメソッド・スタブ
+	public void update(YukyuFormBean yukyuFormBean) {
+		yukyuMapper.update(yukyuFormBean);
+
+	}
+
+	@Override
+	public void save(YukyuFormBean yukyuFormBean) {
+		yukyuMapper.save(yukyuFormBean);
 
 	}
 

@@ -4,25 +4,38 @@
           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softtech.mappers.YukyuMapper">
 
-    <select id="getAllYukyu" parameterType="string" resultType="com.softtech.actionForm.Yukyu">
+    <select id="getAllYukyu" parameterType="string" resultType="com.softtech.entity.Yukyu">
         SELECT *
         FROM yukyu
     </select>
 
-	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.actionForm.Yukyu">
+	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.Yukyu">
 		select *
 		from yukyu
 		where employeeID = #{employeeID}
 	</select>
 
-
-
-	<select id="getEmployee" resultType="com.softtech.actionForm.Yukyu">
-		select employeeID,nendo
+	<select id="getEmployee" resultType="com.softtech.actionForm.YukyuFormBean">
+		select employeeID
 		FROM yukyu;
 	</select>
 
-	<update id="updateYukyu" parameterType="com.softtech.actionForm.Yukyu">
+	<insert id="save" parameterType="com.softtech.actionForm.YukyuFormBean">
+		insert into yukyu
+		(employeeID,
+		 nendo,
+		 totalDay,
+		 usedDay
+		)
+		values
+		(#{employeeID},
+		 #{nendo},
+		 #{totalDay},
+		 #{usedDay}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.softtech.actionForm.YukyuFormBean">
 		update yukyu
     	set
     	    employeeID= #{employeeID},

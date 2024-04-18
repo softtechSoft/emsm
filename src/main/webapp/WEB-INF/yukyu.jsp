@@ -10,21 +10,23 @@
     <script type="text/javascript" >
     <!--検索-->
     function toSearchJsp(){
+    	//var employeeID = document.getElementById("employeeSelect").value;
+    	//document.theForm.action = "/toSearchJsp?employeeID=" + employeeID;
     	document.getElementById('selectFlg').value='0';
-    	document.theForm.submit();
+    	document.getElementById('theForm').submit();
     	alert("検索Button clicked!");
     }
-    function toSearchJsp1(){
-    	document.getElementById('selectFlg').value='1';
-    	document.theForm.submit();
-    	alert("全量検索Button clicked!");
-   }
+    function toSearchJsp1() {
+        document.getElementById('selectFlg').value = '1';
+        document.getElementById('theForm').submit();
+        alert("全量検索Button clicked!");
+    }
     // 更新ボタン処理
     function toUpdateJsp(employeeID){
         // 更新
         document.getElementById('insertFlg').value='1';
         document.getElementById('employeeID').value=employeeID;
-        document.theForm.action="toinitEmployeeInfo";
+        document.theForm.action="toEmployeeInfo";
         document.theForm.submit();
     }
 
@@ -33,15 +35,14 @@
 </head>
 <body>
 <h2>有給管理</h2>
-	<form:form name="theForm" id="theForm" method="post" modelAttribute="yukyu" action="searchYukyu">
+	<form:form name="theForm" id="theForm" method="post" modelAttribute="yukyuFormBean" action="searchYukyu">
 	<!--検索フラグ　０：検索　１：全量検索-->
-    <input type="hidden" id="search" name="search"/>
+    <input type="hidden" id="selectFlg" name="selectFlg"/>
 
 	<b>社員ID</b>
 
-
-	 <form:select path="employeeID">
-    	<form:options items="${elist}" itemLabel="employeeID" itemValue="nendo"/>
+	 <form:select path="employeeID" id="employeeSelect">
+    	<form:options items="${elist}" itemLabel="employeeID" itemValue="employeeID"/>
     </form:select>
 
 
@@ -58,12 +59,12 @@
     </p>
     <table border="1" class="yukyulist-table">
         <tr>
-            <th width="100">社員ID</th>
-            <th width="100">年度</th>
-            <th width="100">総日数</th>
-            <th width="100">消化日数</th>
-            <th width="100">作成日</th>
-            <th width="100">更新日</th>
+            <th width="80">社員ID</th>
+            <th width="80">年度</th>
+            <th width="80">総日数</th>
+            <th width="80">消化日数</th>
+            <th width="80">作成日</th>
+            <th width="80">更新日</th>
 
             <th width="45">更新</th>
         </tr>
@@ -73,7 +74,7 @@
                 <td><c:out value="${yk.employeeID}"/></td>
 		        <td><c:out value="${yk.nendo}"/></td>
 		        <td><c:out value="${yk.totalDay}"/></td>
-		        <td><c:out value="${yk.usedDay}"/></td>
+		        <td><input type="text" name="usedDay" value="${yk.usedDay}" maxlength="2" style="width: 80px;" /></td>
 		        <td><c:out value="${yk.insertDate}"/></td>
 		        <td><c:out value="${yk.updateDate}"/></td>
 

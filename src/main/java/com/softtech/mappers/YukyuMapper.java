@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.softtech.actionForm.Yukyu;
+import com.softtech.actionForm.YukyuFormBean;
+import com.softtech.entity.Yukyu;
 
 @Mapper
 public interface YukyuMapper {
@@ -16,7 +17,10 @@ public interface YukyuMapper {
 
 	List<Yukyu> getEmployee();
 
-	void updateYukyu(Yukyu yukyu);
+	void update(YukyuFormBean yukyuFormBean);
+
+
+	void save(YukyuFormBean yukyuFormBean);
 
 
 }
