@@ -14,20 +14,21 @@
     	//document.theForm.action = "/toSearchJsp?employeeID=" + employeeID;
     	document.getElementById('selectFlg').value='0';
     	document.getElementById('theForm').submit();
-    	alert("検索Button clicked!");
+    	//alert("検索Button clicked!");
     }
     function toSearchJsp1() {
         document.getElementById('selectFlg').value = '1';
         document.getElementById('theForm').submit();
-        alert("全量検索Button clicked!");
+       // alert("全量検索Button clicked!");
     }
     // 更新ボタン処理
     function toUpdateJsp(employeeID){
         // 更新
-        document.getElementById('insertFlg').value='1';
-        document.getElementById('employeeID').value=employeeID;
-        document.theForm.action="toEmployeeInfo";
+        document.getElementById('insertFlg').value='0';
+        //document.getElementById('employeeID').value=employeeID;
+        document.theForm.action="yukyuInfo";
         document.theForm.submit();
+        //alert("更新Button clicked!");
     }
 
     </script>
@@ -35,9 +36,17 @@
 </head>
 <body>
 <h2>有給管理</h2>
+	<div style="color: red;">
+    <p>${updateMsg}</p>
+	</div>
 	<form:form name="theForm" id="theForm" method="post" modelAttribute="yukyuFormBean" action="searchYukyu">
 	<!--検索フラグ　０：検索　１：全量検索-->
-    <input type="hidden" id="selectFlg" name="selectFlg"/>
+    <input type="hidden" id="selectFlg" name="selectFlg"
+    	   value="${yukyuFormBean.selectFlg}"/>
+
+	<!--新規フラグ　０　新規　１　更新-->
+    <input type="hidden" id="insertFlg" name="insertFlg"
+           value="${yukyuFormBean.insertFlg}"/>
 
 	<b>社員ID</b>
 
@@ -74,7 +83,7 @@
                 <td><c:out value="${yk.employeeID}"/></td>
 		        <td><c:out value="${yk.nendo}"/></td>
 		        <td><c:out value="${yk.totalDay}"/></td>
-		        <td><input type="text" name="usedDay" value="${yk.usedDay}" maxlength="2" style="width: 80px;" /></td>
+		        <td><c:out value="${yk.usedDay}"/></td>
 		        <td><c:out value="${yk.insertDate}"/></td>
 		        <td><c:out value="${yk.updateDate}"/></td>
 

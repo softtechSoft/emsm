@@ -22,6 +22,11 @@ public interface YukyuService {
 
 	void save(YukyuFormBean yukyuFormBean);
 
+	YukyuFormBean transforEntityToUI(List<Yukyu> eList);
+
+
+	boolean updateYk(YukyuFormBean yukyuFormBean);
+
 
 
 }

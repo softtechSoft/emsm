@@ -53,14 +53,38 @@ public class YukyuServiceImpl implements YukyuService {
 
 	@Override
 	public void update(YukyuFormBean yukyuFormBean) {
-		yukyuMapper.update(yukyuFormBean);
 
+
+		 yukyuMapper.update(yukyuFormBean);
 	}
 
 	@Override
 	public void save(YukyuFormBean yukyuFormBean) {
 		yukyuMapper.save(yukyuFormBean);
 
+	}
+	@Override
+	public YukyuFormBean transforEntityToUI(List<Yukyu> eList) {
+		YukyuFormBean yukyuFormBean = new YukyuFormBean();
+        for (Yukyu yukyu : eList) {
+            yukyuFormBean.setEmployeeID(yukyu.getEmployeeID());
+            yukyuFormBean.setNendo(yukyu.getNendo());
+            yukyuFormBean.setTotalDay(yukyu.getTotalDay());
+            yukyuFormBean.setUsedDay(yukyu.getUsedDay());
+            yukyuFormBean.setInsertDate(yukyu.getInsertDate());
+            yukyuFormBean.setUpdateDate(yukyu.getUpdateDate());
+
+
+            yukyuFormBean.setInsertDate(yukyu.getInsertDate());
+            yukyuFormBean.setUpdateDate(yukyu.getUpdateDate());
+        }
+        return yukyuFormBean;
+	}
+	@Override
+	public boolean updateYk(YukyuFormBean yukyuFormBean) {
+		// TODO 自動生成されたメソッド・スタブ
+		yukyuMapper.update(yukyuFormBean);
+        return true;
 	}
 
 

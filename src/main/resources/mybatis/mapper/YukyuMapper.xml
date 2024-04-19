@@ -34,16 +34,19 @@
 		 #{usedDay}
 		)
 	</insert>
+	<select id="getByEmployeeIDAndNendo" resultType="com.softtech.entity.Yukyu">
+    	SELECT * FROM yukyu WHERE employeeID = #{employeeID} AND nendo = #{year}
+	</select>
 
-	<update id="update" parameterType="com.softtech.actionForm.YukyuFormBean">
-		update yukyu
+	<update id="update" parameterType="com.softtech.entity.Yukyu">
+		update ems.yukyu
     	set
-    	    employeeID= #{employeeID},
-    	    nendo = #{nendo},
-    	    totalDay = #{totalDay},
     	    usedDay = #{usedDay},
-    	    insertDate = #{insertDate},
-    	    updateDate = #{updateDate},
+
+    	    updateDate = date_format(now(),'%Y%m%d')
+
+    	    where employeeID =#{employeeID}
+			and nendo = #{nendo}
 
 	</update>
 

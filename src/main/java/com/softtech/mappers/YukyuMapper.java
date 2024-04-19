@@ -23,4 +23,7 @@ public interface YukyuMapper {
 	void save(YukyuFormBean yukyuFormBean);
 
 
+
+
+
 }

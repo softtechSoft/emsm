@@ -1,5 +1,6 @@
 package com.softtech.actionForm;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
 
 public class YukyuFormBean {
@@ -17,7 +18,9 @@ public class YukyuFormBean {
 
 	    //消化日数
 
-	    @Pattern(regexp = "^[0-9]+$")
+
+	    @Max(value = 20, message = "入力値は 20 以下!")
+	    @Pattern(regexp = "^[0-9]+$", message = "入力値は整数!")
 	    private String usedDay;
 
 	  //作成日
