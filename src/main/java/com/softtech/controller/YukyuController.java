@@ -36,19 +36,19 @@ public class YukyuController {
 	@RequestMapping("/toinYukyulist")
     public String showYukyuList(Model model) {
 
+
 		//DBから有給情報の社員IDを取得する,社員情報選択リストの初期表示
-		List<Yukyu> elist = yukyuService.getEmployee();
+		List<YukyuFormBean> elist = yukyuService.getEmployee();
 		//画面に渡す
 		model.addAttribute("elist", elist);
 
 		//画面初期表示用のFormBeam
-//		Yukyu yukyu = new Yukyu();
-//		model.addAttribute("yukyu", yukyu);
 		YukyuFormBean yukyuFormBean = new YukyuFormBean();
 		model.addAttribute("yukyuFormBean", yukyuFormBean);
 		//DBから有給情報を取得する,初期表示
-		List<Yukyu> yk = yukyuService.getAllYukyu();
-		model.addAttribute("yukyulist", yk);
+//		List<Yukyu> yk = yukyuService.getAllYukyu();
+        //初期表示すべて情報
+		//model.addAttribute("yukyulist", yk);
 
 
         return "yukyu";
@@ -74,12 +74,18 @@ public class YukyuController {
 	        List<Yukyu> yk = yukyuService.getEmployeeID(employeeID);
 	        model.addAttribute("yukyulist", yk);
 	    } else {
+
 	        List<Yukyu> yk = yukyuService.getAllYukyu();
 	        model.addAttribute("yukyulist", yk);
 	    }
 
 	    //DBから有給情報の社員IDを取得する,社員情報選択リストの初期表示
-		List<Yukyu> elist = yukyuService.getEmployee();
+		List<YukyuFormBean> elist = yukyuService.getEmployee();
+		//
+		YukyuFormBean defaultEmployee = new YukyuFormBean();
+		defaultEmployee.setEmployeeID("Select");
+		//
+		elist.add(0, defaultEmployee);
 		//画面に渡す
 		model.addAttribute("elist", elist);
 
@@ -93,27 +99,23 @@ public class YukyuController {
 	    *@date:2023/10/20
 	    */
 	@RequestMapping("/yukyuInfo")
-	public String toYukyuInfo(@ModelAttribute("yukyuFormBean") YukyuFormBean yukyuFormBean,
-	                                Model model) {
+	public String toYukyuInfo(@ModelAttribute("yukyuFormBean") YukyuFormBean yukyuFormBean, Model model) {
 
 		  //フラグを取得
 		  String insertFlg = yukyuFormBean.getInsertFlg();
 		  //更新の場合
 		  if ("0".equals(insertFlg)) {
 			//IDを取得
-			  String employeeID = yukyuFormBean.getEmployeeID();
+			  String employeeID1Se = yukyuFormBean.getEmployeeIDSelect();
 			//選択された内容を取得する
 
-			  List<Yukyu> bList =
-					  yukyuService.getEmployeeID(employeeID);
+			  List<Yukyu> bList = yukyuService.getEmployeeID(employeeID1Se);
 
-		      YukyuFormBean yukyuFormBean1 =
-		    		  yukyuService.transforEntityToUI(bList);
+		      YukyuFormBean yukyuFormBean1 = yukyuService.transforEntityToUI(bList);
 		      yukyuFormBean1.setInsertFlg(insertFlg);
 		      model.addAttribute("yukyuFormBean", yukyuFormBean1);
 		  }
-//		  model.addAttribute("yukyuFormBean", yukyuFormBean);
-		  return "yukyuInfoEdit";
+		  return "yukyuEdit";
 	}
 
 
@@ -127,7 +129,7 @@ public class YukyuController {
 
 
 	@RequestMapping(value = "/updateYukyu", method = RequestMethod.POST)
-	public String updateYukyu(@Valid @ModelAttribute YukyuFormBean yukyuFormBean,
+	public String updateYukyu(@Valid @ModelAttribute("yukyuFormBean")  YukyuFormBean yukyuFormBean,
 	                                BindingResult result, HttpSession session, Model model) {
 
 		 if (result.hasErrors()) {
@@ -138,23 +140,21 @@ public class YukyuController {
 				  //エラーメッセージ
 				  model.addAttribute("errors", errorlst);
 
-			     return "yukyuInfoEdit";
+			     return "yukyuEdit";
 		 }
 		// 更新DB
 //		  yukyuService.update(yukyuFormBean);
-		// 更新DBの結果
+		 // 更新DBの結果
 		    boolean updateResult = yukyuService.updateYk(yukyuFormBean);
 
 		    if (updateResult) {
 		        //更新成功
 		        model.addAttribute("updateMsg", "有給情報を更新しました。");
-		    } else {
-		        //更新失敗
-		        model.addAttribute("updateMsg", "有給情報の更新に失敗しました。");
 		    }
+//
 
 		//リスト選択
-		List<Yukyu> elist = yukyuService.getEmployee();
+		List<YukyuFormBean> elist = yukyuService.getEmployee();
 		//画面に渡す
 		model.addAttribute("elist", elist);
 

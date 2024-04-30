@@ -2,6 +2,10 @@
 <%@ page session="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +14,6 @@
     <script type="text/javascript" >
     <!--検索-->
     function toSearchJsp(){
-    	//var employeeID = document.getElementById("employeeSelect").value;
-    	//document.theForm.action = "/toSearchJsp?employeeID=" + employeeID;
     	document.getElementById('selectFlg').value='0';
     	document.getElementById('theForm').submit();
     	//alert("検索Button clicked!");
@@ -23,9 +25,8 @@
     }
     // 更新ボタン処理
     function toUpdateJsp(employeeID){
-        // 更新
+        document.getElementById('employeeIDSelect').value = employeeID;
         document.getElementById('insertFlg').value='0';
-        //document.getElementById('employeeID').value=employeeID;
         document.theForm.action="yukyuInfo";
         document.theForm.submit();
         //alert("更新Button clicked!");
@@ -47,7 +48,8 @@
 	<!--新規フラグ　０　新規　１　更新-->
     <input type="hidden" id="insertFlg" name="insertFlg"
            value="${yukyuFormBean.insertFlg}"/>
-
+	<input type="hidden" id="employeeIDSelect" name="employeeIDSelect"
+           value=""/>
 	<b>社員ID</b>
 
 	 <form:select path="employeeID" id="employeeSelect">
@@ -84,11 +86,21 @@
 		        <td><c:out value="${yk.nendo}"/></td>
 		        <td><c:out value="${yk.totalDay}"/></td>
 		        <td><c:out value="${yk.usedDay}"/></td>
-		        <td><c:out value="${yk.insertDate}"/></td>
-		        <td><c:out value="${yk.updateDate}"/></td>
+		       <%-- <fmt:parseDate value="${yk.insertDate}" var="insertDate" pattern="yyyyMMdd" />
+			       <fmt:formatDate value="${insertDate}" pattern="yyyy/MM/dd" />
+			       <fmt:parseDate value="${yk.updateDate}" var="updateDate" pattern="yyyyMMdd" />
+			    	<fmt:formatDate value="${updateDate}" pattern="yyyy/MM/dd" />
+			    	--%>
+		       <td>
+			       <fmt:parseDate value="${yk.insertDate}" var="insertDate" pattern="yyyyMMdd" />
+			       <fmt:formatDate value="${insertDate}" pattern="yyyy/MM/dd" />
+		       </td>
+		        <td>
+		        	<fmt:parseDate value="${yk.updateDate}" var="updateDate" pattern="yyyyMMdd" />
+			    	<fmt:formatDate value="${updateDate}" pattern="yyyy/MM/dd" />
+		        </td>
 
-                <td><input type="button" name="update" value="更新" onclick="toUpdateJsp('<c:out
-                    value="${yk.employeeID}"/>');"/></td>
+                <td><input type="button" name="update" value="更新" onclick="toUpdateJsp('<c:out value="${yk.employeeID}"/>');"/></td>
             </tr>
         </c:forEach>
     </table>

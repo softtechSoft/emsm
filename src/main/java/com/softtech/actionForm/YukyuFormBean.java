@@ -29,6 +29,12 @@ public class YukyuFormBean {
 	    //更新日
 	    private String updateDate;
 
+	    //
+	    private String employeeName;
+
+	    private String employeeIDSelect;
+
+
 	  //更新と新規区別用のFlg
 		private String insertFlg;
 
@@ -99,6 +105,23 @@ public class YukyuFormBean {
 		public void setUpdateDate(String updateDate) {
 			this.updateDate = updateDate;
 		}
+
+		public String getEmployeeName() {
+			return employeeName;
+		}
+
+		public void setEmployeeName(String employeeName) {
+			this.employeeName = employeeName;
+		}
+
+		public String getEmployeeIDSelect() {
+			return employeeIDSelect;
+		}
+
+		public void setEmployeeIDSelect(String employeeIDSelect) {
+			this.employeeIDSelect = employeeIDSelect;
+		}
+
 
 
 }
