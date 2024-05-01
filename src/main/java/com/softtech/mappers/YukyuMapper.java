@@ -15,7 +15,7 @@ public interface YukyuMapper {
 	List<Yukyu> getEmployeeID(String employeeID);
 
 
-	List<Yukyu> getEmployee();
+	List<YukyuFormBean> getEmployee();
 
 	void update(YukyuFormBean yukyuFormBean);
 

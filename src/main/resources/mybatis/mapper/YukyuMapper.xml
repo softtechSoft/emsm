@@ -10,9 +10,9 @@
     </select>
 
 	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.Yukyu">
-		select *
-		from yukyu
-		where employeeID = #{employeeID}
+		SELECT *
+		FROM yukyu
+		WHERE employeeID = #{employeeID}
 	</select>
 
 	<select id="getEmployee" resultType="com.softtech.actionForm.YukyuFormBean">
@@ -35,7 +35,10 @@
 		)
 	</insert>
 	<select id="getByEmployeeIDAndNendo" resultType="com.softtech.entity.Yukyu">
-    	SELECT * FROM yukyu WHERE employeeID = #{employeeID} AND nendo = #{year}
+    	SELECT * FROM yukyu WHERE employeeID = #{employeeID} AND nendo = #{nendo}
+	</select>
+	<select id="getDatesFromDatabase" resultType="com.softtech.entity.Yukyu">
+    	SELECT insertDate,updateDate FROM yukyu
 	</select>
 
 	<update id="update" parameterType="com.softtech.entity.Yukyu">

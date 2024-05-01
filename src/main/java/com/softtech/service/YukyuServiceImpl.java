@@ -45,18 +45,18 @@ public class YukyuServiceImpl implements YukyuService {
 
 
 	@Override
-	public List<Yukyu> getEmployee() {
-		 List<Yukyu> yukyu = yukyuMapper.getEmployee();
+	public List<YukyuFormBean> getEmployee() {
+		 List<YukyuFormBean> yukyu = yukyuMapper.getEmployee();
 
 	        return yukyu;
 	}
 
-	@Override
-	public void update(YukyuFormBean yukyuFormBean) {
-
-
-		 yukyuMapper.update(yukyuFormBean);
-	}
+//	@Override
+//	public void update(YukyuFormBean yukyuFormBean) {
+//
+//
+//		 yukyuMapper.update(yukyuFormBean);
+//	}
 
 	@Override
 	public void save(YukyuFormBean yukyuFormBean) {
@@ -82,11 +82,12 @@ public class YukyuServiceImpl implements YukyuService {
 	}
 	@Override
 	public boolean updateYk(YukyuFormBean yukyuFormBean) {
-		// TODO 自動生成されたメソッド・スタブ
+
+
 		yukyuMapper.update(yukyuFormBean);
         return true;
-	}
 
+	}
 
 
 }

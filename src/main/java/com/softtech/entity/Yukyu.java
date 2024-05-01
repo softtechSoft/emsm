@@ -1,7 +1,5 @@
 package com.softtech.entity;
 
-import javax.validation.constraints.Pattern;
-
 public class Yukyu {
 
 	//ユーザID
@@ -14,8 +12,6 @@ public class Yukyu {
     private String totalDay;
 
     //消化日数
-
-    @Pattern(regexp = "^[0-9]+$")
     private String usedDay;
 
     //作成日
@@ -24,10 +20,7 @@ public class Yukyu {
     //更新日
     private String updateDate;
 
-    //構造関数
-    public Yukyu() {
-
-	}
+    //getter and setter
 	public String getEmployeeID() {
 		return employeeID;
 	}
@@ -63,11 +56,6 @@ public class Yukyu {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
-	}
-	@Override
-	public String toString() {
-		return "YukyuDetail [employeeID=" + employeeID + ", nendo=" + nendo + ", totalDay=" + totalDay + ", usedDay="
-				+ usedDay + ", insertDate=" + insertDate + ", updateDate=" + updateDate + "]";
 	}
 
 }
