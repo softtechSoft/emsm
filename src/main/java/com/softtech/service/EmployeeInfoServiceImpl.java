@@ -116,13 +116,28 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      * @author:スッ
      * @date:2023/10/20
      */
-    public EmployeeInfoEntity transforBeanToEntityByUpDate(EmployeeInfoFormBean employeeInfoFormBean) {
+	public EmployeeInfoEntity transforBeanToEntityByInsert(EmployeeInfoBean employeeInfoFormBean) {
+   	 EmployeeInfoEntity employeeInfoEntity = new EmployeeInfoEntity();
+   	 employeeInfoEntity.setEmployeeID(employeeInfoFormBean.getEmployeeID());
+   	 employeeInfoEntity.setEmployeeName(employeeInfoFormBean.getEmployeeName());
+   	 employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
+     employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
+     employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
+     employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
+		 return employeeInfoEntity;
+   }
+	public void save(EmployeeInfoBean employeeInfoFormBean) {
+   	//画面からデータをEntityに伝送
+       EmployeeInfoEntity employeeInfoEntity = transforBeanToEntityByInsert(employeeInfoFormBean);
+     //DBに登録
+       employeeInfoMapper.save(employeeInfoEntity);
+   }
+	 public EmployeeInfoEntity transforBeanToEntityByUpDate(EmployeeInfoFormBean employeeInfoFormBean) {
     	 EmployeeInfoEntity employeeInfoEntity = new EmployeeInfoEntity();
     	 employeeInfoEntity.setEmployeeID(employeeInfoFormBean.getEmployeeID());
          employeeInfoEntity.setEmployeeName(employeeInfoFormBean.getEmployeeName());
          employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
          employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
-         employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
          employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
          employeeInfoEntity.setEpType(employeeInfoFormBean.getEpType());
          employeeInfoEntity.setBirthday(employeeInfoFormBean.getBirthday());
@@ -133,11 +148,17 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setAddress(employeeInfoFormBean.getAddress());
          employeeInfoEntity.setPhoneNumber(employeeInfoFormBean.getPhoneNumber());
          employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
-
+         employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
          employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
          return employeeInfoEntity;
     }
+	 public void update(EmployeeInfoFormBean employeeInfoFormBean) {
+	    	//画面データをEntityに設定する
+	        EmployeeInfoEntity employeeInfoEntity = transforBeanToEntityByUpDate(employeeInfoFormBean);
+	     // DB登録
+	        employeeInfoMapper.update(employeeInfoEntity);
+	    }
     /**
      * 概要:update
      * @param employeeInfoFormBean
@@ -145,12 +166,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      * @author:スッ
      * @date:2023/10/20
      */
-    public void updateEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean) {
-    	//画面データをEntityに設定する
 
-     // DB登録
-        employeeInfoMapper.updateEmployeeInfo(employeeInfoFormBean);
-    }
     /**
      * 概要:社員ID最大値+1を取得
      * @param:[employeeID]
@@ -171,35 +187,8 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      * @author:スッ
      * @date:2023/10/20
      */
-    public EmployeeInfoEntity transforBeanToEntityByInsert(EmployeeInfoFormBean employeeInfoFormBean) {
-    	 EmployeeInfoEntity employeeInfoEntity = new EmployeeInfoEntity();
-    	 employeeInfoEntity.setEmployeeID(employeeInfoFormBean.getEmployeeID());
-    	 employeeInfoEntity.setEmployeeName(employeeInfoFormBean.getEmployeeName());
-         employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
-         employeeInfoEntity.setStatus(employeeInfoFormBean.getStatus());
-         employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
-         employeeInfoEntity.setSex(employeeInfoFormBean.getSex());
-         employeeInfoEntity.setEpType(employeeInfoFormBean.getEpType());
-         employeeInfoEntity.setBirthday(employeeInfoFormBean.getBirthday());
-         employeeInfoEntity.setAge(employeeInfoFormBean.getAge());
-         employeeInfoEntity.setJoinedDate(employeeInfoFormBean.getJoinedDate());
-         employeeInfoEntity.setJoinedTime(employeeInfoFormBean.getJoinedTime());
-         employeeInfoEntity.setPostCode(employeeInfoFormBean.getPostCode());
-         employeeInfoEntity.setAddress(employeeInfoFormBean.getAddress());
-         employeeInfoEntity.setPhoneNumber(employeeInfoFormBean.getPhoneNumber());
-         employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
 
-         employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
-         employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
-		 return employeeInfoEntity;
-    }
-    @Override
-	public void insertEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean) {
-    	//画面からデータをEntityに伝送
-        EmployeeInfoEntity employeeInfoEntity = transforBeanToEntityByInsert(employeeInfoFormBean);
-      //DBに登録
-        employeeInfoMapper.insertEmployeeInfo(employeeInfoEntity);
-    }
+
     /**
      * 概要:社員情報をactionformへ変換
      * @param:[employees]
@@ -232,30 +221,14 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
         List<EmployeeActionForm> rtn = transferDBTOUI(employee);
         return rtn;
     }
-	@Override
-	public void save(EmployeeInfoBean employeeInfoBean) {
 
-	        employeeInfoMapper.save(employeeInfoBean);
-
-
-
-	}
-	public void update(EmployeeInfoFormBean employeeInfoFormBean) {
-
-        employeeInfoMapper.update(employeeInfoFormBean);
 
 
 
 }
-//	@Override
-//	public List<EmployeeInfoEntity> getEmployeeID(String employeeID) {
-//		// TODO 自動生成されたメソッド・スタブ
-//		return null;
-//	}
-//	@Override
-//	public List<EmployeeInfoEntity> getEmployeeAll() {
-//		// TODO 自動生成されたメソッド・スタブ
-//		return null;
-	}
+
+
+
+
 
 

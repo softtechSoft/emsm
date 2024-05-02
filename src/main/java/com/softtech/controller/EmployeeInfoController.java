@@ -110,8 +110,7 @@ public class EmployeeInfoController {
 	      employeeInfoFormBean1.setEmployeeID(maxEmployeeID);
 	      //新規
 	      employeeInfoFormBean1.setInsertFlg(insertFlg);
-	      /* employeeInfoFormBean1.setInsertDate(format);
-	      employeeInfoFormBean1.setUpdateDate(format); */
+
 	  return "employeeInfoEdit";
 	      //更新の場合
 	  } else {
@@ -137,7 +136,7 @@ public class EmployeeInfoController {
     *@date:2023/10/30
     */
 	@RequestMapping(value = "/employeeInfoEdit", method = RequestMethod.POST)
-	public String registEmployeeInfo(@Valid @ModelAttribute EmployeeInfoBean employeeInfoBean,
+	public String registEmployeeInfo(@Valid @ModelAttribute EmployeeInfoBean employeeInfoFormBean,
 	                                BindingResult result, HttpSession session, Model model) {
 
 		 if (result.hasErrors()) {
@@ -151,14 +150,14 @@ public class EmployeeInfoController {
 			     return "employeeInfoEdit";
 		 }
 	        // ユーザー情報の登録
-		 employeeInfoService.save(employeeInfoBean);
+		 employeeInfoService.save(employeeInfoFormBean);
 		 model.addAttribute("successMessage", "登録完了");
 		 return "employeeInfoEdit";
 
 	}
 	@RequestMapping(value = "/employeeInfoEdit1", method = RequestMethod.POST)
 	public String update(@Valid @ModelAttribute EmployeeInfoFormBean employeeInfoFormBean,
-	                                BindingResult result, HttpSession session, Model model) {
+	                                BindingResult result, Model model) {
 
 		 if (result.hasErrors()) {
 				// エラーチェック用リスト

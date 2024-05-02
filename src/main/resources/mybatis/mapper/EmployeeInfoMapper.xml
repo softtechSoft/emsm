@@ -5,19 +5,23 @@
 
 <mapper namespace="com.softtech.mappers.EmployeeInfoMapper">
 	<insert id="save" parameterType="com.softtech.entity.EmployeeInfoEntity">
-		insert into employee
-		(employeeID,
-		 employeeName,
-		 password,
-		 mailAdress
-		)
-		values
-		(#{employeeID},
-		 #{employeeName},
-		 MD5(#{password}),
-		 #{mailAdress}
-		)
-	</insert>
+    insert into employee
+    	(employeeID,
+    	 employeeName,
+     	password,
+     	mailAdress,
+     	status,
+     	authority
+    )
+    values
+    	(#{employeeID},
+     	#{employeeName},
+     	MD5(#{password}),
+     	#{mailAdress},
+     	#{status},
+     	#{authority}
+    )
+</insert>
 
 	<select id="getEmployee" resultType="com.softtech.entity.Employee">
 		select employeeName, employeeID
@@ -67,3 +71,4 @@
 		WHERE employeeID LIKE 'E%' ;
 	</select>
 </mapper>
+

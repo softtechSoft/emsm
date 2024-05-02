@@ -31,6 +31,7 @@ public class EmployeeInfoFormBean {
 	@Pattern(message = "年齢に数字のみを入力してください。",  regexp = "^[0-9]+")
 	private String age;
 	//入社年月日
+	
 	@NotEmpty(message = "入社年月日を入力してください。例：20231031")
 	@Pattern(message = "入社年月日に数字のみを入力してください。",  regexp = "^[0-9]+")
 	private String joinedDate;

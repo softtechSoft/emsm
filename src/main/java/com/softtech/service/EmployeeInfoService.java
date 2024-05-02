@@ -63,7 +63,7 @@ public interface EmployeeInfoService {
      * @author:スッ
      * @date:2022/08/10
      */
-	void updateEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean);
+//	void updateEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean);
 
 	/**
      * 概要:insert
@@ -73,7 +73,7 @@ public interface EmployeeInfoService {
      * @author:スッ
      * @date:2022/08/10
      */
-	void insertEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean);
+//	void insertEmployeeInfo(EmployeeInfoFormBean employeeInfoFormBean);
 
 	/**概要:DBから社員情報を取得する,画面の社員ID選択
 	 *@param:[]
@@ -86,7 +86,7 @@ public interface EmployeeInfoService {
 	     * ユーザ情報登録
 
 	     */
-	  void save(EmployeeInfoBean employeeInfoBean);
+	  void save(EmployeeInfoBean employeeInfoFormBean);
 	  void update(EmployeeInfoFormBean employeeInfoFormBean);
 
 }

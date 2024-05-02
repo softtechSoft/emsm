@@ -25,7 +25,8 @@
             <spring:message message="${error}"/><br>
         </c:forEach>
     </p>
-<input type="hidden" id="employeeID" name="employeeID" value="${employeeInfoFormBean.employeeID}"/>
+	<input type="hidden" id="status" name="status" value="0"/>
+	<input type="hidden" id="authority" name="authority" value="0"/>
     <!--新規フラグ　０　新規　１　更新-->
     <input type="hidden" id="insertFlg" name="insertFlg" value="${employeeInfoFormBean.insertFlg}"/>
 	<!--検索フラグ　０：検索　１：全量検索-->
