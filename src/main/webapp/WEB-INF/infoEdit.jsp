@@ -20,6 +20,47 @@
 		}
 
 	</script>
+	<script>
+    window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById("birthday").addEventListener("change", calculateAge);
+        document.getElementById("joinedDate").addEventListener("change", calculateJoinedAge);
+
+        calculateAge();
+        calculateJoinedAge();
+    });
+
+    function calculateAge() {
+        var birthday = document.getElementById("birthday").value;
+        if (birthday) {
+            // YYYYMMDD形式の入力をYYYY-MM-DD形式に変換
+            birthday = birthday.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+            var birthDate = new Date(birthday);
+            var today = new Date();
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            document.getElementById("calculatedAge").innerText = age;
+        }
+    }
+
+    function calculateJoinedAge() {
+        var joinedDate = document.getElementById("joinedDate").value;
+        if (joinedDate) {
+            // YYYYMMDD形式の入力をYYYY-MM-DD形式に変換
+            joinedDate = joinedDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+            var joinDate = new Date(joinedDate);
+            var today = new Date();
+            var joinedAge = today.getFullYear() - joinDate.getFullYear();
+            var monthDiff = today.getMonth() - joinDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < joinDate.getDate())) {
+                joinedAge--;
+            }
+            document.getElementById("calculatedJoinedAge").innerText = joinedAge;
+        }
+    }
+</script>
 </head>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="employeeInfoFormBean"
            action="employeeInfoEdit1">
@@ -31,11 +72,7 @@
         </c:forEach>
     </p>
 <input type="hidden" id="employeeID" name="employeeID" value="${employeeInfoFormBean.employeeID}"/>
-    <!--新規フラグ　０　新規　１　更新-->
-    <input type="hidden" id="insertFlg" name="insertFlg" value="${employeeInfoFormBean.insertFlg}"/>
-	<!--検索フラグ　０：検索　１：全量検索-->
-    <input type="hidden" id="selectFlg" name="selectFlg"
-           value="${employeeInfoFormBean.selectFlg}"/>
+
 
 <table border="1" >
 	<tr style = "background-color:#dcfeeb">
@@ -47,11 +84,7 @@
 		<td width="250px"><input type="text" id="employeeName" name="employeeName"
                                      value="${employeeInfoFormBean.employeeName}" style="width: 98%;"/></td>
 	</tr>
-<%-- 	 <tr style = "background-color:#dcfeeb">
-		<td width ="150px">パスワード</td>
-		<td width="250px"><input type="text" id="password" name="password"
-                                     value="${employeeInfoFormBean.password}" /></td>
-	</tr> --%>
+
 
  	 <tr style = "background-color:#dcfeeb">
 		<td width ="150px">ステータス</td>
@@ -118,25 +151,21 @@
                value="2" /> 個人事業
     </td>
 	</tr>
-	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">生年月日</td>
-		<td width="250px"><input type="text" id="birthday" name="birthday"
-                                     value="${employeeInfoFormBean.birthday}"  style="width: 98%;"/></td>
+	<tr style="background-color:#dcfeeb">
+    	<td width="150px">生年月日</td>
+    	<td width="250px"><input type="text" id="birthday" name="birthday" value="${employeeInfoFormBean.birthday}" style="width: 98%;" /></td>
 	</tr>
-	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">年齢</td>
-		<td width="250px"><input type="text" id="age" name="age"
-                                     value="${employeeInfoFormBean.age}"  style="width: 98%;"/></td>
+	<tr style="background-color:#dcfeeb">
+    	<td width="150px">年齢</td>
+    	<td width="250px"><span id="calculatedAge"><c:out value="${employeeInfoFormBean.age}" /></span></td>
 	</tr>
-	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">入社年月日</td>
-		<td width="250px"><input type="text" id="joinedDate" name="joinedDate"
-                                     value="${employeeInfoFormBean.joinedDate}" style="width: 98%;" /></td>
+	<tr style="background-color:#dcfeeb">
+    	<td width="150px">入社年月日</td>
+    	<td width="250px"><input type="text" id="joinedDate" name="joinedDate" value="${employeeInfoFormBean.joinedDate}" style="width: 98%;" /></td>
 	</tr>
-	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">社齢</td>
-		<td width="250px"><input type="text" id="joinedTime" name="joinedTime"
-                                     value="${employeeInfoFormBean.joinedTime}" style="width: 98%;" /></td>
+	<tr style="background-color:#dcfeeb">
+    	<td width="150px">社齢</td>
+    	<td width="250px"><span id="calculatedJoinedAge"><c:out value="${employeeInfoFormBean.joinedTime}" /></span></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">郵便番号</td>
@@ -166,18 +195,17 @@
 		<td width="250px"><input type="text" id="mailAdress" name="mailAdress"
                                      value="${employeeInfoFormBean.mailAdress}"style="width: 98%;" /></td>
 	</tr>
-<%-- 	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">作成日</td>
-		<td width="250px">
-                <c:out  value="${employeeInfoFormBean.insertDate}"/>
-            </td>
-	</tr> --%>
-<%-- 	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">更新日</td>
-		<td width="250px">
-                <c:out  value="${employeeInfoFormBean.updateDate}"/>
-            </td>
-	</tr> --%>
+	<tr style = "background-color:#dcfeeb">
+		<td width ="150px">パスワード</td>
+		<td width="250px"><input type="text" id="password" name="password"
+                                     value="${employeeInfoFormBean.password}"style="width: 98%;" /></td>
+	</tr>
+	<tr style = "background-color:#dcfeeb">
+		<td width ="150px">個人番号</td>
+		<td width="250px"><input type="text" id="personNumber" name="personNumber"
+                                     value="${employeeInfoFormBean.personNumber}"style="width: 98%;" /></td>
+	</tr>
+
 
 	</table>
 	<input type="button" id="update" name="update" value="更新"  onclick="doRegist()"  />

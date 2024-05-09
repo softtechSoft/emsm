@@ -146,6 +146,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setJoinedTime(employeeInfoFormBean.getJoinedTime());
          employeeInfoEntity.setPostCode(employeeInfoFormBean.getPostCode());
          employeeInfoEntity.setAddress(employeeInfoFormBean.getAddress());
+         employeeInfoEntity.setPersonNumber(employeeInfoFormBean.getPersonNumber());
          employeeInfoEntity.setPhoneNumber(employeeInfoFormBean.getPhoneNumber());
          employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
          employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());

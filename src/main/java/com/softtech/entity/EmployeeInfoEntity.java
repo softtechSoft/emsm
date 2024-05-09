@@ -32,6 +32,7 @@ public class EmployeeInfoEntity {
 	private String authority;
 	//メール
 	private String mailAdress;
+	private String personNumber;
 //	//作成日
 	private String insertDate;
 //	//更新日
@@ -161,6 +162,13 @@ public class EmployeeInfoEntity {
 
 	public void setMailAdress(String mailAdress) {
 		this.mailAdress = mailAdress;
+	}
+	public String getPersonNumber() {
+		return personNumber;
+	}
+
+	public void setPersonNumber(String personNumber) {
+		this.personNumber = personNumber;
 	}
 
 	public String getInsertDate() {

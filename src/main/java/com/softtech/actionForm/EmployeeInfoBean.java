@@ -18,6 +18,7 @@ public class EmployeeInfoBean implements Serializable{
 	private String employeeName;
 	//パスワード
 	@NotBlank(message = "パスワードを入力してください。")
+	@Size(max = 6, message = "パスワードは6文字以下で入力してください。")
 	private String password;
 
 	//メール
@@ -33,7 +34,7 @@ public class EmployeeInfoBean implements Serializable{
 	//ステータス0：在籍　１:離職
 	private String status;
 	private String authority;
-	private String insertFlg;
+//	private String insertFlg;
 
 	//検索区別用のFlg
 	private String selectFlg;
@@ -86,13 +87,13 @@ public class EmployeeInfoBean implements Serializable{
 	}
 
 
-	public String getInsertFlg() {
-		return insertFlg;
-	}
-
-	public void setInsertFlg(String insertFlg) {
-		this.insertFlg = insertFlg;
-	}
+//	public String getInsertFlg() {
+//		return insertFlg;
+//	}
+//
+//	public void setInsertFlg(String insertFlg) {
+//		this.insertFlg = insertFlg;
+//	}
 
 	public String getSelectFlg() {
 		return selectFlg;

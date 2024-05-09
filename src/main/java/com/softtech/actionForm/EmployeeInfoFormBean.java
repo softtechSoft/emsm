@@ -2,16 +2,19 @@ package com.softtech.actionForm;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class EmployeeInfoFormBean {
 
 	//社員ID
-	@NotEmpty(message = "社員IDを入力してください。")
+//	@NotEmpty(message = "社員IDを入力してください。")
 	private String employeeID;
 	//社員氏名
 	@NotEmpty(message = "社員氏名を入力してください。")
 	private String employeeName;
 	//パスワード
+	@NotEmpty(message = "パスワードを入力してください。")
+	@Size(max = 6, message = "パスワードは6文字以下で入力してください。")
 	private String password;
 	//ステータス
 	//ステータス0：在籍　１:離職
@@ -27,18 +30,18 @@ public class EmployeeInfoFormBean {
 	@Pattern(message = "生年月日に数字のみを入力してください。例：20231031",  regexp = "^[0-9]+")
 	private String birthday;
 	//年齢
-	@NotEmpty(message = "年齢を入力してください。")
-	@Pattern(message = "年齢に数字のみを入力してください。",  regexp = "^[0-9]+")
+
 	private String age;
 	//入社年月日
-	
+
 	@NotEmpty(message = "入社年月日を入力してください。例：20231031")
 	@Pattern(message = "入社年月日に数字のみを入力してください。",  regexp = "^[0-9]+")
 	private String joinedDate;
 	//社齢
-	@NotEmpty(message = "社齢を入力してください。")
-	@Pattern(message = "社齢に数字のみを入力してください。",  regexp = "^[0-9]+")
+
 	private String joinedTime;
+
+	private String joinedDateString;
 	//郵便番号
 	@NotEmpty(message = "郵便番号を入力してください。")
 	@Pattern(message = "郵便番号に数字のみを入力してください。",  regexp = "^[0-9]+")
@@ -51,12 +54,17 @@ public class EmployeeInfoFormBean {
 	@Pattern(message = "電話番号に数字のみを入力してください。",  regexp = "^[0-9]+")
 	private String phoneNumber;
 	//権限
-	@NotEmpty(message = "権限を入力してください。")
+//	@NotEmpty(message = "権限を入力してください。")
 	private String authority;
 	//メール
 	@NotEmpty(message = "メールを入力してください。")
 	private String mailAdress;
 	//作成日
+	//個人番号
+	@NotEmpty(message = "個人番号を入力してください。")
+	@Size(min = 12 , max = 12, message = "個人番号は半角１２桁数字で入力してください。")
+	@Pattern(regexp = "^[0-9]*$", message = "個人番号は半角数字で入力してください。")
+	private String personNumber;
 	private String insertDate;
 	//更新日
 	private String updateDate;
@@ -138,12 +146,20 @@ public class EmployeeInfoFormBean {
 		this.joinedDate = joinedDate;
 	}
 
+
 	public String getJoinedTime() {
 		return joinedTime;
 	}
 
 	public void setJoinedTime(String joinedTime) {
 		this.joinedTime = joinedTime;
+	}
+	public String getJoinedDateString() {
+		return joinedDateString;
+	}
+
+	public void setJoinedDateString(String joinedDateString) {
+		this.joinedDateString = joinedDateString;
 	}
 
 	public String getPostCode() {
@@ -184,6 +200,13 @@ public class EmployeeInfoFormBean {
 
 	public void setMailAdress(String mailAdress) {
 		this.mailAdress = mailAdress;
+	}
+	public String getPersonNumber() {
+		return personNumber;
+	}
+
+	public void setPersonNumber(String personNumber) {
+		this.personNumber = personNumber;
 	}
 
 	public String getInsertDate() {

@@ -109,7 +109,7 @@ public class EmployeeInfoController {
 	      String maxEmployeeID = employeeInfoService.getNextEmployeeID();
 	      employeeInfoFormBean1.setEmployeeID(maxEmployeeID);
 	      //新規
-	      employeeInfoFormBean1.setInsertFlg(insertFlg);
+//	      employeeInfoFormBean1.setInsertFlg(insertFlg);
 
 	  return "employeeInfoEdit";
 	      //更新の場合
