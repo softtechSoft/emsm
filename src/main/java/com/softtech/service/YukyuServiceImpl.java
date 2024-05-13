@@ -1,6 +1,10 @@
 package com.softtech.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +49,8 @@ public class YukyuServiceImpl implements YukyuService {
 
 
 	@Override
-	public List<YukyuFormBean> getEmployee() {
-		 List<YukyuFormBean> yukyu = yukyuMapper.getEmployee();
+	public List<Yukyu> getEmployee() {
+		 List<Yukyu> yukyu = yukyuMapper.getEmployee();
 
 	        return yukyu;
 	}
@@ -59,10 +63,41 @@ public class YukyuServiceImpl implements YukyuService {
 //	}
 
 	@Override
-	public void save(YukyuFormBean yukyuFormBean) {
-		yukyuMapper.save(yukyuFormBean);
+	public YukyuFormBean findIDnendo(Map<String, String> map) {
+		Yukyu yukyuInfo = yukyuMapper.findIDnendo(map);
+		if (yukyuInfo == null) {
+	        // 如果找不到符合条件的记录，返回 null 或者抛出异常，视情况而定
+	        return null;
+	    }
+		YukyuFormBean yukyuDetailFormBean = new YukyuFormBean();
+		yukyuDetailFormBean.setEmployeeID(yukyuInfo.getEmployeeID());
+		yukyuDetailFormBean.setNendo(yukyuInfo.getNendo());
+		yukyuDetailFormBean.setTotalDay(yukyuInfo.getTotalDay());
+		yukyuDetailFormBean.setUsedDay(yukyuInfo.getUsedDay());
+		yukyuDetailFormBean.setInsertDate(yukyuInfo.getInsertDate());
+		yukyuDetailFormBean.setUpdateDate(yukyuInfo.getUpdateDate());
 
+		return yukyuDetailFormBean;
 	}
+	@Override
+	public Map<String, String> transferUIToMap(YukyuFormBean yukyuFormBean){
+		Map<String, String> map = new HashMap<String, String>();
+
+		map.put("employeeID", yukyuFormBean.getEmployeeID());
+		map.put("nendo", yukyuFormBean.getNendo());
+		map.put("totalDay", yukyuFormBean.getTotalDay());
+		map.put("usedDay", yukyuFormBean.getUsedDay());
+		map.put("insertDate", yukyuFormBean.getInsertDate());
+
+
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyyMMdd");
+		Calendar cl = Calendar.getInstance();
+		String str = sdFormat.format(cl.getTime());
+		map.put("updateDate", str);
+
+		return map;
+	}
+
 	@Override
 	public YukyuFormBean transforEntityToUI(List<Yukyu> eList) {
 		YukyuFormBean yukyuFormBean = new YukyuFormBean();

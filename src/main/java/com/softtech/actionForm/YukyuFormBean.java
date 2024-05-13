@@ -1,26 +1,24 @@
 package com.softtech.actionForm;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 public class YukyuFormBean {
 
-	//ユーザID
+		//ユーザID
 		private String employeeID;
 
 		//年度
 	    private String nendo;
 
-
-
 	    //総日数
 	    private String totalDay;
 
 	    //消化日数
-
-
-	    @Max(value = 20, message = "入力値は 20 以下!")
-	    @Pattern(regexp = "^[0-9]+$", message = "入力値は整数!")
+	    @NotEmpty(message = "消化日数を入力してください")
+	    @Max(value = 20, message = "入力値は 20 以下に入力してください")
+	    @Pattern(regexp = "^[0-9]+$", message = "整数で入力してください")
 	    private String usedDay;
 
 	  //作成日
@@ -29,22 +27,11 @@ public class YukyuFormBean {
 	    //更新日
 	    private String updateDate;
 
-	    //
-	    private String employeeName;
-
+	    //更新選択用
 	    private String employeeIDSelect;
 
-
-	  //更新と新規区別用のFlg
-		private String insertFlg;
-
-		public String getInsertFlg() {
-			return insertFlg;
-		}
-
-		public void setInsertFlg(String insertFlg) {
-			this.insertFlg = insertFlg;
-		}
+	    //検索区別用のFlg
+	  	private String selectFlg;
 
 		public String getSelectFlg() {
 			return selectFlg;
@@ -53,10 +40,6 @@ public class YukyuFormBean {
 		public void setSelectFlg(String selectFlg) {
 			this.selectFlg = selectFlg;
 		}
-
-		//検索区別用のFlg
-		private String selectFlg;
-
 
 	    public String getEmployeeID() {
 			return employeeID;
@@ -104,14 +87,6 @@ public class YukyuFormBean {
 
 		public void setUpdateDate(String updateDate) {
 			this.updateDate = updateDate;
-		}
-
-		public String getEmployeeName() {
-			return employeeName;
-		}
-
-		public void setEmployeeName(String employeeName) {
-			this.employeeName = employeeName;
 		}
 
 		public String getEmployeeIDSelect() {
