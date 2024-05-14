@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+          PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.YukyuMapper">
+
+    <select id="getAllYukyu" parameterType="string" resultType="com.softtech.entity.Yukyu">
+        SELECT *
+        FROM yukyu
+    </select>
+
+	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.Yukyu">
+		SELECT *
+		FROM yukyu
+		WHERE employeeID = #{employeeID}
+	</select>
+
+	<select id="getEmployee" resultType="com.softtech.actionForm.YukyuFormBean">
+		select employeeID
+		FROM yukyu;
+	</select>
+
+	<insert id="save" parameterType="com.softtech.actionForm.YukyuFormBean">
+		insert into yukyu
+		(employeeID,
+		 nendo,
+		 totalDay,
+		 usedDay
+		)
+		values
+		(#{employeeID},
+		 #{nendo},
+		 #{totalDay},
+		 #{usedDay}
+		)
+	</insert>
+	<select id="getByEmployeeIDAndNendo" resultType="com.softtech.entity.Yukyu">
+    	SELECT * FROM yukyu WHERE employeeID = #{employeeID} AND nendo = #{nendo}
+	</select>
+	<select id="getDatesFromDatabase" resultType="com.softtech.entity.Yukyu">
+    	SELECT insertDate,updateDate FROM yukyu
+	</select>
+
+	<update id="update" parameterType="com.softtech.entity.Yukyu">
+		update ems.yukyu
+    	set
+    	    usedDay = #{usedDay},
+
+    	    updateDate = date_format(now(),'%Y%m%d')
+
+    	    where employeeID =#{employeeID}
+			and nendo = #{nendo}
+
+	</update>
+
+
+</mapper>
