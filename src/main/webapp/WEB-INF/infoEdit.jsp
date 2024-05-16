@@ -20,6 +20,7 @@
 		}
 
 	</script>
+	<%--自動計算 --%>
 	<script>
     window.addEventListener('DOMContentLoaded', function() {
         document.getElementById("birthday").addEventListener("change", calculateAge);
@@ -64,7 +65,7 @@
 </head>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="employeeInfoFormBean"
            action="employeeInfoEdit1">
-<h2>社員情報</h2>
+<h2>社員情報更新</h2>
  <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
