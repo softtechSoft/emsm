@@ -6,15 +6,17 @@ import javax.validation.constraints.Size;
 
 public class EmployeeInfoFormBean {
 
-	//社員ID
+//	社員ID
 //	@NotEmpty(message = "社員IDを入力してください。")
 	private String employeeID;
 	//社員氏名
 	@NotEmpty(message = "社員氏名を入力してください。")
+	@Size(max = 50, message = "社員氏名は50文字以下で入力してください。")
 	private String employeeName;
 	//パスワード
 	@NotEmpty(message = "パスワードを入力してください。")
 	@Size(max = 6, message = "パスワードは6文字以下で入力してください。")
+	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "パスワードは英数字のみをを入力してください。")
 	private String password;
 	//ステータス
 	//ステータス0：在籍　１:離職
@@ -48,6 +50,7 @@ public class EmployeeInfoFormBean {
 	private String postCode;
 	//住所
 	@NotEmpty(message = "住所を入力してください。")
+	@Size(max = 200, message = "住所は200文字以下で入力してください。")
 	private String address;
 	//電話番号
 	@NotEmpty(message = "電話番号を入力してください。")
@@ -58,6 +61,7 @@ public class EmployeeInfoFormBean {
 	private String authority;
 	//メール
 	@NotEmpty(message = "メールを入力してください。")
+	@Pattern(regexp = ".+@it-softtech\\.com", message = "メールは'@it-softtech.com'で終わる必要があります。")
 	private String mailAdress;
 	//作成日
 	//個人番号

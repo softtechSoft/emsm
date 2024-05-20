@@ -11,6 +11,7 @@ public class EmployeeInfoBean implements Serializable{
 	//社員ID
 	@NotBlank(message = "社員IDを入力してください。")
 	@Size(max = 6, message = "社員IDは6文字以下で入力してください。")
+	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "社員IDは英数字のみをを入力してください。")
 	private String employeeID;
 	//社員氏名
 	@NotBlank(message = "社員氏名を入力してください。")
@@ -23,7 +24,8 @@ public class EmployeeInfoBean implements Serializable{
 
 	//メール
 	@NotBlank(message = "メールを入力してください。")
-	@Pattern(regexp = ".+@it-softtech\\.com", message = "メールは'@it-softtech.com'で終わる必要があります。")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+$", message = "メールは英数字と特定の記号（._%+-）のみを含む必要があります。")
+    @Pattern(regexp = ".+@it-softtech\\.com$", message = "メールは'@it-softtech.com'で終わる必要があります。")
 	private String mailAdress;
 	//作成日
 	/* private String insertDate;
