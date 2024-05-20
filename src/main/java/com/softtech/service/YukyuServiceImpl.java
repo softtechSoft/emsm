@@ -66,7 +66,7 @@ public class YukyuServiceImpl implements YukyuService {
 	public YukyuFormBean findIDnendo(Map<String, String> map) {
 		Yukyu yukyuInfo = yukyuMapper.findIDnendo(map);
 		if (yukyuInfo == null) {
-	        // 如果找不到符合条件的记录，返回 null 或者抛出异常，视情况而定
+	        //
 	        return null;
 	    }
 		YukyuFormBean yukyuDetailFormBean = new YukyuFormBean();
