@@ -11,28 +11,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <script type="text/javascript" >
-    <!--検索-->
-    function toSearchJsp(){
-    	document.getElementById('selectFlg').value='0';
-    	document.getElementById('theForm').submit();
-    	//alert("検索Button clicked!");
-    }
-    function toSearchJsp1() {
-        document.getElementById('selectFlg').value = '1';
-        document.getElementById('theForm').submit();
-       // alert("全量検索Button clicked!");
-    }
-    // 更新ボタン処理
-    function toUpdateJsp(employeeID){
-        document.getElementById('employeeIDSelect').value = employeeID;
-        document.getElementById('insertFlg').value='0';
-        document.theForm.action="yukyuInfo";
-        document.theForm.submit();
-        //alert("更新Button clicked!");
-    }
-
-    </script>
     <title> ソフトテク株式会社-社内管理システム </title>
 </head>
 <body>
@@ -45,14 +23,12 @@
     <input type="hidden" id="selectFlg" name="selectFlg"
     	   value="${yukyuFormBean.selectFlg}"/>
 
-	<!--新規フラグ　０　新規　１　更新-->
-    <input type="hidden" id="insertFlg" name="insertFlg"
-           value="${yukyuFormBean.insertFlg}"/>
-	<input type="hidden" id="employeeIDSelect" name="employeeIDSelect"
-           value=""/>
-	<b>社員ID</b>
+	<!-- employeeIDSelect更新 -->
+	<input type="hidden" id="employeeIDSelect" name="employeeIDSelect" value=""/>
+	<b>社員:</b>
 
 	 <form:select path="employeeID" id="employeeSelect">
+
     	<form:options items="${elist}" itemLabel="employeeID" itemValue="employeeID"/>
     </form:select>
 
@@ -107,4 +83,25 @@
 
 	</form:form>
 </body>
+<script type="text/javascript" >
+    <!--検索-->
+    function toSearchJsp(){
+    	document.getElementById('selectFlg').value='0';
+    	document.getElementById('theForm').submit();
+    	//alert("検索Button clicked!");
+    }
+    function toSearchJsp1() {
+        document.getElementById('selectFlg').value = '1';
+        document.getElementById('theForm').submit();
+       // alert("全量検索Button clicked!");
+    }
+    // 更新ボタン処理
+    function toUpdateJsp(employeeID){
+        document.getElementById('employeeIDSelect').value = employeeID;
+        document.theForm.action="yukyuInfo";
+        document.theForm.submit();
+        //alert("更新Button clicked!");
+    }
+
+    </script>
 </html>

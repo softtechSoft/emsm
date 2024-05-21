@@ -2,6 +2,7 @@
 <%@ page session="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,7 @@
     <title> ソフトテク株式会社-社内管理システム </title>
 </head>
 <body>
-<h2>有給管理</h2>
+<h2>有給更新</h2>
 	<form:form name="theForm" id="theForm" method="post" modelAttribute="yukyuFormBean" action="updateYukyu">
 
 	<!--エラーメッセージ-->
@@ -31,15 +32,12 @@
     </p>
 
 
-
+	<!-- DB更新ために、画面データ -->
 	 <input type="hidden" id="employeeID" name="employeeID" value="${yukyuFormBean.employeeID}"/>
 	 <input type="hidden" id="nendo" name="nendo" value="${yukyuFormBean.nendo}"/>
 	 <input type="hidden" id="totalDay" name="totalDay" value="${yukyuFormBean.totalDay}"/>
-
 	 <input type="hidden" id="insertDate" name="insertDate" value="${yukyuFormBean.insertDate}"/>
 	 <input type="hidden" id="updateDate" name="updateDate" value="${yukyuFormBean.updateDate}"/>
-    <!--新規フラグ　０　新規　１　更新-->
-    <input type="hidden" id="insertFlg" name="insertFlg" value="${yukyuFormBean.insertFlg}"/>
 	<!--検索フラグ　０：検索　１：全量検索-->
     <input type="hidden" id="selectFlg" name="selectFlg"
            value="${yukyuFormBean.selectFlg}"/>
@@ -62,17 +60,19 @@
 		 </tr>
 		 <tr style = "background-color:#dcfeeb">
             <th width="80">消化日数</th>
-             <td><input type="text" id="usedDay" name="usedDay"
-                                     value="${yukyuFormBean.usedDay}" /></td>
+             <td><input type="text" id="usedDay" name="usedDay" value="${yukyuFormBean.usedDay}" />
+             </td>
          </tr>
 		 <tr style = "background-color:#dcfeeb">
             <th width="80">作成日</th>
-            <td><c:out value="${yukyuFormBean.insertDate}"/>
+            <td><fmt:parseDate value="${yukyuFormBean.insertDate}" var="insertDate" pattern="yyyyMMdd" />
+			       <fmt:formatDate value="${insertDate}" pattern="yyyy/MM/dd" />
             </td>
 		</tr>
 		 <tr style = "background-color:#dcfeeb">
             <th width="80">更新日</th>
-            <td><c:out value="${yukyuFormBean.updateDate}"/>
+            <td><fmt:parseDate value="${yukyuFormBean.updateDate}" var="insertDate" pattern="yyyyMMdd" />
+			       <fmt:formatDate value="${updateDate}" pattern="yyyy/MM/dd" />
            </td>
 		</tr>
 

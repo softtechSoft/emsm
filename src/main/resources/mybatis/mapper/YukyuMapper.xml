@@ -7,48 +7,38 @@
     <select id="getAllYukyu" parameterType="string" resultType="com.softtech.entity.Yukyu">
         SELECT *
         FROM yukyu
+
     </select>
 
 	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.Yukyu">
 		SELECT *
 		FROM yukyu
-		WHERE employeeID = #{employeeID}
+		WHERE
+			employeeID =#{employeeID}
+
 	</select>
 
-	<select id="getEmployee" resultType="com.softtech.actionForm.YukyuFormBean">
-		select employeeID
-		FROM yukyu;
+	<select id="getEmployee" resultType="com.softtech.entity.Yukyu">
+		SELECT employeeID
+		FROM yukyu
 	</select>
 
-	<insert id="save" parameterType="com.softtech.actionForm.YukyuFormBean">
-		insert into yukyu
-		(employeeID,
-		 nendo,
-		 totalDay,
-		 usedDay
-		)
-		values
-		(#{employeeID},
-		 #{nendo},
-		 #{totalDay},
-		 #{usedDay}
-		)
-	</insert>
-	<select id="getByEmployeeIDAndNendo" resultType="com.softtech.entity.Yukyu">
-    	SELECT * FROM yukyu WHERE employeeID = #{employeeID} AND nendo = #{nendo}
-	</select>
-	<select id="getDatesFromDatabase" resultType="com.softtech.entity.Yukyu">
-    	SELECT insertDate,updateDate FROM yukyu
+	<select id="findIDnendo" parameterType="string" resultType="com.softtech.entity.Yukyu">
+		SELECT *
+		FROM ems.yukyu
+		WHERE
+	        employeeID = #{employeeID}
+			and nendo = #{nendo}
+
 	</select>
 
-	<update id="update" parameterType="com.softtech.entity.Yukyu">
+	<update id="update" parameterType="com.softtech.actionForm.YukyuFormBean">
 		update ems.yukyu
     	set
     	    usedDay = #{usedDay},
-
     	    updateDate = date_format(now(),'%Y%m%d')
-
-    	    where employeeID =#{employeeID}
+    	 where
+    	 	employeeID =#{employeeID}
 			and nendo = #{nendo}
 
 	</update>
