@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.YukyuFormBean;
+import com.softtech.entity.Employee;
 import com.softtech.entity.Yukyu;
 import com.softtech.service.YukyuService;
 import com.softtech.util.DateUtil;
@@ -36,19 +37,20 @@ public class YukyuController {
 	@RequestMapping("/toinYukyulist")
     public String showYukyuList(Model model) {
 
-		//DBから有給情報の社員IDを取得する,社員情報選択リストの初期表示
-		List<Yukyu> elist = yukyuService.getEmployee();
+		//社員情報選択リストの初期表示
+//		List<Yukyu> elist = yukyuService.getEmployee();
+		//画面に渡す
+//		model.addAttribute("elist", elist);
+		//選択リストの初期表示
+		List<Employee> elist = yukyuService.getEmployeeName();
 		//画面に渡す
 		model.addAttribute("elist", elist);
-
-		//画面初期表示用のFormBeam
-		YukyuFormBean yukyuFormBean = new YukyuFormBean();
-		//画面に渡す
-		model.addAttribute("yukyuFormBean", yukyuFormBean);
-		//DBから有給情報を取得する,初期表示
+		//すべて有給情報の初期表示
 		List<Yukyu> yk = yukyuService.getAllYukyu();
-        //初期表示すべて情報
+		//画面に渡す
 		model.addAttribute("yukyulist", yk);
+		//画面初期表示用のFormBeam
+		model.addAttribute("yukyuFormBean", new YukyuFormBean());
 
         return "yukyu";
     }
@@ -63,25 +65,23 @@ public class YukyuController {
      */
 
 	@RequestMapping(value = "/searchYukyu", method = RequestMethod.POST)
-	public String toSearchJsp(@ModelAttribute("yukyuFormBean") YukyuFormBean yukyuFormBean, Model model) {
+	public String toSearchJsp(@ModelAttribute("yukyuFormBean") YukyuFormBean yukyuFormBean,Model model) {
 		//フラグを取得
 	    String selectFlg = yukyuFormBean.getSelectFlg();
-
-	    List<Yukyu> yk;
+	    //フラグの処理
 	    switch (selectFlg) {
 	        case "0":
 	            String employeeID = yukyuFormBean.getEmployeeID();
-	            yk = yukyuService.getEmployeeID(employeeID);
+	        	List<Yukyu> ykSelect = yukyuService.getEmployeeID(employeeID);
+	            model.addAttribute("yukyulist", ykSelect);
 	            break;
 	        default:
-	            yk = yukyuService.getAllYukyu();
+	        	List<Yukyu> ykAll = yukyuService.getAllYukyu();
+	            model.addAttribute("yukyulist", ykAll);
 	            break;
 	    }
-	    model.addAttribute("yukyulist", yk);
-
-	    //DBから有給情報の社員IDを取得する,社員情報選択リストの初期表示
-		List<Yukyu> elist = yukyuService.getEmployee();
-		//画面に渡す
+	  //選択リストの再表示
+	    List<Employee> elist = yukyuService.getEmployeeName();
 		model.addAttribute("elist", elist);
 
 	    return "yukyu";
@@ -99,43 +99,33 @@ public class YukyuController {
 			Model model) {
 
 		//IDを取得
-		  String employeeID1Se = yukyuFormBean.getEmployeeIDSelect();
-		//現在の年度を取得
-	    	String currentYear = DateUtil.getNowYear();
-    	//取得したIDと年を受け取るコンテナを新規作成します
+		String employeeID1Se = yukyuFormBean.getEmployeeIDSelect();
+		//年度を取得
+	    String currentYear = DateUtil.getNowYear();
+    	//コンテナを新規作成します
 	    YukyuFormBean DetailForm = new YukyuFormBean();
     	DetailForm.setEmployeeID(employeeID1Se);
     	DetailForm.setNendo(currentYear);
-		//コンテナをマップに変換する
+    	//DBを検索
     	Map<String, String> sqlParam = yukyuService.transferUIToMap(DetailForm);
-    	//マップ型データでDBを検索し、最終的にFromBean形式に変換します
-    	YukyuFormBean yukyuFormBean1 = yukyuService.findIDnendo(sqlParam);
-
-    	if (yukyuFormBean1 == null) {
-            // データが見つからない場合の処理はエラーメッセージを表示
+    	List<Yukyu> yukyuNE = yukyuService.findIDnendo(sqlParam);
+    	//検索の結果
+    	if (yukyuNE == null || yukyuNE.isEmpty()) {
+            //エラーメッセージの値をセットアップ
             result.rejectValue("nendo", "error.nendo", "本年度ではない、更新不可");
             // エラーを表示する
             model.addAttribute("errors", result.getAllErrors());
-
-          //DBから有給情報の社員IDを取得する,社員情報選択リストの初期表示
-    		List<Yukyu> elist = yukyuService.getEmployee();
-    		//画面に渡す
+            //選択リストの再表示
+            List<Employee> elist = yukyuService.getEmployeeName();
     		model.addAttribute("elist", elist);
+            return "yukyu";
+        }else {
+        	YukyuFormBean yukyuFormBean1=yukyuService.transforEntityToUI(yukyuNE);
+        	model.addAttribute("yukyuFormBean", yukyuFormBean1);
+  		  	return "yukyuEdit";
 
-    		//DBから有給情報を取得する,初期表示
-    		List<Yukyu> yk = yukyuService.getAllYukyu();
-            //初期表示すべて情報
-    		model.addAttribute("yukyulist", yk);
-
-            return "yukyu"; // return画面リスト、かつエラーを表示する
         }
-//		//選択された内容を取得する
-//		  List<Yukyu> bList = yukyuService.getEmployeeID(employeeID1Se);
-//
-//	      YukyuFormBean yukyuFormBean1 = yukyuService.transforEntityToUI(bList);
-	      model.addAttribute("yukyuFormBean", yukyuFormBean1);
 
-		  return "yukyuEdit";
 	}
 
 	 /**概要:更新ボタン
@@ -159,7 +149,8 @@ public class YukyuController {
 			     return "yukyuEdit";
 		 }
 		 // 更新DBの結果
-		    boolean updateResult = yukyuService.updateYk(yukyuFormBean);
+		 	Yukyu yukyu = yukyuService.transforFormBeanToEntity(yukyuFormBean);
+		    boolean updateResult = yukyuService.updateYk(yukyu);
 
 		    if (updateResult) {
 		        //更新成功
@@ -167,9 +158,8 @@ public class YukyuController {
 		    }
 
 		//リスト選択
-		List<Yukyu> elist = yukyuService.getEmployee();
-		//画面に渡す
-		model.addAttribute("elist", elist);
+		    List<Employee> elist = yukyuService.getEmployeeName();
+    		model.addAttribute("elist", elist);
 
 		return "yukyu";
 

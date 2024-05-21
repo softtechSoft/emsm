@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.softtech.actionForm.YukyuFormBean;
+import com.softtech.entity.Employee;
 import com.softtech.entity.Yukyu;
 import com.softtech.mappers.YukyuMapper;
 
@@ -46,38 +47,18 @@ public class YukyuServiceImpl implements YukyuService {
 		return yukyu;
     }
 
-
-
 	@Override
-	public List<Yukyu> getEmployee() {
-		 List<Yukyu> yukyu = yukyuMapper.getEmployee();
+	public List<Employee> getEmployeeName() {
+		List<Employee> elist = yukyuMapper.getEmployeeName();
 
-	        return yukyu;
+	        return elist;
 	}
 
-//	@Override
-//	public void update(YukyuFormBean yukyuFormBean) {
-//
-//
-//		 yukyuMapper.update(yukyuFormBean);
-//	}
-
 	@Override
-	public YukyuFormBean findIDnendo(Map<String, String> map) {
-		Yukyu yukyuInfo = yukyuMapper.findIDnendo(map);
-		if (yukyuInfo == null) {
-	        //
-	        return null;
-	    }
-		YukyuFormBean yukyuDetailFormBean = new YukyuFormBean();
-		yukyuDetailFormBean.setEmployeeID(yukyuInfo.getEmployeeID());
-		yukyuDetailFormBean.setNendo(yukyuInfo.getNendo());
-		yukyuDetailFormBean.setTotalDay(yukyuInfo.getTotalDay());
-		yukyuDetailFormBean.setUsedDay(yukyuInfo.getUsedDay());
-		yukyuDetailFormBean.setInsertDate(yukyuInfo.getInsertDate());
-		yukyuDetailFormBean.setUpdateDate(yukyuInfo.getUpdateDate());
+	public List<Yukyu> findIDnendo(Map<String, String> map) {
+		List<Yukyu> yukyuInfo = yukyuMapper.findIDnendo(map);
 
-		return yukyuDetailFormBean;
+		return yukyuInfo;
 	}
 	@Override
 	public Map<String, String> transferUIToMap(YukyuFormBean yukyuFormBean){
@@ -116,12 +97,26 @@ public class YukyuServiceImpl implements YukyuService {
         return yukyuFormBean;
 	}
 	@Override
-	public boolean updateYk(YukyuFormBean yukyuFormBean) {
-
-
-		yukyuMapper.update(yukyuFormBean);
+	public boolean updateYk(Yukyu yukyu) {
+		yukyuMapper.update(yukyu);
         return true;
 
+	}
+	@Override
+	public Yukyu transforFormBeanToEntity(YukyuFormBean yukyuFormBean) {
+		// TODO 自動生成されたメソッド・スタブ
+		Yukyu yukyu = new Yukyu();
+		yukyu.setEmployeeID(yukyuFormBean.getEmployeeID());
+		yukyu.setNendo(yukyuFormBean.getNendo());
+		yukyu.setTotalDay(yukyuFormBean.getTotalDay());
+		yukyu.setUsedDay(yukyuFormBean.getUsedDay());
+		yukyu.setInsertDate(yukyuFormBean.getInsertDate());
+		yukyu.setUpdateDate(yukyuFormBean.getUpdateDate());
+
+
+		yukyu.setInsertDate(yukyuFormBean.getInsertDate());
+		yukyu.setUpdateDate(yukyuFormBean.getUpdateDate());
+		return yukyu;
 	}
 
 

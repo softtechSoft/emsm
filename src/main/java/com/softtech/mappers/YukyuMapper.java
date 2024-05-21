@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.softtech.actionForm.YukyuFormBean;
+import com.softtech.entity.Employee;
 import com.softtech.entity.Yukyu;
 
 @Mapper
@@ -14,11 +14,13 @@ public interface YukyuMapper {
 
 	List<Yukyu> getEmployeeID(String employeeID);
 
-	List<Yukyu> getEmployee();
 
-	Yukyu findIDnendo(Map<String, String> map);
 
-	void update(YukyuFormBean yukyuFormBean);
+	List<Yukyu> findIDnendo(Map<String, String> map);
+
+	void update(Yukyu yukyu);
+
+	List<Employee> getEmployeeName();
 
 
 }
