@@ -24,7 +24,7 @@ import com.softtech.util.DateUtil;
 
 @Controller
 public class YukyuController {
-
+ 
 	@Autowired
 	YukyuService yukyuService;
 
