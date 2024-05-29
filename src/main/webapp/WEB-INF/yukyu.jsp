@@ -27,9 +27,8 @@
 	<input type="hidden" id="employeeIDSelect" name="employeeIDSelect" value=""/>
 	<b>社員:</b>
 
-	 <form:select path="employeeID" id="employeeSelect">
-
-    	<form:options items="${elist}" itemLabel="employeeID" itemValue="employeeID"/>
+	 <form:select path="employeeID" >
+    	<form:options items="${elist}" itemLabel="employeeName" itemValue="employeeID"/>
     </form:select>
 
 
@@ -59,6 +58,7 @@
             <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
                 <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
                 <td><c:out value="${yk.employeeID}"/></td>
+
 		        <td><c:out value="${yk.nendo}"/></td>
 		        <td><c:out value="${yk.totalDay}"/></td>
 		        <td><c:out value="${yk.usedDay}"/></td>

@@ -7,7 +7,8 @@
     <select id="getAllYukyu" parameterType="string" resultType="com.softtech.entity.Yukyu">
         SELECT *
         FROM yukyu
-
+		WHERE
+			nendo = YEAR(CURRENT_DATE())
     </select>
 
 	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.Yukyu">
@@ -18,9 +19,11 @@
 
 	</select>
 
-	<select id="getEmployee" resultType="com.softtech.entity.Yukyu">
-		SELECT employeeID
-		FROM yukyu
+
+
+	<select id="getEmployeeName" parameterType="string" resultType="com.softtech.entity.Employee">
+		select employeeName, employeeID
+		FROM employee;
 	</select>
 
 	<select id="findIDnendo" parameterType="string" resultType="com.softtech.entity.Yukyu">
