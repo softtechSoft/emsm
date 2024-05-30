@@ -43,6 +43,7 @@
                 age--;
             }
             document.getElementById("calculatedAge").innerText = age;
+            document.getElementById("age").value = age;
         }
     }
 
@@ -59,6 +60,7 @@
                 joinedAge--;
             }
             document.getElementById("calculatedJoinedAge").innerText = joinedAge;
+            document.getElementById("joinedTime").value = joinedAge;
         }
     }
 </script>
@@ -72,6 +74,8 @@
             <spring:message message="${error}"/>
         </c:forEach>
     </p>
+<input type="hidden" id="age" name="age" value="${employeeInfoFormBean.age}" />
+<input type="hidden" id="joinedTime" name="joinedTime" value="${employeeInfoFormBean.joinedTime}" />
 <input type="hidden" id="employeeID" name="employeeID" value="${employeeInfoFormBean.employeeID}"/>
 
 
