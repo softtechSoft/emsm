@@ -56,16 +56,35 @@ public class YukyuServiceImplTest {
 
 
     @Test
-    public void testUpdateYk() {
+    public void testUpdateYk_Success() {
 
     	Yukyu yukyu=new Yukyu();
     	yukyu.setEmployeeID("123");
     	yukyu.setNendo("2023");
     	yukyu.setUsedDay("10");
-
+    	
+    	when(yukyuMapper.update(yukyu)).thenReturn(1);
     	Boolean result= target.updateYk(yukyu);
+    	
 
     	assertThat(result).isTrue();
+    	verify(yukyuMapper, times(1)).update(yukyu);
+
+    }
+    
+    @Test
+    public void testUpdateYk_Failure() {
+
+    	Yukyu yukyu=new Yukyu();
+    	yukyu.setEmployeeID("123");
+    	yukyu.setNendo("2023");
+    	yukyu.setUsedDay("10");
+    	
+    	when(yukyuMapper.update(yukyu)).thenReturn(0);
+    	Boolean result= target.updateYk(yukyu);
+    	
+
+    	assertThat(result).isFalse();
     	verify(yukyuMapper, times(1)).update(yukyu);
 
     }

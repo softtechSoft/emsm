@@ -56,9 +56,9 @@ public class YukyuServiceImpl implements YukyuService {
 
 	@Override
 	public List<Yukyu> findIDnendo(Map<String, String> map) {
-		List<Yukyu> yukyuInfo = yukyuMapper.findIDnendo(map);
+		List<Yukyu> yukyulist = yukyuMapper.findIDnendo(map);
 
-		return yukyuInfo;
+		return yukyulist;
 	}
 	@Override
 	public Map<String, String> transferUIToMap(YukyuFormBean yukyuFormBean){
@@ -98,8 +98,8 @@ public class YukyuServiceImpl implements YukyuService {
 	}
 	@Override
 	public boolean updateYk(Yukyu yukyu) {
-		yukyuMapper.update(yukyu);
-        return true;
+		int rowsUpdated= yukyuMapper.update(yukyu);
+        return rowsUpdated > 0;
 
 	}
 	@Override

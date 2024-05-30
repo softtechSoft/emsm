@@ -18,7 +18,7 @@ public interface YukyuMapper {
 
 	List<Yukyu> findIDnendo(Map<String, String> map);
 
-	void update(Yukyu yukyu);
+	int update(Yukyu yukyu);
 
 	List<Employee> getEmployeeName();
 
