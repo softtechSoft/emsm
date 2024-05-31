@@ -53,7 +53,14 @@
 		<td  width ="250px"><input type="password" id="password" name="password"
                                      value="${employeeInfoFormBean.password}"   style="width: 98%;"/></td>
 	</tr>
-
+	<tr style = "background-color:#f4f4f4">
+		<td width ="150px">ステータス</td>
+		<td width="250px"><c:out  value="0 : 在籍"/></td>
+	</tr>
+	<tr style = "background-color:#f4f4f4">
+		<td width ="150px">権限</td>
+		<td width="250px"><c:out  value="0 ： 普通"/></td>
+	</tr>
 
 
 
