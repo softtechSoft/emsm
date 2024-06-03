@@ -25,6 +25,7 @@
 
 	<!-- employeeIDSelect更新 -->
 	<input type="hidden" id="employeeIDSelect" name="employeeIDSelect" value=""/>
+	<input type="hidden" id="nendoSelect" name="nendoSelect" value=""/>
 	<b>社員:</b>
 
 	 <form:select path="employeeID" >
@@ -96,8 +97,9 @@
        // alert("全量検索Button clicked!");
     }
     // 更新ボタン処理
-    function toUpdateJsp(employeeID){
+    function toUpdateJsp(employeeID,nendo){
         document.getElementById('employeeIDSelect').value = employeeID;
+        document.getElementById('nendoSelect').value = nendo;
         document.theForm.action="yukyuInfo";
         document.theForm.submit();
         //alert("更新Button clicked!");

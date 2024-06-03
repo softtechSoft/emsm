@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.IncomeTaxInfoMapper">
+
+    <insert id="insertIncomeTaxInfo" parameterType="com.softtech.entity.IncomeTaxInfoEntity">
+        insert into m_incomeTax
+        (incomeTaxID,
+         employeeID,
+         year,
+         incomeTax1,
+         incomeTax2,
+         incomeTax3,
+         incomeTax4,
+         incomeTax5,
+         incomeTax6,
+         incomeTax7,
+         incomeTax8,
+         incomeTax9,
+         incomeTax10,
+         incomeTax11,
+         incomeTax12,
+         residentTax1,
+         residentTax2,
+         residentTax3,
+         residentTax4,
+         residentTax5,
+         residentTax6,
+         residentTax7,
+         residentTax8,
+         residentTax9,
+         residentTax10,
+         residentTax11,
+         residentTax12,
+         status,
+         insertDate,
+         updateDate)
+            value
+            (#{incomeTaxID},
+             #{employeeID},
+             #{year},
+             #{incomeTax1},
+             #{incomeTax2},
+             #{incomeTax3},
+             #{incomeTax4},
+             #{incomeTax5},
+             #{incomeTax6},
+             #{incomeTax7},
+             #{incomeTax8},
+             #{incomeTax9},
+             #{incomeTax10},
+             #{incomeTax11},
+             #{incomeTax12},
+             #{residentTax1},
+             #{residentTax2},
+             #{residentTax3},
+             #{residentTax4},
+             #{residentTax5},
+             #{residentTax6},
+             #{residentTax7},
+             #{residentTax8},
+             #{residentTax9},
+             #{residentTax10},
+             #{residentTax11},
+             #{residentTax12},
+             #{status},
+             date_format(now(), '%Y%m%d'),
+             date_format(now(), '%Y%m%d')
+                )
+    </insert>
+    <!--画面表示getIncomeTax用のquery,入力の社員IDにより、検索する-->
+    <select id="getIncomeTaxByEmployeeID" parameterType="string" resultType="com.softtech.entity.IncomeTaxInfoEntity">
+        select *
+        from m_incomeTax
+                 LEFT JOIN employee
+                           on m_incomeTax.employeeID = employee.employeeID
+        where employee.employeeID = #{employeeID}
+    </select>
+
+    <!--更新画面への検索,表示される画面の所得税IDにより、検索する-->
+    <select id="getUpdateIncomeTaxByIncomeTaxID" parameterType="String"
+            resultType="com.softtech.entity.IncomeTaxInfoEntity">
+        select *
+        from m_incomeTax
+        where incomeTaxID = #{incomeTaxID}
+    </select>
+
+    <!--最大のIncomeTaxIDを取得、+1用-->
+    <select id="getMaxIncomeTaxID" resultType="String">
+        select MAX(incomeTaxID)
+        from m_incomeTax
+    </select>
+
+    <!--更新の時、更新画面の年度を表示用-->
+    <select id="getYear" resultType="com.softtech.common.IncomeTaxIDName">
+        select year
+        from m_incomeTax
+        where status = '1'
+    </select>
+
+    <update id="updateIncomeTax" parameterType="com.softtech.entity.IncomeTaxInfoEntity">
+        update m_incomeTax
+        set employeeID    = #{employeeID},
+            year          = #{year},
+            incomeTax1    = #{incomeTax1},
+            incomeTax2    = #{incomeTax2},
+            incomeTax3    = #{incomeTax3},
+            incomeTax4    = #{incomeTax4},
+            incomeTax5    = #{incomeTax5},
+            incomeTax6    = #{incomeTax6},
+            incomeTax7    = #{incomeTax7},
+            incomeTax8    = #{incomeTax8},
+            incomeTax9    = #{incomeTax9},
+            incomeTax10   = #{incomeTax10},
+            incomeTax11   = #{incomeTax11},
+            incomeTax12   = #{incomeTax12},
+            residentTax1  = #{residentTax1},
+            residentTax2  = #{residentTax2},
+            residentTax3  = #{residentTax3},
+            residentTax4  = #{residentTax4},
+            residentTax5  = #{residentTax5},
+            residentTax6  = #{residentTax6},
+            residentTax7  = #{residentTax7},
+            residentTax8  = #{residentTax8},
+            residentTax9  = #{residentTax9},
+            residentTax10 = #{residentTax10},
+            residentTax11 = #{residentTax11},
+            residentTax12 = #{residentTax12},
+            status        = #{status},
+            updateDate    = date_format(now(), '%Y%m%d')
+        where incomeTaxID = #{incomeTaxID}
+    </update>
+    <!--画面の社員ID選択-->
+    <select id="getEmployee" resultType="com.softtech.entity.Employee">
+        select employeeName, employeeID
+        FROM employee;
+    </select>
+</mapper>

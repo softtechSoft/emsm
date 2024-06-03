@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.ClaimListMapper">
+	<!--請求情報を取得する。inner join-->
+	<select id="getClaimInfolist" parameterType="string" resultType="com.softtech.entity.ClaimInfo">
+      select c.*,
+             ct.price,
+		     e.employeeName,
+		    com. companyName
+
+		from claim c ,employee e,contract ct,company com
+		where c.contractID=ct.contractID
+		AND   com.companyID=ct.companyID
+		AND   ct.employeeID=e.employeeID
+		AND   c.claimMonth=#{month}
+		AND   com. companyName like concat('%', #{companyName}, '%')
+
+	</select>
+</mapper>

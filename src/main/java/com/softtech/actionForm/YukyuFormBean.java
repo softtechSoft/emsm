@@ -27,8 +27,10 @@ public class YukyuFormBean {
 	    //更新日
 	    private String updateDate;
 
-	    //更新選択用
+	    //更新選択ID用
 	    private String employeeIDSelect;
+	  //更新選択nendo用
+	    private String nendoSelect;
 
 	    //検索区別用のFlg
 	  	private String selectFlg;
@@ -95,6 +97,14 @@ public class YukyuFormBean {
 
 		public void setEmployeeIDSelect(String employeeIDSelect) {
 			this.employeeIDSelect = employeeIDSelect;
+		}
+
+		public String getNendoSelect() {
+			return nendoSelect;
+		}
+
+		public void setNendoSelect(String nendoSelect) {
+			this.nendoSelect = nendoSelect;
 		}
 
 

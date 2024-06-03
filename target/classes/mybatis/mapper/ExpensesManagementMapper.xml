@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.ExpensesManagementMapper">
+
+    <select id="getEmployee" parameterType="String" resultType="com.softtech.entity.Employee">
+        select employeeName, employeeID
+        FROM employee;
+    </select>
+    <select id="insertExpensesManagement" parameterType="String"
+            resultType="com.softtech.entity.ExpensesManagementEntity">
+        insert into ems.expenses
+        (accrualDate, tantouName, cost, paymentType, happenAddress, confirmStaus, stmtlStaus, stmtlDate, remark,
+         expensesType, expensesTypeDetail)
+        values (#{accrualDate}, #{tantouName}, #{cost}, #{paymentType}, #{happenAddress}, #{confirmStaus},
+                #{stmtlStaus}, #{stmtlDate}, #{remark}, #{expensesType}, #{expensesTypeDetail})
+    </select>
+</mapper>

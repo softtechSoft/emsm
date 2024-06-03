@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.MenuMapper">
+<!-- 機能を取得-->
+<select id="queryOfcfunction" parameterType="String" resultType="com.softtech.entity.Ofcfunction">
+     	select *
+		from
+			ems.ofcfunction
+		where deleteFlg='0'
+		 and authority='1'
+		 order by displayNo
+ </select>
+
+
+
+
+
+
+
+
+
+</mapper>

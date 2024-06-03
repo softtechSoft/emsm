@@ -10,9 +10,8 @@
 
     <script type="text/javascript" >
 
-    // 更新ボタン処理
+    // 登録ボタン処理
     function toUpdateJsp(){
-        // 更新
         document.theForm.submit();
         //alert("更新Button clicked!");
     }
@@ -75,11 +74,9 @@
 			       <fmt:formatDate value="${updateDate}" pattern="yyyy/MM/dd" />
            </td>
 		</tr>
-
     </table>
     <br>
-     <input type="button" name="update" value="更新" onclick="toUpdateJsp();"/>
-
+     <input type="button" name="update" value="登録" onclick="toUpdateJsp();"/>
 	</form:form>
 </body>
 </html>

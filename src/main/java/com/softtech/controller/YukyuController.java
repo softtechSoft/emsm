@@ -50,7 +50,8 @@ public class YukyuController {
 		//画面に渡す
 		model.addAttribute("yukyulist", yk);
 		//画面初期表示用のFormBeam
-		model.addAttribute("yukyuFormBean", new YukyuFormBean());
+		YukyuFormBean formBean =  new YukyuFormBean();
+		model.addAttribute("yukyuFormBean",formBean);
 
         return "yukyu";
     }
@@ -68,14 +69,19 @@ public class YukyuController {
 	public String toSearchJsp(@ModelAttribute("yukyuFormBean") YukyuFormBean yukyuFormBean,Model model) {
 		//フラグを取得
 	    String selectFlg = yukyuFormBean.getSelectFlg();
+	    //選択リストのIDを取得
+	    String employeeID = yukyuFormBean.getEmployeeID();
+	    //本年度を取得
+        String currentYear = DateUtil.getNowYear();
 	    //フラグの処理
 	    switch (selectFlg) {
-	        case "0":
-	            String employeeID = yukyuFormBean.getEmployeeID();
-	        	List<Yukyu> ykSelect = yukyuService.getEmployeeID(employeeID);
-	            model.addAttribute("yukyulist", ykSelect);
+	        case "0": 
+	        	//DBを検索
+	        	List<Yukyu> ykID = yukyuService.getEmployeeID(employeeID);
+	            model.addAttribute("yukyulist", ykID);
 	            break;
 	        default:
+	        	//DBを検索
 	        	List<Yukyu> ykAll = yukyuService.getAllYukyu();
 	            model.addAttribute("yukyulist", ykAll);
 	            break;
@@ -98,35 +104,28 @@ public class YukyuController {
 			BindingResult result,
 			Model model) {
 
-		//IDを取得
+		//行のIDを取得
 		String employeeID1Se = yukyuFormBean.getEmployeeIDSelect();
-		//年度を取得
+		//本年度を取得
 	    String currentYear = DateUtil.getNowYear();
-    	//コンテナを新規作成します
+    	
 	    YukyuFormBean DetailForm = new YukyuFormBean();
     	DetailForm.setEmployeeID(employeeID1Se);
     	DetailForm.setNendo(currentYear);
     	//DBを検索
     	Map<String, String> sqlParam = yukyuService.transferUIToMap(DetailForm);
     	List<Yukyu> yukyuNE = yukyuService.findIDnendo(sqlParam);
-    	//検索の結果
-    	if (yukyuNE == null || yukyuNE.isEmpty()) {
-            //エラーメッセージの値をセットアップ
-            result.rejectValue("nendo", "error.nendo", "本年度ではない、更新不可");
-            // エラーを表示する
-            model.addAttribute("errors", result.getAllErrors());
-            //選択リストの再表示
-            List<Employee> elist = yukyuService.getEmployeeName();
-    		model.addAttribute("elist", elist);
-            return "yukyu";
-        }else {
-        	YukyuFormBean yukyuFormBean1=yukyuService.transforEntityToUI(yukyuNE);
-        	model.addAttribute("yukyuFormBean", yukyuFormBean1);
-  		  	return "yukyuEdit";
+    	
+    	YukyuFormBean yukyuFormBean1=yukyuService.transforEntityToUI(yukyuNE);
+//	    List<Yukyu> ykID = yukyuService.getEmployeeID(employeeID1Se);
+        
+    	model.addAttribute("yukyuFormBean", yukyuFormBean1);
+	  	return "yukyuEdit";
 
-        }
+        
 
 	}
+
 
 	 /**概要:更新ボタン
 	    *@param:社員情報リスト画面のデータ
@@ -138,30 +137,30 @@ public class YukyuController {
 	public String updateYukyu(@Valid @ModelAttribute("yukyuFormBean")  YukyuFormBean yukyuFormBean,
 	                                BindingResult result, HttpSession session, Model model) {
 
-		 if (result.hasErrors()) {
-				// エラーチェック用リスト
-				  List<FieldError> errorlst = new ArrayList<FieldError>();
-				//エラーメッセージ。
-				  errorlst.addAll(result.getFieldErrors());
-				  //エラーメッセージ
-				  model.addAttribute("errors", errorlst);
-
-			     return "yukyuEdit";
-		 }
-		 // 更新DBの結果
-		 	Yukyu yukyu = yukyuService.transforFormBeanToEntity(yukyuFormBean);
-		    boolean updateResult = yukyuService.updateYk(yukyu);
-
-		    if (updateResult) {
-		        //更新成功
-		        model.addAttribute("updateMsg", "有給情報を更新しました。");
-		    }
-
-		//リスト選択
-		    List<Employee> elist = yukyuService.getEmployeeName();
-    		model.addAttribute("elist", elist);
-
+	 if (result.hasErrors()) {
+		 // エラーチェック用リスト
+		 List<FieldError> errorlst = new ArrayList<FieldError>();
+		 errorlst.addAll(result.getFieldErrors());
+		 //エラーメッセージ
+		 model.addAttribute("errors", errorlst);
+		 return "yukyuEdit";
+	 }
+	 	// 更新DB
+	 	Yukyu yukyu = yukyuService.transforFormBeanToEntity(yukyuFormBean);
+	    boolean updateResult = yukyuService.updateYk(yukyu);
+	    //更新DBの結果
+	    if (updateResult) {
+	        //更新成功
+	        model.addAttribute("updateMsg", "有給情報を更新しました。");
+	    }
+	  //選択リストの初期表示
+		List<Employee> elist = yukyuService.getEmployeeName();
+		//画面に渡す
+		model.addAttribute("elist", elist);
+		//すべて有給情報の初期表示
+		List<Yukyu> yk = yukyuService.getAllYukyu();
+		//画面に渡す
+		model.addAttribute("yukyulist", yk);
 		return "yukyu";
-
 	}
 }

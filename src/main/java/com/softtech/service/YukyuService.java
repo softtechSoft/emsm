@@ -9,7 +9,7 @@ import com.softtech.entity.Yukyu;
 
 public interface YukyuService {
 
-
+	
 	List<Yukyu> getAllYukyu();
 
 	List<Yukyu> getEmployeeID(String employeeID);
