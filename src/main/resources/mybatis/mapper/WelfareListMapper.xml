@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.WelfareListMapper">
+<!--検索時、福祉控除情報を取得する。-->
+<select id="getWelfareInfoDetail" parameterType="String" resultType="com.softtech.entity.WelfareInfo">
+
+		SELECT *,
+			case from_unixtime(startDate,'%m')
+				when '01' then municipalTax1
+				when '02' then municipalTax2
+				when '03' then municipalTax3
+				when '04' then municipalTax4
+				when '05' then municipalTax5
+				when '06' then municipalTax6
+				when '07' then municipalTax7
+				when '08' then municipalTax8
+				when '09' then municipalTax9
+				when '10' then municipalTax10
+				when '11' then municipalTax11
+				when '12' then municipalTax12
+				ELSE 0
+			END municipalTax
+		FROM welfare
+		WHERE employeeID = #{employeeID}
+		and status = 1
+
+
+ </select>
+ <!--初期画面時、福祉控除情報を取得する。-->
+<select id="getWelfare" resultType="com.softtech.entity.WelfareInfo">
+
+		select * ,
+			case from_unixtime(startDate,'%m')
+				when '01' then municipalTax1
+				when '02' then municipalTax2
+				when '03' then municipalTax3
+				when '04' then municipalTax4
+				when '05' then municipalTax5
+				when '06' then municipalTax6
+				when '07' then municipalTax7
+				when '08' then municipalTax8
+				when '09' then municipalTax9
+				when '10' then municipalTax10
+				when '11' then municipalTax11
+				when '12' then municipalTax12
+				ELSE 0
+			END municipalTax
+		from welfareinfo
+
+ </select>
+
+ <!--社員情報を取得する。inner join-->
+	<select id="getEmployee"  resultType="com.softtech.entity.Employee">
+     select employeeID,
+     		employeeName
+	 from employee
+  </select>
+</mapper>

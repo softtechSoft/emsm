@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.LoginMappers">
+
+<!-- ログイン者IDとパスワードを取得-->
+<select id="getOldPassword" parameterType="com.softtech.common.LoginEmployee" resultType="com.softtech.entity.LoginEntity">
+        SELECT *
+        FROM employee
+        WHERE status = '0'
+		and mailAdress = #{mailAdress}
+		and password = md5(#{password})
+ </select>
+
+<!-- ログイン者IDより、ユーザ情報取得-->
+<select id="getEmployeeByID" parameterType="com.softtech.common.LoginEmployee" resultType="com.softtech.entity.LoginEntity">
+        SELECT *
+        FROM employee
+        WHERE status = #{status}
+		and employeeID = #{employeeID}
+ </select>
+
+<!-- 社員情報IDを取得する-->
+<select id="getEmployees" resultType="com.softtech.common.EmployeeIDName">
+        SELECT employeeID,employeeName
+        FROM employee
+        WHERE status = '0'
+ </select>
+
+
+ <!-- 契約情報IDを取得する-->
+<select id="getContracts" resultType="com.softtech.common.ContractIDName">
+        SELECT contractID,contractName
+        FROM contract
+        WHERE status = '1'
+ </select>
+
+ <select id="getBaseSalarys" resultType="com.softtech.common.BaseSalaryIDName">
+        SELECT baseSalaryID,employeeID
+        FROM m_basesalary
+        WHERE status = '1'
+ </select>
+  <!-- 会社情報IDを取得する-->
+<select id="getCompanys" resultType="com.softtech.common.CompanyIDName">
+        SELECT companyID,companyName
+        FROM company
+
+ </select>
+    <!--選択枠-->
+    <select id="getYear" resultType="com.softtech.common.WelfarefeeIDName">
+        select year
+        from m_welfarefee
+        where status='1'
+    </select>
+
+</mapper>
