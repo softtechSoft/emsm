@@ -63,11 +63,11 @@
 		        <td><c:out value="${yk.nendo}"/></td>
 		        <td><c:out value="${yk.totalDay}"/></td>
 		        <td><c:out value="${yk.usedDay}"/></td>
-		       <%-- <fmt:parseDate value="${yk.insertDate}" var="insertDate" pattern="yyyyMMdd" />
+		       <!-- <fmt:parseDate value="${yk.insertDate}" var="insertDate" pattern="yyyyMMdd" />
 			       <fmt:formatDate value="${insertDate}" pattern="yyyy/MM/dd" />
 			       <fmt:parseDate value="${yk.updateDate}" var="updateDate" pattern="yyyyMMdd" />
 			    	<fmt:formatDate value="${updateDate}" pattern="yyyy/MM/dd" />
-			    	--%>
+			    	 -->
 		       <td>
 			       <fmt:parseDate value="${yk.insertDate}" var="insertDate" pattern="yyyyMMdd" />
 			       <fmt:formatDate value="${insertDate}" pattern="yyyy/MM/dd" />

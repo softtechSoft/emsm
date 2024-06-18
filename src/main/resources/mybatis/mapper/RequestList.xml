@@ -21,6 +21,6 @@
 		JOIN  
     		company co ON c.companyID = co.companyID
 		WHERE
-			w.workMonth ='202401'
+			w.workMonth =#{month}
     </select>
 </mapper>

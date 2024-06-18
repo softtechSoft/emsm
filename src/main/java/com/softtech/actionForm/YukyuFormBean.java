@@ -1,7 +1,7 @@
 package com.softtech.actionForm;
 
 import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 public class YukyuFormBean {
@@ -16,7 +16,7 @@ public class YukyuFormBean {
 	    private String totalDay;
 
 	    //消化日数
-	    @NotEmpty(message = "消化日数を入力してください")
+	    @NotBlank(message = "消化日数を入力してください")
 	    @Max(value = 20, message = "入力値は 20 以下に入力してください")
 	    @Pattern(regexp = "^[0-9]+$", message = "整数で入力してください")
 	    private String usedDay;

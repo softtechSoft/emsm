@@ -34,7 +34,7 @@ public class YukyuController {
      * @return:有給リスト
      * @author:sun
      */
-	@RequestMapping("/toinYukyulist")
+	@RequestMapping("/yukyulist")
     public String showYukyuList(Model model) {
 
 		//社員情報選択リストの初期表示

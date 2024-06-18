@@ -46,7 +46,7 @@ function toDownLoadDataJsp(){
 		    <th >社員ID</th>
             <th >社員氏名</th>
             <th >対象月</th>
-            <th >勤怠時間（H)</th>
+            <th >勤怠時間(H)</th>
             <th >定期券額（円）</th>
             <th >他の交通費（円）</th>
             <th >出張費</th>

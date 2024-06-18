@@ -20,8 +20,8 @@ public class YukyuServiceImpl implements YukyuService {
 
     @Autowired
     private YukyuMapper yukyuMapper;
-
-
+    
+   
 
     /**
      * 概要:社員IDより、検索する
