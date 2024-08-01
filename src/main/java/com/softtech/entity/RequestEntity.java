@@ -6,6 +6,8 @@ public class RequestEntity {
 	private String employeeName;
 	//会社名
 	private String companyName;
+	//契約ID
+	private String contractID;
 	//契約下限と上限
 //	private String contractTime;
 	private String contractLowerTime;
@@ -14,6 +16,12 @@ public class RequestEntity {
 	private int price;
 	//稼働時間
 	private float workTime;
+	//交通費
+	private int transport;
+	//出張旅費
+	private int businessTrip;
+	//特別請求
+	private int specialClaim;
 	
 //	private int upperPrice;
 //	
@@ -32,14 +40,35 @@ public class RequestEntity {
 //	private int claimPrice;
 	
 	
-	
 
-
-	
 	public String getEmployeeName() {
 		return employeeName;
 	}
 	
+	public int getTransport() {
+		return transport;
+	}
+
+	public void setTransport(int transport) {
+		this.transport = transport;
+	}
+
+	public int getBusinessTrip() {
+		return businessTrip;
+	}
+
+	public void setBusinessTrip(int businessTrip) {
+		this.businessTrip = businessTrip;
+	}
+
+	public int getSpecialClaim() {
+		return specialClaim;
+	}
+
+	public void setSpecialClaim(int specialClaim) {
+		this.specialClaim = specialClaim;
+	}
+
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
@@ -98,6 +127,14 @@ public class RequestEntity {
 		this.contractUpperTime = contractUpperTime;
 		this.price = price;
 		this.workTime = workTime;
+	}
+
+	public String getContractID() {
+		return contractID;
+	}
+
+	public void setContractID(String contractID) {
+		this.contractID = contractID;
 	}
 
 	

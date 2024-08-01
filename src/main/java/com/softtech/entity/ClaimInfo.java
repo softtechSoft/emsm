@@ -76,7 +76,8 @@ public class ClaimInfo {
 	 * @param claimMonth セットする claimMonth
 	 */
 	public void setClaimMonth(String claimMonth) {
-		this.claimMonth = String.format("%s/%s", claimMonth.substring(0, 4), claimMonth.substring(4, 6));
+		this.claimMonth = claimMonth;
+//		this.claimMonth = String.format("%s/%s", claimMonth.substring(0, 4), claimMonth.substring(4, 6));
 	}
 
 	/**
@@ -245,7 +246,8 @@ public class ClaimInfo {
 	 * @param sum セットする sum
 	 */
 	public void setSum(String sum) {
-		this.sum = String.format("%,d", Integer.parseInt(sum));
+		this.sum =sum;
+//		this.sum = String.format("%,d", Integer.parseInt(sum));
 	}
 
 	/**

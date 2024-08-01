@@ -14,6 +14,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+
+
 import com.softtech.common.ListIDName;
 
 /**
@@ -287,6 +290,11 @@ public class DateUtil {
 		String s = f.format(dt1);
 		return s;
 
+	}
+
+	public static boolean isCellDateFormatted(Cell cell) {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
 	}
 
 }

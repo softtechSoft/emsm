@@ -4,23 +4,90 @@
           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softtech.mappers.RequestMapper">
 
-    <select id="getRequestData" parameterType="string" resultType="com.softtech.entity.RequestEntity">
+    <select id="getRequestData" parameterType="map" resultType="com.softtech.entity.RequestEntity">
         SELECT 
-			e.employeeName AS employeeName,
+        	e.employeeName AS employeeName,
 			co.companyName AS companyName,
 			c.lowerTime AS contractLowerTime,
 			c.upperTime AS contractUpperTime,
 			c.price AS price,
-			w.workTime AS workTime
+			w.workTime AS workTime,
+      		cl.transport AS transport,
+			cl.businessTrip AS businessTrip,
+			cl.specialClaim AS specialClaim,
+			c.contractID AS contractID
+        	
         FROM 
 			workinfo w
-		JOIN
-			employee e ON w.employeeID = e.employeeID
-		JOIN
-			contract c ON w.contractID = c.contractID 
-		JOIN  
+		LEFT JOIN
+			employee e ON e.employeeID = w.employeeID
+		LEFT JOIN
+			contract c ON c.contractID =w.contractID
+		LEFT JOIN  
     		company co ON c.companyID = co.companyID
+		LEFT JOIN
+			claim cl ON cl.contractID = c.contractID AND w.workMonth = cl.claimMonth
 		WHERE
-			w.workMonth =#{month}
+			w.workMonth = #{month} AND cl.claimStatus = "0" 
     </select>
+    
+    <select id="countByMonthAndType" parameterType="map" resultType="Integer">
+    SELECT COUNT(${type})
+    FROM 
+        <choose>
+            <when test="type == 'workTime'">
+                workinfo
+            </when>
+            
+            <when test="type == 'claimMonth'">
+                claim
+            </when>
+            
+        </choose>
+    WHERE 
+        <choose>
+        	<when test="type == 'workTime'">
+                (workMonth = #{month} OR workMonth IS NULL)
+            </when>
+           
+            <when test="type == 'claimMonth'">
+                (claimMonth = #{month} OR claimMonth IS NULL)
+            </when>
+            
+        </choose>
+</select>
+
+    <select id="countByMonthAndType1" parameterType="java.util.Map" resultType="int">
+	    SELECT COUNT(*)
+	    FROM ${type}
+	    WHERE workMonth = #{month}
+	</select>
+	
+    <select id="findEmployeeNamesByMonth" parameterType="String" resultType="com.softtech.entity.Employee">
+        SELECT DISTINCT e.employeeName
+	    FROM employee e
+	    LEFT JOIN workinfo w ON w.employeeID = e.employeeID AND w.workMonth = #{month}
+<!--	    LEFT JOIN contract c ON c.employeeID = e.employeeID-->
+<!--	    LEFT JOIN claim cl ON cl.contractID = c.contractID AND cl.claimMonth = #{month}-->
+	    WHERE (w.workTime IS NULL 
+<!--	    OR cl.transport IS NULL-->
+	    )
+	    
+    </select>
+    <select id="getLatestYearMonth" resultType="String">
+	    SELECT MAX(claimMonth) AS maxClaimMonth
+	    FROM claim
+	</select>
+    <select id="getMaxClaimID" resultType="string">
+	    SELECT MAX(claimID) AS maxClaimID
+	    FROM claim
+	</select>
+    <insert id="insertClaim" parameterType="com.softtech.entity.ClaimInfo"  >
+    	INSERT INTO 
+    		claim(claimID,contractID,claimMonth,businessTrip,sum,claimStatus)
+    	VALUES 
+    		<foreach collection="list" item="item" separator=",">
+		        (#{item.claimID}, #{item.contractID}, #{item.claimMonth}, #{item.businessTrip}, #{item.sum}, #{item.claimStatus})
+		    </foreach>
+    </insert>
 </mapper>
