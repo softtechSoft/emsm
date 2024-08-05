@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.TblJournalDetailMapper">
+
+    <!-- Select all journal details -->
+    <select id="getAllJournalDetails" resultType="com.softtech.entity.TblJournalDetail">
+        SELECT
+            jd.uid,
+            jd.bookDate,
+            jd.lineNumber,
+            jd.accountTitleID,
+            jd.accountTitleID1,
+            a.name as accountTitleName,
+            a.name as accountTitleName1,
+            jd.description,
+            jd.description1,
+            jd.cdTaxationKbn,
+            jd.cdTaxationKbn1,
+            jd.cdCTaxPriceKbn,
+            jd.cdCTaxPriceKbn1,
+            jd.transValue,
+            jd.transValue1
+        FROM TblJournalDetail jd
+        LEFT JOIN TblAccount a ON jd.accountTitleID = a.uid
+    </select>
+
+    <!-- Insert a new journal detail -->
+    <insert id="insertJournalDetail" parameterType="com.softtech.entity.TblJournalDetail">
+        INSERT INTO TblJournalDetail (
+            uid,
+            bookDate,
+            lineNumber,
+            accountTitleID,
+            description,
+            cdTaxationKbn,
+            cdCTaxPriceKbn,
+            transValue,
+            accountTitleID1,
+            description1,
+            cdTaxationKbn1,
+            cdCTaxPriceKbn1,
+            transValue1
+        ) VALUES (
+            #{uid},
+            #{bookDate},
+            #{lineNumber},
+            #{accountTitleID},
+            #{description},
+            #{cdTaxationKbn},
+            #{cdCTaxPriceKbn},
+            #{transValue},
+            #{accountTitleID1},
+            #{description1},
+            #{cdTaxationKbn1},
+            #{cdCTaxPriceKbn1},
+            #{transValue1}
+        )
+    </insert>
+
+    <!-- Update an existing journal detail -->
+    <update id="updateJournalDetail" parameterType="com.softtech.entity.TblJournalDetail">
+        UPDATE TblJournalDetail SET
+            divisionID = #{divisionID},
+            projectID = #{projectID},
+            generalHeaderID = #{generalHeaderID},
+            journalHeaderID = #{journalHeaderID},
+            bookDate = #{bookDate},
+            cdFormStatus = #{cdFormStatus},
+            lineNumber = #{lineNumber},
+            detailDate = #{detailDate},
+            cdContentKbn = #{cdContentKbn},
+            cdDrCrKbn = #{cdDrCrKbn},
+            accountTitleID = #{accountTitleID},
+            cashFlowTitleID = #{cashFlowTitleID},
+            cdTransactionDetailKbn = #{cdTransactionDetailKbn},
+            transactionDetailID = #{transactionDetailID},
+            description = #{description},
+            cdTaxationKbn = #{cdTaxationKbn},
+            cdCTaxPriceKbn = #{cdCTaxPriceKbn},
+            cTaxRate = #{cTaxRate},
+            transValue = #{transValue},
+            netValue = #{netValue},
+            cTaxValue = #{cTaxValue},
+            displayValue = #{displayValue},
+            cdNegationStatus = #{cdNegationStatus},
+            updateID = #{updateID},
+            updateDate = #{updateDate}
+        WHERE uid = #{uid}
+    </update>
+
+    <!-- Select the maximum line number from TblJournalDetail -->
+    <select id="getMaxLineNumber" resultType="int">
+        SELECT MAX(lineNumber) FROM TblJournalDetail
+    </select>
+
+    <!-- Select all accounts from TblAccount -->
+    <select id="getAllAccounts" resultType="com.softtech.entity.TblAccount">
+        SELECT * FROM TblAccount
+    </select>
+
+</mapper>
