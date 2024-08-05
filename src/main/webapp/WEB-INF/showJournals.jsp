@@ -51,11 +51,7 @@
             <spring:message message="${error}"/><br>
         </c:forEach>
     </p>
-<c:if test="${not empty successMessage}">
-    <p style="color: green;">
-        <c:out value="${successMessage}" />
-    </p>
-</c:if>
+
 <form:form name="theform" id="theForm"  action="journals/add" method="post" modelAttribute="tblJournalDetailFormBean">
     <div>
         <label for="systemDate">日付: </label>
