@@ -58,7 +58,6 @@
                         if (xhr.status === 200) {
                             var response = JSON.parse(xhr.responseText);
                             handleDatabaseResponse(response);   //处理搜索结果的回调函数
-                            alert('Error: ' + xhr.responseText);
                         } else {
                             alert('Error: ' + xhr.statusText);
                         }
