@@ -16,40 +16,40 @@ public class TblJournalDetail {
     private String lineNumber;
 
     // 勘定科目ID
-    private String accountTitleID;
+    private String debitAccountTitleID;
 
     // 備考
-    private String description;
+    private String debitDescription;
 
     // 備考1
-    private String description1;
+    private String creditDescription;
 
     // 課税区分
-    private String cdTaxationKbn;
+    private String debitcdTaxationKbn;
 
     // 課税区分1
-    private String cdTaxationKbn1;
+    private String creditcdTaxationKbn;
 
     // 消費税額区分
-    private String cdCTaxPriceKbn;
+    private String debitcdCTaxPriceKbn;
 
     // 消費税額区分1
-    private String cdCTaxPriceKbn1;
+    private String creditcdCTaxPriceKbn;
 
     // 金額
-    private String transValue;
+    private String debitTransValue;
 
     // 金額1
-    private String transValue1;
+    private String creditTransValue;
 
     // 勘定科目名
-    private String accountTitleName;
+    private String debitAccountTitleName;
 
     // 勘定科目ID1
-    private String accountTitleID1;
+    private String creditAccountTitleID;
 
     // 勘定科目名1
-    private String accountTitleName1;
+    private String creditAccountTitleName;
 	public String getUid() {
 		return uid;
 	}
@@ -78,80 +78,80 @@ public class TblJournalDetail {
 		this.lineNumber = lineNumber;
 	}
 
-	public String getAccountTitleID() {
-		return accountTitleID;
+	public String getdebitAccountTitleID() {
+		return debitAccountTitleID;
 	}
-	public void setAccountTitleID(String accountTitleID) {
-		this.accountTitleID = accountTitleID;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getCdTaxationKbn() {
-		return cdTaxationKbn;
-	}
-	public void setCdTaxationKbn(String cdTaxationKbn) {
-		this.cdTaxationKbn = cdTaxationKbn;
-	}
-	public String getCdCTaxPriceKbn() {
-		return cdCTaxPriceKbn;
-	}
-	public void setCdCTaxPriceKbn(String cdCTaxPriceKbn) {
-		this.cdCTaxPriceKbn = cdCTaxPriceKbn;
+	public void setdebitAccountTitleID(String debitAccountTitleID) {
+		this.debitAccountTitleID = debitAccountTitleID;
 	}
 
-	public String getTransValue() {
-		return transValue;
+	public String getdebitDescription() {
+		return debitDescription;
 	}
-	public void  setTransValue(String transValue) {
-		this.transValue = transValue;
+	public void setdebitDescription(String debitDescription) {
+		this.debitDescription = debitDescription;
+	}
+	public String getdebitcdTaxationKbn() {
+		return debitcdTaxationKbn;
+	}
+	public void setdebitcdTaxationKbn(String debitcdTaxationKbn) {
+		this.debitcdTaxationKbn = debitcdTaxationKbn;
+	}
+	public String getdebitcdCTaxPriceKbn() {
+		return debitcdCTaxPriceKbn;
+	}
+	public void setdebitcdCTaxPriceKbn(String debitcdCTaxPriceKbn) {
+		this.debitcdCTaxPriceKbn = debitcdCTaxPriceKbn;
 	}
 
-	public String getAccountTitleName() {
-		return accountTitleName;
+	public String getdebitTransValue() {
+		return debitTransValue;
 	}
-	public void setAccountTitleName(String accountTitleName) {
-		this.accountTitleName = accountTitleName;
+	public void  setdebitTransValue(String debitTransValue) {
+		this.debitTransValue = debitTransValue;
 	}
-	public String getAccountTitleID1() {
-		return accountTitleID1;
+
+	public String getdebitAccountTitleName() {
+		return debitAccountTitleName;
 	}
-	public void setAccountTitleID1(String accountTitleID1) {
-		this.accountTitleID1 = accountTitleID1;
+	public void setdebitAccountTitleName(String debitAccountTitleName) {
+		this.debitAccountTitleName = debitAccountTitleName;
 	}
-	public String getAccountTitleName1() {
-		return accountTitleName1;
+	public String getcreditAccountTitleID() {
+		return creditAccountTitleID;
 	}
-	public void setAccountTitleName1(String accountTitleName1) {
-		this.accountTitleName1 = accountTitleName1;
+	public void setcreditAccountTitleID(String creditAccountTitleID) {
+		this.creditAccountTitleID = creditAccountTitleID;
 	}
-	public String getTransValue1() {
-		return transValue1;
+	public String getcreditAccountTitleName() {
+		return creditAccountTitleName;
 	}
-	public void setTransValue1(String transValue1) {
-		this.transValue1 = transValue1;
+	public void setcreditAccountTitleName(String creditAccountTitleName) {
+		this.creditAccountTitleName = creditAccountTitleName;
 	}
-	public String getDescription1() {
-		return description1;
+	public String getcreditTransValue() {
+		return creditTransValue;
 	}
-	public void setDescription1(String description1) {
-		this.description1 = description1;
+	public void setcreditTransValue(String creditTransValue) {
+		this.creditTransValue = creditTransValue;
 	}
-	public String getCdTaxationKbn1() {
-		return cdTaxationKbn1;
+	public String getcreditDescription() {
+		return creditDescription;
 	}
-	public void setCdTaxationKbn1(String cdTaxationKbn1) {
-		this.cdTaxationKbn1 = cdTaxationKbn1;
+	public void setcreditDescription(String creditDescription) {
+		this.creditDescription = creditDescription;
 	}
-	public String getCdCTaxPriceKbn1() {
-		return cdCTaxPriceKbn1;
+	public String getcreditcdTaxationKbn() {
+		return creditcdTaxationKbn;
 	}
-	public void setCdCTaxPriceKbn1(String cdCTaxPriceKbn1) {
-		this.cdCTaxPriceKbn1 = cdCTaxPriceKbn1;
+	public void setcreditcdTaxationKbn(String creditcdTaxationKbn) {
+		this.creditcdTaxationKbn = creditcdTaxationKbn;
+	}
+	public String getcreditcdCTaxPriceKbn() {
+		return creditcdCTaxPriceKbn;
+	}
+	public void setcreditcdCTaxPriceKbn(String creditcdCTaxPriceKbn) {
+		this.creditcdCTaxPriceKbn = creditcdCTaxPriceKbn;
 	}
 
     // Getters and setters

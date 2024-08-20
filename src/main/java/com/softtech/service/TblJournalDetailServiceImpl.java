@@ -26,10 +26,6 @@ public class TblJournalDetailServiceImpl implements TblJournalDetailService {
 	    }
 
 	    // 仕訳明細を追加する
-	    @Override
-	    public void addJournalDetail(TblJournalDetail journalDetail) {
-	        journalDetailMapper.insertJournalDetail(journalDetail);
-	    }
 
 	    // 仕訳明細を更新する
 	    @Override
@@ -53,7 +49,7 @@ public class TblJournalDetailServiceImpl implements TblJournalDetailService {
 	    @Override
 	    public int getNextLineNumber() {
 	        Integer maxLineNumber = journalDetailMapper.getMaxLineNumber();
-	        	return maxLineNumber + 1;
+	        	return (maxLineNumber != null) ? maxLineNumber : 0;
 	        }
 	    @Override
 	    public int getMaxLineNumber() {
@@ -65,18 +61,18 @@ public class TblJournalDetailServiceImpl implements TblJournalDetailService {
 	        TblJournalDetail journalDetail = new TblJournalDetail();
 
 	        // Thiết lập các giá trị từ form vào đối tượng journalDetail
-	        journalDetail.setAccountTitleID(tblJournalDetailFormBean.getAccountTitleID());
-	        journalDetail.setAccountTitleID1(tblJournalDetailFormBean.getAccountTitleID1());
-	        journalDetail.setAccountTitleName(tblJournalDetailFormBean.getAccountTitleName());
-	        journalDetail.setAccountTitleName1(tblJournalDetailFormBean.getAccountTitleName1());
-	        journalDetail.setCdTaxationKbn(tblJournalDetailFormBean.getCdTaxationKbn());
-	        journalDetail.setCdTaxationKbn1(tblJournalDetailFormBean.getCdTaxationKbn1());
-	        journalDetail.setCdCTaxPriceKbn(tblJournalDetailFormBean.getCdCTaxPriceKbn());
-	        journalDetail.setCdCTaxPriceKbn1(tblJournalDetailFormBean.getCdCTaxPriceKbn1());
-	        journalDetail.setTransValue(tblJournalDetailFormBean.getTransValue());
-	        journalDetail.setTransValue1(tblJournalDetailFormBean.getTransValue1());
-	        journalDetail.setDescription(tblJournalDetailFormBean.getDescription());
-	        journalDetail.setDescription1(tblJournalDetailFormBean.getDescription1());
+	        journalDetail.setdebitAccountTitleID(tblJournalDetailFormBean.getdebitAccountTitleID());
+	        journalDetail.setcreditAccountTitleID(tblJournalDetailFormBean.getcreditAccountTitleID());
+	        journalDetail.setdebitAccountTitleName(tblJournalDetailFormBean.getdebitAccountTitleName());
+	        journalDetail.setcreditAccountTitleName(tblJournalDetailFormBean.getcreditAccountTitleName());
+	        journalDetail.setdebitcdTaxationKbn(tblJournalDetailFormBean.getdebitcdTaxationKbn());
+	        journalDetail.setcreditcdTaxationKbn(tblJournalDetailFormBean.getcreditcdTaxationKbn());
+	        journalDetail.setdebitcdCTaxPriceKbn(tblJournalDetailFormBean.getdebitcdCTaxPriceKbn());
+	        journalDetail.setcreditcdCTaxPriceKbn(tblJournalDetailFormBean.getcreditcdCTaxPriceKbn());
+	        journalDetail.setdebitTransValue(tblJournalDetailFormBean.getdebitTransValue());
+	        journalDetail.setcreditTransValue(tblJournalDetailFormBean.getcreditTransValue());
+	        journalDetail.setdebitDescription(tblJournalDetailFormBean.getdebitDescription());
+	        journalDetail.setcreditDescription(tblJournalDetailFormBean.getcreditDescription());
 	        journalDetail.setUid(tblJournalDetailFormBean.getUid());
 	        journalDetail.setLineNumber(tblJournalDetailFormBean.getLineNumber());
 	        String bookDateStr = tblJournalDetailFormBean.getBookDate(); // Giả sử chuỗi là '2024-08-04 00:00:00.0'
@@ -90,4 +86,6 @@ public class TblJournalDetailServiceImpl implements TblJournalDetailService {
 	        // Lưu đối tượng journalDetail vào cơ sở dữ liệu
 	        journalDetailMapper.insertJournalDetail(journalDetail);
 	    }
+
+
 }

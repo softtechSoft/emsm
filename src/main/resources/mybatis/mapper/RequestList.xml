@@ -5,7 +5,7 @@
 <mapper namespace="com.softtech.mappers.RequestMapper">
 
     <select id="getRequestData" parameterType="map" resultType="com.softtech.entity.RequestEntity">
-        SELECT 
+        SELECT
         	e.employeeName AS employeeName,
 			co.companyName AS companyName,
 			c.lowerTime AS contractLowerTime,
@@ -16,44 +16,43 @@
 			cl.businessTrip AS businessTrip,
 			cl.specialClaim AS specialClaim,
 			c.contractID AS contractID
-        	
-        FROM 
+        FROM
 			workinfo w
 		LEFT JOIN
-			employee e ON e.employeeID = w.employeeID
+			contract c ON c.contractID = w.contractID
 		LEFT JOIN
-			contract c ON c.contractID =w.contractID
-		LEFT JOIN  
+			employee e ON e.employeeID = c.employeeID
+		LEFT JOIN
     		company co ON c.companyID = co.companyID
 		LEFT JOIN
 			claim cl ON cl.contractID = c.contractID AND w.workMonth = cl.claimMonth
 		WHERE
-			w.workMonth = #{month} AND cl.claimStatus = "0" 
+			w.workMonth = #{month} AND cl.claimStatus = "0"
     </select>
-    
+
     <select id="countByMonthAndType" parameterType="map" resultType="Integer">
     SELECT COUNT(${type})
-    FROM 
+    FROM
         <choose>
             <when test="type == 'workTime'">
                 workinfo
             </when>
-            
+
             <when test="type == 'claimMonth'">
                 claim
             </when>
-            
+
         </choose>
-    WHERE 
+    WHERE
         <choose>
         	<when test="type == 'workTime'">
                 (workMonth = #{month} OR workMonth IS NULL)
             </when>
-           
+
             <when test="type == 'claimMonth'">
                 (claimMonth = #{month} OR claimMonth IS NULL)
             </when>
-            
+
         </choose>
 </select>
 
@@ -62,32 +61,32 @@
 	    FROM ${type}
 	    WHERE workMonth = #{month}
 	</select>
-	
+
     <select id="findEmployeeNamesByMonth" parameterType="String" resultType="com.softtech.entity.Employee">
         SELECT DISTINCT e.employeeName
 	    FROM employee e
-	    LEFT JOIN workinfo w ON w.employeeID = e.employeeID AND w.workMonth = #{month}
-<!--	    LEFT JOIN contract c ON c.employeeID = e.employeeID-->
-<!--	    LEFT JOIN claim cl ON cl.contractID = c.contractID AND cl.claimMonth = #{month}-->
-	    WHERE (w.workTime IS NULL 
-<!--	    OR cl.transport IS NULL-->
-	    )
-	    
+	    LEFT JOIN contract c ON c.employeeID = e.employeeID
+	    LEFT JOIN workinfo w ON w.contractID = c.contractID AND w.workMonth = #{month}
+	    WHERE (w.workTime IS NULL)
     </select>
+
     <select id="getLatestYearMonth" resultType="String">
 	    SELECT MAX(claimMonth) AS maxClaimMonth
 	    FROM claim
 	</select>
+
     <select id="getMaxClaimID" resultType="string">
 	    SELECT MAX(claimID) AS maxClaimID
 	    FROM claim
 	</select>
-    <insert id="insertClaim" parameterType="com.softtech.entity.ClaimInfo"  >
-    	INSERT INTO 
+
+    <insert id="insertClaim" parameterType="com.softtech.entity.ClaimInfo">
+    	INSERT INTO
     		claim(claimID,contractID,claimMonth,businessTrip,sum,claimStatus)
-    	VALUES 
+    	VALUES
     		<foreach collection="list" item="item" separator=",">
 		        (#{item.claimID}, #{item.contractID}, #{item.claimMonth}, #{item.businessTrip}, #{item.sum}, #{item.claimStatus})
 		    </foreach>
     </insert>
+
 </mapper>

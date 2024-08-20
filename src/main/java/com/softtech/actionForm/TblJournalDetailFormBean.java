@@ -1,69 +1,66 @@
 package com.softtech.actionForm;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-
 public class TblJournalDetailFormBean {
 
     // 行番号
     private String lineNumber;
 
     // 勘定科目ID（必須）
-    @NotBlank(message = "借方の勘定科目IDは必須です")
-    private String accountTitleID;
+
+    private String debitAccountTitleID;
 
     // 勘定科目名
-    private String accountTitleName;
+    private String debitAccountTitleName;
 
     // 課税区分
-    @NotBlank(message = "借方の課税区分は必須です")
-    private String cdTaxationKbn;
+
+    private String debitcdTaxationKbn;
 
     // 課税区分1
-    @NotBlank(message = "貸方の課税区分は必須です")
-    private String cdTaxationKbn1;
+
+    private String creditcdTaxationKbn;
 
     // 税処理区分
-    @NotBlank(message = "借方の税処理区分は必須です")
-    private String cdCTaxPriceKbn;
+
+    private String debitcdCTaxPriceKbn;
 
     // 税処理区分1
-    @NotBlank(message = "貸方の税処理区分は必須です")
-    private String cdCTaxPriceKbn1;
+
+    private String creditcdCTaxPriceKbn;
 
     // 借方の金額（必須）
-    @NotEmpty(message = "借方金額を入力してください。")
 
-    @Pattern(message = "借方に数字のみを入力してください。",  regexp = "^[0-9]+")
-    private String transValue;
+
+
+    private String debitTransValue;
 
     // 貸方の金額（必須）
-    @NotEmpty(message = "貸方金額を入力してください。")
 
-    @Pattern(message = "貸方に数字のみを入力してください。",  regexp = "^[0-9]+")
-    private String transValue1;
+
+
+    private String creditTransValue;
 
     // 備考
-    private String description;
+    private String debitDescription;
 
     // 備考1
-    private String description1;
+    private String creditDescription;
 
     // UID
     private String uid;
 
     // 勘定科目ID1（必須）
-    @NotBlank(message = "貸方の勘定科目IDは必須です")
-    private String accountTitleID1;
+
+    private String creditAccountTitleID;
 
     // 勘定科目名1
-    private String accountTitleName1;
+    private String creditAccountTitleName;
 
     // 会計日付
     private String bookDate;
 
     // ゲッターとセッター
+
     public String getLineNumber() {
         return lineNumber;
     }
@@ -72,52 +69,52 @@ public class TblJournalDetailFormBean {
         this.lineNumber = lineNumber;
     }
 
-    public String getAccountTitleID() {
-        return accountTitleID;
+    public String getdebitAccountTitleID() {
+        return debitAccountTitleID;
     }
 
-    public void setAccountTitleID(String accountTitleID) {
-        this.accountTitleID = accountTitleID;
+    public void setdebitAccountTitleID(String debitAccountTitleID) {
+        this.debitAccountTitleID = debitAccountTitleID;
     }
 
-    public String getAccountTitleName() {
-        return accountTitleName;
+    public String getdebitAccountTitleName() {
+        return debitAccountTitleName;
     }
 
-    public void setAccountTitleName(String accountTitleName) {
-        this.accountTitleName = accountTitleName;
+    public void setdebitAccountTitleName(String debitAccountTitleName) {
+        this.debitAccountTitleName = debitAccountTitleName;
     }
 
-    public String getCdTaxationKbn() {
-        return cdTaxationKbn;
+    public String getdebitcdTaxationKbn() {
+        return debitcdTaxationKbn;
     }
 
-    public void setCdTaxationKbn(String cdTaxationKbn) {
-        this.cdTaxationKbn = cdTaxationKbn;
+    public void setdebitcdTaxationKbn(String debitcdTaxationKbn) {
+        this.debitcdTaxationKbn = debitcdTaxationKbn;
     }
 
-    public String getCdCTaxPriceKbn() {
-        return cdCTaxPriceKbn;
+    public String getdebitcdCTaxPriceKbn() {
+        return debitcdCTaxPriceKbn;
     }
 
-    public void setCdCTaxPriceKbn(String cdCTaxPriceKbn) {
-        this.cdCTaxPriceKbn = cdCTaxPriceKbn;
+    public void setdebitcdCTaxPriceKbn(String debitcdCTaxPriceKbn) {
+        this.debitcdCTaxPriceKbn = debitcdCTaxPriceKbn;
     }
 
-    public  String getTransValue() {
-        return transValue;
+    public  String getdebitTransValue() {
+        return debitTransValue;
     }
 
-    public void setTransValue(String transValue) {
-        this.transValue = transValue;
+    public void setdebitTransValue(String debitTransValue) {
+        this.debitTransValue = debitTransValue;
     }
 
-    public String getDescription() {
-        return description;
+    public String getdebitDescription() {
+        return debitDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setdebitDescription(String debitDescription) {
+        this.debitDescription = debitDescription;
     }
 
     public String getUid() {
@@ -128,52 +125,52 @@ public class TblJournalDetailFormBean {
         this.uid = uid;
     }
 
-    public String getAccountTitleID1() {
-        return accountTitleID1;
+    public String getcreditAccountTitleID() {
+        return creditAccountTitleID;
     }
 
-    public void setAccountTitleID1(String accountTitleID1) {
-        this.accountTitleID1 = accountTitleID1;
+    public void setcreditAccountTitleID(String creditAccountTitleID) {
+        this.creditAccountTitleID = creditAccountTitleID;
     }
 
-    public String getAccountTitleName1() {
-        return accountTitleName1;
+    public String getcreditAccountTitleName() {
+        return creditAccountTitleName;
     }
 
-    public void setAccountTitleName1(String accountTitleName1) {
-        this.accountTitleName1 = accountTitleName1;
+    public void setcreditAccountTitleName(String creditAccountTitleName) {
+        this.creditAccountTitleName = creditAccountTitleName;
     }
 
-    public String getTransValue1() {
-        return transValue1;
+    public String getcreditTransValue() {
+        return creditTransValue;
     }
 
-    public void setTransValue1( String transValue1) {
-        this.transValue1 = transValue1;
+    public void setcreditTransValue( String creditTransValue) {
+        this.creditTransValue = creditTransValue;
     }
 
-    public String getCdCTaxPriceKbn1() {
-        return cdCTaxPriceKbn1;
+    public String getcreditcdCTaxPriceKbn() {
+        return creditcdCTaxPriceKbn;
     }
 
-    public void setCdCTaxPriceKbn1(String cdCTaxPriceKbn1) {
-        this.cdCTaxPriceKbn1 = cdCTaxPriceKbn1;
+    public void setcreditcdCTaxPriceKbn(String creditcdCTaxPriceKbn) {
+        this.creditcdCTaxPriceKbn = creditcdCTaxPriceKbn;
     }
 
-    public String getCdTaxationKbn1() {
-        return cdTaxationKbn1;
+    public String getcreditcdTaxationKbn() {
+        return creditcdTaxationKbn;
     }
 
-    public void setCdTaxationKbn1(String cdTaxationKbn1) {
-        this.cdTaxationKbn1 = cdTaxationKbn1;
+    public void setcreditcdTaxationKbn(String creditcdTaxationKbn) {
+        this.creditcdTaxationKbn = creditcdTaxationKbn;
     }
 
-    public String getDescription1() {
-        return description1;
+    public String getcreditDescription() {
+        return creditDescription;
     }
 
-    public void setDescription1(String description1) {
-        this.description1 = description1;
+    public void setcreditDescription(String creditDescription) {
+        this.creditDescription = creditDescription;
     }
 
     public String getBookDate() {

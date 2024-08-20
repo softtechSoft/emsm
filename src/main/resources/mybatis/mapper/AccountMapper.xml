@@ -10,20 +10,20 @@
             jd.uid,
             jd.bookDate,
             jd.lineNumber,
-            jd.accountTitleID,
-            jd.accountTitleID1,
-            a.name as accountTitleName,
-            a.name as accountTitleName1,
-            jd.description,
-            jd.description1,
-            jd.cdTaxationKbn,
-            jd.cdTaxationKbn1,
-            jd.cdCTaxPriceKbn,
-            jd.cdCTaxPriceKbn1,
-            jd.transValue,
-            jd.transValue1
+            jd.debitAccountTitleID,
+            jd.creditAccountTitleID,
+            a.name as debitAccountTitleName,
+            a.name as creditAccountTitleName,
+            jd.debitDescription,
+            jd.creditDescription,
+            jd.debitcdTaxationKbn,
+            jd.creditcdTaxationKbn,
+            jd.debitcdCTaxPriceKbn,
+            jd.creditcdCTaxPriceKbn,
+            jd.debitTransValue,
+            jd.creditTransValue
         FROM TblJournalDetail jd
-        LEFT JOIN TblAccount a ON jd.accountTitleID = a.uid
+        LEFT JOIN TblAccount a ON jd.debitAccountTitleID = a.uid
     </select>
 
     <!-- Insert a new journal detail -->
@@ -32,30 +32,30 @@
             uid,
             bookDate,
             lineNumber,
-            accountTitleID,
-            description,
-            cdTaxationKbn,
-            cdCTaxPriceKbn,
-            transValue,
-            accountTitleID1,
-            description1,
-            cdTaxationKbn1,
-            cdCTaxPriceKbn1,
-            transValue1
+            debitAccountTitleID,
+            debitDescription,
+            debitcdTaxationKbn,
+            debitcdCTaxPriceKbn,
+            debitTransValue,
+            creditAccountTitleID,
+            creditDescription,
+            creditcdTaxationKbn,
+            creditcdCTaxPriceKbn,
+            creditTransValue
         ) VALUES (
             #{uid},
             #{bookDate},
             #{lineNumber},
-            #{accountTitleID},
-            #{description},
-            #{cdTaxationKbn},
-            #{cdCTaxPriceKbn},
-            #{transValue},
-            #{accountTitleID1},
-            #{description1},
-            #{cdTaxationKbn1},
-            #{cdCTaxPriceKbn1},
-            #{transValue1}
+            #{debitAccountTitleID},
+            #{debitDescription},
+            #{debitcdTaxationKbn},
+            #{debitcdCTaxPriceKbn},
+            #{debitTransValue},
+            #{creditAccountTitleID},
+            #{creditDescription},
+            #{creditcdTaxationKbn},
+            #{creditcdCTaxPriceKbn},
+            #{creditTransValue}
         )
     </insert>
 
@@ -91,9 +91,9 @@
     </update>
 
     <!-- Select the maximum line number from TblJournalDetail -->
-    <select id="getMaxLineNumber" resultType="int">
-        SELECT MAX(lineNumber) FROM TblJournalDetail
-    </select>
+   <select id="getMaxLineNumber" resultType="int">
+    SELECT COALESCE(MAX(lineNumber), 0) FROM TblJournalDetail
+</select>
 
     <!-- Select all accounts from TblAccount -->
     <select id="getAllAccounts" resultType="com.softtech.entity.TblAccount">

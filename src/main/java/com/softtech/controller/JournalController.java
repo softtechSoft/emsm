@@ -33,7 +33,8 @@ public class JournalController {
     public String showJournalPage(Model model) {
         model.addAttribute("resultSet", journalDetailService.getAllJournalDetails());
         model.addAttribute("accounts", journalDetailService.getAllAccounts());
-        model.addAttribute("maxLineNumber", journalDetailService.getMaxLineNumber());
+        int maxLineNumber = journalDetailService.getMaxLineNumber();
+        model.addAttribute("maxLineNumber", maxLineNumber);
         return "showJournals";
     }
 
@@ -48,6 +49,9 @@ public class JournalController {
             errorlst.addAll(result.getFieldErrors());
             // エラーをモデルに追加
             model.addAttribute("errors", errorlst);
+            model.addAttribute("resultSet", journalDetailService.getAllJournalDetails());
+            model.addAttribute("accounts", journalDetailService.getAllAccounts());
+            model.addAttribute("maxLineNumber", journalDetailService.getMaxLineNumber());
             return "showJournals";
         }
 
@@ -61,7 +65,7 @@ public class JournalController {
 
         // ジャーナルの登録
         journalDetailService.addJournal(tblJournalDetailFormBean);
-        model.addAttribute("successMessage", "データが正常に保存されました。");
+        model.addAttribute("successMessage", "データが保存完了です。");
         model.addAttribute("resultSet", journalDetailService.getAllJournalDetails());
         model.addAttribute("accounts", journalDetailService.getAllAccounts());
         model.addAttribute("maxLineNumber", journalDetailService.getMaxLineNumber());

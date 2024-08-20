@@ -8,7 +8,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>仕訳データ表示</title>
+    <title></title>
     <style>
         table {
             width: 100%;
@@ -23,6 +23,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 150px;
         }
         th[colspan] {
             border-bottom: none;
@@ -40,10 +41,358 @@
             color: red;
             margin-bottom: 10px;
         }
+        input[type="text"], select {
+    width: 100%; /* Đảm bảo rằng input và select chiếm toàn bộ chiều rộng của ô */
+    box-sizing: border-box; /* Bao gồm padding và border vào chiều rộng tổng thể */
+}
     </style>
+   <script>
+    // Define the accounts array in JavaScript scope
+    const accounts = [
+        <c:forEach var="account" items="${accounts}">
+            { uid: "${account.uid}", name: "${account.name}" },
+        </c:forEach>
+    ];
+
+
+    // 新しい行をテーブルに追加する関数
+  function addRow() {
+	  var table = document.querySelector('table tbody');
+      var newUid = 'UID' + new Date().getTime(); // Tạo UID mới
+      var newLineNumber = table.querySelectorAll('tr').length + 1; // Tăng giá trị lineNumber
+      var debitAccountSelectId = 'debitAccountTitleID' + newLineNumber;
+      var debitAccountNameSpanId = 'debitAccountTitleName' + newLineNumber;
+      var creditAccountSelectId = 'creditAccountTitleID' + newLineNumber;
+      var creditAccountNameSpanId = 'creditAccountTitleName' + newLineNumber;
+      var debitTaxationKbnId = 'debitcdTaxationKbn' + newLineNumber;
+      var debitCTaxPriceKbnId = 'debitcdCTaxPriceKbn' + newLineNumber;
+      var creditTaxationKbnId = 'creditcdTaxationKbn' + newLineNumber;
+      var creditCTaxPriceKbnId = 'creditcdCTaxPriceKbn' + newLineNumber;
+
+      var newRow = document.createElement('tr');
+
+      newRow.innerHTML = `
+          <td>` + newLineNumber + `</td>
+          <td>
+              <select id="` + debitAccountSelectId + `" name="debitAccountTitleID" onchange="updateAccountTitleName(this, '` + debitAccountNameSpanId + `')">
+                  <option value="">選択</option>
+                  <c:forEach var="account" items="${accounts}">
+                      <option value="${account.uid}">${account.uid}</option>
+                  </c:forEach>
+              </select>
+          </td>
+          <td>
+              <span id="` + debitAccountNameSpanId + `"></span>
+          </td>
+          <td>
+              <select id="` + debitTaxationKbnId + `" name="debitcdTaxationKbn" onchange="updateTaxProcessingOptions(this, '` + debitCTaxPriceKbnId + `')">
+                  <option value="">選択</option>
+                  <option value="0">非課税</option>
+                  <option value="1">課税</option>
+              </select>
+          </td>
+          <td>
+              <select id="` + debitCTaxPriceKbnId + `" name="debitcdCTaxPriceKbn">
+                  <option value="">選択</option>
+                  <option value="0">対象外</option>
+                  <option value="1">外税</option>
+                  <option value="2">内税</option>
+              </select>
+          </td>
+          <td><input type="text" name="debitTransValue" oninput="formatNumberWithCommas(this)"></td>
+          <td><input type="text" name="debitDescription"></td>
+          <td>
+              <select id="` + creditAccountSelectId + `" name="creditAccountTitleID" onchange="updateAccountTitleName(this, '` + creditAccountNameSpanId + `')">
+                  <option value="">選択</option>
+                  <c:forEach var="account" items="${accounts}">
+                      <option value="${account.uid}">${account.uid}</option>
+                  </c:forEach>
+              </select>
+          </td>
+          <td>
+              <span id="` + creditAccountNameSpanId + `"></span>
+          </td>
+          <td>
+              <select id="` + creditTaxationKbnId + `" name="creditcdTaxationKbn" onchange="updateTaxProcessingOptions(this, '` + creditCTaxPriceKbnId + `')">
+                  <option value="">選択</option>
+                  <option value="0">非課税</option>
+                  <option value="1">課税</option>
+              </select>
+          </td>
+          <td>
+              <select id="` + creditCTaxPriceKbnId + `" name="creditcdCTaxPriceKbn">
+                  <option value="">選択</option>
+                  <option value="0">対象外</option>
+                  <option value="1">外税</option>
+                  <option value="2">内税</option>
+              </select>
+          </td>
+          <td><input type="text" name="creditTransValue" oninput="formatNumberWithCommas(this)"></td>
+          <td><input type="text" name="creditDescription"></td>
+          <input type="hidden" name="uid" value="` + newUid + `">
+          <input type="hidden" name="lineNumber" value="` + newLineNumber + `">
+      `;
+
+      table.appendChild(newRow);
+  }
+  function validateTotals() {
+	    let debitTotal = 0;
+	    let creditTotal = 0;
+
+	    // Tính tổng số tiền bên Debit
+	    document.querySelectorAll('tr').forEach(row => {
+	        const debitAmountInput = row.querySelector('input[name="debitTransValue"]');
+	        if (debitAmountInput) {
+	            const amount = parseFloat(debitAmountInput.value.replace(/,/g, '')) || 0;
+	            debitTotal += amount;
+	        }
+	    });
+
+	    // Tính tổng số tiền bên Credit
+	    document.querySelectorAll('tr').forEach(row => {
+	        const creditAmountInput = row.querySelector('input[name="creditTransValue"]');
+	        if (creditAmountInput) {
+	            const amount = parseFloat(creditAmountInput.value.replace(/,/g, '')) || 0;
+	            creditTotal += amount;
+	        }
+	    });
+
+	    // So sánh tổng số tiền Debit và Credit
+	    if (debitTotal !== creditTotal) {
+	        alert("エラー: 借方と貸方の金額が一致しません。");
+	        return false; // Ngăn gửi biểu mẫu nếu không khớp
+	    }
+	    return true; // Cho phép gửi biểu mẫu nếu khớp
+	}
+//Hàm để kiểm tra các trường hợp dữ liệu
+// Hàm để kiểm tra các trường hợp dữ liệu
+// Hàm để kiểm tra các trường hợp dữ liệu
+function validateForm() {
+    let isValid = true;
+    let errors = [];
+
+    // Kiểm tra trường Debit thông tin
+    let debitAccountTitleID = document.querySelector('select[name="debitAccountTitleID"]').value;
+    let debitTaxationKbn = document.querySelector('select[name="debitcdTaxationKbn"]').value;
+    let debitTransValue = document.querySelector('input[name="debitTransValue"]').value;
+
+    // Kiểm tra trường Credit thông tin
+    let creditAccountTitleID = document.querySelector('select[name="creditAccountTitleID"]').value;
+    let creditTaxationKbn = document.querySelector('select[name="creditcdTaxationKbn"]').value;
+    let creditTransValue = document.querySelector('input[name="creditTransValue"]').value;
+
+    // Kiểm tra nếu không có cả Debit và Credit thông tin
+    if (!debitAccountTitleID && !creditAccountTitleID) {
+        errors.push("借方または貸方の勘定科目番号のいずれかは必須です");
+        isValid = false;
+    }
+
+    // Kiểm tra trường Debit nếu có thông tin
+    if (debitAccountTitleID) {
+        if (!debitTaxationKbn) {
+            errors.push("借方の課税区分は必須です");
+            isValid = false;
+        }
+        if (!debitTransValue) {
+            errors.push("借方の金額は必須です");
+            isValid = false;
+        } else {
+            if (!debitTransValue.match(/^[0-9]+$/)) {
+                errors.push("借方の金額に数字のみを入力してください。");
+                isValid = false;
+            }
+            if (debitTransValue.length > 10) {
+                errors.push("借方の金額は10文字以下に入力してください。");
+                isValid = false;
+            }
+            if (parseFloat(debitTransValue) < 1) {
+                errors.push("借方金額は1以上でなければなりません");
+                isValid = false;
+            }
+        }
+    }
+
+    // Kiểm tra trường Credit nếu có thông tin
+    if (creditAccountTitleID) {
+        if (!creditTaxationKbn) {
+            errors.push("貸方の課税区分は必須です");
+            isValid = false;
+        }
+        if (!creditTransValue) {
+            errors.push("貸方の金額は必須です");
+            isValid = false;
+        } else {
+            if (!creditTransValue.match(/^[0-9]+$/)) {
+                errors.push("貸方の金額に数字のみを入力してください。");
+                isValid = false;
+            }
+            if (creditTransValue.length > 10) {
+                errors.push("貸方の金額は10文字以下に入力してください。");
+                isValid = false;
+            }
+            if (parseFloat(creditTransValue) < 1) {
+                errors.push("貸方金額は1以上でなければなりません");
+                isValid = false;
+            }
+        }
+    }
+
+    // Hiển thị lỗi nếu có
+    if (!isValid) {
+        alert(errors.join('\n'));
+        return false;
+    }
+
+    return true;
+}
+
+
+function formatNumberWithCommas(input) {
+    // Xóa dấu phẩy cũ
+    let value = input.value.replace(/,/g, '');
+
+    // Thêm dấu phẩy mới
+    input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+function removeCommasFromInputs() {
+    document.querySelectorAll('input[name="debitTransValue"], input[name="creditTransValue"]').forEach(input => {
+        input.value = input.value.replace(/,/g, '');
+    });
+}
+
+function doRegist() {
+
+	removeCommasFromInputs();
+    if (validateForm() && validateTotals()) {
+         // Loại bỏ dấu phẩy trước khi gửi biểu mẫu
+
+        document.getElementById('theForm').submit(); // Gửi biểu mẫu nếu hợp lệ
+    }
+}
+  function setDateLimits() {
+      const today = new Date();
+      const startOfYear = new Date(today.getFullYear(), 3, 2);
+      const endOfYear = new Date(today.getFullYear() + 1, 2, 32);
+      const startDateStr = startOfYear.toISOString().split('T')[0];
+      const endDateStr = endOfYear.toISOString().split('T')[0];
+
+      var dateInput = document.getElementById('systemDate');
+      dateInput.setAttribute('min', startDateStr);
+      dateInput.setAttribute('max', endDateStr);
+
+      // Remove readonly to allow the date picker to work
+      dateInput.removeAttribute('readonly');
+  }
+
+  // Prevent manual input in the date field
+  function preventManualInput(e) {
+      e.preventDefault();
+  }
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+      setDateLimits(); // Set date limits
+      document.getElementById('systemDate').valueAsDate = new Date(); // Set default date
+      updateDenpyoNumber(); // Update document number
+
+      // Prevent manual input
+      const dateInput = document.getElementById('systemDate');
+      dateInput.addEventListener('keydown', preventManualInput);
+      dateInput.addEventListener('paste', preventManualInput);
+      dateInput.addEventListener('input', preventManualInput);
+  });
+  function updateTaxProcessingOptions(taxationSelect, taxProcessingSelectId) {
+	    var selectedValue = taxationSelect.value;
+	    var taxProcessingSelect = document.getElementById(taxProcessingSelectId);
+
+	    if (selectedValue === '0') { // Non-taxable selected
+	        taxProcessingSelect.value = "0"; // Set tax processing to "Not applicable"
+	        taxProcessingSelect.disabled = true; // Disable tax processing
+	        document.getElementById('debitcdCTaxPriceKbn').value = taxProcessingSelect.value;
+	    } else { // Taxable selected
+	        taxProcessingSelect.disabled = false; // Enable tax processing
+	    }
+
+	    // Ensure the value is set correctly to be sent to the server
+
+	}
+
+  function updateCreditTaxProcessingOptions(taxationSelect) {
+	    var selectedValue = taxationSelect.value;
+	    var taxProcessingSelect = document.querySelector('select[name="creditcdCTaxPriceKbn"]');
+
+	    if (selectedValue === '0') { // Non-taxable selected
+	        taxProcessingSelect.value = "0"; // Set tax processing to "Not applicable"
+	        taxProcessingSelect.disabled = true; // Disable tax processing
+
+
+	    } else { // Taxable selected
+	        taxProcessingSelect.disabled = false; // Enable tax processing
+	    }
+
+	    // Ensure the value is set correctly to be sent to the server
+
+	}
+
+    // 更新する関数
+   function updateAccountTitleName(selectElement, spanId) {
+        var uid = selectElement.value;
+        var span = document.getElementById(spanId);
+        var account = accounts.find(a => a.uid === uid);
+        if (account) {
+            span.textContent = account.name;
+        } else {
+            span.textContent = '';
+        }
+    }
+
+    // 数字をフォーマットする関数
+    // Hàm để định dạng số với dấu phẩy
+
+
+    // 伝票番号を更新する関数
+    function updateDenpyoNumber() {
+        const date = document.getElementById('systemDate').value;
+        const formattedDate = date.replace(/-/g, '');
+        const denpyoNumber = 'TS' + formattedDate;
+        document.getElementById('denpyoNumber').value = denpyoNumber;
+    }
+
+
+    function cancelAction() {
+
+        var userConfirmed = confirm("キャンセルしたいですか。");
+
+        if (userConfirmed) {
+            window.location.href = 'http://dev.it-softtech.com/emsm/journals'; //
+        }
+    }
+
+
+
+    // HTML ドキュメントが完全に読み込まれたときのイベント
+    document.addEventListener('DOMContentLoaded', (event) => {
+        setDateLimits(); // Thiết lập giới hạn ngày
+        document.getElementById('systemDate').valueAsDate = new Date(); // Đặt ngày hệ thống
+        updateDenpyoNumber(); // Cập nhật số chứng từ
+    });
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Hiển thị thông báo thành công nếu có
+        const successMessage = '${successMessage}';
+        if (successMessage) {
+            alert(successMessage);
+        }
+    });
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var debitTaxationSelect = document.getElementById('debitcdTaxationKbn');
+        updateTaxProcessingOptions(debitTaxationSelect, 'debitcdCTaxPriceKbn');
+
+        var creditTaxationSelect = document.getElementById('creditcdTaxationKbn');
+        updateTaxProcessingOptions(creditTaxationSelect, 'creditcdCTaxPriceKbn');
+    });
+</script>
 </head>
 <body>
-<h1 style="text-align: center;">仕訳データ表示</h1>
+<h1 style="text-align: center;">一般会計</h1>
 
 <!-- Hiển thị thông báo lỗi nếu có -->
 <p style="color: red;">
@@ -55,10 +404,10 @@
 <form:form name="theform" id="theForm"  action="journals/add" method="post" modelAttribute="tblJournalDetailFormBean">
     <div>
         <label for="systemDate">日付: </label>
-        <input type="date" id="systemDate" name="bookDate" onchange="updateDenpyoNumber()">
+        <input type="date" id="systemDate" name="bookDate" onchange="updateDenpyoNumber()" readonly>
         <br>
         <label for="denpyoNumber">伝票番号: </label>
-        <input type="text" id="denpyoNumber" name="journalSerialNumber">
+        <input type="text" id="denpyoNumber" name="journalSerialNumber" readonly  style="width: 150px;">
     </div>
     <table>
         <thead>
@@ -91,60 +440,60 @@
         <c:forEach var="row" items="${resultSet}">
             <tr>
                 <td>${row.lineNumber}</td>
-                <td>${row.accountTitleID}</td>
-                <td>${row.accountTitleName}</td>
+                <td>${row.debitAccountTitleID}</td>
+                <td>${row.debitAccountTitleName}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${row.cdTaxationKbn == 0}">
+                        <c:when test="${row.debitcdTaxationKbn == 0}">
                             非課税
                         </c:when>
-                        <c:when test="${row.cdTaxationKbn == 1}">
+                        <c:when test="${row.debitcdTaxationKbn == 1}">
                             課税
                         </c:when>
                     </c:choose>
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${row.cdCTaxPriceKbn == 0}">
+                        <c:when test="${row.debitcdCTaxPriceKbn == 0}">
                             対象外
                         </c:when>
-                        <c:when test="${row.cdCTaxPriceKbn == 1}">
+                        <c:when test="${row.debitcdCTaxPriceKbn == 1}">
                             外税
                         </c:when>
-                        <c:when test="${row.cdCTaxPriceKbn == 2}">
+                        <c:when test="${row.debitcdCTaxPriceKbn == 2}">
                             内税
                         </c:when>
                     </c:choose>
                 </td>
-                <td>${row.transValue}</td>
-                <td>${row.description}</td>
-                <td>${row.accountTitleID1}</td>
-                <td>${row.accountTitleName1}</td>
+                <td>${row.debitTransValue}</td>
+                <td>${row.debitDescription}</td>
+                <td>${row.creditAccountTitleID}</td>
+                <td>${row.creditAccountTitleName}</td>
                 <td>
                     <c:choose>
-                        <c:when test="${row.cdTaxationKbn == 0}">
+                        <c:when test="${row.creditcdTaxationKbn == 0}">
                             非課税
                         </c:when>
-                        <c:when test="${row.cdTaxationKbn == 1}">
+                        <c:when test="${row.creditcdTaxationKbn == 1}">
                             課税
                         </c:when>
                     </c:choose>
                 </td>
                 <td>
                     <c:choose>
-                        <c:when test="${row.cdCTaxPriceKbn == 0}">
+                        <c:when test="${row.creditcdCTaxPriceKbn == 0}">
                             対象外
                         </c:when>
-                        <c:when test="${row.cdCTaxPriceKbn == 1}">
+                        <c:when test="${row.creditcdCTaxPriceKbn == 1}">
                             外税
                         </c:when>
-                        <c:when test="${row.cdCTaxPriceKbn == 2}">
+                        <c:when test="${row.creditcdCTaxPriceKbn == 2}">
                             内税
                         </c:when>
                     </c:choose>
                 </td>
-                <td>${row.transValue1}</td>
-                <td>${row.description1}</td>
+                <td>${row.creditTransValue}</td>
+                <td>${row.creditDescription}</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -167,152 +516,6 @@
     </div>
 </form:form>
 
-<script>
-    // Define the accounts array in JavaScript scope
-    const accounts = [
-        <c:forEach var="account" items="${accounts}">
-            { uid: "${account.uid}", name: "${account.name}" },
-        </c:forEach>
-    ];
 
-    // 新しい行をテーブルに追加する関数
-  function addRow() {
-    var table = document.querySelector('table tbody');
-    var newUid = 'UID' + new Date().getTime(); // Generate a new UID
-    var newLineNumber = table.querySelectorAll('tr').length + 1; // Increment lineNumber
-
-    var newRow = document.createElement('tr');
-
-    newRow.innerHTML = `
-        <td>` + newLineNumber + `</td>
-        <td>
-            <select name="accountTitleID" onchange="updateAccountTitleName(this, 'accountTitleName')">
-                <option value="">選択してください</option>
-                <c:forEach var="account" items="${accounts}">
-                    <option value="${account.uid}">${account.uid}</option>
-                </c:forEach>
-            </select>
-        </td>
-        <td>
-            <span id="accountTitleName"></span>
-        </td>
-        <td>
-            <select name="cdTaxationKbn">
-            	<option value="">選択してください</option>
-                <option value="0">非課税</option>
-                <option value="1">課税</option>
-            </select>
-        </td>
-        <td>
-            <select name="cdCTaxPriceKbn">
-            	<option value="">選択してください</option>
-                <option value="0">対象外</option>
-                <option value="1">外税</option>
-                <option value="2">内税</option>
-            </select>
-        </td>
-        <td><input type="text" name="transValue"></td>
-        <td><input type="text" name="description"></td>
-        <td>
-            <select name="accountTitleID1" onchange="updateAccountTitleName(this, 'accountTitleName1')">
-                <option value="">選択してください</option>
-                <c:forEach var="account" items="${accounts}">
-                    <option value="${account.uid}">${account.uid}</option>
-                </c:forEach>
-            </select>
-        </td>
-        <td>
-            <span id="accountTitleName1"></span>
-        </td>
-        <td>
-            <select name="cdTaxationKbn1">
-            	<option value="">選択してください</option>
-                <option value="0">非課税</option>
-                <option value="1">課税</option>
-            </select>
-        </td>
-        <td>
-            <select name="cdCTaxPriceKbn1">
-            	<option value="">選択してください</option>
-                <option value="0">対象外</option>
-                <option value="1">外税</option>
-                <option value="2">内税</option>
-            </select>
-        </td>
-        <td><input type="text" name="transValue1"></td>
-        <td><input type="text" name="description1"></td>
-        <input type="hidden" name="uid" value="` + newUid + `">
-        <input type="hidden" name="lineNumber" value="` + newLineNumber + `">
-    `;
-
-    table.appendChild(newRow);
-}
-  function doRegist() {
-	    document.getElementById('theForm').submit();
-	}
-  function setDateLimits() {
-	    const today = new Date();
-	    const startOfYear = new Date(today.getFullYear(), 0, 2);
-	    const endOfYear = new Date(today.getFullYear(), 11, 32);
-	    const startDateStr = startOfYear.toISOString().split('T')[0];
-	    const endDateStr = endOfYear.toISOString().split('T')[0];
-
-	    document.getElementById('systemDate').setAttribute('min', startDateStr);
-	    document.getElementById('systemDate').setAttribute('max', endDateStr);
-	}
-
-
-    // 更新する関数
-    function updateAccountTitleName(selectElement, spanId) {
-        const selectedValue = selectElement.value;
-        const account = accounts.find(account => account.uid === selectedValue);
-        if (account) {
-            document.getElementById(spanId).innerText = account.name;
-        } else {
-            document.getElementById(spanId).innerText = '';
-        }
-    }
-
-    // 数字をフォーマットする関数
-    function formatNumber(input) {
-        let value = input.value.replace(/,/g, '');
-        if (!isNaN(value) && value !== "") {
-            input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        }
-    }
-
-    // 伝票番号を更新する関数
-    function updateDenpyoNumber() {
-        const date = document.getElementById('systemDate').value;
-        const formattedDate = date.replace(/-/g, '');
-        const denpyoNumber = 'TS' + formattedDate;
-        document.getElementById('denpyoNumber').value = denpyoNumber;
-    }
-
-
-    function cancelAction() {
-
-        var userConfirmed = confirm("キャンセルしたいですか。");
-
-        if (userConfirmed) {
-            window.location.href = 'http://dev.it-softtech.com/emsm/journals'; //
-        }
-    }
-
-
-    // HTML ドキュメントが完全に読み込まれたときのイベント
-    document.addEventListener('DOMContentLoaded', (event) => {
-        setDateLimits(); // Thiết lập giới hạn ngày
-        document.getElementById('systemDate').valueAsDate = new Date(); // Đặt ngày hệ thống
-        updateDenpyoNumber(); // Cập nhật số chứng từ
-    });
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // Hiển thị thông báo thành công nếu có
-        const successMessage = '${successMessage}';
-        if (successMessage) {
-            alert(successMessage);
-        }
-    });
-</script>
 </body>
 </html>

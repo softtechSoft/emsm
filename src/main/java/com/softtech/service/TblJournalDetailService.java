@@ -25,7 +25,7 @@ public interface TblJournalDetailService {
     // すべての勘定科目を取得するメソッド
     List<TblAccount> getAllAccounts();
     int getNextLineNumber();
-    public void addJournalDetail(TblJournalDetail journalDetail);
+
     @Transactional
     public void addJournal(TblJournalDetailFormBean tblJournalDetailFormBean) ;
     int getMaxLineNumber();
