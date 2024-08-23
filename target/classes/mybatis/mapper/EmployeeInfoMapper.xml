@@ -25,18 +25,21 @@
 
 	<select id="getEmployee" resultType="com.softtech.entity.Employee">
 		select employeeName, employeeID
-		FROM employee;
+		FROM employee
+		where status = 0
 	</select>
 
 	<select id="getEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
 		select *
 		from employee
 		where employeeID = #{employeeID}
+
 	</select>
 
 	<select id="getEmployeeAll" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">
 		select *
 		FROM employee
+		where status = 0
 	</select>
 
 	<select id="getUpdateEmployeeByEmployeeID" parameterType="string" resultType="com.softtech.entity.EmployeeInfoEntity">

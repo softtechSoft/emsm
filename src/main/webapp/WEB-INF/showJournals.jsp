@@ -131,6 +131,8 @@
           <td><input type="text" name="creditDescription"></td>
           <input type="hidden" name="uid" value="` + newUid + `">
           <input type="hidden" name="lineNumber" value="` + newLineNumber + `">
+          <input type="hidden" name="debitcdCTaxPriceKbn" id="debitcdCTaxPriceKbn" />
+        <input type="hidden" name="creditcdCTaxPriceKbn" id="creditcdCTaxPriceKbn" />
       `;
 
       table.appendChild(newRow);
@@ -139,7 +141,7 @@
 	    let debitTotal = 0;
 	    let creditTotal = 0;
 
-	    // Tính tổng số tiền bên Debit
+
 	    document.querySelectorAll('tr').forEach(row => {
 	        const debitAmountInput = row.querySelector('input[name="debitTransValue"]');
 	        if (debitAmountInput) {
@@ -148,7 +150,7 @@
 	        }
 	    });
 
-	    // Tính tổng số tiền bên Credit
+
 	    document.querySelectorAll('tr').forEach(row => {
 	        const creditAmountInput = row.querySelector('input[name="creditTransValue"]');
 	        if (creditAmountInput) {
@@ -157,37 +159,35 @@
 	        }
 	    });
 
-	    // So sánh tổng số tiền Debit và Credit
+	    // 金額を比べる
 	    if (debitTotal !== creditTotal) {
 	        alert("エラー: 借方と貸方の金額が一致しません。");
-	        return false; // Ngăn gửi biểu mẫu nếu không khớp
+	        return false;
 	    }
-	    return true; // Cho phép gửi biểu mẫu nếu khớp
+	    return true;
 	}
-//Hàm để kiểm tra các trường hợp dữ liệu
-// Hàm để kiểm tra các trường hợp dữ liệu
-// Hàm để kiểm tra các trường hợp dữ liệu
+//エラーチェック
 function validateForm() {
     let isValid = true;
     let errors = [];
 
-    // Kiểm tra trường Debit thông tin
+
     let debitAccountTitleID = document.querySelector('select[name="debitAccountTitleID"]').value;
     let debitTaxationKbn = document.querySelector('select[name="debitcdTaxationKbn"]').value;
     let debitTransValue = document.querySelector('input[name="debitTransValue"]').value;
 
-    // Kiểm tra trường Credit thông tin
+
     let creditAccountTitleID = document.querySelector('select[name="creditAccountTitleID"]').value;
     let creditTaxationKbn = document.querySelector('select[name="creditcdTaxationKbn"]').value;
     let creditTransValue = document.querySelector('input[name="creditTransValue"]').value;
 
-    // Kiểm tra nếu không có cả Debit và Credit thông tin
+
     if (!debitAccountTitleID && !creditAccountTitleID) {
         errors.push("借方または貸方の勘定科目番号のいずれかは必須です");
         isValid = false;
     }
 
-    // Kiểm tra trường Debit nếu có thông tin
+
     if (debitAccountTitleID) {
         if (!debitTaxationKbn) {
             errors.push("借方の課税区分は必須です");
@@ -212,7 +212,7 @@ function validateForm() {
         }
     }
 
-    // Kiểm tra trường Credit nếu có thông tin
+
     if (creditAccountTitleID) {
         if (!creditTaxationKbn) {
             errors.push("貸方の課税区分は必須です");
@@ -237,7 +237,7 @@ function validateForm() {
         }
     }
 
-    // Hiển thị lỗi nếu có
+
     if (!isValid) {
         alert(errors.join('\n'));
         return false;
@@ -248,10 +248,10 @@ function validateForm() {
 
 
 function formatNumberWithCommas(input) {
-    // Xóa dấu phẩy cũ
+
     let value = input.value.replace(/,/g, '');
 
-    // Thêm dấu phẩy mới
+
     input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 function removeCommasFromInputs() {
@@ -264,9 +264,9 @@ function doRegist() {
 
 	removeCommasFromInputs();
     if (validateForm() && validateTotals()) {
-         // Loại bỏ dấu phẩy trước khi gửi biểu mẫu
 
-        document.getElementById('theForm').submit(); // Gửi biểu mẫu nếu hợp lệ
+
+        document.getElementById('theForm').submit();
     }
 }
   function setDateLimits() {
@@ -280,19 +280,19 @@ function doRegist() {
       dateInput.setAttribute('min', startDateStr);
       dateInput.setAttribute('max', endDateStr);
 
-      // Remove readonly to allow the date picker to work
+
       dateInput.removeAttribute('readonly');
   }
 
-  // Prevent manual input in the date field
+
   function preventManualInput(e) {
       e.preventDefault();
   }
 
   document.addEventListener('DOMContentLoaded', (event) => {
-      setDateLimits(); // Set date limits
-      document.getElementById('systemDate').valueAsDate = new Date(); // Set default date
-      updateDenpyoNumber(); // Update document number
+      setDateLimits();
+      document.getElementById('systemDate').valueAsDate = new Date();
+      updateDenpyoNumber();
 
       // Prevent manual input
       const dateInput = document.getElementById('systemDate');
@@ -304,34 +304,20 @@ function doRegist() {
 	    var selectedValue = taxationSelect.value;
 	    var taxProcessingSelect = document.getElementById(taxProcessingSelectId);
 
-	    if (selectedValue === '0') { // Non-taxable selected
-	        taxProcessingSelect.value = "0"; // Set tax processing to "Not applicable"
-	        taxProcessingSelect.disabled = true; // Disable tax processing
-	        document.getElementById('debitcdCTaxPriceKbn').value = taxProcessingSelect.value;
+	    if (selectedValue === '0') {
+	        taxProcessingSelect.value = "0";
+	        taxProcessingSelect.disabled = true;
+	        document.getElementById('debitcdCTaxPriceKbn').value = "0";
+	        document.getElementById('creditcdCTaxPriceKbn').value = "0";
 	    } else { // Taxable selected
-	        taxProcessingSelect.disabled = false; // Enable tax processing
+	        taxProcessingSelect.disabled = false;
 	    }
 
-	    // Ensure the value is set correctly to be sent to the server
+
 
 	}
 
-  function updateCreditTaxProcessingOptions(taxationSelect) {
-	    var selectedValue = taxationSelect.value;
-	    var taxProcessingSelect = document.querySelector('select[name="creditcdCTaxPriceKbn"]');
 
-	    if (selectedValue === '0') { // Non-taxable selected
-	        taxProcessingSelect.value = "0"; // Set tax processing to "Not applicable"
-	        taxProcessingSelect.disabled = true; // Disable tax processing
-
-
-	    } else { // Taxable selected
-	        taxProcessingSelect.disabled = false; // Enable tax processing
-	    }
-
-	    // Ensure the value is set correctly to be sent to the server
-
-	}
 
     // 更新する関数
    function updateAccountTitleName(selectElement, spanId) {
@@ -346,7 +332,6 @@ function doRegist() {
     }
 
     // 数字をフォーマットする関数
-    // Hàm để định dạng số với dấu phẩy
 
 
     // 伝票番号を更新する関数
@@ -376,7 +361,14 @@ function doRegist() {
         updateDenpyoNumber(); // Cập nhật số chứng từ
     });
     document.addEventListener('DOMContentLoaded', (event) => {
-        // Hiển thị thông báo thành công nếu có
+
+        const reloadPage = '${reloadPage}';
+        if (reloadPage === 'true') {
+
+            window.location.href = 'http://dev.it-softtech.com/emsm/journals';
+        }
+
+
         const successMessage = '${successMessage}';
         if (successMessage) {
             alert(successMessage);
@@ -384,10 +376,10 @@ function doRegist() {
     });
     document.addEventListener('DOMContentLoaded', (event) => {
         var debitTaxationSelect = document.getElementById('debitcdTaxationKbn');
-        updateTaxProcessingOptions(debitTaxationSelect, 'debitcdCTaxPriceKbn');
+        updateTaxProcessingOptions(debitTaxationSelect, '` + debitCTaxPriceKbnId + `');
 
-        var creditTaxationSelect = document.getElementById('creditcdTaxationKbn');
-        updateTaxProcessingOptions(creditTaxationSelect, 'creditcdCTaxPriceKbn');
+        var creditTaxationSelect = document.getElementById('creditcdTaxationKbn');s
+        updateTaxProcessingOptions(creditTaxationSelect, '` + creditCTaxPriceKbnId + `');
     });
 </script>
 </head>

@@ -171,8 +171,8 @@ public class EmployeeInfoController {
 		 }
 	        // ユーザー情報の登録
 		 employeeInfoService.update(employeeInfoFormBean);
-
-		 return "employeeInfoList";
+		 model.addAttribute("successMessage", "更新完了");
+		 return "infoEdit";
 
 	}
 

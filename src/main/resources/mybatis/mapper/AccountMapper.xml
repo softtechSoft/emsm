@@ -4,62 +4,47 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softtech.mappers.TblJournalDetailMapper">
 
-    <!-- Select all journal details -->
+    <!-- すべての仕訳明細を選択する -->
     <select id="getAllJournalDetails" resultType="com.softtech.entity.TblJournalDetail">
-        SELECT
-            jd.uid,
-            jd.bookDate,
-            jd.lineNumber,
-            jd.debitAccountTitleID,
-            jd.creditAccountTitleID,
-            a.name as debitAccountTitleName,
-            a.name as creditAccountTitleName,
-            jd.debitDescription,
-            jd.creditDescription,
-            jd.debitcdTaxationKbn,
-            jd.creditcdTaxationKbn,
-            jd.debitcdCTaxPriceKbn,
-            jd.creditcdCTaxPriceKbn,
-            jd.debitTransValue,
-            jd.creditTransValue
-        FROM TblJournalDetail jd
-        LEFT JOIN TblAccount a ON jd.debitAccountTitleID = a.uid
+      SELECT
+    jd.uid,
+    jd.bookDate,
+    jd.lineNumber,
+    jd.debitAccountTitleID,
+    jd.creditAccountTitleID,
+    CASE WHEN jd.debitAccountTitleID IS NOT NULL THEN a.name ELSE '' END AS debitAccountTitleName,
+    CASE WHEN jd.creditAccountTitleID IS NOT NULL THEN b.name ELSE '' END AS creditAccountTitleName,
+    jd.debitDescription,
+    jd.creditDescription,
+    jd.debitcdTaxationKbn,
+    jd.creditcdTaxationKbn,
+    jd.debitcdCTaxPriceKbn,
+    jd.creditcdCTaxPriceKbn,
+    jd.debitTransValue,
+    jd.creditTransValue
+FROM TblJournalDetail jd
+LEFT JOIN TblAccount a ON jd.debitAccountTitleID = a.uid
+LEFT JOIN TblAccount b ON jd.creditAccountTitleID = b.uid;
     </select>
 
-    <!-- Insert a new journal detail -->
-    <insert id="insertJournalDetail" parameterType="com.softtech.entity.TblJournalDetail">
-        INSERT INTO TblJournalDetail (
-            uid,
-            bookDate,
-            lineNumber,
-            debitAccountTitleID,
-            debitDescription,
-            debitcdTaxationKbn,
-            debitcdCTaxPriceKbn,
-            debitTransValue,
-            creditAccountTitleID,
-            creditDescription,
-            creditcdTaxationKbn,
-            creditcdCTaxPriceKbn,
-            creditTransValue
-        ) VALUES (
-            #{uid},
-            #{bookDate},
-            #{lineNumber},
-            #{debitAccountTitleID},
-            #{debitDescription},
-            #{debitcdTaxationKbn},
-            #{debitcdCTaxPriceKbn},
-            #{debitTransValue},
-            #{creditAccountTitleID},
-            #{creditDescription},
-            #{creditcdTaxationKbn},
-            #{creditcdCTaxPriceKbn},
-            #{creditTransValue}
-        )
-    </insert>
+    <!-- 新しい仕訳明細を挿入する -->
+    <insert id="insertJournalDetail" parameterType="java.util.List">
+    INSERT INTO TblJournalDetail (
+        uid, projectID, bookDate, lineNumber, debitAccountTitleID, debitDescription,
+        creditDescription, debitcdTaxationKbn, creditcdTaxationKbn, debitcdCTaxPriceKbn,
+        creditcdCTaxPriceKbn, debitTransValue, creditTransValue, creditAccountTitleID,
+        creditAccountTitleName
+    ) VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.uid}, #{item.projectID}, #{item.bookDate}, #{item.lineNumber}, #{item.debitAccountTitleID},
+        #{item.debitDescription}, #{item.creditDescription}, #{item.debitcdTaxationKbn},
+        #{item.creditcdTaxationKbn}, #{item.debitcdCTaxPriceKbn}, #{item.creditcdCTaxPriceKbn},
+        #{item.debitTransValue}, #{item.creditTransValue}, #{item.creditAccountTitleID},
+        #{item.creditAccountTitleName})
+    </foreach>
+</insert>
 
-    <!-- Update an existing journal detail -->
+    <!-- 既存の仕訳明細を更新する -->
     <update id="updateJournalDetail" parameterType="com.softtech.entity.TblJournalDetail">
         UPDATE TblJournalDetail SET
             divisionID = #{divisionID},
@@ -90,12 +75,12 @@
         WHERE uid = #{uid}
     </update>
 
-    <!-- Select the maximum line number from TblJournalDetail -->
+    <!-- TblJournalDetail から最大行番号を選択する -->
    <select id="getMaxLineNumber" resultType="int">
     SELECT COALESCE(MAX(lineNumber), 0) FROM TblJournalDetail
 </select>
 
-    <!-- Select all accounts from TblAccount -->
+    <!-- TblAccount からすべてのアカウントを選択する -->
     <select id="getAllAccounts" resultType="com.softtech.entity.TblAccount">
         SELECT * FROM TblAccount
     </select>

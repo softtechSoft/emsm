@@ -216,5 +216,10 @@
 	<input type="button" id="update" name="update" value="更新"  onclick="doRegist()"  />
 
 </form:form>
+<c:if test="${not empty successMessage}">
+    <div style="color: red;">
+        <p><c:out value="${successMessage}" /></p>
+    </div>
+</c:if>
 </body>
 </html>

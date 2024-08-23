@@ -130,7 +130,7 @@ public class SalaryListController {
 	                    lst.add(new FieldError("", "", rtn.getYear() + "の【対象年度】年度の厚生保険料のデータが足りません。"));
 	                    break;
 	                case "3":
-	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象社員】の【対象年月】勤怠情報のデータが足りません。"));
+	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象社員】勤怠情報のデータが足りません。"));
 	                    break;
 	                case "4":
 	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象月】の交通情報のデータが足りません。"));

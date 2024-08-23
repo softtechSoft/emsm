@@ -14,7 +14,7 @@ public interface TblJournalDetailMapper {
     List<TblJournalDetail> getAllJournalDetails();
 
     // 新しいジャーナル詳細を挿入する
-    void insertJournalDetail(TblJournalDetail journalDetail);
+    void insertJournalDetail(List<TblJournalDetail> journalDetail);
 
     // ジャーナル詳細を更新する
     void updateJournalDetail(TblJournalDetail journalDetail);

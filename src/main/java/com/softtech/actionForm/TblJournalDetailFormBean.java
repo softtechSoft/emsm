@@ -61,6 +61,7 @@ public class TblJournalDetailFormBean {
 
     // ゲッターとセッター
 
+
     public String getLineNumber() {
         return lineNumber;
     }

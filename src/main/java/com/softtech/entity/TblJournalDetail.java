@@ -1,6 +1,6 @@
 package com.softtech.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class TblJournalDetail {
 	  // UID
@@ -10,7 +10,7 @@ public class TblJournalDetail {
     private String projectID;
 
     // 会計日付
-    private Date bookDate;
+    private Timestamp bookDate;
 
     // 行番号
     private String lineNumber;
@@ -64,11 +64,11 @@ public class TblJournalDetail {
 		this.projectID = projectID;
 	}
 
-	public Date getBookDate() {
+	public Timestamp getBookDate() {
 		return bookDate;
 	}
-	public void setBookDate(Date bookDate) {
-		this.bookDate = bookDate;
+	public void setBookDate(Timestamp bookDateTimestamp) {
+		this.bookDate = bookDateTimestamp;
 	}
 
 	public String getLineNumber() {
