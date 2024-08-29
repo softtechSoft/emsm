@@ -42,6 +42,7 @@ public class EmployeeInfoEntity {
 	//検索と全量検索区別用のFlg
 	private String selectFlg;
 	private String EmployeeIDAll;
+	private String department;
 
 
 	public String getEmployeeID() {
@@ -220,6 +221,14 @@ public class EmployeeInfoEntity {
 //		// TODO 自動生成されたメソッド・スタブ
 //		return null;
 //	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
 
 
 }

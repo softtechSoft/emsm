@@ -22,61 +22,105 @@
 	</script>
 	<%--自動計算 --%>
 	<script>
-    window.addEventListener('DOMContentLoaded', function() {
-        document.getElementById("birthday").addEventListener("change", calculateAge);
-        document.getElementById("joinedDate").addEventListener("change", calculateJoinedAge);
+	window.addEventListener('DOMContentLoaded', function() {
+	    document.getElementById("birthday").addEventListener("change", function() {
+	        if (validateDate("birthday")) {
+	            calculateAge();
+	        }
+	    });
+	    document.getElementById("joinedDate").addEventListener("change", function() {
+	        if (validateDate("joinedDate")) {
+	            calculateJoinedAge();
+	        }
+	    });
 
-        calculateAge();
-        calculateJoinedAge();
-    });
+	    calculateAge();
+	    calculateJoinedAge();
+	});
 
-    function calculateAge() {
-        var birthday = document.getElementById("birthday").value;
-        if (birthday) {
-            // YYYYMMDD形式の入力をYYYY-MM-DD形式に変換
-            birthday = birthday.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-            var birthDate = new Date(birthday);
-            var today = new Date();
-            var age = today.getFullYear() - birthDate.getFullYear();
-            var monthDiff = today.getMonth() - birthDate.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            document.getElementById("calculatedAge").innerText = age;
-            document.getElementById("age").value = age;
-        }
-    }
+	function validateDate(inputId) {
+	    var dateInput = document.getElementById(inputId);
+	    var dateValue = dateInput.value;
 
-    function calculateJoinedAge() {
-        var joinedDate = document.getElementById("joinedDate").value;
-        if (joinedDate) {
-            // YYYYMMDD形式の入力をYYYY-MM-DD形式に変換
-            joinedDate = joinedDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-            var joinDate = new Date(joinedDate);
-            var today = new Date();
-            var joinedAge = today.getFullYear() - joinDate.getFullYear();
-            var monthDiff = today.getMonth() - joinDate.getMonth();
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < joinDate.getDate())) {
-                joinedAge--;
-            }
-            document.getElementById("calculatedJoinedAge").innerText = joinedAge;
-            document.getElementById("joinedTime").value = joinedAge;
-        }
-    }
+	    if (!/^\d{4}\d{2}\d{2}$/.test(dateValue)) {
+	        alert("正しい年月日入力してください(YYYYMMDD).");
+	        dateInput.focus();
+	        return false;
+	    }
+
+	    var formattedDate = dateValue.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+	    var dateObj = new Date(formattedDate);
+
+	    if (isNaN(dateObj.getTime())) {
+	        alert("年月日が間違ってます。もう一入力してください。");
+	        dateInput.focus();
+	        return false;
+	    }
+
+	    // Update the value to formatted date for further processing
+	    dateInput.value = dateValue;
+
+	    return true;
+	}
+
+	function calculateAge() {
+	    var birthday = document.getElementById("birthday").value;
+	    if (birthday) {
+	        birthday = birthday.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+	        var birthDate = new Date(birthday);
+	        var today = new Date();
+	        var age = today.getFullYear() - birthDate.getFullYear();
+	        var monthDiff = today.getMonth() - birthDate.getMonth();
+	        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+	            age--;
+	        }
+	        document.getElementById("calculatedAge").innerText = age;
+	        document.getElementById("age").value = age;
+	    } else {
+	        document.getElementById("calculatedAge").innerText = "";
+	        document.getElementById("age").value = "";
+	    }
+	}
+
+	function calculateJoinedAge() {
+	    var joinedDate = document.getElementById("joinedDate").value;
+	    if (joinedDate) {
+	        joinedDate = joinedDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+	        var joinDate = new Date(joinedDate);
+	        var today = new Date();
+	        var joinedAge = today.getFullYear() - joinDate.getFullYear();
+	        var monthDiff = today.getMonth() - joinDate.getMonth();
+	        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < joinDate.getDate())) {
+	            joinedAge--;
+	        }
+	        document.getElementById("calculatedJoinedAge").innerText = joinedAge;
+	        document.getElementById("joinedTime").value = joinedAge;
+	    } else {
+	        document.getElementById("calculatedJoinedAge").innerText = "";
+	        document.getElementById("joinedTime").value = "";
+	    }
+	}
 </script>
 </head>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="employeeInfoFormBean"
            action="employeeInfoEdit1">
 <h2>社員情報更新</h2>
+<c:if test="${not empty successMessage}">
+    <div style="color: red;">
+        <p><c:out value="${successMessage}" /></p>
+    </div>
+</c:if>
  <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
-            <spring:message message="${error}"/>
+            <spring:message message="${error}"/><br>
         </c:forEach>
     </p>
+
 <input type="hidden" id="age" name="age" value="${employeeInfoFormBean.age}" />
 <input type="hidden" id="joinedTime" name="joinedTime" value="${employeeInfoFormBean.joinedTime}" />
 <input type="hidden" id="employeeID" name="employeeID" value="${employeeInfoFormBean.employeeID}"/>
+<input type="hidden" id="updateDate" name="updateDate" value="${employeeInfoFormBean.updateDate}"/>
 
 
 <table border="1" >
@@ -110,6 +154,26 @@
                value="1" /> 離職
     </td>
 	</tr>
+	<tr style = "background-color:#dcfeeb">
+		<td width ="150px">部門</td>
+		<td width="250px">
+        <input type="radio" name="department"
+               <c:choose>
+                   <c:when test="${empty employeeInfoFormBean.department || employeeInfoFormBean.department == '0'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="1" />1部
+        <input type="radio" name="department"
+               <c:choose>
+                   <c:when test="${employeeInfoFormBean.department == '1'}">
+                       checked
+                   </c:when>
+               </c:choose>
+               value="2" /> 2部
+    </td>
+	</tr>
+
 
 	<tr style = "background-color:#dcfeeb">
 		 <td width="150px">性別</td>
@@ -158,7 +222,7 @@
 	</tr>
 	<tr style="background-color:#dcfeeb">
     	<td width="150px">生年月日</td>
-    	<td width="250px"><input type="text" id="birthday" name="birthday" value="${employeeInfoFormBean.birthday}" style="width: 98%;" /></td>
+    	<td width="250px"><input type="text" id="birthday" name="birthday" value="${employeeInfoFormBean.birthday}" maxlength="8" style="width: 98%;" /></td>
 	</tr>
 	<tr style="background-color:#dcfeeb">
     	<td width="150px">年齢</td>
@@ -166,7 +230,7 @@
 	</tr>
 	<tr style="background-color:#dcfeeb">
     	<td width="150px">入社年月日</td>
-    	<td width="250px"><input type="text" id="joinedDate" name="joinedDate" value="${employeeInfoFormBean.joinedDate}" style="width: 98%;" /></td>
+    	<td width="250px"><input type="text" id="joinedDate" name="joinedDate" value="${employeeInfoFormBean.joinedDate}" maxlength="8" style="width: 98%;" /></td>
 	</tr>
 	<tr style="background-color:#dcfeeb">
     	<td width="150px">社齢</td>
@@ -175,7 +239,7 @@
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">郵便番号</td>
 		<td width="250px"><input type="text" id="postCode" name="postCode"
-                                     value="${employeeInfoFormBean.postCode}" style="width: 98%;"/></td>
+                                     value="${employeeInfoFormBean.postCode}" maxlength="7"  style="width: 98%;"/></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">住所</td>
@@ -185,7 +249,7 @@
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">電話番号</td>
 		<td width="250px"><input type="text" id="phoneNumber" name="phoneNumber"
-                                     value="${employeeInfoFormBean.phoneNumber}"style="width: 98%;" /></td>
+                                     value="${employeeInfoFormBean.phoneNumber}" maxlength="10"  style="width: 98%;" /></td>
 
 	</tr>
 	<tr style = "background-color:#dcfeeb">
@@ -201,25 +265,18 @@
                                      value="${employeeInfoFormBean.mailAdress}"style="width: 98%;" /></td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
-		<td width ="150px">パスワード</td>
-		<td width="250px"><input type="text" id="password" name="password"
-                                     value="${employeeInfoFormBean.password}"style="width: 98%;" /></td>
-	</tr>
-	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">個人番号</td>
 		<td width="250px"><input type="text" id="personNumber" name="personNumber"
                                      value="${employeeInfoFormBean.personNumber}"style="width: 98%;" /></td>
+
 	</tr>
+
 
 
 	</table>
 	<input type="button" id="update" name="update" value="更新"  onclick="doRegist()"  />
 
 </form:form>
-<c:if test="${not empty successMessage}">
-    <div style="color: red;">
-        <p><c:out value="${successMessage}" /></p>
-    </div>
-</c:if>
+
 </body>
 </html>

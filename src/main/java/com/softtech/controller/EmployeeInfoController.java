@@ -146,7 +146,7 @@ public class EmployeeInfoController {
 				  errorlst.addAll(result.getFieldErrors());
 				  //エラーメッセージ
 				  model.addAttribute("errors", errorlst);
-
+				  model.addAttribute("employeeInfoFormBean", employeeInfoFormBean);
 			     return "employeeInfoEdit";
 		 }
 	        // ユーザー情報の登録

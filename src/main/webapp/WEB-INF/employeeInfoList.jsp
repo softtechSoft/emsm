@@ -81,20 +81,79 @@
 	<c:forEach items="${list}" var="employeeInfoList" varStatus="status">
     <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
         <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
-        <td><c:out value="${empty employeeInfoList.employeeID ? '' : employeeInfoList.employeeID}"/></td>
-        <td><c:out value="${empty employeeInfoList.employeeName ? '' : employeeInfoList.employeeName}"/></td>
-        <td><c:out value="${empty employeeInfoList.sex ? '' : employeeInfoList.sex}"/></td>
-        <td><c:out value="${empty employeeInfoList.epType ? '' : (employeeInfoList.epType == '0' ? '正社員' : (employeeInfoList.epType == '1' ? '契約社員' : '個人事業'))}"/></td>
-        <td><c:out value="${empty employeeInfoList.birthday ? '' : employeeInfoList.birthday.substring(0, 4)}/${empty employeeInfoList.birthday ? '' : employeeInfoList.birthday.substring(4, 6)}/${empty employeeInfoList.birthday ? '' : employeeInfoList.birthday.substring(6)}" /></td>
-        <td><c:out value="${empty employeeInfoList.age ? '' : employeeInfoList.age}"/></td>
-        <td><c:out value="${empty employeeInfoList.joinedDate ? '' : employeeInfoList.joinedDate.substring(0, 4)}/${empty employeeInfoList.joinedDate ? '' : employeeInfoList.joinedDate.substring(4, 6)}/${empty employeeInfoList.joinedDate ? '' : employeeInfoList.joinedDate.substring(6)}"/></td>
-        <td><c:out value="${empty employeeInfoList.joinedTime ? '' : employeeInfoList.joinedTime}"/></td>
-        <td><c:out value="${empty employeeInfoList.postCode ? '' : employeeInfoList.postCode.substring(0, 3)}-${empty employeeInfoList.postCode ? '' : employeeInfoList.postCode.substring(3, 7)}"/></td>
-        <td><c:out value="${empty employeeInfoList.address ? '' : employeeInfoList.address}"/></td>
-        <td><c:out value="${empty employeeInfoList.phoneNumber ? '' : employeeInfoList.phoneNumber.substring(0, 3)}-${empty employeeInfoList.phoneNumber ? '' : employeeInfoList.phoneNumber.substring(3, 7)}-${empty employeeInfoList.phoneNumber ? '' : employeeInfoList.phoneNumber.substring(7, 10)}"/></td>
-        <td><c:out value="${empty employeeInfoList.authority ? '' : (employeeInfoList.authority == '0' ? '普通' : '管理者')}"/></td>
-        <td><c:out value="${empty employeeInfoList.mailAdress ? '' : employeeInfoList.mailAdress}"/></td>
-        <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('${empty employeeInfoList.employeeID ? '' : employeeInfoList.employeeID}');"/></td>
+       <td><c:out value="${empty employeeInfoList.employeeID ? '' : employeeInfoList.employeeID}"/></td>
+<td><c:out value="${empty employeeInfoList.employeeName ? '' : employeeInfoList.employeeName}"/></td>
+<td><c:out value="${empty employeeInfoList.sex ? '' : employeeInfoList.sex}"/></td>
+<td><c:out value="${empty employeeInfoList.epType ? '' : (employeeInfoList.epType == '0' ? '正社員' : (employeeInfoList.epType == '1' ? '契約社員' : '個人事業'))}"/></td>
+
+<td>
+    <c:choose>
+        <c:when test="${empty employeeInfoList.birthday}">
+            <c:out value=""/>
+        </c:when>
+        <c:otherwise>
+            <c:out value="${employeeInfoList.birthday.substring(0, 4)}"/>
+            /
+            <c:out value="${employeeInfoList.birthday.substring(4, 6)}"/>
+            /
+            <c:out value="${employeeInfoList.birthday.substring(6)}"/>
+        </c:otherwise>
+    </c:choose>
+</td>
+
+<td><c:out value="${empty employeeInfoList.age ? '' : employeeInfoList.age}"/></td>
+
+<td>
+    <c:choose>
+        <c:when test="${empty employeeInfoList.joinedDate}">
+            <c:out value=""/>
+        </c:when>
+        <c:otherwise>
+            <c:out value="${employeeInfoList.joinedDate.substring(0, 4)}"/>
+            /
+            <c:out value="${employeeInfoList.joinedDate.substring(4, 6)}"/>
+            /
+            <c:out value="${employeeInfoList.joinedDate.substring(6)}"/>
+        </c:otherwise>
+    </c:choose>
+</td>
+
+<td><c:out value="${empty employeeInfoList.joinedTime ? '' : employeeInfoList.joinedTime}"/></td>
+
+<td>
+    <c:choose>
+        <c:when test="${empty employeeInfoList.postCode}">
+            <c:out value=""/>
+        </c:when>
+        <c:otherwise>
+            <c:out value="${employeeInfoList.postCode.substring(0, 3)}"/>
+            -
+            <c:out value="${employeeInfoList.postCode.substring(3, 7)}"/>
+        </c:otherwise>
+    </c:choose>
+</td>
+
+<td><c:out value="${empty employeeInfoList.address ? '' : employeeInfoList.address}"/></td>
+
+<td>
+    <c:choose>
+        <c:when test="${empty employeeInfoList.phoneNumber}">
+            <c:out value=""/>
+        </c:when>
+        <c:otherwise>
+            <c:out value="${employeeInfoList.phoneNumber.substring(0, 3)}"/>
+            -
+            <c:out value="${employeeInfoList.phoneNumber.substring(3, 7)}"/>
+            -
+            <c:out value="${employeeInfoList.phoneNumber.substring(7, 10)}"/>
+        </c:otherwise>
+    </c:choose>
+</td>
+
+<td><c:out value="${empty employeeInfoList.authority ? '' : (employeeInfoList.authority == '0' ? '普通' : '管理者')}"/></td>
+<td><c:out value="${empty employeeInfoList.mailAdress ? '' : employeeInfoList.mailAdress}"/></td>
+<td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('${empty employeeInfoList.employeeID ? '' : employeeInfoList.employeeID}');"/></td>
+
     </tr>
 </c:forEach>
 </table>

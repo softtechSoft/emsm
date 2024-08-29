@@ -11,7 +11,9 @@
      	password,
      	mailAdress,
      	status,
-     	authority
+     	authority,
+     	epType,
+     	insertDate
     )
     values
     	(#{employeeID},
@@ -19,7 +21,9 @@
      	MD5(#{password}),
      	#{mailAdress},
      	#{status},
-     	#{authority}
+     	#{authority},
+     	#{epType},
+     	date_format(now(), '%Y%m%d')
     )
 </insert>
 
@@ -64,10 +68,10 @@
     	    phoneNumber = #{phoneNumber},
     	    authority = #{authority},
     	    mailAdress = #{mailAdress},
-    	    password = MD5(#{password}),
+
+    	    department = #{department},
     	    personNumber=#{personNumber},
-    	    insertDate = date_format(now(),'%Y%m%d'),
-    	    updateDate = date_format(now(),'%Y%m%d')
+			updateDate = date_format(now(),'%Y%m%d')
     	    where employeeID = #{employeeID}
 	</update>
 

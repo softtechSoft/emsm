@@ -25,8 +25,15 @@
             <spring:message message="${error}"/><br>
         </c:forEach>
     </p>
+     <c:if test="${not empty successMessage}">
+    <div style="color: red;">
+        <p><c:out value="${successMessage}" /></p>
+    </div>
+</c:if>
 	<input type="hidden" id="status" name="status" value="0"/>
 	<input type="hidden" id="authority" name="authority" value="0"/>
+	<input type="hidden" id="insertDate" name="insertDate" value="${employeeInfoFormBean.insertDate}"/>
+	<input type="hidden" id="epType" name="epType" value="${employeeInfoFormBean.epType}"/>
 
 
 <table border="1" >
@@ -50,7 +57,7 @@
 	</tr>
 	<tr style = "background-color:#f4f4f4">
 		<td width ="150px">初期パスワード</td>
-		<td  width ="250px"><input type="password" id="password" name="password"
+		<td  width ="250px"><input type="text" id="password"  maxlength="6" name="password"
                                      value="${employeeInfoFormBean.password}"   style="width: 98%;"/></td>
 	</tr>
 	<tr style = "background-color:#f4f4f4">
@@ -64,14 +71,11 @@
 
 
 
+
 	</table>
 	<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()"  />
 
 </form:form>
- <c:if test="${not empty successMessage}">
-    <div style="color: red;">
-        <p><c:out value="${successMessage}" /></p>
-    </div>
-</c:if>
+
 </body>
 </html>

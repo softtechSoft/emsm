@@ -103,9 +103,10 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
             employeeInfoFormBean.setAddress(employeeInfoEntity.getAddress());
             employeeInfoFormBean.setPhoneNumber(employeeInfoEntity.getPhoneNumber());
             employeeInfoFormBean.setAuthority(employeeInfoEntity.getAuthority());
-
+            employeeInfoFormBean.setPersonNumber(employeeInfoEntity.getPersonNumber());
             employeeInfoFormBean.setInsertDate(employeeInfoEntity.getInsertDate());
             employeeInfoFormBean.setUpdateDate(employeeInfoEntity.getUpdateDate());
+            employeeInfoFormBean.setDepartment(employeeInfoEntity.getDepartment());
         }
         return employeeInfoFormBean;
     }
@@ -124,6 +125,29 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
      employeeInfoEntity.setPassword(employeeInfoFormBean.getPassword());
      employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
      employeeInfoEntity.setAuthority(employeeInfoFormBean.getAuthority());
+
+     String employeeID = employeeInfoFormBean.getEmployeeID();
+     if (employeeID != null && !employeeID.isEmpty()) {
+         char firstChar = employeeID.charAt(0);
+         switch (firstChar) {
+             case 'E':
+                 employeeInfoEntity.setEpType("0");
+                 break;
+             case 'K':
+                 employeeInfoEntity.setEpType("1");
+                 break;
+             case 'P':
+                 employeeInfoEntity.setEpType("3");
+                 break;
+             case 'B':
+                 employeeInfoEntity.setEpType("9");
+                 break;
+             default:
+
+                 employeeInfoEntity.setEpType("0");
+                 break;
+         }
+     }
 		 return employeeInfoEntity;
    }
 	public void save(EmployeeInfoBean employeeInfoFormBean) {
@@ -152,6 +176,7 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setMailAdress(employeeInfoFormBean.getMailAdress());
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
          employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
+         employeeInfoEntity.setDepartment(employeeInfoFormBean.getDepartment());
          return employeeInfoEntity;
     }
 	 public void update(EmployeeInfoFormBean employeeInfoFormBean) {

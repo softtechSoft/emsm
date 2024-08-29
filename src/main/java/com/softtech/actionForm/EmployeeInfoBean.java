@@ -19,7 +19,7 @@ public class EmployeeInfoBean implements Serializable{
 	private String employeeName;
 	//パスワード
 	@NotBlank(message = "パスワードを入力してください。")
-	@Size(max = 6, message = "パスワードは6文字以下で入力してください。")
+
 	private String password;
 
 	//メール
@@ -28,14 +28,15 @@ public class EmployeeInfoBean implements Serializable{
     @Pattern(regexp = ".+@it-softtech\\.com$", message = "メールは'@it-softtech.com'で終わる必要があります。")
 	private String mailAdress;
 	//作成日
-	/* private String insertDate;
+	private String insertDate;
 	//更新日
 	private String updateDate;
-	*/
+
 	//更新と新規区別用のFlg
 	//ステータス0：在籍　１:離職
 	private String status;
 	private String authority;
+	private String epType;
 //	private String insertFlg;
 
 	//検索区別用のFlg
@@ -103,6 +104,30 @@ public class EmployeeInfoBean implements Serializable{
 
 	public void setSelectFlg(String selectFlg) {
 		this.selectFlg = selectFlg;
+	}
+
+	public String getInsertDate() {
+		return insertDate;
+	}
+
+	public void setInsertDate(String insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public String getEpType() {
+		return epType;
+	}
+
+	public void setEpType(String epType) {
+		this.epType = epType;
 	}
 
 }

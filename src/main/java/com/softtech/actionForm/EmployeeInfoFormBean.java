@@ -14,9 +14,7 @@ public class EmployeeInfoFormBean {
 	@Size(max = 50, message = "社員氏名は50文字以下で入力してください。")
 	private String employeeName;
 	//パスワード
-	@NotEmpty(message = "パスワードを入力してください。")
-	@Size(max = 6, message = "パスワードは6文字以下で入力してください。")
-	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "パスワードは英数字のみをを入力してください。")
+
 	private String password;
 	//ステータス
 	//ステータス0：在籍　１:離職
@@ -74,7 +72,7 @@ public class EmployeeInfoFormBean {
 	private String updateDate;
 	//更新と新規区別用のFlg
 	private String insertFlg;
-
+	private String department;
 	//検索区別用のFlg
 	private String selectFlg;
 
@@ -243,6 +241,14 @@ public class EmployeeInfoFormBean {
 
 	public void setSelectFlg(String selectFlg) {
 		this.selectFlg = selectFlg;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 }
