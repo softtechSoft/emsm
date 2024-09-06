@@ -137,10 +137,10 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
                  employeeInfoEntity.setEpType("1");
                  break;
              case 'P':
-                 employeeInfoEntity.setEpType("3");
+                 employeeInfoEntity.setEpType("2");
                  break;
              case 'B':
-                 employeeInfoEntity.setEpType("9");
+                 employeeInfoEntity.setEpType("1");
                  break;
              default:
 

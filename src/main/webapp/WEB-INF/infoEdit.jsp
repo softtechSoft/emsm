@@ -38,26 +38,57 @@
 	    calculateJoinedAge();
 	});
 
-	function validateDate(inputId) {
+	function validateDate(inputId, isBirthDate) {
 	    var dateInput = document.getElementById(inputId);
 	    var dateValue = dateInput.value;
 
+
 	    if (!/^\d{4}\d{2}\d{2}$/.test(dateValue)) {
 	        alert("正しい年月日入力してください(YYYYMMDD).");
+	        dateInput.value = "";
 	        dateInput.focus();
 	        return false;
 	    }
+
 
 	    var formattedDate = dateValue.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
 	    var dateObj = new Date(formattedDate);
 
+
 	    if (isNaN(dateObj.getTime())) {
 	        alert("年月日が間違ってます。もう一入力してください。");
+	        dateInput.value = "";
 	        dateInput.focus();
 	        return false;
 	    }
 
-	    // Update the value to formatted date for further processing
+	    var today = new Date();
+	    var minDate, maxDate;
+
+	    if (isBirthDate) {
+
+	        minDate = new Date(today.getFullYear() - 60, today.getMonth(), today.getDate());
+	        maxDate = new Date(today.getFullYear() - 20, today.getMonth(), today.getDate());
+
+	        if (dateObj < minDate || dateObj > maxDate) {
+	            alert("20歳から60歳までの生年月日を入力してください。");
+	            dateInput.value = "";
+	            dateInput.focus();
+	            return false;
+	        }
+	    } else {
+
+	        minDate = new Date(today.getFullYear() - 60, today.getMonth(), today.getDate());
+
+	        if (dateObj < minDate || dateObj > today) {
+	            alert("60年以内の年月日を入力してください。");
+	            dateInput.value = "";
+	            dateInput.focus();
+	            return false;
+	        }
+	    }
+
+
 	    dateInput.value = dateValue;
 
 	    return true;
@@ -197,28 +228,35 @@
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">タイプ</td>
 		<td width="250px">
-        <input type="radio" name="epType"
-               <c:choose>
-                   <c:when test="${empty employeeInfoFormBean.epType || employeeInfoFormBean.epType == '0'}">
-                       checked
-                   </c:when>
-               </c:choose>
-               value="0" /> 正社員
-        <input type="radio" name="epType"
-               <c:choose>
-                   <c:when test="${employeeInfoFormBean.epType == '1'}">
-                       checked
-                   </c:when>
-               </c:choose>
-               value="1" /> 契約社員
-         <input type="radio" name="epType"
-               <c:choose>
-                   <c:when test="${employeeInfoFormBean.epType == '2'}">
-                       checked
-                   </c:when>
-               </c:choose>
-               value="2" /> 個人事業
-    </td>
+    <input type="radio" name="epType"
+           <c:choose>
+               <c:when test="${empty employeeInfoFormBean.epType || employeeInfoFormBean.epType == '0'}">
+                   checked
+               </c:when>
+           </c:choose>
+           value="0" /> 正社員
+    <input type="radio" name="epType"
+           <c:choose>
+               <c:when test="${employeeInfoFormBean.epType == '1'}">
+                   checked
+               </c:when>
+           </c:choose>
+           value="1" /> 契約社員
+    <input type="radio" name="epType"
+           <c:choose>
+               <c:when test="${employeeInfoFormBean.epType == '2'}">
+                   checked
+               </c:when>
+           </c:choose>
+           value="2" /> 個人事業
+    <input type="radio" name="epType"
+           <c:choose>
+               <c:when test="${employeeInfoFormBean.epType == '9'}">
+                   checked
+               </c:when>
+           </c:choose>
+           value="9" /> その他
+</td>
 	</tr>
 	<tr style="background-color:#dcfeeb">
     	<td width="150px">生年月日</td>
@@ -266,7 +304,7 @@
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">個人番号</td>
-		<td width="250px"><input type="text" id="personNumber" name="personNumber"
+		<td width="250px"><input type="text" id="personNumber" name="personNumber" maxlength="12"
                                      value="${employeeInfoFormBean.personNumber}"style="width: 98%;" /></td>
 
 	</tr>
@@ -274,7 +312,7 @@
 
 
 	</table>
-	<input type="button" id="update" name="update" value="更新"  onclick="doRegist()"  />
+	<input type="button" id="update" name="update" value="更新" onclick="doRegist()" />
 
 </form:form>
 

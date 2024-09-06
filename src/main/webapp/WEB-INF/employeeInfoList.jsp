@@ -84,7 +84,13 @@
        <td><c:out value="${empty employeeInfoList.employeeID ? '' : employeeInfoList.employeeID}"/></td>
 <td><c:out value="${empty employeeInfoList.employeeName ? '' : employeeInfoList.employeeName}"/></td>
 <td><c:out value="${empty employeeInfoList.sex ? '' : employeeInfoList.sex}"/></td>
-<td><c:out value="${empty employeeInfoList.epType ? '' : (employeeInfoList.epType == '0' ? '正社員' : (employeeInfoList.epType == '1' ? '契約社員' : '個人事業'))}"/></td>
+<td>
+    <c:out value="${empty employeeInfoList.epType ? '' :
+        (employeeInfoList.epType == '0' ? '正社員' :
+        (employeeInfoList.epType == '1' ? '契約社員' :
+        (employeeInfoList.epType == '2' ? '個人事業' :
+        (employeeInfoList.epType == '9' ? '特別社員' : ''))))}"/>
+</td>
 
 <td>
     <c:choose>
@@ -92,11 +98,11 @@
             <c:out value=""/>
         </c:when>
         <c:otherwise>
-            <c:out value="${employeeInfoList.birthday.substring(0, 4)}"/>
-            /
-            <c:out value="${employeeInfoList.birthday.substring(4, 6)}"/>
-            /
-            <c:out value="${employeeInfoList.birthday.substring(6)}"/>
+            <span style="white-space: nowrap;">
+                <c:out value="${employeeInfoList.birthday.substring(0, 4)}"/>/
+                <c:out value="${employeeInfoList.birthday.substring(4, 6)}"/>/
+                <c:out value="${employeeInfoList.birthday.substring(6)}"/>
+            </span>
         </c:otherwise>
     </c:choose>
 </td>
@@ -109,11 +115,11 @@
             <c:out value=""/>
         </c:when>
         <c:otherwise>
-            <c:out value="${employeeInfoList.joinedDate.substring(0, 4)}"/>
-            /
-            <c:out value="${employeeInfoList.joinedDate.substring(4, 6)}"/>
-            /
-            <c:out value="${employeeInfoList.joinedDate.substring(6)}"/>
+            <span style="white-space: nowrap;">
+                <c:out value="${employeeInfoList.joinedDate.substring(0, 4)}"/>/
+                <c:out value="${employeeInfoList.joinedDate.substring(4, 6)}"/>/
+                <c:out value="${employeeInfoList.joinedDate.substring(6)}"/>
+            </span>
         </c:otherwise>
     </c:choose>
 </td>
@@ -126,9 +132,10 @@
             <c:out value=""/>
         </c:when>
         <c:otherwise>
-            <c:out value="${employeeInfoList.postCode.substring(0, 3)}"/>
-            -
-            <c:out value="${employeeInfoList.postCode.substring(3, 7)}"/>
+            <span style="white-space: nowrap;">
+                <c:out value="${employeeInfoList.postCode.substring(0, 3)}"/>-
+                <c:out value="${employeeInfoList.postCode.substring(3, 7)}"/>
+            </span>
         </c:otherwise>
     </c:choose>
 </td>
@@ -141,11 +148,11 @@
             <c:out value=""/>
         </c:when>
         <c:otherwise>
-            <c:out value="${employeeInfoList.phoneNumber.substring(0, 3)}"/>
-            -
-            <c:out value="${employeeInfoList.phoneNumber.substring(3, 7)}"/>
-            -
-            <c:out value="${employeeInfoList.phoneNumber.substring(7, 10)}"/>
+            <span style="white-space: nowrap;">
+                <c:out value="${employeeInfoList.phoneNumber.substring(0, 3)}"/>-
+                <c:out value="${employeeInfoList.phoneNumber.substring(3, 7)}"/>-
+                <c:out value="${employeeInfoList.phoneNumber.substring(7, 10)}"/>
+            </span>
         </c:otherwise>
     </c:choose>
 </td>

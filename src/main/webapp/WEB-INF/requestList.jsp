@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <title> ソフトテク株式会社-社内管理システム </title>
-    
+
     <script type="text/javascript">
         //dom
         document.addEventListener('DOMContentLoaded', function() {
@@ -17,14 +17,14 @@
             var btnGenerate = document.getElementById('btnGenerate');
             var btnDownload = document.getElementById('btnDownload');
             var btnConfirm = document.getElementById('btnConfirm');
-            
+
             //初期化ボタン状態
             btnSearch.disabled = true;
             btnGenerate.disabled = true;
             btnDownload.disabled = true;
             btnConfirm.disabled = false;
-            
-            
+
+
             //入力するボタン状態
             input.addEventListener('input', checkInputAndDisableButtons);
             function checkInputAndDisableButtons() {
@@ -42,12 +42,48 @@
             }
 
             //状況確認ボタンを押す及びその他のボタン状態
-            btnConfirm.addEventListener('click', function() {
-                var claimMonth = input.value.trim();
-                if (claimMonth) {
-                    checkDatabase(claimMonth);
-                }
-            });
+           btnConfirm.addEventListener('click', function() {
+        var claimMonth = input.value.trim();
+        if (claimMonth && validateClaimMonth()) {
+            checkDatabase(claimMonth);
+        }
+    });
+
+           function validateClaimMonth() {
+        	    var input = document.getElementById("claimMonth");
+        	    var inputValue = input.value.trim();
+        	    var currentYear = new Date().getFullYear();
+
+        	    // Check if the input length is 6 and if it is a number
+        	    if (inputValue.length !== 6 || isNaN(inputValue)) {
+        	        alert("請求月は6桁の数字で入力してください。");
+        	        input.value = ""; // Clear the input field
+        	        input.focus();
+        	        return false;
+        	    }
+
+        	    // Extract year and month from the input
+        	    var year = parseInt(inputValue.substring(0, 4));
+        	    var month = parseInt(inputValue.substring(4, 6));
+
+        	    // Check if the year is greater than the current year
+        	    if (year > currentYear) {
+        	        alert("年は今年以下にしてください。");
+        	        input.value = ""; // Clear the input field
+        	        input.focus();
+        	        return false;
+        	    }
+
+        	    // Check if the month is between 01 and 12
+        	    if (month < 1 || month > 12) {
+        	        alert("月は01から12までの間で入力してください。");
+        	        input.value = ""; // Clear the input field
+        	        input.focus();
+        	        return false;
+        	    }
+
+        	    return true;
+        	}
             function checkDatabase(claimMonth) {
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'checkDatabase', true);
@@ -96,13 +132,13 @@
             }
 
             //生成ボタンを押す及びその他のボタン状態
-            btnGenerate.addEventListener('click', function() {  
+            btnGenerate.addEventListener('click', function() {
                 var claimMonth = input.value.trim();
                 if (claimMonth) {
                     claimDatabase(claimMonth);
                 }
             });
-            function claimDatabase(claimMonth) {  
+            function claimDatabase(claimMonth) {
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'claimDatabase', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -119,7 +155,7 @@
                 };
                 // 送信するデータを構築する
                 var formData = 'claimMonth=' + encodeURIComponent(claimMonth);
-                xhr.send(formData); 
+                xhr.send(formData);
             }
 
             //ダウンロードボタンを押す及びその他のボタン状態
@@ -130,14 +166,14 @@
                 }
             });
             function downloadInvoice(claimMonth) {
-                
+
                 document.theForm.action="requestSeikyu";
                 alert("btnDownload clicked!");
                 document.theForm.submit();
             }
-            
-        
-            function downloadInvoice() {  
+
+
+            function downloadInvoice() {
             var claimMonth = input.value.trim();
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'downloadInvoice', true);
@@ -154,7 +190,7 @@
                 }
             };
             var formData = JSON.stringify({ claimMonth: claimMonth });
-            xhr.send(formData); 
+            xhr.send(formData);
         }
 
         function handleDownloadResponse(response) {
@@ -201,7 +237,7 @@
             function handleSearchResponse(response) {
                 var tableBody = document.getElementById('resultTableBody');
                     tableBody.innerHTML = ''; // 清空表格内容
-            
+
                     if (response.list && response.list.length > 0) {
                         response.list.forEach(function(item) {
                             var row = '<tr>';
@@ -217,7 +253,7 @@
                             row += '<td>' + item.lowerTime + '</td>';
                             row += '<td>' + item.upperTotal + '</td>';
                             row += '<td>' + item.lowerTotal + '</td>';
-                            
+                            row += '<td>' + item.transport + '</td>';
                             row += '<td>' + item.businessTrip + '</td>';
                             row += '<td>' + item.specialClaim + '</td>';
                             row += '<td>' + item.claimPrice + '</td>';
@@ -236,7 +272,7 @@
 
                 var messageDiv = document.getElementById('messageDiv');
                 messageDiv.innerHTML = ''; // メッセージをクリアする
-
+                var message = '';
                 if (response.isDataEmpty) {
                     var message = '稼働時間がないです。<br>社員氏名:<ul>';
                     response.employeeNames.forEach(function(name) {
@@ -249,12 +285,11 @@
                     btnDownload.disabled = true;
                     btnConfirm.disabled = !response.isDataEmpty;
                 } else {
-                    var message = '稼働時間データがあります。<br>';
-                    //
+                	message = '';
                     if (response.isClaimEmpty) {
-                        message += '請求データが空です。請求書を生成してください。';
+                        message += '稼働時間データがあります。<br> 請求データが空です。請求書を生成してください。';
                     } else {
-                        message += '請求データはあります。請求書を生成しないでください。';
+                        message += '請求データはあります';
                     }
                     messageDiv.innerHTML = message;
                     btnSearch.disabled = response.isClaimEmpty;
@@ -266,7 +301,7 @@
 
         });
     </script>
-     
+
 </head>
 <body>
 <h2>自動請求</h2>
@@ -276,11 +311,11 @@
 	<form:form name="theForm" id="theForm" method="post" modelAttribute="requestFromBean" action="requestSeikyu">
 	<div>
         <b>請求月:</b>
-        <input type="text" id="claimMonth" name="claimMonth" placeholder="請求月 (例: 202401)" value="${month}" />
+        <input type="text" id="claimMonth" name="claimMonth" placeholder="請求月 (例: 202401)" maxlength = "6" value="${month}" />
         <button type="button" id="btnConfirm" >状況確認</button>
         <button type="button" id="btnSearch" >検索</button>
         <button type="button" id="btnGenerate" >請求書生成</button>
-        <button type="button" id="btnDownload" >請求書ダウンロード</button>  
+        <button type="button" id="btnDownload" >請求書ダウンロード</button>
     </div>
     <!-- <input type="hidden" id="contractID" name="contractID" value=""/> -->
 	<input type="hidden" id="contractID" name="contractID" value=""/>
@@ -299,7 +334,7 @@
             <tr>
                 <th width="80">社員氏名</th>
                 <th width="80">客先</th>
-                <th width="80">契約ID</th> 
+                <th width="80">契約ID</th>
                 <th width="80">契約期間</th>
                 <th width="80">標準単価</th>
                 <th width="80">残業単価</th>
@@ -309,7 +344,7 @@
                 <th width="80">不足時間</th>
                 <th width="80">残業額</th>
                 <th width="80">控除額</th>
-                
+				<th width="80">交通費</th>
                 <th width="80">出張旅費</th>
                 <th width="80">特別請求</th>
                 <th width="80">税抜総額</th>
@@ -321,6 +356,6 @@
         </tbody>
     </table>
 	</form:form>
-    
+
 </body>
 </html>

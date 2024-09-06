@@ -129,12 +129,12 @@ public class SalaryListService {
 			 //残業時間
 			 //⑥勤怠情報を取得
 			 WorkInfo workInfo=salarylistMapper.getWkTime(employeeID,nextMonth);
-//			 if( workInfo == null ||  workInfo.getWkTime() == null || workInfo.getWkTime().length()==0) {
-//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-//				 autoSalaryRtn.setYearMonth(nextMonth);
-//				 autoSalaryRtn.setRtn("3");
-//				 return autoSalaryRtn;
-//			 }
+			 if( workInfo == null ) {
+				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+				 autoSalaryRtn.setYearMonth(nextMonth);
+				 autoSalaryRtn.setRtn("3");
+				 return autoSalaryRtn;
+			 }
 
 			 // 稼働時間-稼働時間TO
 			 float overTime= Float.parseFloat( workInfo.getWorkTime()) -   Float.parseFloat(baseSalaryInfoEntity.getWkPeriodTo());
@@ -192,7 +192,8 @@ public class SalaryListService {
 			 //厚生マスタを取る
 			 //⑤厚生保険料を取得
 			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
-			 if( welfarefeeInfoEntity == null ||  welfarefeeInfoEntity.getWfPension() == null || welfarefeeInfoEntity.getWfPension().length()==0) {
+//			 if( welfarefeeInfoEntity == null ||  welfarefeeInfoEntity.getWfPension() == null || welfarefeeInfoEntity.getWfPension().length()==0) {
+			 if( welfarefeeInfoEntity == null) {
 				 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
 				 autoSalaryRtn.setYear(year);
 				 autoSalaryRtn.setRtn("2");

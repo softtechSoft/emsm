@@ -5,13 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.softtech.entity.ClaimInfo;
 import com.softtech.entity.Employee;
 import com.softtech.entity.RequestEntity;
 
 @Mapper
 public interface RequestMapper {
-	
+
 	List<RequestEntity> getRequestData(String month);
 
 	/**
@@ -30,16 +29,25 @@ public interface RequestMapper {
 	 * @return
 	 */
 	String getLatestYearMonth();
-	
+
 	/**
 	 * @param claimInfo
 	 * @return
 	 */
-	int insertClaim(List<ClaimInfo> claimInfo);
+
 
 	/**
 	 * @return
 	 */
 	String getMaxClaimID();
-	
+
+	 int insertClaimInfo(RequestEntity claimInfo);
+
+	    /**
+	     * Retrieve data for a specific month and map it to ClaimInfo objects
+	     * @param month the month for which data is retrieved
+	     * @return a list of ClaimInfo objects
+	     */
+	    List<RequestEntity> getDataForMonth(String month);
+	    int countByMonthAndEmployee(Map<String, Object> params);
 }

@@ -23,7 +23,7 @@ public class RequestFromBean {
 	private String price;
 	//稼働時間
 	private String workTime;
-	
+
 //計算した
 	//超過単価
 	private String upperPrice;
@@ -47,14 +47,14 @@ public class RequestFromBean {
 	private String claimPrice;
 	//請求税込額
 	private String sum;
-	
+
 	//対象年月
 	@Size(min=2, max=6,message="対象月は数字6桁で入力してください。例：202104")
 	@Pattern(regexp = "^\\d{6}$", message = "対象月は数字で入力してください。例：202104")
 	@NotBlank(message="対象月を入力してください。例：202104")
 	private String claimMonth;
-	
-	
+
+
 	public String getEmployeeName() {
 		return employeeName;
 	}
@@ -273,5 +273,5 @@ public class RequestFromBean {
 		this.contractID = contractID;
 	}
 
-	
+
 }
