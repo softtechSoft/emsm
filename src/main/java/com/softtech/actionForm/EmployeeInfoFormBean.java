@@ -64,7 +64,7 @@ public class EmployeeInfoFormBean {
 	//作成日
 	//個人番号
 	@NotEmpty(message = "個人番号を入力してください。")
-	@Size(min = 12 , max = 12, message = "個人番号は半角１２桁数字で入力してください。")
+
 	@Pattern(regexp = "^[0-9]*$", message = "個人番号は半角数字で入力してください。")
 	private String personNumber;
 	private String insertDate;

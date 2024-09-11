@@ -205,9 +205,13 @@ public class RequestController {
         }
 
         String inputFilePath = "C:\\Users\\81809\\OneDrive\\Desktop\\YYYYMM請求書_ソフトテク.xlsx";
-        String excelOutputFilePath = "C:\\Users\\81809\\請求書_" + claimMonth + ".xlsx";
+        String excelOutputFilePath = "C:\\Users\\81809\\ "+ claimMonth +"_請求書 .xlsx";
         String pdfOutputFilePath = "C:\\Users\\81809\\ "+ claimMonth +"_請求書 .pdf";
         String templateSheetName = "sample";
+        int rowNumber = 1;
+        String startDate = claimMonth.substring(0, 4) + "/" + claimMonth.substring(4, 6) + "/01";
+        String endDate = claimMonth.substring(0, 4) + "/" + claimMonth.substring(4, 6) + "/"
+                + getLastDayOfMonth(Integer.parseInt(claimMonth.substring(4, 6)), Integer.parseInt(claimMonth.substring(0, 4)));
 
         try (FileInputStream fis = new FileInputStream(inputFilePath);
              XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
@@ -230,14 +234,15 @@ public class RequestController {
                     int newSheetIndex = workbook.getSheetIndex(sheet);
                     workbook.setSheetName(newSheetIndex, sheetName);
                     sheetRowMap.put(sheetName, 20);
-
+                    rowNumber = 1;
                     // 新しいシートにデータを書き込む
                     writeCellData(sheet, 3, 0, formattedDate);
                     writeCellData(sheet, 5, 0, companyNameWithSuffix);
                 }
 
                 int startRow = sheetRowMap.get(sheetName);
-
+                writeCellData(sheet, startRow, 0, String.valueOf(rowNumber));
+                writeCellData(sheet, startRow, 4, startDate + "～" + endDate);
                 String employeeName = rqDlEntity.getEmployeeName();
                 String price = rqDlEntity.getPrice();
                 int priceInt = Integer.parseInt(price.replace(",", ""));
@@ -254,18 +259,12 @@ public class RequestController {
                 	workTimeOut = lowerTime;
                 }
 
-             	String upperTotal = rqDlEntity.getUpperTotal();
-             	String lowerTotal = rqDlEntity.getLowerTotal();
-             	String specialPrice;
-             	if (!upperTotal.equals("0")) {
-             	    specialPrice = upperTotal;
-             	} else if (!lowerTotal.equals("0")) {
-             	    specialPrice = lowerTotal;
-             	} else {
-             	    specialPrice = "0";
-             	}
 
-             	writeCellData(sheet, startRow, 19, specialPrice);
+             	int specialPriceValue = sumInt - priceInt;
+
+
+
+             	writeCellData(sheet, startRow, 19, specialPriceValue);
                 writeCellData(sheet, startRow, 1, employeeName);
                 writeCellData(sheet, startRow, 22, sumInt);
                 writeCellData(sheet, startRow, 16, priceInt);
@@ -274,6 +273,7 @@ public class RequestController {
 
                 // 次の行の開始位置を更新
                 sheetRowMap.put(sheetName, startRow + 1);
+                rowNumber++;
             }
 
             // すべての数式を再計算
@@ -301,14 +301,26 @@ public class RequestController {
 
         return response;
     }
+	private String getLastDayOfMonth(int month, int year) {
+	    LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+	    LocalDate lastDayOfMonth = firstDayOfMonth.withDayOfMonth(firstDayOfMonth.lengthOfMonth());
+	    return String.format("%02d", lastDayOfMonth.getDayOfMonth());
+	}
 	private void convertExcelToPdf(String excelFilePath, String pdfFilePath) {
 	    try {
-
 	        Workbook workbook = new Workbook(excelFilePath);
 
 
 	        PdfSaveOptions pdfSaveOptions = new PdfSaveOptions();
 	        pdfSaveOptions.setOnePagePerSheet(true);
+
+
+	        if (workbook.getWorksheets().getCount() > 0) {
+	            Worksheet firstSheet = workbook.getWorksheets().get(0);
+
+	            firstSheet.setVisible(false);
+
+	        }
 
 
 	        for (int i = 0; i < workbook.getWorksheets().getCount(); i++) {
@@ -322,6 +334,7 @@ public class RequestController {
 	        e.printStackTrace();
 	    }
 	}
+
 
 
 	private String convertToEndOfMonth(String claimMonth) {

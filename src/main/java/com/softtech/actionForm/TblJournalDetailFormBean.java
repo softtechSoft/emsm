@@ -2,7 +2,7 @@ package com.softtech.actionForm;
 
 public class TblJournalDetailFormBean {
 
-    // 行番号
+	// 行番号
     private String lineNumber;
 
     // 勘定科目ID（必須）

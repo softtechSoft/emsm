@@ -42,14 +42,14 @@
             margin-bottom: 10px;
         }
         input[type="text"], select {
-    width: 100%; /* Đảm bảo rằng input và select chiếm toàn bộ chiều rộng của ô */
-    box-sizing: border-box; /* Bao gồm padding và border vào chiều rộng tổng thể */
+    width: 100%;
+    box-sizing: border-box;
 }
     </style>
    <script>
     // Define the accounts array in JavaScript scope
     const accounts = [
-        <c:forEach var="account" items="${accounts}">
+        <c:forEach var="account" items="${accounts1}">
             { uid: "${account.uid}", name: "${account.name}" },
         </c:forEach>
     ];
@@ -58,7 +58,7 @@
     // 新しい行をテーブルに追加する関数
   function addRow() {
 	  var table = document.querySelector('table tbody');
-      var newUid = 'UID' + new Date().getTime(); // Tạo UID mới
+
       var newLineNumber = table.querySelectorAll('tr').length + 1; // Tăng giá trị lineNumber
       var debitAccountSelectId = 'debitAccountTitleID' + newLineNumber;
       var debitAccountNameSpanId = 'debitAccountTitleName' + newLineNumber;
@@ -76,7 +76,7 @@
           <td>
               <select id="` + debitAccountSelectId + `" name="debitAccountTitleID" onchange="updateAccountTitleName(this, '` + debitAccountNameSpanId + `')">
                   <option value="">選択</option>
-                  <c:forEach var="account" items="${accounts}">
+                  <c:forEach var="account" items="${accounts1}">
                       <option value="${account.uid}">${account.uid}</option>
                   </c:forEach>
               </select>
@@ -104,7 +104,7 @@
           <td>
               <select id="` + creditAccountSelectId + `" name="creditAccountTitleID" onchange="updateAccountTitleName(this, '` + creditAccountNameSpanId + `')">
                   <option value="">選択</option>
-                  <c:forEach var="account" items="${accounts}">
+                  <c:forEach var="account" items="${accounts1}">
                       <option value="${account.uid}">${account.uid}</option>
                   </c:forEach>
               </select>
@@ -129,10 +129,11 @@
           </td>
           <td><input type="text" name="creditTransValue" oninput="formatNumberWithCommas(this)"></td>
           <td><input type="text" name="creditDescription"></td>
-          <input type="hidden" name="uid" value="` + newUid + `">
+          <input type="hidden" name="uid" value="">
           <input type="hidden" name="lineNumber" value="` + newLineNumber + `">
           <input type="hidden" name="debitcdCTaxPriceKbn" id="debitcdCTaxPriceKbn" />
         <input type="hidden" name="creditcdCTaxPriceKbn" id="creditcdCTaxPriceKbn" />
+        	<input type="hidden" name="cdDrCrKbn" id="cdDrCrKbn" />
       `;
 
       table.appendChild(newRow);
@@ -309,7 +310,7 @@ function doRegist() {
 	        taxProcessingSelect.disabled = true;
 	        document.getElementById('debitcdCTaxPriceKbn').value = "0";
 	        document.getElementById('creditcdCTaxPriceKbn').value = "0";
-	    } else { // Taxable selected
+	    } else {
 	        taxProcessingSelect.disabled = false;
 	    }
 
@@ -386,7 +387,6 @@ function doRegist() {
 <body>
 <h1 style="text-align: center;">一般会計</h1>
 
-<!-- Hiển thị thông báo lỗi nếu có -->
 <p style="color: red;">
         <c:forEach items="${errors}" var="error">
             <spring:message message="${error}"/><br>
@@ -433,7 +433,9 @@ function doRegist() {
             <tr>
                 <td>${row.lineNumber}</td>
                 <td>${row.debitAccountTitleID}</td>
-                <td>${row.debitAccountTitleName}</td>
+<td>
+    <c:out value="${accounts[row.debitAccountTitleID]}" />
+</td>
                 <td>
                     <c:choose>
                         <c:when test="${row.debitcdTaxationKbn == 0}">
@@ -460,7 +462,9 @@ function doRegist() {
                 <td>${row.debitTransValue}</td>
                 <td>${row.debitDescription}</td>
                 <td>${row.creditAccountTitleID}</td>
-                <td>${row.creditAccountTitleName}</td>
+<td>
+    <c:out value="${accounts[row.creditAccountTitleID]}" />
+</td>
                 <td>
                     <c:choose>
                         <c:when test="${row.creditcdTaxationKbn == 0}">

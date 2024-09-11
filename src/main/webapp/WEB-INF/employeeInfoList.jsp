@@ -89,7 +89,7 @@
         (employeeInfoList.epType == '0' ? '正社員' :
         (employeeInfoList.epType == '1' ? '契約社員' :
         (employeeInfoList.epType == '2' ? '個人事業' :
-        (employeeInfoList.epType == '9' ? '特別社員' : ''))))}"/>
+        (employeeInfoList.epType == '9' ? '契約社員' : ''))))}"/>
 </td>
 
 <td>

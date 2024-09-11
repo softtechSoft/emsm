@@ -81,7 +81,7 @@
 	        minDate = new Date(today.getFullYear() - 60, today.getMonth(), today.getDate());
 
 	        if (dateObj < minDate || dateObj > today) {
-	            alert("60年以内の年月日を入力してください。");
+	            alert("今日以前６０年以内に入力してください。");
 	            dateInput.value = "";
 	            dateInput.focus();
 	            return false;
@@ -190,14 +190,14 @@
 		<td width="250px">
         <input type="radio" name="department"
                <c:choose>
-                   <c:when test="${empty employeeInfoFormBean.department || employeeInfoFormBean.department == '0'}">
+                   <c:when test="${empty employeeInfoFormBean.department || employeeInfoFormBean.department == '1'}">
                        checked
                    </c:when>
                </c:choose>
                value="1" />1部
         <input type="radio" name="department"
                <c:choose>
-                   <c:when test="${employeeInfoFormBean.department == '1'}">
+                   <c:when test="${employeeInfoFormBean.department == '2'}">
                        checked
                    </c:when>
                </c:choose>

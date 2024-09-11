@@ -59,7 +59,7 @@ public class RequestServiceImpl {
 			requestDetail.setLowerPrice(String.format("%,d",lowerPrice));
 			//残業単価
 
-			int upperPrice = re.getLowerPrice();
+			int upperPrice = re.getUpperPrice();
 			requestDetail.setUpperPrice(String.format("%,d",upperPrice));
 			//過/不足時間
 			int upperTime=0;//初期化
@@ -337,7 +337,7 @@ public class RequestServiceImpl {
 			claimDownload.setLowerPrice(String.valueOf(lowerPrice));
 			//残業単価
 
-			int upperPrice = Integer.parseInt(requestFromBean.getLowerPrice().replace(",", ""));
+			int upperPrice = Integer.parseInt(requestFromBean.getUpperPrice().replace(",", ""));
 			claimDownload.setUpperPrice(String.valueOf( upperPrice));
 			//過/不足時間
 			int upperTime=0;//初期化

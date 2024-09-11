@@ -5,47 +5,37 @@
 <mapper namespace="com.softtech.mappers.TblJournalDetailMapper">
 
     <!-- すべての仕訳明細を選択する -->
-    <select id="getAllJournalDetails" resultType="com.softtech.entity.TblJournalDetail">
-      SELECT
-    jd.uid,
-    jd.bookDate,
-    jd.lineNumber,
-    jd.debitAccountTitleID,
-    jd.creditAccountTitleID,
-    CASE WHEN jd.debitAccountTitleID IS NOT NULL THEN a.name ELSE '' END AS debitAccountTitleName,
-    CASE WHEN jd.creditAccountTitleID IS NOT NULL THEN b.name ELSE '' END AS creditAccountTitleName,
-    jd.debitDescription,
-    jd.creditDescription,
-    jd.debitcdTaxationKbn,
-    jd.creditcdTaxationKbn,
-    jd.debitcdCTaxPriceKbn,
-    jd.creditcdCTaxPriceKbn,
-    jd.debitTransValue,
-    jd.creditTransValue
-FROM TblJournalDetail jd
-LEFT JOIN TblAccount a ON jd.debitAccountTitleID = a.uid
-LEFT JOIN TblAccount b ON jd.creditAccountTitleID = b.uid;
-    </select>
+ <select id="getAllJournalDetails" resultType="com.softtech.entity.TblJournalDetailEntity">
+    SELECT
+        jd.uid,
+        jd.bookDate,
+        jd.lineNumber,
+        jd.accountTitleID,
+        jd.cdDrCrKbn,
+        jd.description,
+        jd.cdTaxationKbn,
+        jd.cdCTaxPriceKbn,
+        jd.transValue,
+        a.name AS accountTitleName
+    FROM TblJournalDetail jd
+    LEFT JOIN TblAccount a ON jd.accountTitleID = a.uid
+</select>
 
     <!-- 新しい仕訳明細を挿入する -->
     <insert id="insertJournalDetail" parameterType="java.util.List">
     INSERT INTO TblJournalDetail (
-        uid, projectID, bookDate, lineNumber, debitAccountTitleID, debitDescription,
-        creditDescription, debitcdTaxationKbn, creditcdTaxationKbn, debitcdCTaxPriceKbn,
-        creditcdCTaxPriceKbn, debitTransValue, creditTransValue, creditAccountTitleID,
-        creditAccountTitleName
+        uid, projectID, bookDate, lineNumber, accountTitleID, description,
+        cdDrCrKbn, cdTaxationKbn, cdCTaxPriceKbn, transValue
     ) VALUES
     <foreach collection="list" item="item" separator=",">
-        (#{item.uid}, #{item.projectID}, #{item.bookDate}, #{item.lineNumber}, #{item.debitAccountTitleID},
-        #{item.debitDescription}, #{item.creditDescription}, #{item.debitcdTaxationKbn},
-        #{item.creditcdTaxationKbn}, #{item.debitcdCTaxPriceKbn}, #{item.creditcdCTaxPriceKbn},
-        #{item.debitTransValue}, #{item.creditTransValue}, #{item.creditAccountTitleID},
-        #{item.creditAccountTitleName})
+        (#{item.uid}, #{item.projectID}, #{item.bookDate}, #{item.lineNumber}, #{item.accountTitleID},
+        #{item.description}, #{item.cdDrCrKbn}, #{item.cdTaxationKbn}, #{item.cdCTaxPriceKbn},
+        #{item.transValue})
     </foreach>
 </insert>
 
     <!-- 既存の仕訳明細を更新する -->
-    <update id="updateJournalDetail" parameterType="com.softtech.entity.TblJournalDetail">
+    <update id="updateJournalDetail" parameterType="com.softtech.entity.TblJournalDetailEntity">
         UPDATE TblJournalDetail SET
             divisionID = #{divisionID},
             projectID = #{projectID},
@@ -84,5 +74,9 @@ LEFT JOIN TblAccount b ON jd.creditAccountTitleID = b.uid;
     <select id="getAllAccounts" resultType="com.softtech.entity.TblAccount">
         SELECT * FROM TblAccount
     </select>
+    <select id="getMaxUid" resultType="string">
+    SELECT MAX(uid) AS maxUid
+    FROM TblJournalDetail
+</select>
 
 </mapper>

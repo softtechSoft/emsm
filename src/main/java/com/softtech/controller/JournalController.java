@@ -3,6 +3,9 @@ package com.softtech.controller;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.softtech.actionForm.TblJournalDetailFormBean;
+import com.softtech.entity.TblAccount;
 import com.softtech.service.TblJournalDetailService;
 
 @Controller
@@ -28,8 +32,14 @@ public class JournalController {
     // ジャーナルページの表示
     @GetMapping
     public String showJournalPage(Model model) {
+
+    	System.out.print(journalDetailService.getAllJournalDetails());
         model.addAttribute("resultSet", journalDetailService.getAllJournalDetails());
-        model.addAttribute("accounts", journalDetailService.getAllAccounts());
+        List<TblAccount> accounts = journalDetailService.getAllAccounts();
+        Map<String, String> accountMap = accounts.stream()
+                .collect(Collectors.toMap(TblAccount::getUid, TblAccount::getName));
+            model.addAttribute("accounts", accountMap);
+            model.addAttribute("accounts1", journalDetailService.getAllAccounts());
         int maxLineNumber = journalDetailService.getMaxLineNumber();
         model.addAttribute("maxLineNumber", maxLineNumber);
         return "showJournals";
@@ -51,7 +61,11 @@ public class JournalController {
         journalDetailService.addJournal(tblJournalDetailFormBean);
 
         model.addAttribute("resultSet", journalDetailService.getAllJournalDetails());
-        model.addAttribute("accounts", journalDetailService.getAllAccounts());
+        List<TblAccount> accounts = journalDetailService.getAllAccounts();
+        Map<String, String> accountMap = accounts.stream()
+                .collect(Collectors.toMap(TblAccount::getUid, TblAccount::getName));
+        model.addAttribute("accounts", accountMap);
+        model.addAttribute("accounts1", journalDetailService.getAllAccounts());
         model.addAttribute("maxLineNumber", journalDetailService.getMaxLineNumber());
         model.addAttribute("reloadPage", true);
         model.addAttribute("successMessage", "データが保存完了です。");
