@@ -29,7 +29,7 @@ function myFunction(){
 	document.getElementById('eplyInsComp').value= Math.ceil(base * 0.006);
 	document.getElementById('eplyInsWithdraw').value= Math.ceil(base * 0.00002);
 	document.getElementById('wkAcccpsIns').value=Math.ceil(base * 0.003);
-	document.theForm.submit();
+
 }
 </script>
 </head >
