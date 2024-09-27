@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.CompanyInfoMapper">
+<select id = "getCompanyID" resultType = "com.softtech.entity.CompanyEntity">
+	select *
+	from company
+	where companyID = #{companyID}
+</select>
+<select id = "getAllCompany" resultType = "com.softtech.entity.CompanyEntity">
+	select *
+	from company
+
+</select>
+<select id = "getCompany" resultType = "com.softtech.entity.CompanyEntity">
+	select companyID,companyName
+	from company
+
+</select>
+<select id="getMaxCompanyID" resultType="string">
+select MAX(companyID)
+from company
+Where companyID LIKE 'C%' ;
+
+</select>
+<insert id="insertCompany" parameterType="com.softtech.entity.CompanyEntity">
+    INSERT INTO company (companyID, companyName, companyType, postCode, address, basicContractDate, phoneNumber, contactName, mail, contractStatus, level, insertDate, updateDate)
+    VALUES (#{companyID}, #{companyName}, #{companyType}, #{postCode}, #{address}, #{basicContractDate}, #{phoneNumber}, #{contactName}, #{mail}, #{contractStatus}, #{level}, #{insertDate}, #{updateDate});
+</insert>
+ <update id="updateCompanyInfo" parameterType="com.softtech.actionForm.CompanyInfoFormBean">
+        UPDATE company
+        SET
+            companyName = #{companyName},
+            companyType = #{companyType},
+            postCode = #{postCode},
+            address = #{address},
+            basicContractDate = #{basicContractDate},
+            phoneNumber = #{phoneNumber},
+            contactName = #{contactName},
+            mail = #{mail},
+            contractStatus = #{contractStatus},
+            level = #{level},
+            insertDate = #{insertDate},
+            updateDate = #{updateDate}
+        WHERE companyID = #{companyID}
+    </update>
+
+</mapper>

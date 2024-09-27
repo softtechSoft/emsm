@@ -165,6 +165,7 @@ public class EmployeeInfoController {
 				//エラーメッセージ。
 				  errorlst.addAll(result.getFieldErrors());
 				  //エラーメッセージ
+
 				  model.addAttribute("errors", errorlst);
 
 			     return "infoEdit";
