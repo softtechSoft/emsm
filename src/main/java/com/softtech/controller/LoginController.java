@@ -64,6 +64,7 @@ public class LoginController {
 			LoginEntity userEmployee=loginService.qureyEmployee(loginBean);
 			session.setAttribute("loginUserName",userEmployee.getEmployeeName());
 			session.setAttribute("loginUserID",userEmployee.getEmployeeID());
+			session.setAttribute("userMailAdress",userEmployee.getMailAdress());
 
 
 			// Menu画面初期化遷移
