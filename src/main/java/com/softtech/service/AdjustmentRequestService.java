@@ -5,9 +5,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +24,7 @@ import com.softtech.mappers.EmployeeMapper;
 
 @Service
 public class AdjustmentRequestService {
+	
     @Autowired
     private AdjustmentRequestFilesMapper adjustmentRequestFilesMapper;
     @Autowired
@@ -28,59 +34,101 @@ public class AdjustmentRequestService {
 
     private final Path rootLocation = Paths.get("/Users/yangxiwen/Documents/work/templates");
 
-    // ファイルを保存するメソッド
     public void storeFile(MultipartFile file, String employeeID, String employeeEmail, int fileYear) throws IOException {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("アップロードされたファイルが空です。");
         }
 
-        // ディレクトリが存在しない場合、作成する
-        if (!Files.exists(rootLocation)) {
-            Files.createDirectories(rootLocation);
-        }
-
         Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize();
-        // ファイルを保存（既存ファイルを上書きする）
         Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
-        // データベース用のファイル情報を設定
-        AdjustmentRequestFiles adjustmentFile = new AdjustmentRequestFiles();
-        adjustmentFile.setEmployeeID(employeeID);
-        adjustmentFile.setEmployeeEmail(employeeEmail);
-        adjustmentFile.setFileName(destinationFile.getFileName().toString());
-        adjustmentFile.setFileYear(fileYear); // 現在の年を設定
-        adjustmentFile.setFileULStatus("1"); // アップロード済み
-        adjustmentFile.setFileInsertDate(new java.util.Date());
-        adjustmentFile.setFileUpdateDate(new java.util.Date());
+        String fileName = destinationFile.getFileName().toString();
 
-        // データベースに挿入
-        adjustmentRequestFilesMapper.insert(adjustmentFile);
+        Date currentDate = new Date();
+
+        // 检查是否存在相同的记录
+        List<AdjustmentRequestFiles> existingFiles = adjustmentRequestFilesMapper.selectByFileNameAndEmployeeIDAndYear(fileName, employeeID, fileYear);
+
+        if (existingFiles != null && !existingFiles.isEmpty()) {
+            // 更新已有记录
+            AdjustmentRequestFiles existingFile = existingFiles.get(0);
+            existingFile.setEmployeeEmail(employeeEmail);
+            existingFile.setFileULStatus("1");
+            existingFile.setFileUpdateDate(currentDate);
+            adjustmentRequestFilesMapper.updateByEmployeeIDAndFileYearAndFileName(existingFile);
+
+            // 删除其他重复的记录（如果有）
+            for (int i = 1; i < existingFiles.size(); i++) {
+                adjustmentRequestFilesMapper.deleteByFileID(existingFiles.get(i).getFileID());
+            }
+        } else {
+            // 插入新记录
+            try {
+                AdjustmentRequestFiles adjustmentFile = new AdjustmentRequestFiles();
+                adjustmentFile.setEmployeeID(employeeID);
+                adjustmentFile.setEmployeeEmail(employeeEmail);
+                adjustmentFile.setFileName(fileName);
+                adjustmentFile.setFileYear(fileYear);
+                adjustmentFile.setFileULStatus("1");
+                adjustmentFile.setFileInsertDate(currentDate);
+                adjustmentFile.setFileUpdateDate(currentDate);
+
+                adjustmentRequestFilesMapper.insert(adjustmentFile);
+            } catch (DuplicateKeyException e) {
+                // 如果违反唯一约束，更新已有的记录
+                AdjustmentRequestFiles existingFile = adjustmentRequestFilesMapper.selectByFileNameAndEmployeeIDAndYearSingle(fileName, employeeID, fileYear);
+                if (existingFile != null) {
+                    existingFile.setEmployeeEmail(employeeEmail);
+                    existingFile.setFileULStatus("1");
+                    existingFile.setFileUpdateDate(currentDate);
+                    adjustmentRequestFilesMapper.updateByEmployeeIDAndFileYearAndFileName(existingFile);
+                } else {
+                    throw new RuntimeException("既存のファイルを更新できませんでした。");
+                }
+            }
+        }
     }
 
-    // アップロード済みファイルを取得するメソッド
-    public List<AdjustmentRequestFiles> getAllFiles() {
-        return adjustmentRequestFilesMapper.selectByStatus("1");
+
+    public List<AdjustmentRequestFiles> getCurrentYearFilesWithStatusOne(int currentYear) {
+        return adjustmentRequestFilesMapper.findByYearAndStatus(currentYear, "1");
     }
 
-    // すべての従業員データを取得するメソッド
+    public List<Map<String, Object>> getAllEmployeesWithAdjustmentDetail(int currentYear) {
+        return employeeMapper.queryEmployeeAndAdjustmentStatuses(currentYear);
+    }
+
     public List<Employee> getAllEmployees() {
         return employeeMapper.findAll();
     }
 
-    // 指定された従業員IDの詳細を取得するメソッド
-    public Employee getEmployeeDetails(String employeeID) {
-        return employeeMapper.findById(employeeID);
-    }
-
-    // 従業員IDに基づく調整状況を取得するメソッド
     public String getAdjustmentStatusByEmployeeId(String employeeId) {
         return adjustmentDetailMapper.findByEmployeeId(employeeId).getAdjustmentStatus();
     }
 
-    // ファイル削除メソッド
     public void deleteFile(String fileName) throws IOException {
         Path file = this.rootLocation.resolve(fileName).normalize();
         Files.deleteIfExists(file);
         adjustmentRequestFilesMapper.deleteByFileName(fileName);
     }
+
+    public Resource loadFileAsResource(String fileName) {
+        try {
+            Path filePath = this.rootLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists() && resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("ファイルが見つかりません: " + fileName);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("ファイルのロードに失敗しました: " + fileName, e);
+        }
+    }
+
+    public List<Map<String, Object>> getUploadedFiles() {
+        return adjustmentRequestFilesMapper.selectByStatusMapped("1");
+    }
+
+
 }

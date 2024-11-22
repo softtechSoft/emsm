@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 
 import com.softtech.entity.Employee;
 
@@ -18,16 +16,10 @@ public interface EmployeeMapper {
     int insert(Employee employee);
     int update(Employee employee);
     int deleteById(String employeeID);
-    
-    @Select("SELECT e.employeeName, ad.adjustmentStatus " +
-            "FROM employee e " +
-            "LEFT JOIN adjustmentDetail ad ON e.employeeID = ad.employeeID")
-    @Results({
-        @Result(property = "employeeName", column = "employeeName"),
-        @Result(property = "adjustmentStatus", column = "adjustmentStatus")
-    })
-    List<Map<String, Object>> queryEmployeeAndAdjustments();
-    
-    String findEmployeeIdByEmail(String email);
 
+    List<Map<String, Object>> queryEmployeeAndFileStatus(@Param("currentYear") int currentYear);
+    
+    List<Map<String, Object>> queryEmployeeAndAdjustmentStatuses(@Param("currentYear") int currentYear);
+
+    String findEmployeeIdByEmail(String email);
 }
