@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softtech.mappers.AdjustmentFileMapper">
     <!-- Result Mapping -->
     <resultMap id="AdjustmentFileResultMap" type="com.softtech.entity.AdjustmentFile">
@@ -15,10 +16,6 @@
     <!-- SQL Queries -->
     <select id="selectAll" resultMap="AdjustmentFileResultMap">
         SELECT * FROM adjustmentFile
-    </select>
-    
-    <select id="findFilesByEmployeeEmail" parameterType="String" resultMap="AdjustmentFileResultMap">
-        SELECT * FROM adjustmentFile WHERE employeeEmail = #{employeeEmail}
     </select>
 
     <select id="selectByFileID" parameterType="Integer" resultMap="AdjustmentFileResultMap">
@@ -39,4 +36,30 @@
     <delete id="deleteByFileID" parameterType="Integer">
         DELETE FROM adjustmentFile WHERE fileID = #{fileID}
     </delete>
+
+    <select id="findFilesByEmployeeEmail" parameterType="String" resultMap="AdjustmentFileResultMap">
+        SELECT * FROM adjustmentFile WHERE employeeEmail = #{employeeEmail}
+    </select>
+
+    <select id="findFilesByTypeAndEmployee" parameterType="map" resultMap="AdjustmentFileResultMap">
+        SELECT * FROM adjustmentFile
+        WHERE fileType = #{fileType} AND employeeEmail = #{employeeEmail} AND fileYear = #{fileYear}
+    </select>
+
+    <select id="findFilesByEmployeeEmailAndYear" parameterType="map" resultMap="AdjustmentFileResultMap">
+        SELECT * FROM adjustmentFile
+        WHERE employeeEmail = #{employeeEmail} AND fileYear = #{fileYear}
+    </select>
+
+    <select id="findByEmployeeIDAndYearAndFileName" parameterType="map" resultMap="AdjustmentFileResultMap">
+        SELECT * FROM adjustmentFile
+        WHERE employeeID = #{employeeID} AND fileYear = #{fileYear} AND fileName = #{fileName}
+    </select>
+
+    <update id="updateByEmployeeIDAndYearAndFileName" parameterType="com.softtech.entity.AdjustmentFile">
+        UPDATE adjustmentFile SET
+        filePath = #{filePath},
+        fileType = #{fileType}
+        WHERE employeeID = #{employeeID} AND fileYear = #{fileYear} AND fileName = #{fileName}
+    </update>
 </mapper>

@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.time.LocalDate"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,15 +72,19 @@
         <table>
             <tr>
                 <th>年度</th>
-                <td><%= java.time.LocalDate.now().getYear() %></td>
+                <td>${currentYear}</td>
             </tr>
             <tr>
                 <th>社員名</th>
-                <td id="employeeName"></td>
+                <td>${employeeName}</td>
             </tr>
             <tr>
                 <th>ファイル</th>
-                <td id="fileContainer"></td>
+                <td>
+                    <c:forEach var="file" items="${detailFiles}">
+                        <a href="${pageContext.request.contextPath}/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">${file.fileName}</a><br/>
+                    </c:forEach>
+                </td>
             </tr>
         </table>
 
@@ -107,66 +113,47 @@
                     <th>年度</th>
                     <td>
                         <select id="yearSelect" onchange="loadFilesForSelectedYear()">
-                            <!-- 由 JavaScript 动态填充年份选项 -->
+                            <c:forEach var="year" items="${yearList}">
+                                <option value="${year}">${year}</option>
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <th>ファイル</th>
-                    <td id="pastFilesContainer"></td>
+                    <td id="pastFilesContainer">
+                        <!-- 动态加载 -->
+                    </td>
                 </tr>
             </thead>
         </table>
     </div>
     <script>
-        var currentYear = '<%= java.time.LocalDate.now().getYear() %>';
-        var contextPath = '<%= request.getContextPath() %>';
-        var employeeId = '<%= request.getParameter("employeeId") %>';
+        var currentYear = '${currentYear}';
+        var contextPath = '${pageContext.request.contextPath}';
+        var employeeId = '${employeeId}';
+        var employeeEmail = '${employeeEmail}';
 
         document.addEventListener("DOMContentLoaded", function() {
-            initializeYearSelect(currentYear);
-            fetchEmployeeData(employeeId, currentYear);
+            loadFilesForSelectedYear();
         });
-
-        function initializeYearSelect(currentYear) {
-            const yearSelect = document.getElementById('yearSelect');
-            if (!yearSelect) {
-                console.error('yearSelect element not found');
-                return;
-            }
-            for (let year = currentYear; year > currentYear - 10; year--) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-            }
-        }
-
-        function fetchEmployeeData(employeeId, year) {
-            fetch(contextPath + "/getEmployeeDetails?employeeId=" + employeeId + "&year=" + year)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('employeeName').textContent = data.employeeName;
-                displayFiles(data.files);
-            })
-            .catch(error => console.error("Failed to load employee data:", error));
-        }
-
-        function displayFiles(files) {
-            const container = document.getElementById('fileContainer');
-            container.innerHTML = ''; 
-            files.forEach(file => {
-                const link = document.createElement('a');
-                link.href = contextPath + '/download/' + file.fileName;
-                link.textContent = file.fileName;
-                container.appendChild(link);
-                container.appendChild(document.createElement('br'));
-            });
-        }
 
         function loadFilesForSelectedYear() {
             const selectedYear = document.getElementById('yearSelect').value;
-            fetchEmployeeData(employeeId, selectedYear);
+            fetch(contextPath + "/adjustmentInfoEdit/getPastFiles?employeeId=" + employeeId + "&year=" + selectedYear)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('pastFilesContainer');
+                    container.innerHTML = '';
+                    data.files.forEach(file => {
+                        const link = document.createElement('a');
+                        link.href = contextPath + '/adjustmentInfoEdit/download/' + file.fileYear + '/' + file.employeeEmail + '/' + file.fileName;
+                        link.textContent = file.fileName;
+                        container.appendChild(link);
+                        container.appendChild(document.createElement('br'));
+                    });
+                })
+                .catch(error => console.error('Error loading past files:', error));
         }
 
         function updateFileList() {
@@ -196,8 +183,8 @@
             Array.from(files).forEach(file => {
                 formData.append('files', file);
             });
-
-            fetch(contextPath + '/uploadFile', {
+            formData.append('employeeId', employeeId);
+            fetch(contextPath + '/adjustmentInfoEdit/uploadResultFiles', {
                 method: 'POST',
                 body: formData
             })
