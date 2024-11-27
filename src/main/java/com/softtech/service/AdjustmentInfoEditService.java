@@ -43,6 +43,10 @@ public class AdjustmentInfoEditService {
         return adjustmentFileMapper.findFilesByTypeAndEmployee(fileType, employeeEmail, year);
     }
 
+    public List<AdjustmentFile> getResultFilesByEmployeeAndYear(String employeeEmail, int year) {
+        return adjustmentFileMapper.findFilesByTypeAndEmployee("resultType", employeeEmail, year);
+    }
+
     public List<Integer> getPastYears(int numYears) {
         int currentYear = LocalDate.now().getYear();
         List<Integer> years = new ArrayList<>();
@@ -52,21 +56,16 @@ public class AdjustmentInfoEditService {
         return years;
     }
 
-    public List<AdjustmentFile> getFilesByEmployeeAndYear(String employeeEmail, int year) {
-        return adjustmentFileMapper.findFilesByEmployeeEmailAndYear(employeeEmail, year);
-    }
-
     public void saveFilesAndDetails(MultipartFile[] files, String employeeEmail, String employeeID, int fileYear, String fileType) throws IOException {
         // 查找或创建 AdjustmentDetail 记录
-        List<AdjustmentDetail> details = adjustmentDetailMapper.findByEmployeeEmailAndYear(employeeEmail, fileYear);
-        AdjustmentDetail detail;
-        if (details.isEmpty()) {
+        AdjustmentDetail detail = adjustmentDetailMapper.findByEmployeeIdAndYear(employeeID, String.valueOf(fileYear));
+        if (detail == null) {
             detail = new AdjustmentDetail();
             detail.setEmployeeID(employeeID);
             detail.setEmployeeEmail(employeeEmail);
             detail.setYear(String.valueOf(fileYear));
             detail.setUploadStatus("1:アップロード完了");
-            detail.setAdjustmentStatus("1:調整済み");  // 设置为调整完了
+            detail.setAdjustmentStatus("1:調整済み"); 
 
             Date currentDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
             detail.setInsertDate(currentDate);
@@ -74,7 +73,6 @@ public class AdjustmentInfoEditService {
 
             adjustmentDetailMapper.insert(detail);
         } else {
-            detail = details.get(0);
             detail.setAdjustmentStatus("1:調整済み");  // 更新调整状态为已调整
 
             Date currentDate = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());

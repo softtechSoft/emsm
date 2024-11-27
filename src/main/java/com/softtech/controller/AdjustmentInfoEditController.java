@@ -38,6 +38,7 @@ public class AdjustmentInfoEditController {
     public String showAdjustmentInfoEdit(@RequestParam("employeeId") String employeeId, Model model) {
         int currentYear = LocalDate.now().getYear();
         Employee employee = adjustmentInfoEditService.getEmployeeById(employeeId);
+
         model.addAttribute("currentYear", currentYear);
         model.addAttribute("employeeName", employee.getEmployeeName());
         model.addAttribute("employeeId", employeeId);
@@ -46,6 +47,10 @@ public class AdjustmentInfoEditController {
         // 获取 detailType 的文件
         List<AdjustmentFile> detailFiles = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("detailType", employee.getMailAdress(), currentYear);
         model.addAttribute("detailFiles", detailFiles);
+
+        // 获取 resultType 的文件
+        List<AdjustmentFile> resultFiles = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("resultType", employee.getMailAdress(), currentYear);
+        model.addAttribute("resultFiles", resultFiles);
 
         // 年份列表
         List<Integer> yearList = adjustmentInfoEditService.getPastYears(10);
@@ -58,7 +63,7 @@ public class AdjustmentInfoEditController {
     @ResponseBody
     public Map<String, Object> getPastFiles(@RequestParam("employeeId") String employeeId, @RequestParam("year") int year) {
         Employee employee = adjustmentInfoEditService.getEmployeeById(employeeId);
-        List<AdjustmentFile> files = adjustmentInfoEditService.getFilesByEmployeeAndYear(employee.getMailAdress(), year);
+        List<AdjustmentFile> files = adjustmentInfoEditService.getResultFilesByEmployeeAndYear(employee.getMailAdress(), year);
         Map<String, Object> response = new HashMap<>();
         response.put("files", files);
         return response;

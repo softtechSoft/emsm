@@ -18,5 +18,8 @@ public interface AdjustmentDetailMapper {
     // 根据员工ID查询调整详情
     AdjustmentDetail findByEmployeeId(@Param("employeeID") String employeeID);
     List<AdjustmentDetail> findByEmployeeEmailAndYear(@Param("employeeEmail") String employeeEmail, @Param("year") int year);
+    
+    AdjustmentDetail findByEmployeeIdAndYear(@Param("employeeID") String employeeID, @Param("year") String year);
+
 
 }

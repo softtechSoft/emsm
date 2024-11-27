@@ -51,16 +51,18 @@
 	</select>
 	
 	<select id="queryEmployeeAndAdjustmentStatuses" resultType="map">
-        SELECT 
-            e.employeeName, 
-            ad.uploadStatus,
-            ad.adjustmentStatus
-        FROM 
-            employee e
-            LEFT JOIN adjustmentDetail ad ON e.employeeID = ad.employeeID
-        WHERE 
-            ad.year = #{currentYear}
-    </select>
+    SELECT 
+        e.employeeID,
+        e.employeeName, 
+        ad.uploadStatus,
+        ad.adjustmentStatus
+    FROM 
+        employee e
+        LEFT JOIN adjustmentDetail ad ON e.employeeID = ad.employeeID
+    WHERE 
+        ad.year = #{currentYear}
+	</select>
+
 	
 
     <insert id="insert" parameterType="com.softtech.entity.Employee">

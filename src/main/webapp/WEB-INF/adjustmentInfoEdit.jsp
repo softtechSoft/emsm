@@ -32,9 +32,6 @@
             width: 20%;
         }
         .upload-area {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 20px;
         }
         .file-list {
@@ -79,23 +76,34 @@
                 <td>${employeeName}</td>
             </tr>
             <tr>
-                <th>ファイル</th>
+                <th>アップ済み</th>
                 <td>
                     <c:forEach var="file" items="${detailFiles}">
-                        <a href="${pageContext.request.contextPath}/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">${file.fileName}</a><br/>
+                        <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">${file.fileName}</a><br/>
                     </c:forEach>
                 </td>
             </tr>
         </table>
 
+        <!-- 结果表格 -->
         <table>
             <tr>
-                <th>結果</th>
+                <th rowspan="2">結果</th>
                 <td>
                     <div class="upload-area">
                         <input type="file" id="fileUpload" multiple class="file-input" onchange="updateFileList()"/>
                         <label for="fileUpload" class="custom-button">ファイルを選択</label>
-                        <ul id="fileList"></ul>
+                        <ul id="fileList" class="file-list"></ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- 显示已上传的 resultType 文件 -->
+                    <div id="uploadedFiles">
+                        <c:forEach var="file" items="${resultFiles}">
+                            <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">${file.fileName}</a><br/>
+                        </c:forEach>
                     </div>
                 </td>
             </tr>
@@ -160,17 +168,24 @@
             const input = document.getElementById('fileUpload');
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = ''; 
+            const dt = new DataTransfer();
             Array.from(input.files).forEach(file => {
+                dt.items.add(file);
                 const li = document.createElement('li');
                 li.textContent = file.name;
                 li.classList.add('file-item');
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = '削除';
                 deleteBtn.className = 'delete-btn';
-                deleteBtn.onclick = function() { this.parentElement.remove(); };
+                deleteBtn.onclick = function() {
+                    dt.items.remove(Array.from(dt.files).indexOf(file));
+                    input.files = dt.files;
+                    this.parentElement.remove();
+                };
                 li.appendChild(deleteBtn);
                 fileList.appendChild(li);
             });
+            input.files = dt.files;
         }
 
         function submitFiles() {

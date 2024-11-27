@@ -81,7 +81,7 @@
                 </td>
             </tr>
             <tr>
-                <th>申請書</th>
+                <th>テンプレート</th>
                 <td id="requestFiles">
                     <c:forEach var="file" items="${files}">
                         <a href="${pageContext.request.contextPath}/download/${file.fileName}">${file.fileName}</a><br/>
@@ -103,18 +103,18 @@
                 </tr>
             </thead>
             <tbody id="employeeList">
-                <c:forEach var="employee" items="${employees}">
-                    <tr>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/adjustmentInfoEdit?employeeId=${employee.employeeID}">
-                                ${employee.employeeName}
-                            </a>
-                        </td>
-                        <td>${employee.uploadStatus == '1:アップロード完了' ? 'アップロード完了' : 'アップロード中'}</td>
-                        <td>${employee.adjustmentStatus == '1:調整済み' ? '調整済み' : '調整中'}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
+    			<c:forEach var="employee" items="${employees}">
+        	<tr>
+            	<td>
+                	<a href="${pageContext.request.contextPath}/adjustmentInfoEdit?employeeId=${employee.employeeID}">
+                    	${employee.employeeName}
+                	</a>
+            	</td>
+            	<td>${employee.uploadStatus == '1:アップロード完了' ? 'アップロード完了' : 'アップロード中'}</td>
+            	<td>${employee.adjustmentStatus == '1:調整済み' ? '調整済み' : '調整中'}</td>
+        	</tr>
+    			</c:forEach>
+			</tbody>
         </table>
     </div>
     <script>
