@@ -109,12 +109,14 @@ public class AdjustmentInfoEditController {
             throw new RuntimeException("指定された社員が存在しません。");
         }
         String employeeEmail = employee.getMailAdress();
-        List<AdjustmentFile> files = adjustmentInfoEditService.getFilesByEmployeeEmailAndYear(employeeEmail, year);
+        
+        List<AdjustmentFile> files = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("resultType", employeeEmail, year);
 
         Map<String, Object> response = new HashMap<>();
         response.put("files", files);
         return response;
     }
+
 
     /**
      * レスポンスメッセージを作成する
