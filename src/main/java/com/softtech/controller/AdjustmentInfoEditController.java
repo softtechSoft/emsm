@@ -1,5 +1,6 @@
 package com.softtech.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,8 +59,11 @@ public class AdjustmentInfoEditController {
                 employee.getMailAdress(), currentYear);
         model.addAttribute("resultFiles", resultFiles);
 
-        // 获取有文件的年度列表
-        List<Integer> yearList = adjustmentInfoEditService.getYearsWithFiles(employee.getMailAdress());
+        // 生成当前年份及往前推十年的年份列表
+        List<Integer> yearList = new ArrayList<>();
+        for (int i = 0; i <= 10; i++) {
+            yearList.add(currentYear - i);
+        }
         model.addAttribute("yearList", yearList);
 
         return "adjustmentInfoEdit";
@@ -109,14 +113,13 @@ public class AdjustmentInfoEditController {
             throw new RuntimeException("指定された社員が存在しません。");
         }
         String employeeEmail = employee.getMailAdress();
-        
+        // 仅获取 fileType 为 "resultType" 的文件
         List<AdjustmentFile> files = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("resultType", employeeEmail, year);
 
         Map<String, Object> response = new HashMap<>();
         response.put("files", files);
         return response;
     }
-
 
     /**
      * レスポンスメッセージを作成する
