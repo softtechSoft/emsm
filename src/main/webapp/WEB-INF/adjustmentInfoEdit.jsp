@@ -1,67 +1,68 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.time.LocalDate"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>年末調整個人別</title>
-    <style>
-        .table-container {
-            width: 50%;
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-        h1 {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 2px solid #b3cbde;
-            padding: 15px;
-            text-align: left;
-        }
-        th {
-            height: 40px;
-            width: 20%;
-        }
-        .upload-area {
-            margin-bottom: 20px;
-        }
-        .file-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-        }
-        .file-item {
-            margin-bottom: 5px;
-        }
-        .file-input {
-            display: none;
-        }
-        .custom-button {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #7fa3bc;
-            color: white;
-            cursor: pointer;
-        }
-        .button-container {
-            text-align: right;
-            padding-right: 10px;
-            padding-top: 10px;
-        }
-        .delete-btn {
-            margin-left: 10px;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>年末調整詳細</title>
+<style>
+    .table-container {
+        width: 50%;
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+    h1 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 2px solid #b3cbde;
+        padding: 15px;
+        text-align: left;
+    }
+    th {
+        height: 40px;
+        width: 20%;
+    }
+    .upload-area {
+        margin-bottom: 20px;
+    }
+    .file-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 10px;
+    }
+    .file-item {
+        margin-bottom: 5px;
+    }
+    .file-input {
+        display: none;
+    }
+    button {
+        border-radius: px;
+        padding: 3px 7px;
+        font-size: 13px;
+        cursor: pointer;
+        margin: 5px;
+    }
+    .button-container {
+        text-align: right;
+        padding-right: 10px;
+        padding-top: 10px;
+    }
+    .delete-btn {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+</style>
 </head>
 <body>
     <div class="table-container">
@@ -79,7 +80,10 @@
                 <th>アップ済み</th>
                 <td>
                     <c:forEach var="file" items="${detailFiles}">
-                        <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">${file.fileName}</a><br/>
+                        <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">
+                            ${file.fileName}
+                        </a>
+                        <br />
                     </c:forEach>
                 </td>
             </tr>
@@ -91,8 +95,10 @@
                 <th rowspan="2">結果</th>
                 <td>
                     <div class="upload-area">
-                        <input type="file" id="fileUpload" multiple class="file-input" onchange="updateFileList()"/>
-                        <label for="fileUpload" class="custom-button">ファイルを選択</label>
+                        <!-- 隐藏的文件输入框 -->
+                        <input type="file" id="fileUpload" multiple class="file-input" onchange="updateFileList()" />
+                        <!-- 使用<button>元素的“ファイルを選択”按钮 -->
+                        <button type="button" onclick="document.getElementById('fileUpload').click();">ファイルを選択</button>
                         <ul id="fileList" class="file-list"></ul>
                     </div>
                 </td>
@@ -102,16 +108,20 @@
                     <!-- 显示已上传的 resultType 文件 -->
                     <div id="uploadedFiles">
                         <c:forEach var="file" items="${resultFiles}">
-                            <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">${file.fileName}</a><br/>
+                            <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/${file.fileYear}/${file.employeeEmail}/${file.fileName}">
+                                ${file.fileName}
+                            </a>
+                            <br />
                         </c:forEach>
                     </div>
                 </td>
             </tr>
         </table>
         <div class="button-container">
-            <button onclick="submitFiles()">調整完了</button>
+            <button type="button" onclick="submitFiles()">調整完了</button>
         </div>
 
+        <!-- 以前ファイル参照表格 -->
         <table>
             <thead>
                 <tr>
@@ -135,6 +145,12 @@
                 </tr>
             </thead>
         </table>
+
+        <!-- “戻る”按钮 -->
+        <div style="text-align: center; margin-top: 20px;">
+            <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/adjustmentList'">戻る</button>
+        </div>
+
     </div>
     <script>
         var currentYear = '${currentYear}';
@@ -169,7 +185,7 @@
             const fileList = document.getElementById('fileList');
             fileList.innerHTML = ''; 
             const dt = new DataTransfer();
-            Array.from(input.files).forEach(file => {
+            Array.from(input.files).forEach((file, index) => {
                 dt.items.add(file);
                 const li = document.createElement('li');
                 li.textContent = file.name;
@@ -178,7 +194,7 @@
                 deleteBtn.textContent = '削除';
                 deleteBtn.className = 'delete-btn';
                 deleteBtn.onclick = function() {
-                    dt.items.remove(Array.from(dt.files).indexOf(file));
+                    dt.items.remove(index);
                     input.files = dt.files;
                     this.parentElement.remove();
                 };

@@ -20,6 +20,11 @@ public interface EmployeeMapper {
     List<Map<String, Object>> queryEmployeeAndFileStatus(@Param("currentYear") int currentYear);
     
     List<Map<String, Object>> queryEmployeeAndAdjustmentStatuses(@Param("currentYear") int currentYear);
+    
+    List<Map<String, Object>> queryAllEmployeesWithAdjustmentDetail(@Param("currentYear") int currentYear);
 
     String findEmployeeIdByEmail(String email);
+    
+    List<Map<String, Object>> queryAllEmployeesWithAdjustmentStatuses(@Param("currentYear") int currentYear);
+
 }

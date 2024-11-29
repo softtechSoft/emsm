@@ -1,16 +1,11 @@
 package com.softtech.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +22,9 @@ import com.softtech.entity.AdjustmentFile;
 import com.softtech.entity.Employee;
 import com.softtech.service.AdjustmentInfoEditService;
 
+/**
+ * 調整情報編集コントローラー
+ */
 @Controller
 @RequestMapping("/adjustmentInfoEdit")
 public class AdjustmentInfoEditController {
@@ -34,76 +32,96 @@ public class AdjustmentInfoEditController {
     @Autowired
     private AdjustmentInfoEditService adjustmentInfoEditService;
 
+    /**
+     * 調整情報編集ページを表示する
+     */
     @GetMapping
     public String showAdjustmentInfoEdit(@RequestParam("employeeId") String employeeId, Model model) {
-        int currentYear = LocalDate.now().getYear();
+        int currentYear = java.time.LocalDate.now().getYear();
         Employee employee = adjustmentInfoEditService.getEmployeeById(employeeId);
-
+        if (employee == null) {
+            model.addAttribute("errorMessage", "指定された社員が存在しません。");
+            return "errorPage";
+        }
         model.addAttribute("currentYear", currentYear);
         model.addAttribute("employeeName", employee.getEmployeeName());
         model.addAttribute("employeeId", employeeId);
         model.addAttribute("employeeEmail", employee.getMailAdress());
 
-        // 获取 detailType 的文件
-        List<AdjustmentFile> detailFiles = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("detailType", employee.getMailAdress(), currentYear);
+        // detailTypeのファイルを取得
+        List<AdjustmentFile> detailFiles = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("detailType",
+                employee.getMailAdress(), currentYear);
         model.addAttribute("detailFiles", detailFiles);
 
-        // 获取 resultType 的文件
-        List<AdjustmentFile> resultFiles = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("resultType", employee.getMailAdress(), currentYear);
+        // resultTypeのファイルを取得
+        List<AdjustmentFile> resultFiles = adjustmentInfoEditService.getFilesByTypeEmployeeAndYear("resultType",
+                employee.getMailAdress(), currentYear);
         model.addAttribute("resultFiles", resultFiles);
 
-        // 年份列表
-        List<Integer> yearList = adjustmentInfoEditService.getPastYears(10);
+        // 获取有文件的年度列表
+        List<Integer> yearList = adjustmentInfoEditService.getYearsWithFiles(employee.getMailAdress());
         model.addAttribute("yearList", yearList);
 
         return "adjustmentInfoEdit";
     }
 
+    /**
+     * 結果ファイルをアップロードする
+     */
+    @PostMapping("/uploadResultFiles")
+    @ResponseBody
+    public ResponseEntity<?> uploadResultFiles(@RequestParam("files") MultipartFile[] files,
+            @RequestParam("employeeId") String employeeId) {
+        try {
+            adjustmentInfoEditService.uploadResultFiles(files, employeeId);
+            return ResponseEntity.ok(createResponse("ファイルのアップロードに成功しました！"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(createResponse("ファイルのアップロードに失敗しました: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * ファイルをダウンロードする
+     */
+    @GetMapping("/download/{fileYear}/{employeeEmail}/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadFile(@PathVariable("fileYear") int fileYear,
+            @PathVariable("employeeEmail") String employeeEmail, @PathVariable("filename") String filename) {
+        try {
+            Resource resource = adjustmentInfoEditService.loadFileAsResource(fileYear, employeeEmail, filename);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * 指定した年度の過去ファイルを取得する
+     */
     @GetMapping("/getPastFiles")
     @ResponseBody
     public Map<String, Object> getPastFiles(@RequestParam("employeeId") String employeeId, @RequestParam("year") int year) {
         Employee employee = adjustmentInfoEditService.getEmployeeById(employeeId);
-        List<AdjustmentFile> files = adjustmentInfoEditService.getResultFilesByEmployeeAndYear(employee.getMailAdress(), year);
+        if (employee == null) {
+            throw new RuntimeException("指定された社員が存在しません。");
+        }
+        String employeeEmail = employee.getMailAdress();
+        List<AdjustmentFile> files = adjustmentInfoEditService.getFilesByEmployeeEmailAndYear(employeeEmail, year);
+
         Map<String, Object> response = new HashMap<>();
         response.put("files", files);
         return response;
     }
 
-    @PostMapping("/uploadResultFiles")
-    @ResponseBody
-    public ResponseEntity<?> uploadResultFiles(@RequestParam("files") MultipartFile[] files,
-                                               @RequestParam("employeeId") String employeeId) {
-        try {
-            Employee employee = adjustmentInfoEditService.getEmployeeById(employeeId);
-            int currentYear = LocalDate.now().getYear();
-            adjustmentInfoEditService.saveFilesAndDetails(files, employee.getMailAdress(), employee.getEmployeeID(), currentYear, "resultType");
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "ファイルのアップロードに成功しました！");
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "ファイルのアップロードに失敗しました: " + e.getMessage());
-            return ResponseEntity.badRequest().body(response);
-        }
-    }
-
-    @GetMapping("/download/{fileYear}/{employeeEmail}/{filename}")
-    @ResponseBody
-    public ResponseEntity<Resource> downloadFile(@PathVariable("fileYear") int fileYear,
-                                                 @PathVariable("employeeEmail") String employeeEmail,
-                                                 @PathVariable("filename") String filename) {
-        try {
-            Path file = Paths.get("/Users/yangxiwen/Documents/work", String.valueOf(fileYear), employeeEmail, filename);
-            if (Files.exists(file)) {
-                Resource resource = new UrlResource(file.toUri());
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                        .body(resource);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
+    /**
+     * レスポンスメッセージを作成する
+     */
+    private Map<String, String> createResponse(String message) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+        return response;
     }
 }

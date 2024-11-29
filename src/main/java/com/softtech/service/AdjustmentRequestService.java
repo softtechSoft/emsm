@@ -7,114 +7,119 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softtech.entity.AdjustmentRequestFiles;
-import com.softtech.entity.Employee;
-import com.softtech.mappers.AdjustmentDetailMapper;
 import com.softtech.mappers.AdjustmentRequestFilesMapper;
 import com.softtech.mappers.EmployeeMapper;
 
+/**
+ * 調整申請サービス
+ */
 @Service
 public class AdjustmentRequestService {
-	
+
     @Autowired
     private AdjustmentRequestFilesMapper adjustmentRequestFilesMapper;
     @Autowired
     private EmployeeMapper employeeMapper;
-    @Autowired
-    private AdjustmentDetailMapper adjustmentDetailMapper;
 
-    private final Path rootLocation = Paths.get("/Users/yangxiwen/Documents/work/templates");
+    @Value("${file.storage.location}")
+    private String rootLocation;
 
-    public void storeFile(MultipartFile file, String employeeID, String employeeEmail, int fileYear) throws IOException {
+    private Path getRootLocation() {
+        return Paths.get(rootLocation);
+    }
+
+    /**
+     * ファイルをアップロードする
+     */
+    public void uploadFiles(MultipartFile[] files, String employeeID, String employeeEmail) throws IOException {
+        if (files == null || files.length == 0) {
+            throw new IllegalArgumentException("ファイルが選択されていません。");
+        }
+        int currentYear = java.time.LocalDate.now().getYear();
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                storeFile(file, employeeID, employeeEmail, currentYear);
+            }
+        }
+    }
+
+    /**
+     * ファイルを保存する
+     */
+    private void storeFile(MultipartFile file, String employeeID, String employeeEmail, int fileYear)
+            throws IOException {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("アップロードされたファイルが空です。");
         }
 
-        Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename())).normalize();
+        Path destinationFile = this.getRootLocation().resolve(Paths.get(file.getOriginalFilename())).normalize();
+        Files.createDirectories(destinationFile.getParent());
         Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
         String fileName = destinationFile.getFileName().toString();
 
         Date currentDate = new Date();
 
-        // 检查是否存在相同的记录
-        List<AdjustmentRequestFiles> existingFiles = adjustmentRequestFilesMapper.selectByFileNameAndEmployeeIDAndYear(fileName, employeeID, fileYear);
+        // 既存のレコードをチェックする
+        List<AdjustmentRequestFiles> existingFiles = adjustmentRequestFilesMapper
+                .selectByFileNameAndEmployeeIDAndYear(fileName, employeeID, fileYear);
 
         if (existingFiles != null && !existingFiles.isEmpty()) {
-            // 更新已有记录
+            // 既存のレコードを更新する
             AdjustmentRequestFiles existingFile = existingFiles.get(0);
             existingFile.setEmployeeEmail(employeeEmail);
             existingFile.setFileULStatus("1");
             existingFile.setFileUpdateDate(currentDate);
             adjustmentRequestFilesMapper.updateByEmployeeIDAndFileYearAndFileName(existingFile);
 
-            // 删除其他重复的记录（如果有）
+            // 重複するレコードを削除する（もしあれば）
             for (int i = 1; i < existingFiles.size(); i++) {
                 adjustmentRequestFilesMapper.deleteByFileID(existingFiles.get(i).getFileID());
             }
         } else {
-            // 插入新记录
-            try {
-                AdjustmentRequestFiles adjustmentFile = new AdjustmentRequestFiles();
-                adjustmentFile.setEmployeeID(employeeID);
-                adjustmentFile.setEmployeeEmail(employeeEmail);
-                adjustmentFile.setFileName(fileName);
-                adjustmentFile.setFileYear(fileYear);
-                adjustmentFile.setFileULStatus("1");
-                adjustmentFile.setFileInsertDate(currentDate);
-                adjustmentFile.setFileUpdateDate(currentDate);
+            // 新しいレコードを挿入する
+            AdjustmentRequestFiles adjustmentFile = new AdjustmentRequestFiles();
+            adjustmentFile.setEmployeeID(employeeID);
+            adjustmentFile.setEmployeeEmail(employeeEmail);
+            adjustmentFile.setFileName(fileName);
+            adjustmentFile.setFileYear(fileYear);
+            adjustmentFile.setFileULStatus("1");
+            adjustmentFile.setFileInsertDate(currentDate);
+            adjustmentFile.setFileUpdateDate(currentDate);
 
-                adjustmentRequestFilesMapper.insert(adjustmentFile);
-            } catch (DuplicateKeyException e) {
-                // 如果违反唯一约束，更新已有的记录
-                AdjustmentRequestFiles existingFile = adjustmentRequestFilesMapper.selectByFileNameAndEmployeeIDAndYearSingle(fileName, employeeID, fileYear);
-                if (existingFile != null) {
-                    existingFile.setEmployeeEmail(employeeEmail);
-                    existingFile.setFileULStatus("1");
-                    existingFile.setFileUpdateDate(currentDate);
-                    adjustmentRequestFilesMapper.updateByEmployeeIDAndFileYearAndFileName(existingFile);
-                } else {
-                    throw new RuntimeException("既存のファイルを更新できませんでした。");
-                }
-            }
+            adjustmentRequestFilesMapper.insert(adjustmentFile);
         }
     }
 
-
+    /**
+     * 現在の年度のファイルを取得する（ステータスが1のもの）
+     */
     public List<AdjustmentRequestFiles> getCurrentYearFilesWithStatusOne(int currentYear) {
         return adjustmentRequestFilesMapper.findByYearAndStatus(currentYear, "1");
     }
 
-    public List<Map<String, Object>> getAllEmployeesWithAdjustmentDetail(int currentYear) {
-        return employeeMapper.queryEmployeeAndAdjustmentStatuses(currentYear);
+    /**
+     * 全ての社員と調整状態を取得する
+     */
+    public List<java.util.Map<String, Object>> getAllEmployeesWithAdjustmentStatuses(int currentYear) {
+        return employeeMapper.queryAllEmployeesWithAdjustmentStatuses(currentYear);
     }
 
-    public List<Employee> getAllEmployees() {
-        return employeeMapper.findAll();
-    }
-
-    public String getAdjustmentStatusByEmployeeId(String employeeId) {
-        return adjustmentDetailMapper.findByEmployeeId(employeeId).getAdjustmentStatus();
-    }
-
-    public void deleteFile(String fileName) throws IOException {
-        Path file = this.rootLocation.resolve(fileName).normalize();
-        Files.deleteIfExists(file);
-        adjustmentRequestFilesMapper.deleteByFileName(fileName);
-    }
-
+    /**
+     * ファイルをリソースとしてロードする
+     */
     public Resource loadFileAsResource(String fileName) {
         try {
-            Path filePath = this.rootLocation.resolve(fileName).normalize();
+            Path filePath = this.getRootLocation().resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
                 return resource;
@@ -125,10 +130,4 @@ public class AdjustmentRequestService {
             throw new RuntimeException("ファイルのロードに失敗しました: " + fileName, e);
         }
     }
-
-    public List<Map<String, Object>> getUploadedFiles() {
-        return adjustmentRequestFilesMapper.selectByStatusMapped("1");
-    }
-
-
 }

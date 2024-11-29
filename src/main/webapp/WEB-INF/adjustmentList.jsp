@@ -48,13 +48,13 @@
         .file-input {
             display: none;
         }
-        .custom-button {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #7fa3bc;
-            color: white;
-            cursor: pointer;
-        }
+    	button {
+        	border-radius: px;
+        	padding: 3px 7px;
+        	font-size: 13px;
+        	cursor: pointer;
+        	margin: 5px;
+    	}
         .delete-btn {
             margin-left: 10px;
             cursor: pointer;
@@ -73,9 +73,9 @@
                 <th>アップロード</th>
                 <td>
                     <div class="upload-area">
-                        <label for="fileUpload" class="custom-button">ファイルを選択</label>
                         <input type="file" id="fileUpload" multiple class="file-input" onchange="updateFileList()"/>
-                        <button onclick="submitFiles()" class="custom-button">確定</button>
+                        <button type="button" onclick="document.getElementById('fileUpload').click();">ファイルを選択</button>
+                        <button type="button" onclick="submitFiles()">確定</button>
                     </div>
                     <ul id="fileList" class="file-list"></ul>
                 </td>
@@ -97,24 +97,24 @@
                     <th colspan="3" style="text-align: center;">社員リスト</th>
                 </tr>
                 <tr>
-                    <th>社員名</th>
+                    <th>社員氏名</th>
                     <th>アップロード状態</th>
                     <th>調整状態</th>
                 </tr>
             </thead>
-            <tbody id="employeeList">
-    			<c:forEach var="employee" items="${employees}">
-        	<tr>
-            	<td>
-                	<a href="${pageContext.request.contextPath}/adjustmentInfoEdit?employeeId=${employee.employeeID}">
-                    	${employee.employeeName}
-                	</a>
-            	</td>
-            	<td>${employee.uploadStatus == '1:アップロード完了' ? 'アップロード完了' : 'アップロード中'}</td>
-            	<td>${employee.adjustmentStatus == '1:調整済み' ? '調整済み' : '調整中'}</td>
-        	</tr>
-    			</c:forEach>
-			</tbody>
+            <tbody>
+                <c:forEach var="employee" items="${employees}">
+                    <tr>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/adjustmentInfoEdit?employeeId=${employee.employeeID}">
+                                ${employee.employeeName}
+                            </a>
+                        </td>
+                        <td>${employee.uploadStatus}</td>
+                        <td>${employee.adjustmentStatus}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
         </table>
     </div>
     <script>
@@ -132,14 +132,22 @@
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = '削除';
                 deleteBtn.className = 'delete-btn';
-                deleteBtn.onclick = function() { this.parentElement.remove(); };
+                deleteBtn.onclick = function() {
+                    const dt = new DataTransfer();
+                    const filesArray = Array.from(input.files);
+                    filesArray.splice(index, 1);
+                    filesArray.forEach(file => dt.items.add(file));
+                    input.files = dt.files;
+                    this.parentElement.remove();
+                };
                 li.appendChild(deleteBtn);
                 fileList.appendChild(li);
             });
         }
 
         function submitFiles() {
-            const files = document.getElementById('fileUpload').files;
+            const input = document.getElementById('fileUpload');
+            const files = input.files;
             if (files.length === 0) {
                 alert('ファイルを選択してください。');
                 return;

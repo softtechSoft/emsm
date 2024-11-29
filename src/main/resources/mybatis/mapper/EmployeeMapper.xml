@@ -62,6 +62,37 @@
     WHERE 
         ad.year = #{currentYear}
 	</select>
+	
+	<select id="queryAllEmployeesWithAdjustmentDetail" parameterType="int" resultType="map">
+    SELECT 
+        e.employeeID,
+        e.employeeName,
+        ad.uploadStatus,
+        ad.adjustmentStatus,
+        ad.otherColumns
+    FROM 
+        employee e
+    LEFT JOIN 
+        adjustmentDetail ad 
+    ON 
+        e.employeeID = ad.employeeID AND ad.year = #{currentYear}
+	</select>
+	
+	
+	<select id="queryAllEmployeesWithAdjustmentStatuses" resultType="map">
+    SELECT 
+        e.employeeID,
+        e.employeeName,
+        COALESCE(ad.uploadStatus, '0:アップロード中') AS uploadStatus,
+        COALESCE(ad.adjustmentStatus, '0:未調整中') AS adjustmentStatus
+    FROM 
+        employee e
+    LEFT JOIN 
+        adjustmentDetail ad 
+    ON 
+        e.employeeID = ad.employeeID AND ad.year = #{currentYear}
+	</select>
+	
 
 	
 
