@@ -95,9 +95,9 @@
                 <th rowspan="2">結果</th>
                 <td>
                     <div class="upload-area">
-                        <!-- 隐藏的文件输入框 -->
+
                         <input type="file" id="fileUpload" multiple class="file-input" onchange="updateFileList()" />
-                        <!-- 使用<button>元素的“ファイルを選択”按钮 -->
+
                         <button type="button" onclick="document.getElementById('fileUpload').click();">ファイルを選択</button>
                         <ul id="fileList" class="file-list"></ul>
                     </div>

@@ -33,8 +33,16 @@ public class AdjustmentRequestService {
     @Value("${file.storage.location}")
     private String rootLocation;
 
+    @Value("${file.request.location}")
+    private String requestFilesLocation;
+
     private Path getRootLocation() {
         return Paths.get(rootLocation);
+    }
+
+    // 新增方法：获取模板文件的保存路径
+    private Path getTemplatesLocation() {
+        return getRootLocation().resolve(requestFilesLocation);
     }
 
     /**
@@ -61,8 +69,11 @@ public class AdjustmentRequestService {
             throw new IllegalArgumentException("アップロードされたファイルが空です。");
         }
 
-        Path destinationFile = this.getRootLocation().resolve(Paths.get(file.getOriginalFilename())).normalize();
-        Files.createDirectories(destinationFile.getParent());
+        // 使用模板文件保存路径
+        Path templatesLocation = this.getTemplatesLocation();
+        Files.createDirectories(templatesLocation);
+
+        Path destinationFile = templatesLocation.resolve(file.getOriginalFilename()).normalize();
         Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
         String fileName = destinationFile.getFileName().toString();
@@ -119,7 +130,8 @@ public class AdjustmentRequestService {
      */
     public Resource loadFileAsResource(String fileName) {
         try {
-            Path filePath = this.getRootLocation().resolve(fileName).normalize();
+            // 从模板文件保存路径加载文件
+            Path filePath = this.getTemplatesLocation().resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() && resource.isReadable()) {
                 return resource;
