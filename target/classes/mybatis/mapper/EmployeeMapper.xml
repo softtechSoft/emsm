@@ -84,7 +84,7 @@
         e.employeeID,
         e.employeeName,
         COALESCE(ad.uploadStatus, '0:アップロード中') AS uploadStatus,
-        COALESCE(ad.adjustmentStatus, '0:未調整中') AS adjustmentStatus
+        COALESCE(ad.adjustmentStatus, '0:調整中') AS adjustmentStatus
     FROM 
         employee e
     LEFT JOIN 
