@@ -573,3 +573,86 @@ VALUES(employeeID1
 END IF;
 END
 
+
+--新規年末調整テーブル
+
+CREATE TABLE ems.adjustmentRequest (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `employeeID` VARCHAR(6) NOT NULL,
+    `employeeEmail` VARCHAR(255) NOT NULL,
+    `year` INT NOT NULL,
+    `insertDate` DATE NOT NULL,
+    `updateDate` DATE NOT NULL,
+    FOREIGN KEY (`employeeID`) REFERENCES `ems`.`employee`(`employeeID`) ON DELETE CASCADE,
+    INDEX(`year`, `employeeID`, `employeeEmail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE ems.adjustmentRequestFiles (
+    `fileID` INT AUTO_INCREMENT PRIMARY KEY,
+    `employeeID` VARCHAR(6),
+    `employeeEmail` VARCHAR(255) NOT NULL,
+    `fileName` VARCHAR(255) NOT NULL,
+    `fileYear` INT NOT NULL,
+    `fileULStatus` VARCHAR(50) NOT NULL,
+    `fileInsertDate` DATE NOT NULL,
+    `fileUpdateDate` DATE NOT NULL,
+    INDEX `idx_employee_id` (`employeeID`),
+    INDEX `idx_employee_email` (`employeeEmail`),
+    INDEX(`fileYear`, `fileName`),
+    FOREIGN KEY (`employeeID`) REFERENCES `ems`.`employee`(`employeeID`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE ems.adjustmentDetail(
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `employeeID` VARCHAR(6) NOT NULL,
+    `employeeEmail` VARCHAR(255) NOT NULL,
+    `year` VARCHAR(4) NOT NULL,
+    `uploadStatus` VARCHAR(50),
+    `adjustmentStatus` VARCHAR(50),
+    `insertDate` DATETIME,
+    `updateDate` DATETIME,
+    FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE,
+    INDEX(`year`, `employeeID`, `employeeEmail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE ems.adjustmentFile (
+    `fileID` INT AUTO_INCREMENT PRIMARY KEY,
+    `employeeID` VARCHAR(6) NOT NULL,
+    `employeeEmail` VARCHAR(255) NOT NULL,
+    `fileType` VARCHAR(255) NOT NULL,
+    `fileYear` INT NOT NULL,
+    `fileName` VARCHAR(255) NOT NULL,
+    `filePath` VARCHAR(255) NOT NULL,
+    FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+ALTER TABLE `adjustmentDetail`
+MODIFY COLUMN `adjustmentStatus` VARCHAR(50) DEFAULT '0:未調整';
+
+ALTER TABLE ems.adjustmentRequestFiles
+ADD CONSTRAINT uniq_employee_file UNIQUE (employeeID, fileYear, fileName);
+
+ALTER TABLE ems.adjustmentFile
+ADD CONSTRAINT uniq_employee_file UNIQUE (employeeID, fileYear, fileName);
+
+
+
+--年末調整画面をofcfunction表に挿入する
+INSERT INTO `ofcfunction` (
+    `functionID`,
+    `functionName`,
+    `functionText`,
+    `authority`,
+    `functionLink`,
+    `displayNo`,
+    `deleteFlg`,
+    `insertDate`,
+    `updateDate`,
+    `sysType`
+) VALUES 
+    ('B4', 'Adjustment', '&#xe681;&emsp;年末調整', '0', '/adjustment', '6', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '1'),
+    ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '1', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '0');
