@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,126 +19,161 @@ import com.softtech.mappers.AdjustmentRequestFilesMapper;
 import com.softtech.mappers.EmployeeMapper;
 
 /**
- * 調整申請サービス
+ * 年末調整申請サービス
+ * 
+ * このサービスクラスは、年末調整申請に関連するファイルのアップロード、保存、
+ * ファイルの取得、および従業員の年末調整状態の管理を担当します。
  */
 @Service
 public class AdjustmentRequestService {
 
     @Autowired
-    private AdjustmentRequestFilesMapper adjustmentRequestFilesMapper;
+    private AdjustmentRequestFilesMapper adjustmentRequestFilesMapper; // 年末調整申請ファイル情報を操作するマッパー
+
     @Autowired
-    private EmployeeMapper employeeMapper;
+    private EmployeeMapper employeeMapper; // 従業員情報を操作するマッパー
 
     @Value("${file.storage.location}")
-    private String rootLocation;
+    private String rootLocation; // ファイル保存のルートディレクトリパス
 
     @Value("${file.request.location}")
-    private String requestFilesLocation;
+    private String requestFilesLocation; // リクエストファイル保存のディレクトリパス
 
-    private Path getRootLocation() {
-        return Paths.get(rootLocation);
-    }
-
-    // 新增方法：获取模板文件的保存路径
+    /**
+     * テンプレートファイル格納先ディレクトリのパスを取得するメソッド
+     * 
+     * @return テンプレートファイル格納先ディレクトリのPathオブジェクト
+     */
+    // テンプレートファイル格納先ディレクトリを取得
     private Path getTemplatesLocation() {
-        return getRootLocation().resolve(requestFilesLocation);
+        return Paths.get(rootLocation).toAbsolutePath().normalize().resolve(requestFilesLocation);
     }
 
     /**
-     * ファイルをアップロードする
+     * ファイルをアップロードするメソッド
+     * 
+     * @param files    アップロードされたファイルの配列
+     * @param fileYear 年度（現在年度等）
+     * @throws IOException ファイルの保存中に発生する例外
      */
-    public void uploadFiles(MultipartFile[] files, String employeeID, String employeeEmail) throws IOException {
+    /**
+     * 年末調整申請ファイルをアップロードするメソッド
+     * 
+     * @param files    アップロードされたファイルの配列
+     * @param fileYear 年度（現在年度等）
+     * @throws IOException ファイルの保存中に発生する例外
+     */
+    public void uploadFiles(MultipartFile[] files, int fileYear) throws IOException {
         if (files == null || files.length == 0) {
-            throw new IllegalArgumentException("ファイルが選択されていません。");
+            throw new IllegalArgumentException("ファイルが選択されていません。"); // ファイルが選択されていない場合の例外
         }
-        int currentYear = java.time.LocalDate.now().getYear();
+
+        Files.createDirectories(getTemplatesLocation()); // テンプレートファイル保存ディレクトリを作成
+
         for (MultipartFile file : files) {
             if (!file.isEmpty()) {
-                storeFile(file, employeeID, employeeEmail, currentYear);
+                storeFile(file, fileYear); // 各ファイルを保存
             }
         }
     }
 
     /**
-     * ファイルを保存する
+     * ファイルを保存し、AdjustmentRequestFilesテーブルに登録または更新するメソッド
+     * 
+     * @param file     保存するファイル
+     * @param fileYear ファイルの年度
+     * @throws IOException ファイルの保存中に発生する例外
      */
-    private void storeFile(MultipartFile file, String employeeID, String employeeEmail, int fileYear)
-            throws IOException {
+    /**
+     * 年末調整申請ファイルを保存し、AdjustmentRequestFilesテーブルに登録または更新するメソッド
+     * 
+     * @param file     保存するファイル
+     * @param fileYear ファイルの年度
+     * @throws IOException ファイルの保存中に発生する例外
+     */
+    private void storeFile(MultipartFile file, int fileYear) throws IOException {
         if (file.isEmpty()) {
-            throw new IllegalArgumentException("アップロードされたファイルが空です。");
+            throw new IllegalArgumentException("アップロードされたファイルが空です。"); // ファイルが空の場合の例外
         }
 
-        // 使用模板文件保存路径
-        Path templatesLocation = this.getTemplatesLocation();
-        Files.createDirectories(templatesLocation);
+        Path templatesLocation = getTemplatesLocation(); // テンプレートファイル保存ディレクトリのパスを取得
+        Path destinationFile = templatesLocation.resolve(file.getOriginalFilename()).normalize(); // 保存先のファイルパスを設定
+        Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING); // ファイルをコピー
 
-        Path destinationFile = templatesLocation.resolve(file.getOriginalFilename()).normalize();
-        Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+        String fileName = destinationFile.getFileName().toString(); // ファイル名を取得
 
-        String fileName = destinationFile.getFileName().toString();
-
-        Date currentDate = new Date();
-
-        // 既存のレコードをチェックする
-        List<AdjustmentRequestFiles> existingFiles = adjustmentRequestFilesMapper
-                .selectByFileNameAndEmployeeIDAndYear(fileName, employeeID, fileYear);
-
+        // fileULStatusを'1'としてアップロード完了扱い
+        List<AdjustmentRequestFiles> existingFiles = adjustmentRequestFilesMapper.selectByFileNameAndYear(fileName, fileYear);
         if (existingFiles != null && !existingFiles.isEmpty()) {
-            // 既存のレコードを更新する
+            // 既存ファイルの更新
             AdjustmentRequestFiles existingFile = existingFiles.get(0);
-            existingFile.setEmployeeEmail(employeeEmail);
-            existingFile.setFileULStatus("1");
-            existingFile.setFileUpdateDate(currentDate);
-            adjustmentRequestFilesMapper.updateByEmployeeIDAndFileYearAndFileName(existingFile);
-
-            // 重複するレコードを削除する（もしあれば）
-            for (int i = 1; i < existingFiles.size(); i++) {
-                adjustmentRequestFilesMapper.deleteByFileID(existingFiles.get(i).getFileID());
-            }
+            existingFile.setFileULStatus("1"); // アップロードステータスを設定
+            existingFile.setFilePath(destinationFile.toString()); // ファイルパスを更新
+            adjustmentRequestFilesMapper.updateFileYearAndFileName(existingFile); // データベースを更新
         } else {
-            // 新しいレコードを挿入する
-            AdjustmentRequestFiles adjustmentFile = new AdjustmentRequestFiles();
-            adjustmentFile.setEmployeeID(employeeID);
-            adjustmentFile.setEmployeeEmail(employeeEmail);
-            adjustmentFile.setFileName(fileName);
-            adjustmentFile.setFileYear(fileYear);
-            adjustmentFile.setFileULStatus("1");
-            adjustmentFile.setFileInsertDate(currentDate);
-            adjustmentFile.setFileUpdateDate(currentDate);
-
-            adjustmentRequestFilesMapper.insert(adjustmentFile);
+            // 新規ファイルの挿入
+            AdjustmentRequestFiles newFile = new AdjustmentRequestFiles();
+            newFile.setFileName(fileName); // ファイル名を設定
+            newFile.setFileYear(fileYear); // ファイル年度を設定
+            newFile.setFileULStatus("1"); // アップロードステータスを設定
+            newFile.setFilePath(destinationFile.toString()); // ファイルパスを設定
+            adjustmentRequestFilesMapper.insert(newFile); // データベースに挿入
         }
     }
 
     /**
-     * 現在の年度のファイルを取得する（ステータスが1のもの）
+     * 現在の年度のファイルを取得するメソッド（ステータスが1のもの）
+     * 
+     * @param currentYear 現在の年度
+     * @return 現在の年度に対応する年末調整申請ファイルのリスト
+     */
+    /**
+     * 現在の年度の年末調整申請ファイルを取得するメソッド（ステータスが1のもの）
+     * 
+     * @param currentYear 現在の年度
+     * @return 現在の年度に対応する年末調整申請ファイルのリスト
      */
     public List<AdjustmentRequestFiles> getCurrentYearFilesWithStatusOne(int currentYear) {
-        return adjustmentRequestFilesMapper.findByYearAndStatus(currentYear, "1");
+        return adjustmentRequestFilesMapper.findByYearAndStatus(currentYear, "1"); // ステータスが"1"のファイルを取得
     }
 
     /**
-     * 全ての社員と調整状態を取得する
+     * 全ての社員と年末調整状態を取得するメソッド
+     * 
+     * @param currentYear 現在の年度
+     * @return 全ての社員と年末調整状態を含むマップのリスト
+     */
+    /**
+     * 全ての社員と年末調整状態を取得するメソッド
+     * 
+     * @param currentYear 現在の年度
+     * @return 全ての社員と年末調整状態を含むマップのリスト
      */
     public List<java.util.Map<String, Object>> getAllEmployeesWithAdjustmentStatuses(int currentYear) {
-        return employeeMapper.queryAllEmployeesWithAdjustmentStatuses(currentYear);
+        return employeeMapper.queryAllEmployeesWithAdjustmentStatuses(currentYear); // 全ての社員と年末調整状態を取得
     }
 
     /**
-     * ファイルをリソースとしてロードする
+     * ファイルをリソースとしてロードするメソッド
+     * 
+     * @param fileName ダウンロードするファイルの名前
+     * @return ダウンロード可能なリソース
+     */
+    /**
+     * 年末調整申請ファイルをリソースとしてロードするメソッド
+     * 
+     * @param fileName ダウンロードするファイルの名前
+     * @return ダウンロード可能なリソース
      */
     public Resource loadFileAsResource(String fileName) {
         try {
-            // 从模板文件保存路径加载文件
-            Path filePath = this.getTemplatesLocation().resolve(fileName).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
-            if (resource.exists() && resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("ファイルが見つかりません: " + fileName);
+            Path filePath = getTemplatesLocation().resolve(fileName).normalize(); // ファイルパスを構築
+            if (!Files.exists(filePath)) {
+                throw new RuntimeException("ファイルが見つかりません: " + fileName); // ファイルが存在しない場合の例外
             }
+            return new UrlResource(filePath.toUri()); // リソースとしてロード
         } catch (Exception e) {
-            throw new RuntimeException("ファイルのロードに失敗しました: " + fileName, e);
+            throw new RuntimeException("ファイルのロードに失敗しました: " + fileName, e); // ロード失敗時の例外
         }
     }
 }

@@ -1,84 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softtech.mappers.AdjustmentRequestFilesMapper">
 
-    <!-- ResultMap for AdjustmentRequestFiles -->
     <resultMap id="AdjustmentRequestFilesResultMap" type="com.softtech.entity.AdjustmentRequestFiles">
-        <id property="fileID" column="fileID" />
-        <result property="employeeID" column="employeeID" />
-        <result property="employeeEmail" column="employeeEmail" />
         <result property="fileName" column="fileName" />
         <result property="fileYear" column="fileYear" />
         <result property="fileULStatus" column="fileULStatus" />
-        <result property="fileInsertDate" column="fileInsertDate" />
-        <result property="fileUpdateDate" column="fileUpdateDate" />
+        <result property="filePath" column="filePath" />
     </resultMap>
 
-    <!-- SQL Statements -->
     <select id="selectAll" resultMap="AdjustmentRequestFilesResultMap">
         SELECT * FROM ems.adjustmentRequestFiles
-    </select>
-
-    <select id="selectByFileID" parameterType="Integer" resultMap="AdjustmentRequestFilesResultMap">
-        SELECT * FROM ems.adjustmentRequestFiles WHERE fileID = #{fileID}
     </select>
 
     <select id="selectByStatus" parameterType="String" resultMap="AdjustmentRequestFilesResultMap">
         SELECT * FROM ems.adjustmentRequestFiles WHERE fileULStatus = #{status}
     </select>
-    
+
     <select id="selectByStatusMapped" parameterType="String" resultType="map">
-    SELECT
-        fileID as "fileID",
-        employeeID as "employeeID",
-        employeeEmail as "employeeEmail",
-        fileName as "fileName",
-        fileYear as "fileYear",
-        fileULStatus as "fileULStatus"
-    FROM
-        ems.adjustmentRequestFiles
-    WHERE
-        fileULStatus = #{status}
-	</select>
-	
-	<select id="findByYearAndStatus" resultMap="AdjustmentRequestFilesResultMap">
-    SELECT * FROM ems.adjustmentRequestFiles
-    WHERE fileYear = #{year} AND fileULStatus = #{status}
-	</select>
-	
-    <!-- 查询所有匹配的记录 -->
-    <select id="selectByFileNameAndEmployeeIDAndYear" parameterType="map" resultMap="AdjustmentRequestFilesResultMap">
-        SELECT * FROM ems.adjustmentRequestFiles
-        WHERE fileName = #{fileName} AND employeeID = #{employeeID} AND fileYear = #{fileYear}
+        SELECT fileName as "fileName", fileYear as "fileYear", fileULStatus as "fileULStatus"
+        FROM ems.adjustmentRequestFiles
+        WHERE fileULStatus = #{status}
     </select>
 
-    <!-- 查询单条记录 -->
-    <select id="selectByFileNameAndEmployeeIDAndYearSingle" parameterType="map" resultMap="AdjustmentRequestFilesResultMap">
+    <select id="findByYearAndStatus" resultMap="AdjustmentRequestFilesResultMap">
         SELECT * FROM ems.adjustmentRequestFiles
-        WHERE fileName = #{fileName} AND employeeID = #{employeeID} AND fileYear = #{fileYear}
-        LIMIT 1
+        WHERE fileYear = #{year} AND fileULStatus = #{status}
     </select>
 
-	
-    
+    <select id="selectByFileNameAndYear" parameterType="map" resultMap="AdjustmentRequestFilesResultMap">
+        SELECT * FROM ems.adjustmentRequestFiles
+        WHERE fileName = #{fileName} AND fileYear = #{fileYear}
+    </select>
 
     <insert id="insert" parameterType="com.softtech.entity.AdjustmentRequestFiles">
-        INSERT INTO ems.adjustmentRequestFiles (employeeID, employeeEmail, fileName, fileYear, fileULStatus, fileInsertDate, fileUpdateDate)
-        VALUES (#{employeeID}, #{employeeEmail}, #{fileName}, #{fileYear}, #{fileULStatus}, #{fileInsertDate}, #{fileUpdateDate})
+        INSERT INTO ems.adjustmentRequestFiles (fileName, fileYear, fileULStatus, filePath)
+        VALUES (#{fileName}, #{fileYear}, #{fileULStatus}, #{filePath})
     </insert>
 
-    <update id="updateByEmployeeIDAndFileYearAndFileName" parameterType="com.softtech.entity.AdjustmentRequestFiles">
+    <update id="updateFileYearAndFileName" parameterType="com.softtech.entity.AdjustmentRequestFiles">
         UPDATE ems.adjustmentRequestFiles SET
-        employeeEmail = #{employeeEmail},
-        fileULStatus = #{fileULStatus},
-        fileInsertDate = #{fileInsertDate},
-        fileUpdateDate = #{fileUpdateDate}
-        WHERE employeeID = #{employeeID} AND fileYear = #{fileYear} AND fileName = #{fileName}
+            fileULStatus = #{fileULStatus},
+            filePath = #{filePath}
+        WHERE fileYear = #{fileYear} AND fileName = #{fileName}
     </update>
-
-    <delete id="deleteByFileID" parameterType="Integer">
-        DELETE FROM ems.adjustmentRequestFiles WHERE fileID = #{fileID}
-    </delete>
 
     <delete id="deleteByFileName" parameterType="String">
         DELETE FROM ems.adjustmentRequestFiles WHERE fileName = #{fileName}
