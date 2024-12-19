@@ -1,235 +1,237 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ page import="java.time.LocalDate"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>年末調整詳細</title>
-    <style>
-        /* テーブルコンテナのスタイル設定 */
-        .table-container {
-            width: 50%; /* 幅を50%に設定 */
-            margin-left: 20px; /* 左マージンを20pxに設定 */
-            margin-bottom: 20px; /* 下マージンを20pxに設定 */
-        }
+<meta charset="UTF-8">
+<title>年末調整詳細</title>
+<style>
+/* テーブルコンテナのスタイル設定 */
+.table-container {
+	width: 50%; /* 幅を50%に設定 */
+	margin-left: 20px; /* 左マージンを20pxに設定 */
+	margin-bottom: 20px; /* 下マージンを20pxに設定 */
+}
 
-        /* 見出し1のスタイル設定 */
-        h1 {
-            text-align: center; /* テキストを中央揃え */
-            font-size: 24px; /* フォントサイズを24pxに設定 */
-            font-weight: bold; /* フォントを太字に設定 */
-        }
+/* 見出し1のスタイル設定 */
+h1 {
+	text-align: center; /* テキストを中央揃え */
+	font-size: 24px; /* フォントサイズを24pxに設定 */
+	font-weight: bold; /* フォントを太字に設定 */
+}
 
-        /* テーブルのスタイル設定 */
-        table {
-            width: 100%; /* 幅を100%に設定 */
-            margin-top: 20px; /* 上マージンを20pxに設定 */
-            border-collapse: collapse; /* ボーダーを重ねて表示 */
-        }
+/* テーブルのスタイル設定 */
+table {
+	width: 100%; /* 幅を100%に設定 */
+	margin-top: 20px; /* 上マージンを20pxに設定 */
+	border-collapse: collapse; /* ボーダーを重ねて表示 */
+}
 
-        /* テーブルヘッダーとデータセルのスタイル設定 */
-        th, td {
-            border: 2px solid #b3cbde; /* ボーダーの色と太さを設定 */
-            padding: 15px; /* 内側の余白を15pxに設定 */
-            text-align: left; /* テキストを左揃え */
-        }
+/* テーブルヘッダーとデータセルのスタイル設定 */
+th, td {
+	border: 2px solid #b3cbde; /* ボーダーの色と太さを設定 */
+	padding: 15px; /* 内側の余白を15pxに設定 */
+	text-align: left; /* テキストを左揃え */
+}
 
-        /* テーブルヘッダーの特定スタイル設定 */
-        th {
-            height: 40px; /* 高さを40pxに設定 */
-            width: 20%; /* 幅を20%に設定 */
-        }
+/* テーブルヘッダーの特定スタイル設定 */
+th {
+	height: 40px; /* 高さを40pxに設定 */
+	width: 20%; /* 幅を20%に設定 */
+}
 
-        /* アップロードエリアのスタイル設定 */
-        .upload-area {
-            display: flex; /* フレックスボックスを使用 */
-            justify-content: space-between; /* アイテム間のスペースを均等に配置 */
-            align-items: center; /* アイテムを中央揃え */
-            margin-bottom: 20px; /* 下マージンを20pxに設定 */
-        }
+/* アップロードエリアのスタイル設定 */
+.upload-area {
+	display: flex; /* フレックスボックスを使用 */
+	justify-content: space-between; /* アイテム間のスペースを均等に配置 */
+	align-items: center; /* アイテムを中央揃え */
+	margin-bottom: 20px; /* 下マージンを20pxに設定 */
+}
 
-        /* ファイルリストのスタイル設定 */
-        .file-list {
-            list-style-type: disc; /* リストマーカーをディスクに設定 */
-            padding-left: 20px; /* 左パディングを20pxに設定 */
-            margin: 0; /* マージンを0に設定 */
-        }
+/* ファイルリストのスタイル設定 */
+.file-list {
+	list-style-type: disc; /* リストマーカーをディスクに設定 */
+	padding-left: 20px; /* 左パディングを20pxに設定 */
+	margin: 0; /* マージンを0に設定 */
+}
 
-        /* ファイルアイテムのスタイル設定 */
-        .file-item {
-            margin-bottom: 5px; /* 下マージンを5pxに設定 */
-        }
+/* ファイルアイテムのスタイル設定 */
+.file-item {
+	margin-bottom: 5px; /* 下マージンを5pxに設定 */
+}
 
-        /* ファイル入力フィールドのスタイル設定 */
-        .file-input {
-            display: none; /* 非表示に設定 */
-        }
+/* ファイル入力フィールドのスタイル設定 */
+.file-input {
+	display: none; /* 非表示に設定 */
+}
 
-        /* ボタンのスタイル設定 */
-        button {
-            border-radius: px;
-            padding: 3px 7px; /* 内側の余白を3px上、下、7px左右に設定 */
-            font-size: 13px; /* フォントサイズを13pxに設定 */
-            cursor: pointer; /* カーソルをポインターに設定 */
-            margin: 5px; /* マージンを5pxに設定 */
-        }
+/* ボタンのスタイル設定 */
+button {
+	border-radius: px;
+	padding: 3px 7px; /* 内側の余白を3px上、下、7px左右に設定 */
+	font-size: 13px; /* フォントサイズを13pxに設定 */
+	cursor: pointer; /* カーソルをポインターに設定 */
+	margin: 5px; /* マージンを5pxに設定 */
+}
 
-        /* 削除ボタンのスタイル設定 */
-        .delete-btn {
-            margin-left: 10px; /* 左マージンを10pxに設定 */
-            cursor: pointer; /* カーソルをポインターに設定 */
-        }
+/* 削除ボタンのスタイル設定 */
+.delete-btn {
+	margin-left: 10px; /* 左マージンを10pxに設定 */
+	cursor: pointer; /* カーソルをポインターに設定 */
+}
 
-        /* ボタンコンテナのスタイル設定 */
-        .button-container {
-            text-align: right; /* テキストを右揃え */
-            padding-right: 10px; /* 右パディングを10pxに設定 */
-            padding-top: 10px; /* 上パディングを10pxに設定 */
-        }
+/* ボタンコンテナのスタイル設定 */
+.button-container {
+	text-align: right; /* テキストを右揃え */
+	padding-right: 10px; /* 右パディングを10pxに設定 */
+	padding-top: 10px; /* 上パディングを10pxに設定 */
+}
 
-        /* ファイルがない場合のメッセージスタイル設定 */
-        .no-file-message {
-            font-weight: bold; /* フォントを太字に設定 */
-        }
+/* ファイルがない場合のメッセージスタイル設定 */
+.no-file-message {
+	font-weight: bold; /* フォントを太字に設定 */
+}
 
-        /* ファイルセルのスタイル設定 */
-        .file-cell {
-            padding-left: 15px; /* 左パディングを15pxに設定 */
-        }
-    </style>
+/* ファイルセルのスタイル設定 */
+.file-cell {
+	padding-left: 15px; /* 左パディングを15pxに設定 */
+}
+</style>
 </head>
 <body>
-    <div class="table-container">
-        <h1>年末調整</h1>
-        <!-- 年度と社員名を表示するテーブル -->
-        <table>
-            <tr>
-                <th>年度</th>
-                <td>${currentYear}</td> <!-- 現在の年度を表示 -->
-            </tr>
+	<div class="table-container">
+		<h1>年末調整</h1>
+		<!-- 年度と社員名を表示するテーブル -->
+		<table>
+			<tr>
+				<th>年度</th>
+				<td>${currentYear}</td>
+				<!-- 現在の年度を表示 -->
+			</tr>
 
-            <tr>
-                <th>社員名</th>
-                <td>${employeeName}</td> <!-- 社員の名前を表示 -->
-            </tr>
+			<tr>
+				<th>社員名</th>
+				<td>${employeeName}</td>
+				<!-- 社員の名前を表示 -->
+			</tr>
 
-            <tr>
-                <th>アップ済み</th>
-                <td class="file-cell" id="detailFilesContainer">
-                    <c:choose>
-                        <c:when test="${not empty detailFiles}">
-                            <!-- アップ済みファイルが存在する場合のリスト表示 -->
-                            <ul class="file-list">
-                                <c:forEach var="file" items="${detailFiles}">
-                                    <li>
-                                        <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/downloadFileDirect?filePath=${file.filePath}">
-                                            ${file.fileName} <!-- ファイル名を表示 -->
-                                        </a>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </c:when>
-                        <c:otherwise>
-                            <!-- アップ済みファイルがない場合のメッセージ表示 -->
-                            <span class="no-file-message">ファイルがありません</span>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </table>
+			<tr>
+				<th>アップ済み</th>
+				<td class="file-cell" id="detailFilesContainer"><c:choose>
+						<c:when test="${not empty detailFiles}">
+							<!-- アップ済みファイルが存在する場合のリスト表示 -->
+							<ul class="file-list">
+								<c:forEach var="file" items="${detailFiles}">
+									<li><a
+										href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/detailType/${file.fileYear}/${file.employeeID}/${file.fileName}">
+											${file.fileName} </a></li>
+								</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<!-- アップ済みファイルがない場合のメッセージ表示 -->
+							<span class="no-file-message">ファイルがありません</span>
+						</c:otherwise>
+					</c:choose></td>
+			</tr>
+		</table>
 
-        <!-- 結果に関するアップロードと表示を行うテーブル -->
-        <table>
-            <tr>
-                <th rowspan="2">結果</th> <!-- 結果の見出しを2行にまたがる -->
-                <td class="file-cell">
-                    <div class="upload-area">
-                        <input type="file" id="fileUpload" multiple class="file-input" onchange="updateFileList()" /> <!-- ファイル入力フィールド -->
-                        <button type="button" onclick="document.getElementById('fileUpload').click();">ファイルを選択</button> <!-- ファイル選択ボタン -->
-                        <button type="button" onclick="submitFiles()" id="uploadBtn">アップロード</button> <!-- アップロードボタン -->
-                    </div>
-                    <ul id="fileList" class="file-list"></ul> <!-- アップロードしたファイルのリスト表示 -->
-                </td>
-            </tr>
-            <tr>
-                <td class="file-cell" id="uploadedFiles">
-                    <c:choose>
-                        <c:when test="${not empty resultFiles}">
-                            <!-- 結果ファイルが存在する場合のリスト表示 -->
-                            <ul class="file-list">
-                                <c:forEach var="file" items="${resultFiles}">
-                                    <li>
-                                        <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/downloadFileDirect?filePath=${file.filePath}">
-                                            ${file.fileName} <!-- ファイル名を表示 -->
-                                        </a>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </c:when>
-                        <c:otherwise>
-                            <!-- 結果ファイルがない場合のメッセージ表示 -->
-                            <span class="no-file-message">ファイルがありません</span>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </table>
+		<!-- 結果に関するアップロードと表示を行うテーブル -->
+		<table>
+			<tr>
+				<th rowspan="2">結果</th>
+				<!-- 結果の見出しを2行にまたがる -->
+				<td class="file-cell">
+					<div class="upload-area">
+						<input type="file" id="fileUpload" multiple class="file-input"
+							onchange="updateFileList()" />
+						<!-- ファイル入力フィールド -->
+						<button type="button"
+							onclick="document.getElementById('fileUpload').click();">ファイルを選択</button>
+						<!-- ファイル選択ボタン -->
+						<button type="button" onclick="submitFiles()" id="uploadBtn">アップロード</button>
+						<!-- アップロードボタン -->
+					</div>
+					<ul id="fileList" class="file-list"></ul> <!-- アップロードしたファイルのリスト表示 -->
+				</td>
+			</tr>
+			<tr>
+				<td class="file-cell" id="uploadedFiles"><c:choose>
+						<c:when test="${not empty resultFiles}">
+							<!-- 結果ファイルが存在する場合のリスト表示 -->
+							<ul class="file-list">
+								<c:forEach var="file" items="${resultFiles}">
+									<li><a
+										href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/resultType/${file.fileYear}/${file.employeeID}/${file.fileName}">
+											${file.fileName} </a></li>
+								</c:forEach>
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<!-- 結果ファイルがない場合のメッセージ表示 -->
+							<span class="no-file-message">ファイルがありません</span>
+						</c:otherwise>
+					</c:choose></td>
+			</tr>
+		</table>
 
-        <!-- 調整完了ボタンを配置するコンテナ -->
-        <div class="button-container">
-            <button type="button" onclick="finalizeAdjustment()">調整完了</button> <!-- 調整完了ボタン -->
-        </div>
+		<!-- 調整完了ボタンを配置するコンテナ -->
+		<div class="button-container">
+			<button type="button" onclick="finalizeAdjustment()">調整完了</button>
+			<!-- 調整完了ボタン -->
+		</div>
 
-        <!-- 以前のファイルを参照するテーブル -->
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="2" style="text-align: center;">以前ファイル参照</th> <!-- テーブル見出し -->
-                </tr>
-                <tr>
-                    <th>年度</th>
-                    <td>
-                        <select id="yearSelect" onchange="loadFilesForSelectedYear()"> <!-- 年度選択ドロップダウン -->
-                            <c:forEach var="year" items="${yearList}">
-                                <option value="${year}">${year}</option> <!-- 年度の選択肢 -->
-                            </c:forEach>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>ファイル</th>
-                    <td class="file-cell" id="pastFilesContainer">
-                        <c:choose>
-                            <c:when test="${not empty pastFiles}">
-                                <!-- 過去のファイルが存在する場合のリスト表示 -->
-                                <ul class="file-list">
-                                    <c:forEach var="file" items="${pastFiles}">
-                                        <li>
-                                            <a href="${pageContext.request.contextPath}/adjustmentInfoEdit/downloadFileDirect?filePath=${file.filePath}">
-                                                ${file.fileName} <!-- ファイル名を表示 -->
-                                            </a>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </c:when>
-                            <c:otherwise>
-                                <!-- 過去のファイルがない場合のメッセージ表示 -->
-                                <span class="no-file-message">ファイルがありません</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+		<!-- 以前のファイルを参照するテーブル -->
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2" style="text-align: center;">以前ファイル参照</th>
+					<!-- テーブル見出し -->
+				</tr>
+				<tr>
+					<th>年度</th>
+					<td><select id="yearSelect"
+						onchange="loadFilesForSelectedYear()">
+							<!-- 年度選択ドロップダウン -->
+							<c:forEach var="year" items="${yearList}">
+								<option value="${year}">${year}</option>
+								<!-- 年度の選択肢 -->
+							</c:forEach>
+					</select></td>
+				</tr>
+				<tr>
+					<th>ファイル</th>
+					<td class="file-cell" id="pastFilesContainer"><c:choose>
+							<c:when test="${not empty pastFiles}">
+								<!-- 過去のファイルが存在する場合のリスト表示 -->
+								<ul class="file-list">
+									<c:forEach var="file" items="${pastFiles}">
+										<li><a
+											href="${pageContext.request.contextPath}/adjustmentInfoEdit/downloadFileDirect?filePath=${file.filePath}">
+												${file.fileName} <!-- ファイル名を表示 -->
+										</a></li>
+									</c:forEach>
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<!-- 過去のファイルがない場合のメッセージ表示 -->
+								<span class="no-file-message">ファイルがありません</span>
+							</c:otherwise>
+						</c:choose></td>
+				</tr>
+			</thead>
+		</table>
 
-        <!-- 戻るボタンを中央に配置 -->
-        <div style="text-align: center; margin-top: 20px;">
-            <button type="button" onclick="window.location.href='${pageContext.request.contextPath}/adjustmentList'">戻る</button> <!-- 戻るボタン -->
-        </div>
-    </div>
-    <script>
+		<!-- 戻るボタンを中央に配置 -->
+		<div style="text-align: center; margin-top: 20px;">
+			<button type="button"
+				onclick="window.location.href='${pageContext.request.contextPath}/adjustmentList'">戻る</button>
+			<!-- 戻るボタン -->
+		</div>
+	</div>
+	<script>
         // コンテキストパスと社員IDをJavaScript変数に設定
         var currentYear = '${currentYear}';
         var contextPath = '${pageContext.request.contextPath}';
@@ -257,7 +259,7 @@
                             const li = document.createElement('li');
                             const link = document.createElement('a');
                             // ダウンロードリンクを設定
-                            link.href = contextPath + '/adjustmentInfoEdit/downloadFileDirect?filePath=' + encodeURIComponent(file.filePath);
+                            link.href = contextPath + '/adjustmentInfoEdit/download/resultType/' + file.fileYear + '/' + employeeId + '/' + encodeURIComponent(file.fileName);
                             link.textContent = file.fileName; // ファイル名を表示
                             li.appendChild(link);
                             ul.appendChild(li);

@@ -1,11 +1,14 @@
 package com.softtech.controller;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,13 +87,17 @@ public class AdjustmentRequestController {
         try {
             // 指定されたファイルをリソースとして取得
             Resource resource = adjustmentRequestService.loadFileAsResource(fileName);
-            // ファイルをダウンロード可能なレスポンスを返す
+            
+            ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
+                    .filename(fileName, StandardCharsets.UTF_8)
+                    .build();
+            
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(resource);
         } catch (Exception e) {
-            // ファイルが見つからない場合、404レスポンスを返す
+            // ファイルが見つからない場合は404レスポンスを返す
             return ResponseEntity.notFound().build();
         }
     }

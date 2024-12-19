@@ -226,16 +226,23 @@ public class AdjustmentInfoEditService {
      */
     public Resource loadFileAsResource(String fileType, int fileYear, String employeeId, String filename) {
         try {
-            // ファイルのパスを構築
-            Path file = getRootLocation().resolve(Paths.get(String.valueOf(fileYear), employeeId, fileType, filename));
-            if (Files.exists(file)) {
-                Resource resource = new UrlResource(file.toUri()); // リソースとしてロード
-                return resource; // リソースを返す
-            } else {
-                throw new RuntimeException("ファイルが見つかりません: " + filename); // ファイルが存在しない場合は例外を投げる
+            // DBからファイル情報を取得
+            AdjustmentFile fileRecord = adjustmentFileMapper.findByEmployeeIDAndYearAndFileName(employeeId, fileYear, filename, fileType);
+            if (fileRecord == null) {
+                throw new RuntimeException("ファイル情報がデータベースに存在しません: " + filename);
             }
+
+            // DBに保存されているfilePathを使用
+            Path filePath = Paths.get(fileRecord.getFilePath());
+            if (!Files.exists(filePath)) {
+                throw new RuntimeException("実ファイルが見つかりません: " + filename + " パス: " + filePath);
+            }
+
+            Resource resource = new UrlResource(filePath.toUri());
+            return resource;
+
         } catch (Exception e) {
-            throw new RuntimeException("ファイルのロードに失敗しました: " + filename, e); // ロード失敗時に例外を投げる
+            throw new RuntimeException("ファイルのロードに失敗しました: " + filename, e);
         }
     }
     

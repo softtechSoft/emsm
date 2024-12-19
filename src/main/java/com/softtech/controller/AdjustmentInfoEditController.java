@@ -1,8 +1,6 @@
 package com.softtech.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +8,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,13 +122,18 @@ public class AdjustmentInfoEditController {
         try {
             // 指定されたファイルをリソースとして取得
             Resource resource = adjustmentInfoEditService.loadFileAsResource(fileType, fileYear, employeeID, filename);
-            // ファイルをダウンロード可能なレスポンスを返す
+            
+            
+            ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
+                    .filename(filename, StandardCharsets.UTF_8)
+                    .build();
+            
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
                     .body(resource);
         } catch (Exception e) {
-            // ファイルが見つからない場合、404レスポンスを返す
+            // ファイルが見つからない場合は404レスポンスを返す
             return ResponseEntity.notFound().build();
         }
     }
@@ -178,31 +182,31 @@ public class AdjustmentInfoEditController {
         }
     }
 
-    /**
-     * ファイルを直接ダウンロードするメソッド
-     * 
-     * @param filePath ダウンロードするファイルのパス
-     * @return ダウンロードファイルを含むレスポンスエンティティ
-     */
-    @GetMapping("/downloadFileDirect")
-    @ResponseBody
-    public ResponseEntity<Resource> downloadFileDirect(@RequestParam("filePath") String filePath) {
-        try {
-            Path path = Paths.get(filePath); // ファイルパスを取得
-            if (!Files.exists(path)) {
-                return ResponseEntity.notFound().build(); // ファイルが存在しない場合、404レスポンスを返す
-            }
-            // ファイルをリソースとして取得
-            Resource resource = new UrlResource(path.toUri());
-            // ファイルをダウンロード可能なレスポンスを返す
-            return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
-        } catch (Exception e) {
-            // エラーが発生した場合、404レスポンスを返す
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    /**
+//     * ファイルを直接ダウンロードするメソッド
+//     * 
+//     * @param filePath ダウンロードするファイルのパス
+//     * @return ダウンロードファイルを含むレスポンスエンティティ
+//     */
+//    @GetMapping("/downloadFileDirect")
+//    @ResponseBody
+//    public ResponseEntity<Resource> downloadFileDirect(@RequestParam("filePath") String filePath) {
+//        try {
+//            Path path = Paths.get(filePath); // ファイルパスを取得
+//            if (!Files.exists(path)) {
+//                return ResponseEntity.notFound().build(); // ファイルが存在しない場合、404レスポンスを返す
+//            }
+//            // ファイルをリソースとして取得
+//            Resource resource = new UrlResource(path.toUri());
+//            // ファイルをダウンロード可能なレスポンスを返す
+//            return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                .body(resource);
+//        } catch (Exception e) {
+//            // エラーが発生した場合、404レスポンスを返す
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
     /**
      * レスポンスメッセージを作成するメソッド
