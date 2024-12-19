@@ -603,8 +603,10 @@ CREATE TABLE ems.adjustmentRequestFiles (
     `fileName` VARCHAR(255) NOT NULL,
     `fileYear` INT NOT NULL,
     `fileULStatus` VARCHAR(50) NOT NULL DEFAULT '0',
-    `filePath` VARCHAR(255) NOT NULL
+    `filePath` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`fileName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 ALTER TABLE ems.adjustmentFile 
 ADD CONSTRAINT uniq_employee_file 
