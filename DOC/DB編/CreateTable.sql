@@ -575,7 +575,6 @@ END
 
 
 --新規年末調整テーブル
-
 CREATE TABLE ems.adjustmentDetail (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `employeeID` VARCHAR(6) NOT NULL,
@@ -607,23 +606,18 @@ CREATE TABLE ems.adjustmentRequestFiles (
     `filePath` VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-
 ALTER TABLE ems.adjustmentFile 
 ADD CONSTRAINT uniq_employee_file 
 UNIQUE (employeeID, fileYear, fileName, fileType);
-
-
 ALTER TABLE ems.adjustmentFile 
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (employeeID, fileType, fileYear, fileName);
 
-
-
-
-
 --年末調整画面をofcfunction表に挿入する
-INSERT INTO `ofcfunction` (
+ALTER TABLE ems.ofcfunction
+MODIFY COLUMN functionName VARCHAR(20);
+
+INSERT INTO ems.ofcfunction (
     `functionID`,
     `functionName`,
     `functionText`,
@@ -636,4 +630,4 @@ INSERT INTO `ofcfunction` (
     `sysType`
 ) VALUES 
     ('B4', 'Adjustment', '&#xe681;&emsp;年末調整', '0', '/adjustment', '6', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '1'),
-    ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '1', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '0');
+    ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '0');
