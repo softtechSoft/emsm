@@ -122,42 +122,37 @@
 		    <artifactId>assertj-core</artifactId>
 		    <scope>test</scope>
 		</dependency>
-		
-		<dependency>
-    <groupId>org.fusesource.jansi</groupId>
-    <artifactId>jansi</artifactId>
-    <version>1.18</version>
+
+	<dependency>
+    	<groupId>org.fusesource.jansi</groupId>
+    	<artifactId>jansi</artifactId>
+    	<version>1.17.1</version>
 	</dependency>
-	
 
+	<!--poi-ooxml 包提供对后缀名 .xlsx 的 Excel 文件的支持-->
+   	<!-- Apache POI - poi -->
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi</artifactId>
+	    <version>5.2.1</version> <!-- Replace with the latest version -->
+	</dependency>
 
-
-
-
-		<!--poi-ooxml 包提供对后缀名 .xlsx 的 Excel 文件的支持-->
-    	<!-- Apache POI - poi -->
-		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi</artifactId>
-		    <version>5.2.1</version> <!-- Replace with the latest version -->
-		</dependency>
-
-		<!-- Apache POI - poi-ooxml -->
-		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml</artifactId>
-		    <version>5.2.1</version> <!-- Replace with the latest version -->
-		</dependency>
-	    <dependency>
-	        <groupId>org.apache.xmlbeans</groupId>
-	        <artifactId>xmlbeans</artifactId>
-	        <version>5.1.1</version>
-	    </dependency>
-	    <dependency>
-	        <groupId>org.apache.commons</groupId>
-	        <artifactId>commons-collections4</artifactId>
-	        <version>4.4</version>
-	    </dependency>
+	<!-- Apache POI - poi-ooxml -->
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-ooxml</artifactId>
+	    <version>5.2.1</version> <!-- Replace with the latest version -->
+	</dependency>
+    <dependency>
+        <groupId>org.apache.xmlbeans</groupId>
+        <artifactId>xmlbeans</artifactId>
+        <version>5.1.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.4</version>
+    </dependency>
     <!-- 其他依赖项 -->
 
 		<!--pdf生成するため-->
