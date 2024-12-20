@@ -147,12 +147,18 @@ button {
 					<div class="upload-area">
 						<input type="file" id="fileUpload" multiple class="file-input"
 							onchange="updateFileList()" />
-						<!-- ファイル入力フィールド -->
+						<!-- ファイル選択ボタン、adjustmentStatusが1の場合はdisabled -->
 						<button type="button"
-							onclick="document.getElementById('fileUpload').click();">ファイルを選択</button>
-						<!-- ファイル選択ボタン -->
-						<button type="button" onclick="submitFiles()" id="uploadBtn">アップロード</button>
-						<!-- アップロードボタン -->
+							onclick="document.getElementById('fileUpload').click();"
+							<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>ファイルを選択</button>
+						<!-- アップロードボタン、adjustmentStatusが1の場合はdisabled -->
+						<button type="button" onclick="submitFiles()" id="uploadBtn"
+							<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+							<c:choose>
+								<c:when test="${adjustmentStatus == '1'}">アップロード済み</c:when>
+								<c:otherwise>アップロード</c:otherwise>
+							</c:choose>
+						</button>
 					</div>
 					<ul id="fileList" class="file-list"></ul> <!-- アップロードしたファイルのリスト表示 -->
 				</td>
@@ -179,8 +185,13 @@ button {
 
 		<!-- 調整完了ボタンを配置するコンテナ -->
 		<div class="button-container">
-			<button type="button" onclick="finalizeAdjustment()">調整完了</button>
-			<!-- 調整完了ボタン -->
+			<button type="button" onclick="finalizeAdjustment()"
+				<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+				<c:choose>
+					<c:when test="${adjustmentStatus == '1'}">確定済み</c:when>
+					<c:otherwise>調整完了</c:otherwise>
+				</c:choose>
+			</button>
 		</div>
 
 		<!-- 以前のファイルを参照するテーブル -->
@@ -345,27 +356,52 @@ button {
         /**
          * 調整を確定する関数
          */
-        function finalizeAdjustment() {
-            fetch(contextPath + '/adjustmentInfoEdit/finalizeAdjustment?employeeId=' + employeeId, {
-                method: 'POST'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(errData.message || '調整完了に失敗しました'); // エラーメッセージを取得
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert(data.message || "調整完了しました！"); // 成功メッセージを表示
-                location.reload(); // ページをリロード
-            })
-            .catch(error => {
-                alert('調整完了に失敗しました: ' + error.message); // エラーメッセージを表示
-                console.error('Finalize error:', error); // コンソールにエラーログを出力
-            });
-        }
+         function finalizeAdjustment() {
+        	    if (!confirm('注意：一旦確定すると、再アップロードはできなくなります。')) { 
+        	        return;
+        	    }
+        	    fetch(contextPath + '/adjustmentInfoEdit/finalizeAdjustment?employeeId=' + employeeId, {
+        	        method: 'POST'
+        	    })
+        	    .then(response => response.json())
+        	    .then(data => {
+        	        if (data.message) {
+        	            // data.messageが成功メッセージの場合のみ以下の処理を実行
+        	            if (data.message.indexOf("完了しました") !== -1) {
+        	                alert(data.message);
+
+        	                // 禁用上传按钮
+        	                const uploadBtn = document.getElementById('uploadBtn');
+        	                if (uploadBtn) {
+        	                    uploadBtn.disabled = true;
+        	                    uploadBtn.textContent = 'アップロード済み';
+        	                }
+
+        	                // 禁用ファイル選択ボタン
+        	                const fileSelectBtn = document.querySelector('.upload-area button:nth-of-type(1)');
+        	                if (fileSelectBtn) {
+        	                    fileSelectBtn.disabled = true;
+        	                }
+
+        	                // 禁用確定按钮
+        	                const finalizeBtn = document.querySelector('.button-container button');
+        	                if (finalizeBtn) {
+        	                    finalizeBtn.disabled = true;
+        	                    finalizeBtn.textContent = '確定済み';
+        	                }
+        	            } else {
+        	                // 若message中包含失败信息，则提示并不锁定按钮
+        	                alert(data.message);
+        	            }
+        	        } else if (data.error) {
+        	            alert(data.error);
+        	        }
+        	    })
+        	    .catch(error => {
+        	        console.error("Processing failed: ", error);
+        	        alert('調整完了に失敗しました: ' + error.message);
+        	    });
+        	}
     </script>
 </body>
 </html>

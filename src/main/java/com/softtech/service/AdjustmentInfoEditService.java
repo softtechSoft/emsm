@@ -247,6 +247,17 @@ public class AdjustmentInfoEditService {
     }
     
     /**
+     * AdjustmentDetailを取得するメソッド
+     * 
+     * @param employeeId 従業員ID
+     * @param year       年度
+     * @return AdjustmentDetailオブジェクト
+     */
+    public AdjustmentDetail getAdjustmentDetailByEmployeeIdAndYear(String employeeId, String year) {
+        return adjustmentDetailMapper.findByEmployeeIdAndYear(employeeId, year);
+    }
+
+    /**
      * 年末調整を確定するメソッド
      * 
      * @param employeeId 確定対象の従業員ID
@@ -260,7 +271,8 @@ public class AdjustmentInfoEditService {
         int currentYear = java.time.LocalDate.now().getYear(); // 現在の年度を取得
 
         // 現在の年度でAdjustmentDetailを検索
-        AdjustmentDetail detail = adjustmentDetailMapper.findByEmployeeIdAndYear(employeeID, String.valueOf(currentYear));
+        AdjustmentDetail detail = adjustmentDetailMapper.findByEmployeeIdAndYear(employeeID,
+                String.valueOf(currentYear));
         if (detail == null) {
             // AdjustmentDetailが存在しない場合、新規作成
             detail = new AdjustmentDetail();
@@ -279,5 +291,6 @@ public class AdjustmentInfoEditService {
             adjustmentDetailMapper.update(detail); // 既存レコードを更新
         }
     }
+
 
 }

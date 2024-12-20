@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.softtech.entity.AdjustmentDetail;
 import com.softtech.entity.AdjustmentFile;
 import com.softtech.entity.Employee;
 import com.softtech.service.AdjustmentInfoEditService;
@@ -38,6 +39,7 @@ public class AdjustmentInfoEditController {
 
     @Autowired
     private AdjustmentInfoEditService adjustmentInfoEditService; // 調整情報編集サービスの注入
+   
 
     /**
      * 年末調整情報編集ページを表示するメソッド
@@ -79,6 +81,13 @@ public class AdjustmentInfoEditController {
             yearList.add(currentYear - i);
         }
         model.addAttribute("yearList", yearList);
+        
+     // AdjustmentDetailを取得し、adjustmentStatusを設定
+        AdjustmentDetail detail = adjustmentInfoEditService.getAdjustmentDetailByEmployeeIdAndYear(employee.getEmployeeID(),
+                String.valueOf(currentYear));
+        String adjustmentStatus = (detail == null || detail.getAdjustmentStatus() == null) ? "0"
+                : detail.getAdjustmentStatus();
+        model.addAttribute("adjustmentStatus", adjustmentStatus);
 
         return "adjustmentInfoEdit"; // 年末調整情報編集ページのビュー名を返す
     }
@@ -173,11 +182,25 @@ public class AdjustmentInfoEditController {
     @ResponseBody
     public ResponseEntity<?> finalizeAdjustment(@RequestParam("employeeId") String employeeId) {
         try {
-            // 調整の確定処理を実行
+            // 先にuploadStatusを確認する
+            Employee employee = adjustmentInfoEditService.getEmployeeById(employeeId); 
+            if (employee == null) {
+                return ResponseEntity.badRequest().body(createResponse("指定された社員が存在しません。"));
+            }
+            String employeeID = employee.getEmployeeID();
+            int currentYear = java.time.LocalDate.now().getYear();
+
+            // 現在の年度でAdjustmentDetailを検索
+            AdjustmentDetail detail = adjustmentInfoEditService.getAdjustmentDetailByEmployeeIdAndYear(employeeID, String.valueOf(currentYear));
+            // detailが存在しないか、uploadStatusが1でない場合はエラー
+            if (detail == null || !"1".equals(detail.getUploadStatus())) {
+                return ResponseEntity.badRequest().body(createResponse("該当社員はファイルがまだアップロードされていません。調整完了できません。"));
+            }
+
+            // 問題がなければ調整の確定処理を実行
             adjustmentInfoEditService.finalizeAdjustment(employeeId);
             return ResponseEntity.ok(createResponse("調整完了しました！"));
         } catch (Exception e) {
-            // エラーが発生した場合、エラーメッセージを返す
             return ResponseEntity.badRequest().body(createResponse("調整完了に失敗しました: " + e.getMessage()));
         }
     }
