@@ -89,4 +89,12 @@ public interface AdjustmentRequestFilesMapper {
      * @return 更新に成功した場合は1、失敗した場合は0
      */
     int updateFileYearAndFileName(AdjustmentRequestFiles adjustmentRequestFiles);
+    
+    
+    AdjustmentRequestFiles findByFileName(@Param("fileName") String fileName);
+    
+    int updateStatusByYear(@Param("year") int year, @Param("status") String status);
+    
+    List<AdjustmentRequestFiles> findByYearAllStatus(@Param("year") int year);
+
 }

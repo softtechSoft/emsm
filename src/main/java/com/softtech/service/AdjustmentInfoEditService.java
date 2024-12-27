@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -259,8 +260,6 @@ public class AdjustmentInfoEditService {
 
     /**
      * 年末調整を確定するメソッド
-     * 
-     * @param employeeId 確定対象の従業員ID
      */
     public void finalizeAdjustment(String employeeId) {
         Employee employee = getEmployeeById(employeeId); // 従業員情報を取得
@@ -279,7 +278,7 @@ public class AdjustmentInfoEditService {
             detail.setEmployeeID(employeeID);
             detail.setEmployeeEmail(employee.getMailAdress());
             detail.setYear(String.valueOf(currentYear));
-            detail.setUploadStatus("0"); // アップロードステータスを設定
+            detail.setUploadStatus("0"); // アップロードステータスを設定（確定後はアップロード不可）
             detail.setAdjustmentStatus("1"); // 調整ステータスを確定
             detail.setInsertDate(new Date()); // 挿入日時を設定
             detail.setUpdateDate(new Date()); // 更新日時を設定
@@ -290,7 +289,49 @@ public class AdjustmentInfoEditService {
             detail.setUpdateDate(new Date()); // 更新日時を設定
             adjustmentDetailMapper.update(detail); // 既存レコードを更新
         }
+
+        // 調整確定後、ファイルの削除を無効化するためにファイルステータスを確定済みに更新
+        adjustmentFileMapper.updateFileStatusByEmployeeIDAndYear(Map.of(
+            "employeeID", employeeID,
+            "fileYear", currentYear,
+            "fileType", "resultType",
+            "newStatus", "1" // "1" は確定済み
+        ));
     }
+
+    /**
+     * 指定されたファイルを削除するメソッド
+     */
+    public void deleteFile(String employeeID, int fileYear, String fileName, String fileType) {
+        // 1) AdjustmentDetailが確定済みか確認
+        AdjustmentDetail detail = adjustmentDetailMapper.findByEmployeeIdAndYear(employeeID, String.valueOf(fileYear));
+        if (detail != null && "1".equals(detail.getAdjustmentStatus())) {
+            throw new RuntimeException("調整が既に確定されているため、ファイルを削除できません。");
+        }
+
+        // 2) DBにファイルがあるかチェック
+        AdjustmentFile fileRecord = adjustmentFileMapper.findByEmployeeIDAndYearAndFileName(employeeID, fileYear, fileName, fileType);
+        if (fileRecord == null) {
+            throw new RuntimeException("削除対象のファイルが見つかりません: " + fileName);
+        }
+
+        // 3) DBから削除
+        int affected = adjustmentFileMapper.deleteFile(employeeID, fileYear, fileName, fileType);
+        if (affected == 0) {
+            throw new RuntimeException("ファイルレコードを削除できませんでした: " + fileName);
+        }
+
+        // 4) 物理ファイルを削除
+        Path filePath = Paths.get(fileRecord.getFilePath());
+        try {
+            if (Files.exists(filePath)) {
+                Files.delete(filePath);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("物理ファイルの削除に失敗しました: " + filePath, e);
+        }
+    }
+
 
 
 }

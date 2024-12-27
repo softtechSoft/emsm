@@ -36,7 +36,6 @@ th, td {
 	text-align: left; /* テキストを左揃え */
 }
 
-/* テーブルヘッダーの特定スタイル設定 */
 th {
 	height: 40px; /* 高さを40pxに設定 */
 	width: 20%; /* 幅を20%に設定 */
@@ -101,6 +100,10 @@ button {
 </style>
 </head>
 <body>
+	<!-- 
+	   adjustmentStatus=='1' => 調整済み 
+	   => アップロード/ファイル選択/削除ボタン/確定ボタン 全て disable
+	-->
 	<div class="table-container">
 		<h1>年末調整</h1>
 		<!-- 年度と社員名を表示するテーブル -->
@@ -119,14 +122,17 @@ button {
 
 			<tr>
 				<th>アップ済み</th>
-				<td class="file-cell" id="detailFilesContainer"><c:choose>
+				<td class="file-cell" id="detailFilesContainer">
+					<c:choose>
 						<c:when test="${not empty detailFiles}">
 							<!-- アップ済みファイルが存在する場合のリスト表示 -->
 							<ul class="file-list">
 								<c:forEach var="file" items="${detailFiles}">
-									<li><a
-										href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/detailType/${file.fileYear}/${file.employeeID}/${file.fileName}">
-											${file.fileName} </a></li>
+									<li>
+										<a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/detailType/${file.fileYear}/${file.employeeID}/${file.fileName}">
+											${file.fileName}
+										</a>
+									</li>
 								</c:forEach>
 							</ul>
 						</c:when>
@@ -134,7 +140,8 @@ button {
 							<!-- アップ済みファイルがない場合のメッセージ表示 -->
 							<span class="no-file-message">ファイルがありません</span>
 						</c:otherwise>
-					</c:choose></td>
+					</c:choose>
+				</td>
 			</tr>
 		</table>
 
@@ -146,13 +153,19 @@ button {
 				<td class="file-cell">
 					<div class="upload-area">
 						<input type="file" id="fileUpload" multiple class="file-input"
-							onchange="updateFileList()" />
+							onchange="updateFileList()"
+							<c:if test="${adjustmentStatus == '1'}">disabled</c:if> />
 						<!-- ファイル選択ボタン、adjustmentStatusが1の場合はdisabled -->
 						<button type="button"
 							onclick="document.getElementById('fileUpload').click();"
-							<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>ファイルを選択</button>
+							id="selectBtn"
+							<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+							ファイルを選択
+						</button>
 						<!-- アップロードボタン、adjustmentStatusが1の場合はdisabled -->
-						<button type="button" onclick="submitFiles()" id="uploadBtn"
+						<button type="button"
+							onclick="submitFiles()"
+							id="uploadBtn"
 							<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
 							<c:choose>
 								<c:when test="${adjustmentStatus == '1'}">アップロード済み</c:when>
@@ -164,14 +177,24 @@ button {
 				</td>
 			</tr>
 			<tr>
-				<td class="file-cell" id="uploadedFiles"><c:choose>
+				<td class="file-cell" id="uploadedFiles">
+					<c:choose>
 						<c:when test="${not empty resultFiles}">
 							<!-- 結果ファイルが存在する場合のリスト表示 -->
 							<ul class="file-list">
 								<c:forEach var="file" items="${resultFiles}">
-									<li><a
-										href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/resultType/${file.fileYear}/${file.employeeID}/${file.fileName}">
-											${file.fileName} </a></li>
+									<li class="file-item">
+										<a href="${pageContext.request.contextPath}/adjustmentInfoEdit/download/resultType/${file.fileYear}/${file.employeeID}/${file.fileName}">
+											${file.fileName}
+										</a>
+										<!-- 削除ボタンを追加 -->
+										<button type="button"
+											class="delete-btn"
+											onclick="deleteResultFile('${file.employeeID}','${file.fileYear}','${file.fileName}','resultType')"
+											<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+											削除
+										</button>
+									</li>
 								</c:forEach>
 							</ul>
 						</c:when>
@@ -179,16 +202,19 @@ button {
 							<!-- 結果ファイルがない場合のメッセージ表示 -->
 							<span class="no-file-message">ファイルがありません</span>
 						</c:otherwise>
-					</c:choose></td>
+					</c:choose>
+				</td>
 			</tr>
 		</table>
 
 		<!-- 調整完了ボタンを配置するコンテナ -->
 		<div class="button-container">
-			<button type="button" onclick="finalizeAdjustment()"
+			<button type="button"
+				onclick="finalizeAdjustment()"
+				id="finalizeBtn"
 				<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
 				<c:choose>
-					<c:when test="${adjustmentStatus == '1'}">確定済み</c:when>
+					<c:when test="${adjustmentStatus == '1'}">調整済み</c:when>
 					<c:otherwise>調整完了</c:otherwise>
 				</c:choose>
 			</button>
@@ -199,94 +225,98 @@ button {
 			<thead>
 				<tr>
 					<th colspan="2" style="text-align: center;">以前ファイル参照</th>
-					<!-- テーブル見出し -->
 				</tr>
 				<tr>
 					<th>年度</th>
-					<td><select id="yearSelect"
-						onchange="loadFilesForSelectedYear()">
+					<td>
+						<select id="yearSelect" onchange="loadFilesForSelectedYear()">
 							<!-- 年度選択ドロップダウン -->
 							<c:forEach var="year" items="${yearList}">
 								<option value="${year}">${year}</option>
 								<!-- 年度の選択肢 -->
 							</c:forEach>
-					</select></td>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<th>ファイル</th>
-					<td class="file-cell" id="pastFilesContainer"><c:choose>
+					<td class="file-cell" id="pastFilesContainer">
+						<c:choose>
 							<c:when test="${not empty pastFiles}">
 								<!-- 過去のファイルが存在する場合のリスト表示 -->
 								<ul class="file-list">
 									<c:forEach var="file" items="${pastFiles}">
-										<li><a
-											href="${pageContext.request.contextPath}/adjustmentInfoEdit/downloadFileDirect?filePath=${file.filePath}">
-												${file.fileName} <!-- ファイル名を表示 -->
-										</a></li>
+										<li>
+											<a href="${pageContext.request.contextPath}/adjustmentInfoEdit/downloadFileDirect?filePath=${file.filePath}">
+												${file.fileName}
+											</a>
+										</li>
 									</c:forEach>
 								</ul>
 							</c:when>
 							<c:otherwise>
-								<!-- 過去のファイルがない場合のメッセージ表示 -->
 								<span class="no-file-message">ファイルがありません</span>
 							</c:otherwise>
-						</c:choose></td>
+						</c:choose>
+					</td>
 				</tr>
 			</thead>
 		</table>
 
 		<!-- 戻るボタンを中央に配置 -->
 		<div style="text-align: center; margin-top: 20px;">
-			<button type="button"
-				onclick="window.location.href='${pageContext.request.contextPath}/adjustmentList'">戻る</button>
-			<!-- 戻るボタン -->
+			<button type="button" onclick="window.location.href='${pageContext.request.contextPath}/adjustmentList'">
+				戻る
+			</button>
 		</div>
 	</div>
+
 	<script>
         // コンテキストパスと社員IDをJavaScript変数に設定
         var currentYear = '${currentYear}';
         var contextPath = '${pageContext.request.contextPath}';
         var employeeId = '${employeeId}';
 
-        // ページの読み込みが完了したら、選択された年度のファイルを読み込む
+        // ページ読み込み時に過去ファイルをロード
         document.addEventListener("DOMContentLoaded", function() {
             loadFilesForSelectedYear();
         });
 
         /**
-         * 選択された年度のファイルをサーバーから取得し、表示する関数
+         * 過去ファイルをロード
          */
         function loadFilesForSelectedYear() {
-            const selectedYear = document.getElementById('yearSelect').value; // 選択された年度を取得
+            const selectedYear = document.getElementById('yearSelect').value;
             fetch(contextPath + "/adjustmentInfoEdit/getPastFiles?employeeId=" + employeeId + "&year=" + selectedYear)
                 .then(response => response.json())
                 .then(data => {
-                    const container = document.getElementById('pastFilesContainer'); // ファイル表示コンテナを取得
-                    container.innerHTML = ''; // コンテナの内容をクリア
+                    const container = document.getElementById('pastFilesContainer');
+                    container.innerHTML = '';
                     if (data.files && data.files.length > 0) {
                         const ul = document.createElement('ul');
-                        ul.classList.add('file-list'); // ファイルリストのクラスを追加
+                        ul.classList.add('file-list');
                         data.files.forEach(file => {
                             const li = document.createElement('li');
                             const link = document.createElement('a');
-                            // ダウンロードリンクを設定
-                            link.href = contextPath + '/adjustmentInfoEdit/download/resultType/' + file.fileYear + '/' + employeeId + '/' + encodeURIComponent(file.fileName);
-                            link.textContent = file.fileName; // ファイル名を表示
+                            link.href = contextPath + '/adjustmentInfoEdit/download/resultType/'
+                                       + file.fileYear + '/' + employeeId + '/'
+                                       + encodeURIComponent(file.fileName);
+                            link.textContent = file.fileName;
                             li.appendChild(link);
                             ul.appendChild(li);
                         });
-                        container.appendChild(ul); // リストをコンテナに追加
+                        container.appendChild(ul);
                     } else {
                         const noFileMessage = document.createElement('span');
                         noFileMessage.textContent = 'ファイルがありません';
-                        noFileMessage.classList.add('no-file-message'); // メッセージのクラスを追加
-                        container.appendChild(noFileMessage); // メッセージをコンテナに追加
+                        noFileMessage.classList.add('no-file-message');
+                        container.appendChild(noFileMessage);
                     }
                 })
                 .catch(error => {
-                    console.error('Error loading past files:', error); // エラーログを出力
+                    console.error('Error loading past files:', error);
                     const container = document.getElementById('pastFilesContainer');
-                    container.innerHTML = 'ファイルの読み込み中にエラーが発生しました'; // エラーメッセージを表示
+                    container.innerHTML = 'ファイルの読み込み中にエラーが発生しました';
                 });
         }
 
@@ -294,43 +324,45 @@ button {
          * ファイルリストを更新する関数
          */
         function updateFileList() {
-            const input = document.getElementById('fileUpload'); // ファイル入力フィールドを取得
-            const fileList = document.getElementById('fileList'); // ファイルリスト表示エリアを取得
-            fileList.innerHTML = ''; // リストをクリア
-            const dt = new DataTransfer(); // 新しいDataTransferオブジェクトを作成
+            const input = document.getElementById('fileUpload');
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            const dt = new DataTransfer();
             Array.from(input.files).forEach((file, index) => {
-                dt.items.add(file); // ファイルをDataTransferに追加
+                dt.items.add(file);
                 const li = document.createElement('li');
-                li.textContent = file.name; // ファイル名を表示
-                li.classList.add('file-item'); // ファイルアイテムのクラスを追加
+                li.classList.add('file-item');
+                li.textContent = file.name;
+
+                // 削除ボタン
                 const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = '削除'; // 削除ボタンのテキストを設定
-                deleteBtn.className = 'delete-btn'; // 削除ボタンのクラスを設定
+                deleteBtn.textContent = '削除';
+                deleteBtn.className = 'delete-btn';
                 deleteBtn.onclick = function() {
-                    dt.items.remove(index); // 該当ファイルをDataTransferから削除
-                    input.files = dt.files; // ファイル入力フィールドのファイルリストを更新
-                    this.parentElement.remove(); // リストアイテムを削除
+                    dt.items.remove(index);
+                    input.files = dt.files;
+                    this.parentElement.remove();
                 };
-                li.appendChild(deleteBtn); // 削除ボタンをリストアイテムに追加
-                fileList.appendChild(li); // リストアイテムをファイルリストに追加
+                li.appendChild(deleteBtn);
+                fileList.appendChild(li);
             });
-            input.files = dt.files; // ファイル入力フィールドのファイルリストを更新
+            input.files = dt.files;
         }
 
         /**
          * ファイルをサーバーにアップロードする関数
          */
         function submitFiles() {
-            const files = document.getElementById('fileUpload').files; // ファイル入力フィールドからファイルを取得
+            const files = document.getElementById('fileUpload').files;
             if (files.length === 0) {
-                alert('ファイルを選択してください。'); // ファイルが選択されていない場合のアラート
+                alert('ファイルを選択してください。');
                 return;
             }
             const formData = new FormData();
             Array.from(files).forEach(file => {
-                formData.append('files', file); // 各ファイルをFormDataに追加
+                formData.append('files', file);
             });
-            formData.append('employeeId', employeeId); // 社員IDをFormDataに追加
+            formData.append('employeeId', employeeId);
             fetch(contextPath + '/adjustmentInfoEdit/uploadResultFiles', {
                 method: 'POST',
                 body: formData
@@ -338,70 +370,119 @@ button {
             .then(response => {
                 if (!response.ok) {
                     return response.json().then(errData => {
-                        throw new Error(errData.message || 'アップロードに失敗しました'); // エラーメッセージを取得
+                        throw new Error(errData.message || 'アップロードに失敗しました');
                     });
                 }
                 return response.json();
             })
             .then(data => {
-                alert(data.message || "アップロードが成功しました！"); // 成功メッセージを表示
-                location.reload(); // ページをリロード
+                alert(data.message || "アップロードが成功しました！");
+                location.reload();
             })
             .catch(error => {
-                alert('ファイルのアップロードに失敗しました: ' + error.message); // エラーメッセージを表示
-                console.error('Upload error:', error); // コンソールにエラーログを出力
+                alert('ファイルのアップロードに失敗しました: ' + error.message);
+                console.error('Upload error:', error);
+            });
+        }
+
+        /**
+         * 結果ファイルを削除する関数
+         */
+        function deleteResultFile(employeeID, fileYear, fileName, fileType) {
+            if (!confirm('削除しますか？')) {
+                return;
+            }
+            fetch(contextPath + '/adjustmentInfoEdit/deleteFile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    employeeID: employeeID,
+                    fileYear: fileYear,
+                    fileName: fileName,
+                    fileType: fileType
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('サーバーエラー');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message) {
+                    alert(data.message);
+                    location.reload();
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Delete failed: ', error);
+                alert('ファイルの削除に失敗しました: ' + error.message);
             });
         }
 
         /**
          * 調整を確定する関数
          */
-         function finalizeAdjustment() {
-        	    if (!confirm('注意：一旦確定すると、再アップロードはできなくなります。')) { 
-        	        return;
-        	    }
-        	    fetch(contextPath + '/adjustmentInfoEdit/finalizeAdjustment?employeeId=' + employeeId, {
-        	        method: 'POST'
-        	    })
-        	    .then(response => response.json())
-        	    .then(data => {
-        	        if (data.message) {
-        	            // data.messageが成功メッセージの場合のみ以下の処理を実行
-        	            if (data.message.indexOf("完了しました") !== -1) {
-        	                alert(data.message);
+        function finalizeAdjustment() {
+            if (!confirm('注意：一旦確定すると、再アップロードはできなくなります。')) {
+                return;
+            }
+            fetch(contextPath + '/adjustmentInfoEdit/finalizeAdjustment?employeeId=' + employeeId, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    // data.message が成功メッセージの場合のみ以下の処理を実行
+                    if (data.message.indexOf("完了しました") !== -1) {
+                        alert(data.message);
 
-        	                // 禁用上传按钮
-        	                const uploadBtn = document.getElementById('uploadBtn');
-        	                if (uploadBtn) {
-        	                    uploadBtn.disabled = true;
-        	                    uploadBtn.textContent = 'アップロード済み';
-        	                }
+                        // 1) 禁用アップロードボタン
+                        const uploadBtn = document.getElementById('uploadBtn');
+                        if (uploadBtn) {
+                            uploadBtn.disabled = true;
+                            uploadBtn.textContent = 'アップロード済み';
+                        }
 
-        	                // 禁用ファイル選択ボタン
-        	                const fileSelectBtn = document.querySelector('.upload-area button:nth-of-type(1)');
-        	                if (fileSelectBtn) {
-        	                    fileSelectBtn.disabled = true;
-        	                }
+                        // 2) 禁用ファイル選択ボタン
+                        const fileSelectBtn = document.querySelector('.upload-area button:nth-of-type(1)');
+                        if (fileSelectBtn) {
+                            fileSelectBtn.disabled = true;
+                        }
 
-        	                // 禁用確定按钮
-        	                const finalizeBtn = document.querySelector('.button-container button');
-        	                if (finalizeBtn) {
-        	                    finalizeBtn.disabled = true;
-        	                    finalizeBtn.textContent = '確定済み';
-        	                }
-        	            } else {
-        	                // 若message中包含失败信息，则提示并不锁定按钮
-        	                alert(data.message);
-        	            }
-        	        } else if (data.error) {
-        	            alert(data.error);
-        	        }
-        	    })
-        	    .catch(error => {
-        	        console.error("Processing failed: ", error);
-        	        alert('調整完了に失敗しました: ' + error.message);
-        	    });
-        	}
+                        // 3) 禁用確定ボタン
+                        const finalizeBtn = document.querySelector('.button-container button');
+                        if (finalizeBtn) {
+                            finalizeBtn.disabled = true;
+                            finalizeBtn.textContent = '調整済み';
+                        }
+
+                        // 4) 物理的に"ファイルを選択" inputもdisable
+                        const fileInput = document.getElementById('fileUpload');
+                        if (fileInput) {
+                            fileInput.disabled = true;
+                        }
+
+                        // 5) すべての削除ボタンを無効化
+                        const deleteButtons = document.querySelectorAll('.delete-btn');
+                        deleteButtons.forEach(btn => {
+                            btn.disabled = true;
+                        });
+                    } else {
+                        // 失敗メッセージの場合
+                        alert(data.message);
+                    }
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                console.error("Processing failed: ", error);
+                alert('調整完了に失敗しました: ' + error.message);
+            });
+        }
     </script>
 </body>
 </html>

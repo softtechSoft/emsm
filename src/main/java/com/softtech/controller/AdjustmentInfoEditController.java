@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -231,6 +232,45 @@ public class AdjustmentInfoEditController {
 //        }
 //    }
 
+    
+    /**
+     * 指定されたファイルを削除するメソッド
+     */
+    @PostMapping("/deleteFile")
+    @ResponseBody
+    public ResponseEntity<?> deleteResultFile(@RequestBody Map<String, Object> payload) {
+        try {
+            // 1) 从payload获取参数
+            String employeeID = (String) payload.get("employeeID");
+            String fileName   = (String) payload.get("fileName");
+            String fileType   = (String) payload.get("fileType");
+
+            // fileYear 要从 int 或字符串转换
+            Object yearObj = payload.get("fileYear");
+            Integer fileYear = null;
+            if (yearObj instanceof Number) {
+                fileYear = ((Number) yearObj).intValue();
+            } else if (yearObj instanceof String) {
+                fileYear = Integer.valueOf((String) yearObj);
+            }
+
+            if (employeeID == null || fileName == null || fileType == null || fileYear == null) {
+                return ResponseEntity.badRequest().body(createResponse("パラメータが無効です。"));
+            }
+
+            // 2) Serviceメソッド呼び出し
+            adjustmentInfoEditService.deleteFile(employeeID, fileYear, fileName, fileType);
+
+            // 3) 成功メッセージを返す
+            return ResponseEntity.ok(createResponse("削除が成功しました。"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(createResponse("ファイルの削除に失敗しました: " + e.getMessage()));
+        }
+    }
+
+    
     /**
      * レスポンスメッセージを作成するメソッド
      * 

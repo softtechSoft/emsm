@@ -1,52 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.softtech.mappers.AdjustmentRequestFilesMapper">
+<mapper
+	namespace="com.softtech.mappers.AdjustmentRequestFilesMapper">
 
-    <resultMap id="AdjustmentRequestFilesResultMap" type="com.softtech.entity.AdjustmentRequestFiles">
-        <result property="fileName" column="fileName" />
-        <result property="fileYear" column="fileYear" />
-        <result property="fileULStatus" column="fileULStatus" />
-        <result property="filePath" column="filePath" />
-    </resultMap>
+	<resultMap id="AdjustmentRequestFilesResultMap"
+		type="com.softtech.entity.AdjustmentRequestFiles">
+		<result property="fileName" column="fileName" />
+		<result property="fileYear" column="fileYear" />
+		<result property="fileULStatus" column="fileULStatus" />
+		<result property="filePath" column="filePath" />
+	</resultMap>
 
-    <select id="selectAll" resultMap="AdjustmentRequestFilesResultMap">
-        SELECT * FROM ems.adjustmentRequestFiles
-    </select>
+	<select id="selectAll"
+		resultMap="AdjustmentRequestFilesResultMap">
+		SELECT * FROM ems.adjustmentRequestFiles
+	</select>
 
-    <select id="selectByStatus" parameterType="String" resultMap="AdjustmentRequestFilesResultMap">
-        SELECT * FROM ems.adjustmentRequestFiles WHERE fileULStatus = #{status}
-    </select>
+	<select id="selectByStatus" parameterType="String"
+		resultMap="AdjustmentRequestFilesResultMap">
+		SELECT * FROM ems.adjustmentRequestFiles WHERE fileULStatus
+		= #{status}
+	</select>
 
-    <select id="selectByStatusMapped" parameterType="String" resultType="map">
-        SELECT fileName as "fileName", fileYear as "fileYear", fileULStatus as "fileULStatus"
-        FROM ems.adjustmentRequestFiles
-        WHERE fileULStatus = #{status}
-    </select>
+	<select id="selectByStatusMapped" parameterType="String"
+		resultType="map">
+		SELECT fileName as "fileName", fileYear as "fileYear",
+		fileULStatus as
+		"fileULStatus"
+		FROM ems.adjustmentRequestFiles
+		WHERE
+		fileULStatus = #{status}
+	</select>
 
-    <select id="findByYearAndStatus" resultMap="AdjustmentRequestFilesResultMap">
-        SELECT * FROM ems.adjustmentRequestFiles
-        WHERE fileYear = #{year} AND fileULStatus = #{status}
-    </select>
+	<select id="findByYearAndStatus"
+		resultMap="AdjustmentRequestFilesResultMap">
+		SELECT * FROM ems.adjustmentRequestFiles
+		WHERE fileYear =
+		#{year} AND fileULStatus = #{status}
+	</select>
 
-    <select id="selectByFileNameAndYear" parameterType="map" resultMap="AdjustmentRequestFilesResultMap">
-        SELECT * FROM ems.adjustmentRequestFiles
-        WHERE fileName = #{fileName} AND fileYear = #{fileYear}
-    </select>
+	<select id="selectByFileNameAndYear" parameterType="map"
+		resultMap="AdjustmentRequestFilesResultMap">
+		SELECT * FROM ems.adjustmentRequestFiles
+		WHERE fileName =
+		#{fileName} AND fileYear = #{fileYear}
+	</select>
 
-    <insert id="insert" parameterType="com.softtech.entity.AdjustmentRequestFiles">
-        INSERT INTO ems.adjustmentRequestFiles (fileName, fileYear, fileULStatus, filePath)
-        VALUES (#{fileName}, #{fileYear}, #{fileULStatus}, #{filePath})
-    </insert>
+	<select id="findByFileName" parameterType="string"
+		resultMap="AdjustmentRequestFilesResultMap">
+		SELECT * FROM ems.adjustmentRequestFiles
+		WHERE fileName =
+		#{fileName}
+	</select>
 
-    <update id="updateFileYearAndFileName" parameterType="com.softtech.entity.AdjustmentRequestFiles">
-        UPDATE ems.adjustmentRequestFiles SET
-            fileULStatus = #{fileULStatus},
-            filePath = #{filePath}
-        WHERE fileYear = #{fileYear} AND fileName = #{fileName}
-    </update>
+	<select id="findByYearAllStatus" parameterType="int"
+		resultMap="AdjustmentRequestFilesResultMap">
+		SELECT *
+		FROM ems.adjustmentRequestFiles
+		WHERE fileYear = #{year}
+	</select>
 
-    <delete id="deleteByFileName" parameterType="String">
-        DELETE FROM ems.adjustmentRequestFiles WHERE fileName = #{fileName}
-    </delete>
+
+	<insert id="insert"
+		parameterType="com.softtech.entity.AdjustmentRequestFiles">
+		INSERT INTO ems.adjustmentRequestFiles (fileName,
+		fileYear, fileULStatus,
+		filePath)
+		VALUES (#{fileName}, #{fileYear},
+		#{fileULStatus}, #{filePath})
+	</insert>
+
+	<update id="updateFileYearAndFileName"
+		parameterType="com.softtech.entity.AdjustmentRequestFiles">
+		UPDATE ems.adjustmentRequestFiles SET
+		fileULStatus =
+		#{fileULStatus},
+		filePath = #{filePath}
+		WHERE fileYear = #{fileYear} AND
+		fileName = #{fileName}
+	</update>
+
+	<update id="updateStatusByYear" parameterType="map">
+		UPDATE
+		adjustmentRequestFiles
+		SET fileULStatus = #{status}
+		WHERE fileYear =
+		#{year}
+	</update>
+
+
+	<delete id="deleteByFileName" parameterType="String">
+		DELETE FROM
+		ems.adjustmentRequestFiles WHERE fileName = #{fileName}
+	</delete>
 </mapper>

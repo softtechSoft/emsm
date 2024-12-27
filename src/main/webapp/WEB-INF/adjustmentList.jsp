@@ -10,97 +10,92 @@
 <style>
 /* テーブルコンテナのスタイル設定 */
 .table-container {
-	width: 50%; /* 幅を50%に設定 */
-	margin-left: 20px; /* 左マージンを20pxに設定 */
-	margin-bottom: 20px; /* 下マージンを20pxに設定 */
+	width: 50%;
+	margin-left: 20px;
+	margin-bottom: 20px;
 }
 
 /* 見出し1のスタイル設定 */
 h1 {
-	text-align: center; /* テキストを中央揃え */
-	font-size: 24px; /* フォントサイズを24pxに設定 */
-	font-weight: bold; /* フォントを太字に設定 */
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
 }
 
 /* テーブルのスタイル設定 */
 table {
-	width: 100%; /* 幅を100%に設定 */
-	margin-top: 20px; /* 上マージンを20pxに設定 */
-	border-collapse: collapse; /* ボーダーを重ねて表示 */
+	width: 100%;
+	margin-top: 20px;
+	border-collapse: collapse;
 }
 
 /* テーブルヘッダーとデータセルのスタイル設定 */
 th, td {
-	border: 2px solid #b3cbde; /* ボーダーの色と太さを設定 */
-	padding: 15px; /* 内側の余白を15pxに設定 */
-	text-align: left; /* テキストを左揃え */
+	border: 2px solid #b3cbde;
+	padding: 15px;
+	text-align: left;
 }
 
-/* テーブルヘッダーの特定スタイル設定 */
 th {
-	height: 40px; /* 高さを40pxに設定 */
-	width: 20%; /* 幅を20%に設定 */
+	height: 40px;
+	width: 20%;
 }
 
 /* アップロードエリアのスタイル設定 */
 .upload-area {
-	display: flex; /* フレックスボックスを使用 */
-	justify-content: space-between; /* アイテム間のスペースを均等に配置 */
-	align-items: center; /* アイテムを中央揃え */
-	margin-bottom: 20px; /* 下マージンを20pxに設定 */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
 }
 
 /* ファイルリストのスタイル設定 */
 .file-list {
-	list-style: none; /* リストマーカーを無しに設定 */
-	padding: 0; /* パディングを0に設定 */
-	margin-top: 10px; /* 上マージンを10pxに設定 */
+	list-style-type: disc; /* 黒丸を表示 */
+	padding-left: 20px;
+	margin-top: 10px;
 }
 
 /* ファイルアイテムのスタイル設定 */
 .file-item {
-	margin-bottom: 5px; /* 下マージンを5pxに設定 */
+	margin-bottom: 5px;
+	word-wrap: break-word; /* テキストが長い場合に折り返し可能 */
 }
 
 /* ファイル入力フィールドのスタイル設定 */
 .file-input {
-	display: none; /* 非表示に設定 */
+	display: none;
 }
 
 /* ボタンのスタイル設定 */
 button {
-	border-radius: px; /* ボーダーの半径を設定（値が未指定） */
-	padding: 3px 7px; /* 内側の余白を3px上、下、7px左右に設定 */
-	font-size: 13px; /* フォントサイズを13pxに設定 */
-	cursor: pointer; /* カーソルをポインターに設定 */
-	margin: 5px; /* マージンを5pxに設定 */
+	padding: 3px 7px;
+	font-size: 13px;
+	cursor: pointer;
+	margin: 5px;
 }
 
 /* 削除ボタンのスタイル設定 */
 .delete-btn {
-	margin-left: 10px; /* 左マージンを10pxに設定 */
-	cursor: pointer; /* カーソルをポインターに設定 */
+	margin-left: 10px;
+	cursor: pointer;
 }
 
-/* リクエストファイルのリストスタイル設定 */
-#requestFiles ul {
-	list-style-type: disc; /* リストマーカーをディスクに設定 */
-	padding-left: 20px; /* 左パディングを20pxに設定 */
-	margin: 0; /* マージンを0に設定 */
-}
-
-/* リクエストファイルのリストアイテムのスタイル設定 */
-#requestFiles li {
-	margin-bottom: 5px; /* 下マージンを5pxに設定 */
+/* 確定ボタンコンテナのスタイル設定：右寄せ */
+.button-container {
+	text-align: right;
+	padding-top: 10px;
 }
 
 /* ファイルがない場合のメッセージスタイル設定 */
 .no-file-message {
-	font-weight: bold; /* フォントを太字に設定 */
+	font-weight: bold;
 }
 </style>
 </head>
 <body>
+	<c:set var="isFinalized" value="${isFinalized}" scope="page" />
+
 	<div class="table-container">
 		<h1>年末調整</h1>
 		<!-- 年度とアップロードセクションを表示するテーブル -->
@@ -116,26 +111,47 @@ button {
 					<div class="upload-area">
 						<!-- ファイル選択フィールド -->
 						<input type="file" id="fileUpload" multiple class="file-input"
-							onchange="updateFileList()" />
+							onchange="updateFileList()"
+							<c:if test="${isFinalized eq true}">disabled</c:if> />
 						<!-- ファイル選択ボタン -->
-						<button type="button"
-							onclick="document.getElementById('fileUpload').click();">ファイルを選択</button>
+						<button type="button" id="selectBtn"
+							onclick="document.getElementById('fileUpload').click();"
+							<c:if test="${isFinalized eq true}">disabled</c:if>>
+							ファイルを選択
+						</button>
 						<!-- アップロードボタン -->
-						<button type="button" onclick="submitFiles()">アップロード</button>
-					</div> <!-- 選択したファイルのリストを表示する領域 -->
+						<button type="button" id="uploadBtn" onclick="submitFiles()"
+							<c:if test="${isFinalized eq true}">disabled</c:if>>
+							<c:choose>
+								<c:when test="${isFinalized eq true}">アップロード済み</c:when>
+								<c:otherwise>アップロード</c:otherwise>
+							</c:choose>
+						</button>
+					</div>
+					<!-- 選択したファイルのリストを表示する領域 -->
 					<ul id="fileList" class="file-list"></ul>
 				</td>
 			</tr>
 			<tr>
-				<th>テンプレート</th>
-				<td id="requestFiles"><c:choose>
+				<th>年末調整申請書</th>
+				<td>
+					<c:choose>
 						<c:when test="${not empty files}">
 							<!-- テンプレートファイルが存在する場合のリスト表示 -->
-							<ul>
+							<ul class="file-list">
 								<c:forEach var="file" items="${files}">
-									<li><a
-										href="${pageContext.request.contextPath}/download/${file.fileName}">
-											${file.fileName} </a></li>
+									<li class="file-item">
+										<!-- ダウンロードリンク -->
+										<a href="${pageContext.request.contextPath}/download/${file.fileName}">
+											${file.fileName}
+										</a>
+										<!-- 削除ボタン -->
+										<button type="button" class="delete-btn"
+											onclick="deleteFile('${file.fileName}')"
+											<c:if test="${isFinalized eq true}">disabled</c:if>>
+											削除
+										</button>
+									</li>
 								</c:forEach>
 							</ul>
 						</c:when>
@@ -143,9 +159,22 @@ button {
 							<!-- テンプレートファイルがない場合のメッセージ表示 -->
 							<span class="no-file-message">ファイルがありません</span>
 						</c:otherwise>
-					</c:choose></td>
+					</c:choose>
+				</td>
 			</tr>
 		</table>
+
+		<!-- 確定ボタン -->
+		<div class="button-container">
+			<!-- 确定按钮若 isFinalized==true 则禁用并显示「確定済み」 -->
+			<button type="button" id="finalizeBtn" onclick="finalizeAdjustment()"
+				<c:if test="${isFinalized eq true}">disabled</c:if>>
+				<c:choose>
+					<c:when test="${isFinalized eq true}">確定済み</c:when>
+					<c:otherwise>確定</c:otherwise>
+				</c:choose>
+			</button>
+		</div>
 
 		<!-- 社員リスト表 -->
 		<table>
@@ -164,61 +193,67 @@ button {
 				<c:forEach var="employee" items="${employees}">
 					<tr>
 						<!-- 社員名をリンクとして表示 -->
-						<td><a
-							href="${pageContext.request.contextPath}/adjustmentInfoEdit?employeeId=${employee.employeeID}">
-								${employee.employeeName} </a></td>
-
-						<!-- アップロード状態を表示 -->
-						<td><c:choose>
+						<td>
+							<a href="${pageContext.request.contextPath}/adjustmentInfoEdit?employeeId=${employee.employeeID}">
+								${employee.employeeName}
+							</a>
+						</td>
+						<!-- アップロード状態 -->
+						<td>
+							<c:choose>
 								<c:when test="${employee.uploadStatus == '1'}">アップロード完了</c:when>
 								<c:otherwise>アップロード中</c:otherwise>
-							</c:choose></td>
-
-						<!-- 調整状態を表示 -->
-						<td><c:choose>
+							</c:choose>
+						</td>
+						<!-- 調整状態 -->
+						<td>
+							<c:choose>
 								<c:when test="${employee.adjustmentStatus == '1'}">調整済み</c:when>
 								<c:otherwise>調整中</c:otherwise>
-							</c:choose></td>
+							</c:choose>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
+
 	<script>
         // コンテキストパスをJavaScript変数に設定
         var contextPath = '${pageContext.request.contextPath}';
+        var currentYear = '${currentYear}'; // JSP传入的当年年度
 
         /**
          * ファイルリストを更新する関数
          */
         function updateFileList() {
-            const input = document.getElementById('fileUpload'); // ファイル入力フィールドを取得
-            const fileList = document.getElementById('fileList'); // ファイルリスト表示領域を取得
-            fileList.innerHTML = ''; // リストをクリア
+            const input = document.getElementById('fileUpload');
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
 
             // 選択されたファイルをリストに追加
             Array.from(input.files).forEach((file, index) => {
                 const li = document.createElement('li');
-                li.textContent = file.name; // ファイル名を表示
-                li.classList.add('file-item'); // ファイルアイテムのクラスを追加
+                li.classList.add('file-item');
+                li.textContent = file.name;
 
-                // 削除ボタンを作成
+                // 削除ボタン
                 const deleteBtn = document.createElement('button');
-                deleteBtn.textContent = '削除'; // ボタンのテキストを設定
-                deleteBtn.className = 'delete-btn'; // ボタンのクラスを設定
+                deleteBtn.textContent = '削除';
+                deleteBtn.className = 'delete-btn';
 
-                // 削除ボタンのクリックイベントを設定
+                // 削除ボタンのクリックイベント
                 deleteBtn.onclick = function() {
-                    const dt = new DataTransfer(); // 新しいDataTransferオブジェクトを作成
-                    const filesArray = Array.from(input.files); // ファイルリストを配列に変換
-                    filesArray.splice(index, 1); // 指定したインデックスのファイルを削除
-                    filesArray.forEach(file => dt.items.add(file)); // 残りのファイルをDataTransferに追加
-                    input.files = dt.files; // ファイル入力フィールドのファイルリストを更新
-                    this.parentElement.remove(); // リストアイテムを削除
+                    const dt = new DataTransfer();
+                    const filesArray = Array.from(input.files);
+                    filesArray.splice(index, 1);
+                    filesArray.forEach(f => dt.items.add(f));
+                    input.files = dt.files;
+                    this.parentElement.remove();
                 };
 
-                li.appendChild(deleteBtn); // 削除ボタンをリストアイテムに追加
-                fileList.appendChild(li); // リストアイテムをファイルリストに追加
+                li.appendChild(deleteBtn);
+                fileList.appendChild(li);
             });
         }
 
@@ -226,39 +261,128 @@ button {
          * ファイルをサーバーにアップロードする関数
          */
         function submitFiles() {
-            const input = document.getElementById('fileUpload'); // ファイル入力フィールドを取得
-            const files = input.files; // 選択されたファイルを取得
+            const input = document.getElementById('fileUpload');
+            const files = input.files;
             if (files.length === 0) {
-                alert('ファイルを選択してください。'); // ファイルが選択されていない場合のアラート
+                alert('ファイルを選択してください。');
                 return;
             }
 
-            const formData = new FormData(); // 新しいFormDataオブジェクトを作成
+            const formData = new FormData();
             for (let i = 0; i < files.length; i++) {
-                formData.append('files', files[i]); // 各ファイルをFormDataに追加
+                formData.append('files', files[i]);
             }
 
-            // ファイルをサーバーに送信
             fetch(contextPath + '/uploadFile', {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
                 if (!response.ok) {
-                    // エラーメッセージを取得して例外を投げる
                     return response.json().then(errData => {
                         throw new Error(errData.message || 'アップロードに失敗しました');
                     });
                 }
-                return response.json(); // レスポンスをJSON形式で取得
+                return response.json();
             })
             .then(data => {
-                alert(data.message || "アップロードが成功しました！"); // 成功メッセージを表示
-                location.reload(); // ページをリロード
+                alert(data.message || "アップロードが成功しました！");
+                location.reload();
             })
             .catch(error => {
-                console.error('エラー:', error); // コンソールにエラーログを出力
-                alert('ファイルのアップロードに失敗しました: ' + error.message); // エラーメッセージを表示
+                console.error('エラー:', error);
+                alert('ファイルのアップロードに失敗しました: ' + error.message);
+            });
+        }
+
+        /**
+         * 指定されたファイルを削除する関数
+         */
+        function deleteFile(fileName) {
+            if (!confirm('削除しますか？')) {
+                return;
+            }
+            fetch(contextPath + '/deleteFile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fileName: fileName })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('サーバーエラー');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Delete failed: ', error);
+                alert('削除に失敗しました: ' + error.message);
+            });
+        }
+
+        /**
+         * 確定ボタンを押した時の関数
+         */
+        function finalizeAdjustment() {
+            if (!confirm('注意：一旦確定すると、再アップロードはできなくなります。')) {
+                return;
+            }
+
+            // 向サーバー发送 finalizeAdjustment 请求，携带当年年度
+            fetch(contextPath + '/finalizeAdjustment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fileYear: currentYear })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(errData.message || '確定に失敗しました');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message || "確定しました！");
+
+                // 1) "ファイルを選択" ボタンをdisable
+                const selectBtn = document.getElementById('selectBtn');
+                if (selectBtn) {
+                    selectBtn.disabled = true;
+                }
+
+                // 2) "アップロード" ボタンをdisable & テキスト変更
+                const uploadBtn = document.getElementById('uploadBtn');
+                if (uploadBtn) {
+                    uploadBtn.disabled = true;
+                    uploadBtn.textContent = 'アップロード済み';
+                }
+
+                // 3) fileUpload input をdisable
+                const fileInput = document.getElementById('fileUpload');
+                if (fileInput) {
+                    fileInput.disabled = true;
+                }
+
+                // 4) "確定" ボタンをdisable & テキスト変更
+                const finalizeBtn = document.getElementById('finalizeBtn');
+                if (finalizeBtn) {
+                    finalizeBtn.disabled = true;
+                    finalizeBtn.textContent = '確定済み';
+                }
+
+                // 5) すべての削除ボタンをdisable
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(btn => {
+                    btn.disabled = true;
+                });
+            })
+            .catch(error => {
+                console.error('確定に失敗:', error);
+                alert('確定に失敗しました: ' + error.message);
             });
         }
     </script>

@@ -94,4 +94,13 @@ public interface AdjustmentFileMapper {
      */
     // finalize用のステータス更新メソッドが必要
     int updateFileStatusByEmployeeIDAndYear(Map<String,Object> params);
+    
+    // 指定された従業員ID、年度、ファイル名、およびファイルタイプに基づいてファイルを削除
+    int deleteFile(
+        @Param("employeeID") String employeeID,
+        @Param("fileYear") int fileYear,
+        @Param("fileName") String fileName,
+        @Param("fileType") String fileType
+    );
+    
 }

@@ -107,7 +107,7 @@ public class AdjustmentRequestService {
         if (existingFiles != null && !existingFiles.isEmpty()) {
             // 既存ファイルの更新
             AdjustmentRequestFiles existingFile = existingFiles.get(0);
-            existingFile.setFileULStatus("1"); // アップロードステータスを設定
+            existingFile.setFileULStatus("0"); // アップロードステータスを設定
             existingFile.setFilePath(destinationFile.toString()); // ファイルパスを更新
             adjustmentRequestFilesMapper.updateFileYearAndFileName(existingFile); // データベースを更新
         } else {
@@ -115,7 +115,7 @@ public class AdjustmentRequestService {
             AdjustmentRequestFiles newFile = new AdjustmentRequestFiles();
             newFile.setFileName(fileName); // ファイル名を設定
             newFile.setFileYear(fileYear); // ファイル年度を設定
-            newFile.setFileULStatus("1"); // アップロードステータスを設定
+            newFile.setFileULStatus("0"); // アップロードステータスを設定
             newFile.setFilePath(destinationFile.toString()); // ファイルパスを設定
             adjustmentRequestFilesMapper.insert(newFile); // データベースに挿入
         }
@@ -128,14 +128,15 @@ public class AdjustmentRequestService {
      * @return 現在の年度に対応する年末調整申請ファイルのリスト
      */
     /**
-     * 現在の年度の年末調整申請ファイルを取得するメソッド（ステータスが1のもの）
+     * 現在の年度の年末調整申請ファイルを取得するメソッド
      * 
      * @param currentYear 現在の年度
      * @return 現在の年度に対応する年末調整申請ファイルのリスト
      */
-    public List<AdjustmentRequestFiles> getCurrentYearFilesWithStatusOne(int currentYear) {
-        return adjustmentRequestFilesMapper.findByYearAndStatus(currentYear, "1"); // ステータスが"1"のファイルを取得
+    public List<AdjustmentRequestFiles> getCurrentYearFilesAll(int currentYear) {
+        return adjustmentRequestFilesMapper.findByYearAllStatus(currentYear);
     }
+
 
     /**
      * 全ての社員と年末調整状態を取得するメソッド
@@ -175,5 +176,42 @@ public class AdjustmentRequestService {
         } catch (Exception e) {
             throw new RuntimeException("ファイルのロードに失敗しました: " + fileName, e); // ロード失敗時の例外
         }
+    }
+    
+    /**
+     * ファイルを削除するメソッド
+     */
+    public void deleteFile(String fileName) {
+        AdjustmentRequestFiles arf = adjustmentRequestFilesMapper.findByFileName(fileName);
+        if (arf == null) {
+            throw new RuntimeException("削除対象のファイルが見つかりません: " + fileName);
+        }
+        // DBから削除
+        adjustmentRequestFilesMapper.deleteByFileName(fileName);
+        // 物理ファイル削除
+        Path filePath = Paths.get(arf.getFilePath());
+        try {
+            if (Files.exists(filePath)) {
+                Files.delete(filePath);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("ファイルの削除に失敗しました: " + filePath, e);
+        }
+    }
+    
+    /**
+     * 確定処理を行うメソッド
+     */
+    public void finalizeAdjustment(int fileYear) {
+        // ★ 指定された年度のレコードをすべて1に更新
+        adjustmentRequestFilesMapper.updateStatusByYear(fileYear, "1");
+    }
+
+    /**
+     * もしこの年度に fileULStatus == '1' のレコードがあればtrueを返す
+     */
+    public boolean checkIfAnyFileIsFinalized(int fileYear) {
+        List<AdjustmentRequestFiles> list = adjustmentRequestFilesMapper.findByYearAndStatus(fileYear, "1");
+        return (list != null && !list.isEmpty());
     }
 }
