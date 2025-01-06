@@ -154,21 +154,22 @@ button {
 					<div class="upload-area">
 						<input type="file" id="fileUpload" multiple class="file-input"
 							onchange="updateFileList()"
-							<c:if test="${adjustmentStatus == '1'}">disabled</c:if> />
+							<c:if test="${adjustmentStatus == '1' or uploadStatus ne '1'}">disabled</c:if> />
 						<!-- ファイル選択ボタン、adjustmentStatusが1の場合はdisabled -->
 						<button type="button"
 							onclick="document.getElementById('fileUpload').click();"
 							id="selectBtn"
-							<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+							<c:if test="${adjustmentStatus == '1' or uploadStatus ne '1'}">disabled</c:if>>
 							ファイルを選択
 						</button>
 						<!-- アップロードボタン、adjustmentStatusが1の場合はdisabled -->
 						<button type="button"
 							onclick="submitFiles()"
 							id="uploadBtn"
-							<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+							<c:if test="${adjustmentStatus == '1' or uploadStatus ne '1'}">disabled</c:if>>
 							<c:choose>
 								<c:when test="${adjustmentStatus == '1'}">アップロード済み</c:when>
+								<c:when test="${uploadStatus ne '1'}">アップロード不可</c:when>
 								<c:otherwise>アップロード</c:otherwise>
 							</c:choose>
 						</button>
@@ -191,7 +192,7 @@ button {
 										<button type="button"
 											class="delete-btn"
 											onclick="deleteResultFile('${file.employeeID}','${file.fileYear}','${file.fileName}','resultType')"
-											<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+											<c:if test="${adjustmentStatus == '1' or uploadStatus ne '1'}">disabled</c:if>>
 											削除
 										</button>
 									</li>
@@ -212,9 +213,10 @@ button {
 			<button type="button"
 				onclick="finalizeAdjustment()"
 				id="finalizeBtn"
-				<c:if test="${adjustmentStatus == '1'}">disabled</c:if>>
+				<c:if test="${adjustmentStatus == '1' or uploadStatus ne '1'}">disabled</c:if>>
 				<c:choose>
-					<c:when test="${adjustmentStatus == '1'}">調整済み</c:when>
+					<c:when test="${adjustmentStatus == '1'}">調整済み </c:when>
+					<c:when test="${uploadStatus ne '1'}">調整不可</c:when>
 					<c:otherwise>調整完了</c:otherwise>
 				</c:choose>
 			</button>

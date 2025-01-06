@@ -83,12 +83,19 @@ public class AdjustmentInfoEditController {
         }
         model.addAttribute("yearList", yearList);
         
-     // AdjustmentDetailを取得し、adjustmentStatusを設定
-        AdjustmentDetail detail = adjustmentInfoEditService.getAdjustmentDetailByEmployeeIdAndYear(employee.getEmployeeID(),
-                String.valueOf(currentYear));
-        String adjustmentStatus = (detail == null || detail.getAdjustmentStatus() == null) ? "0"
-                : detail.getAdjustmentStatus();
+     // AdjustmentDetailを取得し、adjustmentStatus、uploadStatusを設定
+        AdjustmentDetail detail = adjustmentInfoEditService
+                .getAdjustmentDetailByEmployeeIdAndYear(employee.getEmployeeID(), String.valueOf(currentYear));
+
+        String adjustmentStatus = (detail == null || detail.getAdjustmentStatus() == null) 
+                                  ? "0" 
+                                  : detail.getAdjustmentStatus();
+        String uploadStatus = (detail == null || detail.getUploadStatus() == null) 
+                              ? "0" 
+                              : detail.getUploadStatus();
+
         model.addAttribute("adjustmentStatus", adjustmentStatus);
+        model.addAttribute("uploadStatus", uploadStatus);
 
         return "adjustmentInfoEdit"; // 年末調整情報編集ページのビュー名を返す
     }
