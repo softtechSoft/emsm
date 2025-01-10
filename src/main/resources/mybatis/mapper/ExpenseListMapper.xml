@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.ExpenseListMapper">
+
+	<!-- 根据 年 / 月 查询: 只取 deleteFlg = '0' -->
+	<select id="findByYearMonth"
+		resultType="com.softtech.entity.ExpenseListEntity">
+		SELECT
+		expensesID,
+		accrualDate,
+		cost,
+		tantouName,
+		settlementType,
+		settlementDate,
+		expensesType,
+		happenAddress,
+		deleteFlg
+		FROM ems.m_expenses
+		WHERE deleteFlg = '0'
+		AND YEAR(accrualDate) = #{year}
+		AND MONTH(accrualDate) = #{month}
+		ORDER BY accrualDate ASC
+	</select>
+
+	<!-- 根据 ID 查询单条 ( deleteFlg = '0' ) -->
+	<select id="findById"
+		resultType="com.softtech.entity.ExpenseListEntity">
+		SELECT
+		expensesID,
+		accrualDate,
+		cost,
+		tantouName,
+		settlementType,
+		settlementDate,
+		expensesType,
+		happenAddress,
+		deleteFlg
+		FROM ems.m_expenses
+		WHERE expensesID = #{expensesID}
+		AND deleteFlg = '0'
+	</select>
+
+	<!-- 逻辑删除 -->
+	<update id="deleteById">
+		UPDATE ems.m_expenses
+		SET deleteFlg = '1'
+		WHERE expensesID = #{expensesID}
+	</update>
+
+	<!-- 更新 示例 -->
+	<update id="update"
+		parameterType="com.softtech.entity.ExpenseListEntity">
+		UPDATE ems.m_expenses
+		SET accrualDate = #{accrualDate},
+		cost = #{cost},
+		tantouName = #{tantouName},
+		settlementType = #{settlementType},
+		settlementDate = #{settlementDate},
+		expensesType = #{expensesType},
+		happenAddress = #{happenAddress}
+		WHERE expensesID = #{expensesID}
+		AND deleteFlg = '0'
+	</update>
+
+
+	<insert id="insert"
+		parameterType="com.softtech.entity.ExpenseListEntity"
+		useGeneratedKeys="true" keyProperty="expensesID">
+		INSERT INTO ems.m_expenses (
+		accrualDate,
+		cost,
+		tantouName,
+		settlementType,
+		settlementDate,
+		expensesType,
+		happenAddress,
+		deleteFlg
+		) VALUES (
+		#{accrualDate},
+		#{cost},
+		#{tantouName},
+		#{settlementType},
+		#{settlementDate},
+		#{expensesType},
+		#{happenAddress},
+		'0'
+		)
+	</insert>
+
+
+</mapper>
