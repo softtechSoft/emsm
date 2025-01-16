@@ -7,7 +7,7 @@ package com.softtech.entity;
  *
  */
 public class RequestToDownloadEntity {
-
+	private String contractID;
 	//社員氏名
 	private String employeeName;
 	//会社名
@@ -37,6 +37,12 @@ public class RequestToDownloadEntity {
 	private String claimMonth;
 
 
+	public String getContractID() {
+        return contractID;
+    }
+    public void setContractID(String contractID) {
+        this.contractID = contractID;
+    }
 	public String getEmployeeName() {
 		return employeeName;
 	}
