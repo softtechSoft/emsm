@@ -5,7 +5,7 @@
 
 <mapper namespace="com.softtech.mappers.ExpenseListMapper">
 
-	<!-- 根据 年 / 月 查询: 只取 deleteFlg = '0' -->
+	<!-- 年/月で経費を検索: deleteFlg = '0' のデータのみ取得 -->
 	<select id="findByYearMonth"
 		resultType="com.softtech.entity.ExpenseListEntity">
 		SELECT
@@ -25,7 +25,7 @@
 		ORDER BY accrualDate ASC
 	</select>
 
-	<!-- 根据 ID 查询单条 ( deleteFlg = '0' ) -->
+	<!-- 経費IDで単一経費を検索 (deleteFlg = '0') -->
 	<select id="findById"
 		resultType="com.softtech.entity.ExpenseListEntity">
 		SELECT
@@ -43,18 +43,19 @@
 		AND deleteFlg = '0'
 	</select>
 
-	<!-- 逻辑删除 -->
+	<!-- 経費IDに基づく論理削除 -->
 	<update id="deleteById">
 		UPDATE ems.m_expenses
 		SET deleteFlg = '1'
 		WHERE expensesID = #{expensesID}
 	</update>
 
-	<!-- 更新 示例 -->
+	<!-- 経費データの更新 -->
 	<update id="update"
 		parameterType="com.softtech.entity.ExpenseListEntity">
 		UPDATE ems.m_expenses
-		SET accrualDate = #{accrualDate},
+		SET
+		accrualDate = #{accrualDate},
 		cost = #{cost},
 		tantouName = #{tantouName},
 		settlementType = #{settlementType},
@@ -65,7 +66,7 @@
 		AND deleteFlg = '0'
 	</update>
 
-
+	<!-- 新規経費レコードの挿入 -->
 	<insert id="insert"
 		parameterType="com.softtech.entity.ExpenseListEntity"
 		useGeneratedKeys="true" keyProperty="expensesID">
@@ -89,6 +90,5 @@
 		'0'
 		)
 	</insert>
-
 
 </mapper>

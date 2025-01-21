@@ -20,33 +20,42 @@ import com.softtech.service.ExpenseInfoService;
 @RequestMapping("/expenseInfo")
 public class ExpenseInfoController {
 
-    @Autowired
-    private ExpenseInfoService expenseInfoService;
+	@Autowired
+	private ExpenseInfoService expenseInfoService;
 
-    // /expenseInfo にアクセスした際に JSP を返す
-    @GetMapping
-    public String showExpenseInfoPage() {
-        return "expenseInfo";
-    }
+	/**
+	 * 経費情報追加ページを表示する。
+	 *
+	 * @return 経費情報追加ページのビュー名
+	 */
+	@GetMapping
+	public String showExpenseInfoPage() {
+		return "expenseInfo";
+	}
 
-    /**
-     * 複数の経費記録を保存 (AJAX)
-     */
-    @PostMapping("/addMultiple")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> addMultipleExpenses(@RequestBody List<ExpenseListEntity> expenses) {
-        Map<String, Object> result = new HashMap<>();
-        try {
-            expenseInfoService.addMultipleExpenses(expenses);
-            result.put("status", "ok");
-            result.put("message", "保存成功");
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.put("status", "fail");
-            result.put("message", "保存失敗: " + e.getMessage());
-            return ResponseEntity.badRequest().body(result);
-        }
-    }
-
+	/**
+	 * 複数の経費記録を保存する。
+	 * AJAXリクエストを受け取り、経費情報をデータベースに保存する。
+	 *
+	 * @param expenses 保存対象の経費エンティティリスト
+	 * @return 保存結果を示すステータスとメッセージを含むレスポンスエンティティ
+	 */
+	@PostMapping("/addMultiple")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> addMultipleExpenses(@RequestBody List<ExpenseListEntity> expenses) {
+		Map<String, Object> result = new HashMap<>();
+		try {
+			// 複数の経費エンティティをサービス層を通じて保存
+			expenseInfoService.addMultipleExpenses(expenses);
+			result.put("status", "ok");
+			result.put("message", "保存成功");
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			// エラー発生時にスタックトレースを出力し、エラーメッセージをレスポンスに含める
+			e.printStackTrace();
+			result.put("status", "fail");
+			result.put("message", "保存失敗: " + e.getMessage());
+			return ResponseEntity.badRequest().body(result);
+		}
+	}
 }

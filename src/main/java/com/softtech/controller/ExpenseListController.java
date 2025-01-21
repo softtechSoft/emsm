@@ -19,102 +19,142 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.softtech.entity.ExpenseListEntity;
 import com.softtech.service.ExpenseListService;
 
+/**
+ * 経費リストの管理を行うコントローラクラス。
+ * 経費の表示、検索、削除、および更新機能を提供する。
+ */
 @Controller
 @RequestMapping("/expenseList")
 public class ExpenseListController {
 
-    @Autowired
-    private ExpenseListService expenseListService;
+	@Autowired
+	private ExpenseListService expenseListService;
 
-    // ============ 1. 現在の年、月のデータを初期表示 ============
-    @GetMapping
-    public String init(Model model) {
-        LocalDate now = LocalDate.now();
-        int currentYear = now.getYear();
-        int currentMonth = now.getMonthValue();
+	/**
+	 * 現在の年と月に基づいて経費データを初期表示する。
+	 *
+	 * @param model モデルオブジェクト
+	 * @return 経費リストのビュー名
+	 */
+	@GetMapping
+	public String init(Model model) {
+		LocalDate now = LocalDate.now();
+		int currentYear = now.getYear();
+		int currentMonth = now.getMonthValue();
 
-        // 年リスト、月リストを構築
-        List<Integer> yearList = new ArrayList<>();
-        for(int y = currentYear; y > currentYear - 10; y--) {
-            yearList.add(y);
-        }
-        List<Integer> monthList = new ArrayList<>();
-        for(int m = 1; m <= 12; m++) {
-            monthList.add(m);
-        }
+		// 年リストを作成（現在の年から過去10年）
+		List<Integer> yearList = new ArrayList<>();
+		for (int y = currentYear; y > currentYear - 10; y--) {
+			yearList.add(y);
+		}
 
-        // データを検索
-        List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(currentYear, currentMonth);
+		// 月リストを作成（1月から12月）
+		List<Integer> monthList = new ArrayList<>();
+		for (int m = 1; m <= 12; m++) {
+			monthList.add(m);
+		}
 
-        double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
+		// 指定された年と月の経費データを取得
+		List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(currentYear, currentMonth);
 
-        model.addAttribute("yearList", yearList);
-        model.addAttribute("monthList", monthList);
-        model.addAttribute("currentYear", currentYear);
-        model.addAttribute("currentMonth", currentMonth);
-        model.addAttribute("expenseList", expenseList);
-        model.addAttribute("totalCost", totalCost);
+		// 合計金額を計算
+		double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
 
-        return "expenseList";
-    }
+		// モデルにデータを追加
+		model.addAttribute("yearList", yearList);
+		model.addAttribute("monthList", monthList);
+		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("currentMonth", currentMonth);
+		model.addAttribute("expenseList", expenseList);
+		model.addAttribute("totalCost", totalCost);
 
-    // ============ 2. 指定の年、月を検索 ============
-    @GetMapping("/search")
-    public String search(@RequestParam("year") int year,
-                         @RequestParam("month") int month,
-                         Model model) {
-        // 年リスト、月リストを同様に構築
-        int currentYear = LocalDate.now().getYear();
-        List<Integer> yearList = new ArrayList<>();
-        for(int y = currentYear; y > currentYear - 10; y--) {
-            yearList.add(y);
-        }
-        List<Integer> monthList = new ArrayList<>();
-        for(int m = 1; m <= 12; m++) {
-            monthList.add(m);
-        }
+		return "expenseList";
+	}
 
-        // データを検索
-        List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(year, month);
-        double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
+	/**
+	 * 指定された年と月に基づいて経費データを検索し表示する。
+	 *
+	 * @param year   検索対象の年度
+	 * @param month  検索対象の月度
+	 * @param model  モデルオブジェクト
+	 * @return 経費リストのビュー名
+	 */
+	@GetMapping("/search")
+	public String search(@RequestParam("year") int year,
+			@RequestParam("month") int month,
+			Model model) {
+		// 年リストを作成（現在の年から過去10年）
+		int currentYear = LocalDate.now().getYear();
+		List<Integer> yearList = new ArrayList<>();
+		for (int y = currentYear; y > currentYear - 10; y--) {
+			yearList.add(y);
+		}
 
-        model.addAttribute("yearList", yearList);
-        model.addAttribute("monthList", monthList);
-        model.addAttribute("currentYear", year);
-        model.addAttribute("currentMonth", month);
-        model.addAttribute("expenseList", expenseList);
-        model.addAttribute("totalCost", totalCost);
+		// 月リストを作成（1月から12月）
+		List<Integer> monthList = new ArrayList<>();
+		for (int m = 1; m <= 12; m++) {
+			monthList.add(m);
+		}
 
-        return "expenseList";
-    }
+		// 指定された年と月の経費データを取得
+		List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(year, month);
 
-    // ============ 3. 削除（論理削除） ============
-    @GetMapping("/delete/{expensesID}")
-    public String delete(@PathVariable("expensesID") String expensesID) {
-        expenseListService.deleteExpense(expensesID);
-        return "redirect:/expenseList";
-    }
+		// 合計金額を計算
+		double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
 
-    // ============ 4. 編集ページへ移動（オプション） ============
-    @GetMapping("/edit")
-    public String editForm(@RequestParam("expensesID") String expensesID, Model model) {
-        ExpenseListEntity expense = expenseListService.findById(expensesID);
-        model.addAttribute("expense", expense);
-        return "editExpense";
-    }
+		// モデルにデータを追加
+		model.addAttribute("yearList", yearList);
+		model.addAttribute("monthList", monthList);
+		model.addAttribute("currentYear", year);
+		model.addAttribute("currentMonth", month);
+		model.addAttribute("expenseList", expenseList);
+		model.addAttribute("totalCost", totalCost);
 
-    // ============ 5. インライン編集の更新（AJAX） ============
-    @PostMapping("/update")
-    @ResponseBody // 文字列を返す、または ResponseEntity を使用
-    public ResponseEntity<String> updateExpense(@RequestBody ExpenseListEntity expense) {
-        try {
-            System.out.println("updateExpense - Received: " + expense);
-            expenseListService.updateExpense(expense);
-            return ResponseEntity.ok("更新成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("更新失敗: " + e.getMessage());
-        }
-    }
+		return "expenseList";
+	}
 
+	/**
+	 * 指定された経費IDの経費を論理削除する。
+	 *
+	 * @param expensesID 削除対象の経費ID
+	 * @return 経費リストのリダイレクトURL
+	 */
+	@GetMapping("/delete/{expensesID}")
+	public String delete(@PathVariable("expensesID") String expensesID) {
+		expenseListService.deleteExpense(expensesID);
+		return "redirect:/expenseList";
+	}
+
+	/**
+	 * 経費データを更新するためのインライン編集機能。
+	 * AJAXリクエストを受け取り、経費データを更新する。
+	 *
+	 * @param expense 更新対象の経費エンティティ
+	 * @return 更新結果のメッセージ
+	 */
+	@PostMapping("/update")
+	@ResponseBody
+	public ResponseEntity<String> updateExpense(@RequestBody ExpenseListEntity expense) {
+		try {
+			// 更新対象の経費情報をログに出力
+			System.out.println("===== updateExpense =====");
+			System.out.println("expensesID       = " + expense.getExpensesID());
+			System.out.println("accrualDate      = " + expense.getAccrualDate());
+			System.out.println("cost             = " + expense.getCost());
+			System.out.println("happenAddress    = " + expense.getHappenAddress());
+			System.out.println("tantouName       = " + expense.getTantouName());
+			System.out.println("settlementDate   = " + expense.getSettlementDate());
+			System.out.println("settlementType   = " + expense.getSettlementType());
+			System.out.println("expensesType     = " + expense.getExpensesType());
+
+			// 経費データを更新
+			expenseListService.updateExpense(expense);
+
+			return ResponseEntity.ok("更新成功");
+		} catch (Exception e) {
+			// エラー発生時にスタックトレースを出力し、エラーメッセージを返す
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body("更新失敗: " + e.getMessage());
+		}
+	}
 }

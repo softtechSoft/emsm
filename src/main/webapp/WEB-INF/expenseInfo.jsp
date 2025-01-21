@@ -1,111 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>経費新規追加</title>
-    <style>
-        .table-container {
-            width: 90%;
-            margin: 0 auto;
-            margin-bottom: 20px;
-        }
-        h1 {
-            text-align: left;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        table {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 2px solid #b3cbde;
-            padding: 15px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-top: 10px;
-        }
-        button {
-            padding: 6px 12px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-        .btn-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>経費新規追加</title>
+<style>
+.table-container {
+	width: 90%;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+h1 {
+	text-align: left;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+table {
+	width: 100%;
+	margin-top: 30px;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 2px solid #b3cbde;
+	padding: 15px;
+	text-align: center;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.error-message {
+	color: red;
+	text-align: center;
+	margin-top: 10px;
+}
+
+button {
+	padding: 6px 12px;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.btn-container {
+	text-align: center;
+	margin-top: 20px;
+}
+</style>
 </head>
 <body>
-    <div class="table-container">
-        <h1>経費新規追加</h1>
+	<div class="table-container">
+		<h1>経費新規追加</h1>
 
-        <!-- エラーメッセージ（オプション） -->
-        <c:if test="${not empty errorMessage}">
-            <div class="error-message">${errorMessage}</div>
-        </c:if>
+		<!-- エラーメッセージ表示エリア -->
+		<c:if test="${not empty errorMessage}">
+			<div class="error-message">${errorMessage}</div>
+		</c:if>
 
-        <!-- 追加ボタン -->
-        <div>
-            <button type="button" id="addRowBtn">追加</button>
-        </div>
+		<!-- 経費項目追加ボタン -->
+		<div>
+			<button type="button" id="addRowBtn">追加</button>
+		</div>
 
-        <!-- 複数入力用のテーブル -->
-        <table>
-            <thead>
-                <tr>
-                    <th>経費種別</th>
-                    <th>発生日付</th>
-                    <th>金額</th>
-                    <th>用途</th>
-                    <th>担当者</th>
-                    <th>精算日付</th>
-                    <th>精算種別</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody id="expenseTableBody">
-                <!-- 動的に行を挿入 -->
-            </tbody>
-        </table>
+		<!-- 経費項目入力用テーブル -->
+		<table>
+			<thead>
+				<tr>
+					<th>経費種別</th>
+					<th>発生日付</th>
+					<th>金額</th>
+					<th>用途</th>
+					<th>担当者</th>
+					<th>精算日付</th>
+					<th>精算種別</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody id="expenseTableBody">
+				<!-- 動的に行を挿入 -->
+			</tbody>
+		</table>
 
-        <!-- 下部ボタンエリア： 確定 + 戻る -->
-        <div class="btn-container">
-            <button type="button" id="confirmBtn">確定</button>
-            <button type="button" id="backBtn">戻る</button>
-        </div>
-    </div>
+		<!-- 確定および戻るボタンエリア -->
+		<div class="btn-container">
+			<button type="button" id="confirmBtn">確定</button>
+			<button type="button" id="backBtn">戻る</button>
+		</div>
+	</div>
 
-    <script>
-        // 未保存データの有無を示すフラグ
+	<script>
+        /**
+         * 未保存データの有無を示すフラグ
+         * ユーザーがデータを追加・削除・編集した際にtrueに設定される
+         */
         let unsavedData = false;
 
-        // ページ読み込み時に空行を自動追加
+        /**
+         * ページ読み込み時に初期行を自動追加
+         */
         window.onload = function() {
             addNewRow();
         };
 
-        // 1. “追加”ボタン：行を追加
+        /**
+         * 追加ボタンのクリックイベントリスナー
+         * 新しい経費入力行を追加する
+         */
         document.getElementById("addRowBtn").addEventListener("click", function() {
             addNewRow();
         });
 
-        // 新しい行を追加する関数
+        /**
+         * 新しい経費入力行をテーブルに追加する関数
+         */
         function addNewRow() {
             const tableBody = document.getElementById("expenseTableBody");
             const newRow = document.createElement("tr");
 
-            // 経費種別
+            // 経費種別選択セル
             const cell1 = document.createElement("td");
             cell1.innerHTML = `
                 <select class="expensesType" required>
@@ -116,32 +133,32 @@
             `;
             newRow.appendChild(cell1);
 
-            // 発生日付
+            // 発生日付入力セル
             const cell2 = document.createElement("td");
             cell2.innerHTML = `<input type="date" class="accrualDate" required />`;
             newRow.appendChild(cell2);
 
-            // 金額
+            // 金額入力セル
             const cell3 = document.createElement("td");
             cell3.innerHTML = `<input type="number" step="0.01" class="cost" required />円`;
             newRow.appendChild(cell3);
 
-            // 用途
+            // 用途入力セル
             const cell4 = document.createElement("td");
             cell4.innerHTML = `<input type="text" class="happenAddress" style="width:100%;" required />`;
             newRow.appendChild(cell4);
 
-            // 担当者
+            // 担当者入力セル
             const cell5 = document.createElement("td");
             cell5.innerHTML = `<input type="text" class="tantouName" required />`;
             newRow.appendChild(cell5);
 
-            // 精算日付
+            // 精算日付入力セル
             const cell6 = document.createElement("td");
             cell6.innerHTML = `<input type="date" class="settlementDate" required />`;
             newRow.appendChild(cell6);
 
-            // 精算種別
+            // 精算種別選択セル
             const cell7 = document.createElement("td");
             cell7.innerHTML = `
                 <select class="settlementType" required>
@@ -152,7 +169,7 @@
             `;
             newRow.appendChild(cell7);
 
-            // 操作：削除ボタン
+            // 操作セル（削除ボタン）
             const cell8 = document.createElement("td");
             cell8.innerHTML = `<button type="button" class="deleteRowBtn">削除</button>`;
             newRow.appendChild(cell8);
@@ -163,7 +180,10 @@
             unsavedData = true;
         }
 
-        // 削除ボタンのクリックイベントを委譲
+        /**
+         * 削除ボタンのクリックイベントを委譲
+         * 指定された行を削除する
+         */
         document.addEventListener("click", function(e) {
             if (e.target && e.target.classList.contains("deleteRowBtn")) {
                 const row = e.target.closest("tr");
@@ -191,13 +211,16 @@
             }
         });
 
-        // “確定”ボタン：確認後、AJAXで保存
+        /**
+         * 確定ボタンのクリックイベントリスナー
+         * 入力データを収集し、AJAXでサーバーに送信して保存する
+         */
         document.getElementById("confirmBtn").addEventListener("click", function() {
             if (!confirm("保存しますか？")) {
                 return; // キャンセルされた場合は保存しない
             }
 
-            // データを収集
+            // テーブル内のすべての行を取得
             const rows = document.querySelectorAll("#expenseTableBody tr");
             if (rows.length === 0) {
                 alert("入力データがありません。");
@@ -214,7 +237,7 @@
                 const settlementDate = row.querySelector(".settlementDate").value;
                 const settlementType = row.querySelector(".settlementType").value;
 
-                // 簡単な必須入力チェック
+                // 必須入力チェック
                 if (!expensesType || !accrualDate || !cost || !happenAddress 
                     || !tantouName || !settlementDate || !settlementType) {
                     alert("未入力項目があります。全て入力してください。");
@@ -232,7 +255,7 @@
                 });
             }
 
-            // AJAXで送信
+            // AJAXで経費データをサーバーに送信
             fetch('${pageContext.request.contextPath}/expenseInfo/addMultiple', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -242,7 +265,7 @@
             .then(result => {
                 if (result.status === "ok") {
                     alert("保存成功");
-                    // テーブルをクリアし、空行を追加
+                    // テーブルをクリアし、初期行を再追加
                     document.getElementById("expenseTableBody").innerHTML = "";
                     addNewRow();
                     unsavedData = false;
@@ -256,14 +279,17 @@
             });
         });
 
-        // “戻る”ボタン：未保存データがある場合は確認
+        /**
+         * 戻るボタンのクリックイベントリスナー
+         * 未保存データがある場合は確認ダイアログを表示し、確認後に経費リストページへ戻る
+         */
         document.getElementById("backBtn").addEventListener("click", function() {
             if (unsavedData) {
                 if (!confirm("まだ保存していないデータがあります。放棄してよろしいですか？")) {
                     return; // キャンセルされた場合はそのまま
                 }
             }
-            // 放棄が確認された場合、または未保存データがない場合は移動
+            // 放棄が確認された場合、または未保存データがない場合は経費リストページへ移動
             location.href = '${pageContext.request.contextPath}/expenseList';
         });
     </script>
