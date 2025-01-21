@@ -633,3 +633,31 @@ INSERT INTO ems.ofcfunction (
 ) VALUES 
     ('B4', 'Adjustment', '&#xe681;&emsp;年末調整', '0', '/adjustment', '6', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '1'),
     ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '0');
+
+
+--新規経費管理テーブル
+CREATE TABLE ems.m_expenses (
+    expensesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 経費ID (自増)
+    accrualDate DATE NOT NULL,                          -- 発生日
+    cost DECIMAL(15, 2) NOT NULL,                       -- 金額
+    tantouName VARCHAR(6) NOT NULL,                     -- 担当者
+    settlementType CHAR(1) NOT NULL COMMENT '0:現金, 1:口座', -- 精算種別　
+    settlementDate DATE NOT NULL,                       -- 精算日
+    expensesType VARCHAR(2) NOT NULL COMMENT '1:一般経費 2:固定経費', -- 経費種別
+    deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除', -- 削除フラグ
+    happenAddress VARCHAR(255) NOT NULL                 -- 用途
+);
+--経費管理画面をofcfunction表に挿入する
+INSERT INTO ems.ofcfunction (
+    `functionID`,
+    `functionName`,
+    `functionText`,
+    `authority`,
+    `functionLink`,
+    `displayNo`,
+    `deleteFlg`,
+    `insertDate`,
+    `updateDate`,
+    `sysType`
+) VALUES 
+    ('B3', 'expenseList', '&#xe65d;&emsp;経費管理', '1', '/emsm/expenseList', '11', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
