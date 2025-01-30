@@ -9,7 +9,7 @@
 <style>
 .table-container {
 	width: 90%;
-	margin-left: 5%;
+	margin: 0 auto;
 	margin-bottom: 20px;
 }
 
@@ -22,8 +22,8 @@ h1 {
 .form-group {
 	margin-top: 20px;
 	display: flex;
-	align-items: center;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 label {
@@ -40,7 +40,7 @@ button {
 	padding: 5px 10px;
 	font-size: 14px;
 	cursor: pointer;
-	margin-right: 10px;
+	margin-right: 5px;
 }
 
 table {
@@ -51,8 +51,9 @@ table {
 
 th, td {
 	border: 2px solid #b3cbde;
-	padding: 15px;
+	padding: 8px;
 	text-align: center;
+	vertical-align: middle;
 }
 
 th {
@@ -63,15 +64,16 @@ tr:nth-child(even) {
 	background-color: #fafafa;
 }
 
-.button-container {
-	text-align: center;
-	padding-top: 10px;
+.thumb-img {
+	max-width: 100px;
+	max-height: 100px;
+	border: 1px solid #ccc;
+	display: block;
+	margin: 0 auto 5px auto;
 }
 
-.no-data-message {
-	font-weight: bold;
-	text-align: center;
-	padding: 20px 0;
+.hidden-file-input {
+	display: none;
 }
 </style>
 </head>
@@ -96,17 +98,14 @@ tr:nth-child(even) {
 							${monthItem}月</option>
 					</c:forEach>
 				</select>
-
 				<button type="submit">検索</button>
-
-				<!-- 新規追加ボタン -->
 				<button type="button"
 					onclick="location.href='${pageContext.request.contextPath}/expenseInfo'">
 					新規</button>
 			</div>
 		</form>
 
-		<!-- 経費データテーブル -->
+		<!-- データ一覧テーブル -->
 		<table>
 			<thead>
 				<tr>
@@ -117,6 +116,7 @@ tr:nth-child(even) {
 					<th>担当者</th>
 					<th>精算日付</th>
 					<th>精算種別</th>
+					<th>画像</th>
 					<th>編集</th>
 					<th>削除</th>
 				</tr>
@@ -126,45 +126,80 @@ tr:nth-child(even) {
 					<c:when test="${not empty expenseList}">
 						<c:forEach var="expense" items="${expenseList}">
 							<tr id="row${expense.expensesID}">
+								<!-- 経費種別 -->
 								<td class="col-expensesType"><c:choose>
 										<c:when test="${expense.expensesType eq '1'}">一般経費</c:when>
 										<c:when test="${expense.expensesType eq '2'}">固定経費</c:when>
 										<c:otherwise>その他</c:otherwise>
 									</c:choose></td>
+								<!-- 発生日付 -->
 								<td class="col-accrualDate"><c:out
 										value="${expense.accrualDate}" /></td>
+								<!-- 金額 -->
 								<td class="col-cost"><c:out value="${expense.cost}" />円</td>
+								<!-- 用途 -->
 								<td class="col-happenAddress"><c:out
 										value="${expense.happenAddress}" /></td>
+								<!-- 担当者 -->
 								<td class="col-tantouName"><c:out
 										value="${expense.tantouName}" /></td>
+								<!-- 精算日付 -->
 								<td class="col-settlementDate"><c:out
 										value="${expense.settlementDate}" /></td>
+								<!-- 精算種別 -->
 								<td class="col-settlementType"><c:choose>
 										<c:when test="${expense.settlementType eq '0'}">現金</c:when>
 										<c:when test="${expense.settlementType eq '1'}">口座</c:when>
-										<c:otherwise>その他</c:otherwise>
+										<c:otherwise></c:otherwise>
 									</c:choose></td>
-								<td class="col-edit">
-									<button type="button"
-										onclick="editExpense('${expense.expensesID}')">編集</button>
-								</td>
-								<td class="col-delete">
-									<button type="button"
-										onclick="deleteExpense('${expense.expensesID}')">削除</button>
-								</td>
+								<!-- 画像 -->
+								<td class="col-receipt"><c:choose>
+										<c:when test="${empty expense.receiptPath}">
+                                            なし
+                                        </c:when>
+										<c:otherwise>
+											<img class="thumb-img"
+												src="${pageContext.request.contextPath}/expenseList/showThumbnail?path=${expense.receiptPath}"
+												alt="receipt" />
+											<button type="button"
+												onclick="downloadReceipt('${expense.expensesID}')">
+												ダウンロード</button>
+										</c:otherwise>
+									</c:choose></td>
+								<!-- 編集ボタン -->
+								<td class="col-edit"><c:choose>
+										<c:when
+											test="${not empty expense.settlementDate and not empty expense.settlementType}">
+											<button type="button" disabled title="精算済みのため編集できません">編集</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button"
+												onclick="editExpense('${expense.expensesID}')">編集</button>
+										</c:otherwise>
+									</c:choose></td>
+								<!-- 削除ボタン -->
+								<td class="col-delete"><c:choose>
+										<c:when
+											test="${not empty expense.settlementDate and not empty expense.settlementType}">
+											<button type="button" disabled title="精算済みのため削除できません">削除</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button"
+												onclick="deleteExpense('${expense.expensesID}')">削除</button>
+										</c:otherwise>
+									</c:choose></td>
 							</tr>
 						</c:forEach>
-						<!-- 合計金額表示行 -->
+						<!-- 合计行 -->
 						<tr>
 							<td colspan="2"></td>
 							<td><strong>合計: ${totalCost}円</strong></td>
-							<td colspan="6"></td>
+							<td colspan="7"></td>
 						</tr>
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="9" class="no-data-message">データがありません。</td>
+							<td colspan="10">データがありません。</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -172,241 +207,331 @@ tr:nth-child(even) {
 		</table>
 	</div>
 
-	<!-- JavaScript スクリプト -->
 	<script>
-    /**
-     * 行内編集機能
-     * 指定された経費IDの行を編集モードに切り替える
-     * @param {string} expensesID - 編集対象の経費ID
-     */
-    function editExpense(expensesID) {
-        console.log("editExpense called with:", expensesID);
-        const row = document.getElementById("row" + expensesID);
-        if (!row) {
-            console.error("Row with id 'row" + expensesID + "' not found.");
-            return;
-        }
+	
+	/**
+	* 経費データの行内編集処理を行う
+	* 
+	* @param {string} expensesID - 経費ID
+	* @details
+	* - 画像のプレビュー機能あり
+	* - 精算済みデータの編集不可
+	* - 入力内容の検証あり
+	*/
+	function editExpense(expensesID) {
+	   console.log("editExpense:", expensesID);
+	   const row = document.getElementById("row" + expensesID);
+	   if (!row) return;
 
-        const colExpensesType = row.querySelector(".col-expensesType");
-        const colAccrualDate = row.querySelector(".col-accrualDate");
-        const colCost = row.querySelector(".col-cost");
-        const colHappenAddress = row.querySelector(".col-happenAddress");
-        const colTantouName = row.querySelector(".col-tantouName");
-        const colSettlementDate = row.querySelector(".col-settlementDate");
-        const colSettlementType = row.querySelector(".col-settlementType");
-        const colEdit = row.querySelector(".col-edit");
+	   // 各カラムの要素を取得
+	   const colExpensesType   = row.querySelector(".col-expensesType");
+	   const colAccrualDate    = row.querySelector(".col-accrualDate");
+	   const colCost           = row.querySelector(".col-cost");
+	   const colHappenAddress  = row.querySelector(".col-happenAddress");
+	   const colTantouName     = row.querySelector(".col-tantouName");
+	   const colSettlementDate = row.querySelector(".col-settlementDate");
+	   const colSettlementType = row.querySelector(".col-settlementType");
+	   const colReceipt        = row.querySelector(".col-receipt");
+	   const colEdit           = row.querySelector(".col-edit");
 
-        // 元のデータを取得
-        const originalCost = colCost.textContent.replace('円', '').trim();
-        const originalExpensesType = colExpensesType.textContent.trim();
-        const originalSettlementType = colSettlementType.textContent.trim();
+	   // 現在の表示値を取得
+	   const originalExpTypeTxt = colExpensesType.textContent.trim();
+	   const originalAccrualDate= colAccrualDate.textContent.trim();
+	   const originalCostTxt    = colCost.textContent.replace("円","").trim();
+	   const originalHappenTxt  = colHappenAddress.textContent.trim();
+	   const originalTantouTxt  = colTantouName.textContent.trim();
+	   const originalSettlDate  = colSettlementDate.textContent.trim();
+	   const originalSettlType  = colSettlementType.textContent.trim();
 
-        // selectの選択状態を設定
-        const selected1 = (originalExpensesType === "一般経費") ? "selected" : "";
-        const selected2 = (originalExpensesType === "固定経費") ? "selected" : "";
-        const selectedCash = (originalSettlementType === "現金") ? "selected" : "";
-        const selectedAccount = (originalSettlementType === "口座") ? "selected" : "";
+	   // 精算状態の確認
+	   if (originalSettlDate && (originalSettlType === '現金' || originalSettlType === '口座')) {
+	       alert('精算済みのため編集できません。');
+	       return;
+	   }
 
-        // 各フィールドを編集可能な入力要素に置き換える
-        colExpensesType.innerHTML = 
-            '<select id="editExpensesType_' + expensesID + '" name="expensesType">' +
-                '<option value="1" ' + selected1 + '>一般経費</option>' +
-                '<option value="2" ' + selected2 + '>固定経費</option>' +
-            '</select>';
+	   // セレクトボックスの選択状態を設定
+	   let sel1="", sel2="";
+	   if (originalExpTypeTxt==="一般経費") sel1="selected";
+	   else if (originalExpTypeTxt==="固定経費") sel2="selected";
 
-        colAccrualDate.innerHTML = 
-            '<input type="date" ' +
-                   'id="editAccrualDate_' + expensesID + '" ' +
-                   'name="accrualDate" ' +
-                   'value="' + colAccrualDate.textContent.trim() + '" />';
+	   let selCash="", selAcct="";
+	   if (originalSettlType==="現金") selCash="selected";
+	   else if (originalSettlType==="口座") selAcct="selected";
 
-        colCost.innerHTML = 
-            '<input type="number" ' +
-                   'id="editCost_' + expensesID + '" ' +
-                   'name="cost" ' +
-                   'value="' + originalCost + '" ' +
-                   'step="1" />円';
+	   // 経費種別の編集フォーム生成
+	   colExpensesType.innerHTML = 
+	       '<select id="editExpensesType_'+expensesID+'">' +
+	           '<option value="1" '+sel1+'>一般経費</option>' +
+	           '<option value="2" '+sel2+'>固定経費</option>' +
+	       '</select>';
 
-        colHappenAddress.innerHTML = 
-            '<input type="text" ' +
-                   'id="editHappenAddress_' + expensesID + '" ' +
-                   'name="happenAddress" ' +
-                   'value="' + colHappenAddress.textContent.trim() + '" ' +
-                   'style="width:100%" />';
+	   // 発生日付の編集フォーム生成
+	   colAccrualDate.innerHTML =
+	       '<input type="date" id="editAccrualDate_'+expensesID+'" value="'+formatDateForInput(originalAccrualDate)+'" style="width:90%;">';
 
-        colTantouName.innerHTML = 
-            '<input type="text" ' +
-                   'id="editTantouName_' + expensesID + '" ' +
-                   'name="tantouName" ' +
-                   'value="' + colTantouName.textContent.trim() + '" />';
+	   // 金額の編集フォーム生成
+	   colCost.innerHTML =
+	       '<input type="number" id="editCost_'+expensesID+'" value="'+originalCostTxt+'" step="1" style="width:60%;">円';
 
-        colSettlementDate.innerHTML = 
-            '<input type="date" ' +
-                   'id="editSettlementDate_' + expensesID + '" ' +
-                   'name="settlementDate" ' +
-                   'value="' + colSettlementDate.textContent.trim() + '" />';
+	   // 用途の編集フォーム生成
+	   colHappenAddress.innerHTML =
+	       '<input type="text" id="editHappenAddress_'+expensesID+'" value="'+originalHappenTxt+'" style="width:95%;">';
 
-        colSettlementType.innerHTML = 
-            '<select id="editSettlementType_' + expensesID + '" name="settlementType">' +
-                '<option value="0" ' + selectedCash + '>現金</option>' +
-                '<option value="1" ' + selectedAccount + '>口座</option>' +
-            '</select>';
+	   // 担当者の編集フォーム生成
+	   colTantouName.innerHTML =
+	       '<input type="text" id="editTantouName_'+expensesID+'" value="'+originalTantouTxt+'">';
 
-        // 編集ボタンを確定とキャンセルボタンに変更
-        colEdit.innerHTML = 
-            '<button type="button" onclick="confirmEdit(\'' + expensesID + '\')">確定</button>' +
-            '<button type="button" onclick="cancelEdit(\'' + expensesID + '\')">キャンセル</button>';
-    }
+	   // 精算日付の編集フォーム生成
+	   colSettlementDate.innerHTML =
+	       '<input type="date" id="editSettlementDate_'+expensesID+'" value="'+formatDateForInput(originalSettlDate)+'" style="width:90%;">';
 
-    /**
-     * 編集のキャンセル機能
-     * 編集モードをキャンセルし、元のデータに戻す
-     * @param {string} expensesID - キャンセル対象の経費ID
-     */
-    function cancelEdit(expensesID) {
-        const row = document.getElementById("row" + expensesID);
-        if (!row) return;
+	   // 精算種別の編集フォーム生成
+	   colSettlementType.innerHTML =
+	       '<select id="editSettlementType_'+expensesID+'">' +
+	           '<option value=""></option>' +
+	           '<option value="0" '+selCash+'>現金</option>' +
+	           '<option value="1" '+selAcct+'>口座</option>' +
+	       '</select>';
 
-        const colExpensesType = row.querySelector(".col-expensesType");
-        const colAccrualDate = row.querySelector(".col-accrualDate");
-        const colCost = row.querySelector(".col-cost");
-        const colHappenAddress = row.querySelector(".col-happenAddress");
-        const colTantouName = row.querySelector(".col-tantouName");
-        const colSettlementDate = row.querySelector(".col-settlementDate");
-        const colSettlementType = row.querySelector(".col-settlementType");
-        const colEdit = row.querySelector(".col-edit");
+	   // 領収書画像の処理
+	   let thumbHTML = "";
+	   let oldThumbSrc = "";
+	   const imgTag = colReceipt.querySelector("img.thumb-img"); 
+	   if (imgTag) {
+	       oldThumbSrc = imgTag.getAttribute("src"); 
+	       thumbHTML =
+	         '<img id="previewImg_'+expensesID+'" class="thumb-img" src="'+oldThumbSrc+'" alt="receipt">';
+	   } else {
+	       thumbHTML =
+	         '<img id="previewImg_'+expensesID+'" class="thumb-img" src="" style="display:none;" alt="receipt"><div>なし</div>';
+	   }
 
-        // 各フィールドを元の値に戻す
-        colExpensesType.textContent = mapExpensesType(row.querySelector('select').value);
-        colAccrualDate.textContent = row.querySelector('input[type="date"]').value;
-        colCost.textContent = row.querySelector('input[type="number"]').value + "円";
-        colHappenAddress.textContent = row.querySelector('input[type="text"]').value;
-        colTantouName.textContent = row.querySelector('input[name="tantouName"]').value;
-        colSettlementDate.textContent = row.querySelector('input[name="settlementDate"]').value;
-        colSettlementType.textContent = mapSettlementType(row.querySelector('select[name="settlementType"]').value);
+	   // 領収書更新フォームの生成
+	   colReceipt.innerHTML =
+	      thumbHTML+
+	      '<br/><button type="button" onclick="triggerFileSelect(\''+expensesID+'\')">更新</button>'+
+	      '<input type="file" id="editReceiptFile_'+expensesID+'" class="hidden-file-input" accept=".jpg,.jpeg,.png,.pdf" onchange="onFileChanged(\''+expensesID+'\')" />';
 
-        // 編集ボタンを復元
-        colEdit.innerHTML = '<button type="button" onclick="editExpense(\'' + expensesID + '\')">編集</button>';
-    }
+	   // 操作ボタンの生成
+	   colEdit.innerHTML =
+	       '<button type="button" onclick="confirmEdit(\''+expensesID+'\')">確定</button>'+
+	       '<button type="button" onclick="cancelEdit(\''+expensesID+'\')">キャンセル</button>';
+	}
+	
+	/**
+	* 日付文字列をHTML5の日付入力形式（yyyy-MM-dd）に変換する
+	*
+	* @param {string} dateStr - 変換対象の日付文字列
+	* @returns {string} 変換後の日付文字列（yyyy-MM-dd形式）
+	*/
+	function formatDateForInput(dateStr) {
+	   if (!dateStr) return "";
+	   let val = dateStr.trim();
 
-    /**
-     * 編集を確定し、AJAXで更新を送信する
-     * @param {string} expensesID - 更新対象の経費ID
-     */
-    function confirmEdit(expensesID) {
-        try {
-            console.log("confirmEdit called with:", expensesID);
-            if (!confirm("更新しますか？")) {
-                return;
-            }
+	   // 時刻部分を削除
+	   const spaceIndex = val.indexOf(" ");
+	   if (spaceIndex>0) {
+	       val = val.substring(0,spaceIndex);
+	   }
 
-            // すべての入力要素を取得
-            const expensesTypeSelect = document.getElementById("editExpensesType_" + expensesID);
-            const accrualDateInput = document.getElementById("editAccrualDate_" + expensesID);
-            const costInput = document.getElementById("editCost_" + expensesID);
-            const happenAddressInput = document.getElementById("editHappenAddress_" + expensesID);
-            const tantouNameInput = document.getElementById("editTantouName_" + expensesID);
-            const settlementDateInput = document.getElementById("editSettlementDate_" + expensesID);
-            const settlementTypeSelect = document.getElementById("editSettlementType_" + expensesID);
+	   // 区切り文字を'-'に統一
+	   val = val.replace(/\//g, "-");
 
-            // 必須フィールドの存在を確認
-            if (!expensesTypeSelect || !accrualDateInput || !costInput || 
-                !happenAddressInput || !tantouNameInput || !settlementDateInput || 
-                !settlementTypeSelect) {
-                
-                let errorMessage = "更新失敗: 以下の入力フィールドが見つかりません：\n";
-                if (!expensesTypeSelect) errorMessage += "- 経費種別\n";
-                if (!accrualDateInput) errorMessage += "- 発生日付\n";
-                if (!costInput) errorMessage += "- 金額\n";
-                if (!happenAddressInput) errorMessage += "- 用途\n";
-                if (!tantouNameInput) errorMessage += "- 担当者\n";
-                if (!settlementDateInput) errorMessage += "- 精算日付\n";
-                if (!settlementTypeSelect) errorMessage += "- 精算種別\n";
+	   // yyyy-MM-dd形式で先頭10文字を取得
+	   if (val.length>=10) {
+	       val = val.substring(0,10);
+	   }
 
-                alert(errorMessage);
-                return;
-            }
+	   return val;
+	}
+	
+	/**
+	* ファイル選択ダイアログを表示する
+	* 
+	* @param {string} expensesID - 経費ID
+	* @details 非表示のファイル入力欄をクリックして表示
+	*/
+	function triggerFileSelect(expensesID) {
+	   document.getElementById("editReceiptFile_"+expensesID).click();
+	}
+	
+	/**
+	* 選択されたファイルの処理とプレビュー表示を行う
+	* 
+	* @param {string} expensesID - 経費ID
+	* @details
+	* - 画像ファイルの場合はプレビュー表示
+	* - PDF等その他のファイルの場合はプレビューを非表示
+	*/
+	function onFileChanged(expensesID) {
+	   const fileInput = document.getElementById("editReceiptFile_"+expensesID);
+	   const previewImg= document.getElementById("previewImg_"+expensesID);
+	   if (!fileInput || !fileInput.files || fileInput.files.length===0) return;
 
-            // 入力値を取得し、パラメータオブジェクトを構築
-            const params = {
-                expensesID: expensesID,
-                expensesType: expensesTypeSelect.value,
-                accrualDate: accrualDateInput.value,
-                cost: costInput.value,
-                happenAddress: happenAddressInput.value,
-                tantouName: tantouNameInput.value,
-                settlementDate: settlementDateInput.value,
-                settlementType: settlementTypeSelect.value
-            };
+	   const file = fileInput.files[0];
+	   const mime = file.type.toLowerCase();
+	   if (mime.includes("image/")) {
+	       // 画像ファイルのプレビュー表示
+	       const reader = new FileReader();
+	       reader.onload = e => {
+	           previewImg.src = e.target.result;
+	           previewImg.style.display = "block";
+	       };
+	       reader.readAsDataURL(file);
+	   } else {
+	       // 画像以外のファイルはプレビューを非表示
+	       previewImg.src="";
+	       previewImg.style.display="none";
+	   }
+	}
+	
+	/**
+	* 編集をキャンセルし、画面を再読み込みする
+	* 
+	* @param {string} expensesID - 経費ID
+	*/
+	function cancelEdit(expensesID) {
+	   window.location.reload();
+	}
+	
+	/**
+	* 経費データの更新処理を実行する
+	* 
+	* @param {string} expensesID - 経費ID
+	* @details
+	* - 必須入力項目の検証
+	* - 画像ファイルのアップロード処理
+	* - サーバーへの非同期通信による更新
+	*/
+	function confirmEdit(expensesID) {
+	   if (!confirm("更新しますか？")) return;
 
-            console.log("Sending params:", params);
+	   // フォーム値の取得
+	   const expensesType = document.getElementById("editExpensesType_"+expensesID).value;
+	   const accrualDate = document.getElementById("editAccrualDate_"+expensesID).value;
+	   const cost = document.getElementById("editCost_"+expensesID).value;
+	   const happenAddress= document.getElementById("editHappenAddress_"+expensesID).value;
+	   const tantouName = document.getElementById("editTantouName_"+expensesID).value;
+	   const settlementDate= document.getElementById("editSettlementDate_"+expensesID).value;
+	   const settlementType= document.getElementById("editSettlementType_"+expensesID).value;
 
-            // 更新リクエストを送信
-            fetch('${pageContext.request.contextPath}/expenseList/update', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(params)
-            })
-            .then(function(response) {
-                return response.text();
-            })
-            .then(function(data) {
-                alert(data || "更新成功");
-                window.location.reload();
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-                alert("更新失敗: " + error.message);
-            });
-        } catch (error) {
-            console.error("Error in confirmEdit:", error);
-            alert("エラーが発生しました: " + error.message);
-        }
-    }
+	   // 必須項目の入力チェック
+	   if (!accrualDate || !cost || !happenAddress || !tantouName) {
+	       alert("発生日付、金額、用途、担当者は必須です。");
+	       return;
+	   }
 
-    /**
-     * 経費種別の数値をテキストにマッピング
-     * @param {string} val - 経費種別の数値
-     * @returns {string} - 経費種別のテキスト
-     */
-    function mapExpensesType(val) {
-        switch(val) {
-            case "1":
-                return "一般経費";
-            case "2":
-                return "固定経費";
-            default:
-                return "その他";
-        }
-    }
+	   // 送信用データの作成
+	   const formData = new FormData();
 
-    /**
-     * 精算種別の数値をテキストにマッピング
-     * @param {string} val - 精算種別の数値
-     * @returns {string} - 精算種別のテキスト
-     */
-    function mapSettlementType(val) {
-        switch(val) {
-            case "0":
-                return "現金";
-            case "1":
-                return "口座";
-            default:
-                return "その他";
-        }
-    }
+	   // 経費データをJSONとして設定
+	   const expenseObj = {
+	       expensesID,
+	       expensesType,
+	       accrualDate,
+	       cost,
+	       happenAddress,
+	       tantouName,
+	       settlementDate,
+	       settlementType
+	   };
+	   formData.append("expenseData", JSON.stringify(expenseObj));
 
-    /**
-     * 経費削除機能
-     * @param {string} expensesID - 削除対象の経費ID
-     */
-    function deleteExpense(expensesID) {
-        if (confirm("削除しますか？")) {
-            location.href = '${pageContext.request.contextPath}/expenseList/delete/' + expensesID;
-        }
-    }
-</script>
+	   // 領収書ファイルの追加
+	   const fileInput = document.getElementById("editReceiptFile_"+expensesID);
+	   if (fileInput && fileInput.files.length>0) {
+	       formData.append("receiptFile", fileInput.files[0]);
+	   }
+
+	   // サーバーへのデータ送信
+	   fetch(`${pageContext.request.contextPath}/expenseList/update`, {
+	       method: "POST",
+	       body: formData
+	   })
+	   .then(resp => {
+	       if (!resp.ok) {
+	           return resp.text().then(t => { throw new Error(t); });
+	       }
+	       return resp.json();
+	   })
+	   .then(data => {
+	       if (data.status==="ok") {
+	           alert(data.message || "更新成功");
+	           window.location.reload();
+	       } else {
+	           throw new Error(data.message || "更新失敗");
+	       }
+	   })
+	   .catch(err => {
+	       console.error(err);
+	       alert("更新失敗: "+err.message);
+	   });
+	}
+	
+	/**
+	* 領収書ファイルのダウンロード処理を実行する
+	* 
+	* @param {string} expensesID - 経費ID
+	* @details IDの存在チェック後、ダウンロードを実行
+	*/
+	function downloadReceipt(expensesID) {
+	   if (!expensesID) {
+	       alert("ダウンロード失敗：IDが見つかりません");
+	       return;
+	   }
+	   window.location.href = '${pageContext.request.contextPath}/expenseList/downloadReceipt/' + expensesID;
+	}
+	
+	/**
+	* 経費データの削除処理を実行する
+	* 
+	* @param {string} expensesID - 経費ID
+	* @details
+	* - 精算済みデータは削除不可
+	* - 削除前に確認ダイアログを表示
+	* - 削除後は一覧画面を再表示
+	*/
+	function deleteExpense(expensesID) {
+	   const row = document.getElementById("row" + expensesID);
+	   if (!row) return;
+
+	   // 精算状態の確認
+	   const settlementDate = row.querySelector(".col-settlementDate").textContent.trim();
+	   const settlementType = row.querySelector(".col-settlementType").textContent.trim();
+
+	   // 精算済みの場合は削除不可
+	   if (settlementDate && (settlementType === '現金' || settlementType === '口座')) {
+	       alert('精算済みのため削除できません。');
+	       return;
+	   }
+
+	   // 削除確認と実行
+	   if (confirm("削除しますか？")) {
+	       location.href = `${pageContext.request.contextPath}/expenseList/delete/${expensesID}`;
+	   }
+	}
+	
+	/**
+	* アップロードファイルのサイズ検証を行う
+	* 
+	* @param {HTMLInputElement} input - ファイル入力要素
+	* @param {number} maxMB - 許容最大サイズ（MB単位）
+	* @details
+	* - ファイルサイズが制限を超える場合は警告を表示
+	* - 入力値をクリアして再選択を促す
+	*/
+	function validateFileSize(input, maxMB) {
+	   if (input.files && input.files[0]) {
+	       // ファイルサイズをMB単位で計算
+	       const size = input.files[0].size / 1024 / 1024;
+	       
+	       // サイズ制限チェック
+	       if (size > maxMB) {
+	           alert("ファイルサイズは"+maxMB+"MB以下にしてください。");
+	           input.value="";  // 入力値をクリア
+	       }
+	   }
+	}
+    </script>
 </body>
 </html>

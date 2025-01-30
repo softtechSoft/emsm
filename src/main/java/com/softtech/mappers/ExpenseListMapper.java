@@ -34,8 +34,6 @@ public interface ExpenseListMapper {
 
 	/**
 	 * 指定された経費IDに基づいて経費を論理削除する。
-	 * 論理削除とは、データベース上のレコードを物理的に削除するのではなく、
-	 * 削除フラグ（deleteFlg）を '1' に設定することで削除とみなす方法。
 	 *
 	 * @param expensesID 論理削除対象の経費ID
 	 */

@@ -636,7 +636,7 @@ INSERT INTO ems.ofcfunction (
 
 
 --新規経費管理テーブル
-CREATE TABLE ems.m_expenses (
+CREATE TABLE ems.expenses (
     expensesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 経費ID (自増)
     accrualDate DATE NOT NULL,                          -- 発生日
     cost DECIMAL(15, 2) NOT NULL,                       -- 金額
