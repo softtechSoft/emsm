@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -254,66 +252,62 @@ public class ExpenseListController {
 	}
 
 	/**
-	* 領収書画像のダウンロード処理を実行する
-	*
-	* @param expensesID 対象の経費ID
-	* @return ファイルダウンロード用のレスポンスエンティティ
-	* @details
-	* - 経費データと領収書ファイルの存在チェック
-	* - 相対パス・絶対パスの解決処理
-	* - ファイルのダウンロード設定
-	*/
+	 * 領収書ファイルのダウンロード処理を実行する
+	 *
+	 * @param expensesID 対象の経費ID
+	 * @return ファイルダウンロード用のレスポンスエンティティ
+	 * @throws IOException ファイル処理で例外が発生した場合
+	 */
 	@GetMapping("/downloadReceipt/{expensesID}")
 	@ResponseBody
 	public ResponseEntity<?> downloadReceipt(@PathVariable("expensesID") String expensesID) {
-		try {
-			// 経費データの取得と検証
-			ExpenseListEntity expense = expenseListService.findById(expensesID);
-			if (expense == null || !StringUtils.hasText(expense.getReceiptPath())) {
-				return ResponseEntity.notFound().build();
-			}
+	    try {
+	        // データベースから経費データを取得
+	        ExpenseListEntity expense = expenseListService.findById(expensesID);
+	        if (expense == null || StringUtils.isEmpty(expense.getReceiptPath())) {
+	            return ResponseEntity.notFound().build();
+	        }
 
-			// ファイルパスの取得
-			String pathInDb = expense.getReceiptPath();
+	        // 設定された保存先ディレクトリのパスを取得
+	        String baseDir = receiptFolder;
+	        if (!baseDir.endsWith(File.separator)) {
+	            baseDir += File.separator;
+	        }
 
-			// パス形式の判定と解決
-			Path filePath;
-			if (Paths.get(pathInDb).isAbsolute()) {
-				filePath = Paths.get(pathInDb);
-			} else {
-				// 相対パスの場合は基準ディレクトリから解決
-				filePath = expenseListService.getReceiptFolderPath().resolve(pathInDb).normalize();
-			}
+	        // データベースの相対パスからファイルの完全パスを構築
+	        String dbPath = expense.getReceiptPath();
+	        // パスからファイル名部分を抽出（最後の/以降）
+	        String fileName = dbPath.substring(dbPath.lastIndexOf('/') + 1);
+	        // 完全なファイルパスを構築
+	        String fullPath = baseDir + fileName;
 
-			// ファイルの存在確認
-			File file = filePath.toFile();
-			if (!file.exists()) {
-				return ResponseEntity.notFound().build();
-			}
+	        // ファイルの存在確認
+	        File file = new File(fullPath);
+	        if (!file.exists() || !file.isFile()) {
+	            return ResponseEntity.notFound().build();
+	        }
 
-			// ファイルストリームの準備
-			FileInputStream fis = new FileInputStream(file);
-			InputStreamResource resource = new InputStreamResource(fis);
+	        // ファイルの読み込みとレスポンスの設定
+	        FileInputStream fileInputStream = new FileInputStream(file);
+	        InputStreamResource resource = new InputStreamResource(fileInputStream);
 
-			// ダウンロードファイル名の設定
-			String fileName = file.getName();
-			String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.name())
-					.replace("+", "%20"); // 空白文字の適切な処理
+	        // Content-Dispositionヘッダーの設定
+	        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.name())
+	                .replace("+", "%20");
 
-			// ダウンロード用レスポンスの生成
-			return ResponseEntity.ok()
-					.contentType(MediaType.APPLICATION_OCTET_STREAM)
-					.header(HttpHeaders.CONTENT_DISPOSITION,
-							"attachment; filename=\"" + encodedFileName + "\"")
-					.contentLength(file.length())
-					.body(resource);
+	        // レスポンスの返却
+	        return ResponseEntity.ok()
+	                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	                .contentLength(file.length())
+	                .header(HttpHeaders.CONTENT_DISPOSITION, 
+	                        "attachment; filename=\"" + encodedFileName + "\"")
+	                .body(resource);
 
-		} catch (IOException e) {
-			// エラー処理
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("ファイルダウンロードでエラー発生: " + e.getMessage());
-		}
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("ファイルダウンロードエラー: " + e.getMessage());
+	    }
 	}
 
 	/**
