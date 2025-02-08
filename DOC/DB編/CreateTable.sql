@@ -636,16 +636,17 @@ INSERT INTO ems.ofcfunction (
 
 
 --新規経費管理テーブル
-CREATE TABLE ems.m_expenses (
+CREATE TABLE ems.expenses (
     expensesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 経費ID (自増)
     accrualDate DATE NOT NULL,                          -- 発生日
     cost DECIMAL(15, 2) NOT NULL,                       -- 金額
     tantouName VARCHAR(6) NOT NULL,                     -- 担当者
-    settlementType CHAR(1) NOT NULL COMMENT '0:現金, 1:口座', -- 精算種別　
-    settlementDate DATE NOT NULL,                       -- 精算日
+    settlementType CHAR(1) DEFAULT NULL COMMENT '0:現金, 1:口座', -- 精算種別
+    settlementDate DATE DEFAULT NULL,                   -- 精算日
     expensesType VARCHAR(2) NOT NULL COMMENT '1:一般経費 2:固定経費', -- 経費種別
     deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除', -- 削除フラグ
-    happenAddress VARCHAR(255) NOT NULL                 -- 用途
+    happenAddress VARCHAR(255) NOT NULL,                -- 用途
+    receiptPath VARCHAR(255) DEFAULT NULL COMMENT '小票画像ファイルのパス'
 );
 --経費管理画面をofcfunction表に挿入する
 INSERT INTO ems.ofcfunction (

@@ -22,6 +22,7 @@ public class ExpenseListEntity {
 	private String expensesType; // 経費種別 '1':一般経費, '2':固定経費
 	private String deleteFlg; // 削除フラグ '0':未削除, '1':削除
 	private String happenAddress; // 用途
+	private String receiptPath; //画像
 
 	// ------------------ Getter / Setter ------------------
 	public String getExpensesID() {
@@ -95,5 +96,13 @@ public class ExpenseListEntity {
 	public void setHappenAddress(String happenAddress) {
 		this.happenAddress = happenAddress;
 	}
+	
+    public String getReceiptPath() {
+        return receiptPath;
+    }
+
+    public void setReceiptPath(String receiptPath) {
+        this.receiptPath = receiptPath;
+    }
 
 }

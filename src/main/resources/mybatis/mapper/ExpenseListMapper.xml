@@ -9,19 +9,20 @@
 	<select id="findByYearMonth"
 		resultType="com.softtech.entity.ExpenseListEntity">
 		SELECT
-		expensesID,
-		accrualDate,
-		cost,
-		tantouName,
-		settlementType,
-		settlementDate,
-		expensesType,
-		happenAddress,
-		deleteFlg
-		FROM ems.m_expenses
+			expensesID,
+			accrualDate,
+			cost,
+			tantouName,
+			settlementType,
+			settlementDate,
+			expensesType,
+			happenAddress,
+			deleteFlg,
+			receiptPath
+		FROM ems.expenses
 		WHERE deleteFlg = '0'
-		AND YEAR(accrualDate) = #{year}
-		AND MONTH(accrualDate) = #{month}
+		  AND YEAR(accrualDate) = #{year}
+		  AND MONTH(accrualDate) = #{month}
 		ORDER BY accrualDate ASC
 	</select>
 
@@ -29,23 +30,24 @@
 	<select id="findById"
 		resultType="com.softtech.entity.ExpenseListEntity">
 		SELECT
-		expensesID,
-		accrualDate,
-		cost,
-		tantouName,
-		settlementType,
-		settlementDate,
-		expensesType,
-		happenAddress,
-		deleteFlg
-		FROM ems.m_expenses
+			expensesID,
+			accrualDate,
+			cost,
+			tantouName,
+			settlementType,
+			settlementDate,
+			expensesType,
+			happenAddress,
+			deleteFlg,
+			receiptPath
+		FROM ems.expenses
 		WHERE expensesID = #{expensesID}
-		AND deleteFlg = '0'
+		  AND deleteFlg = '0'
 	</select>
 
 	<!-- 経費IDに基づく論理削除 -->
 	<update id="deleteById">
-		UPDATE ems.m_expenses
+		UPDATE ems.expenses
 		SET deleteFlg = '1'
 		WHERE expensesID = #{expensesID}
 	</update>
@@ -53,41 +55,44 @@
 	<!-- 経費データの更新 -->
 	<update id="update"
 		parameterType="com.softtech.entity.ExpenseListEntity">
-		UPDATE ems.m_expenses
-		SET
-		accrualDate = #{accrualDate},
-		cost = #{cost},
-		tantouName = #{tantouName},
-		settlementType = #{settlementType},
-		settlementDate = #{settlementDate},
-		expensesType = #{expensesType},
-		happenAddress = #{happenAddress}
+		UPDATE ems.expenses
+		SET accrualDate   = #{accrualDate},
+		    cost          = #{cost},
+		    tantouName    = #{tantouName},
+		    settlementType= #{settlementType},
+		    settlementDate= #{settlementDate},
+		    expensesType  = #{expensesType},
+		    happenAddress = #{happenAddress},
+		    receiptPath   = #{receiptPath}
 		WHERE expensesID = #{expensesID}
-		AND deleteFlg = '0'
+		  AND deleteFlg = '0'
 	</update>
 
 	<!-- 新規経費レコードの挿入 -->
 	<insert id="insert"
 		parameterType="com.softtech.entity.ExpenseListEntity"
 		useGeneratedKeys="true" keyProperty="expensesID">
-		INSERT INTO ems.m_expenses (
-		accrualDate,
-		cost,
-		tantouName,
-		settlementType,
-		settlementDate,
-		expensesType,
-		happenAddress,
-		deleteFlg
-		) VALUES (
-		#{accrualDate},
-		#{cost},
-		#{tantouName},
-		#{settlementType},
-		#{settlementDate},
-		#{expensesType},
-		#{happenAddress},
-		'0'
+		INSERT INTO ems.expenses (
+			accrualDate,
+			cost,
+			tantouName,
+			settlementType,
+			settlementDate,
+			expensesType,
+			happenAddress,
+			deleteFlg,
+			receiptPath
+		)
+		VALUES (
+			#{accrualDate},
+			#{cost},
+			#{tantouName},
+			#{settlementType},
+			#{settlementDate},
+			#{expensesType},
+			#{happenAddress},
+			'0', -- insert默认deleteFlg=0
+			#{receiptPath}
 		)
 	</insert>
 
