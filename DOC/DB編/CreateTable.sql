@@ -1,3 +1,20 @@
+CREATE TABLE payment (
+paymentID VARCHAR(6) NOT NULL COMMENT '支払いID',
+paymentMonth VARCHAR(6) NOT NULL COMMENT '支払い対象月',
+companyID VARCHAR(6) NOT NULL COMMENT '取引先ID',
+paymentEmployeeName VARCHAR(20) NOT NULL COMMENT '社員名',
+basicAmount VARCHAR(8) NOT NULL COMMENT '基本金額',
+overtimeAmount VARCHAR(8) NULL COMMENT '残業額',
+paymentDate VARCHAR(8) NOT NULL COMMENT '支払い日（YYYYMMDD形式）',
+PRIMARY KEY (paymentID)
+) ;
+INSERT INTO `ofcfunction` (
+    `functionID`, `functionName`, `functionText`, `authority`, `functionLink`,
+    `displayNo`, `deleteFlg`, `insertDate`, `updateDate`, `sysType`
+) VALUES (
+    'P6', 'payment', '&#xe60c;&emsp;支払い管理システム', '1', '/emsm/payment',
+    '10', '0', '20250208', '20250208', '2'
+);
 drop table if exists employee;
 create table employee(
 employeeID varchar(6) not null primary key comment'社員ID',
@@ -608,10 +625,10 @@ CREATE TABLE ems.adjustmentRequestFiles (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-ALTER TABLE ems.adjustmentFile 
-ADD CONSTRAINT uniq_employee_file 
+ALTER TABLE ems.adjustmentFile
+ADD CONSTRAINT uniq_employee_file
 UNIQUE (employeeID, fileYear, fileName, fileType);
-ALTER TABLE ems.adjustmentFile 
+ALTER TABLE ems.adjustmentFile
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (employeeID, fileType, fileYear, fileName);
 
@@ -630,7 +647,7 @@ INSERT INTO ems.ofcfunction (
     `insertDate`,
     `updateDate`,
     `sysType`
-) VALUES 
+) VALUES
     ('B4', 'Adjustment', '&#xe681;&emsp;年末調整', '0', '/adjustment', '6', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '1'),
     ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '0');
 
@@ -660,5 +677,5 @@ INSERT INTO ems.ofcfunction (
     `insertDate`,
     `updateDate`,
     `sysType`
-) VALUES 
+) VALUES
     ('B3', 'expenseList', '&#xe65d;&emsp;経費管理', '1', '/emsm/expenseList', '11', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
