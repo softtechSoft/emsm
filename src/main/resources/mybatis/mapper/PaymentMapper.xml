@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.PaymentMapper">
+
+    <select id="getAllPayments" resultType="com.softtech.actionForm.PaymentListFormBean">
+        SELECT
+            p.paymentID,
+            p.paymentMonth,
+            p.companyID,
+            p.paymentEmployeeName,
+            p.basicAmount,
+            p.overtimeAmount,
+            p.paymentDate,
+            (p.basicAmount + IFNULL(p.overtimeAmount, 0)) AS totalAmount -- 総支払額を計算する
+        FROM
+            ems.payment p
+        ORDER BY
+            p.paymentDate DESC; -- 支払い日でソートする
+    </select>
+     <select id="getConsolidatedPayments" resultType="com.softtech.actionForm.PaymentListFormBean">
+        SELECT
+            p.paymentID,
+            p.paymentMonth,
+            p.companyID,
+            p.paymentEmployeeName,
+            p.basicAmount,
+            p.overtimeAmount,
+            p.paymentDate,
+            c.companyName,
+            SUM(CAST(p.basicAmount AS DECIMAL(10, 2)) + IFNULL(CAST(p.overtimeAmount AS DECIMAL(10, 2)), 0)) AS totalAmount
+        FROM ems.payment p
+        JOIN ems.company c ON p.companyID = c.companyID
+        WHERE p.paymentMonth = #{paymentMonth}
+        GROUP BY p.paymentMonth, p.companyID, c.companyName
+        ORDER BY p.companyID
+    </select>
+ <select id="searchPaymentsByMonth" resultType="com.softtech.actionForm.PaymentListFormBean">
+    SELECT
+        p.paymentID,
+        p.paymentMonth,
+        c.companyName,  <!-- Changed from p.companyID to c.companyName -->
+        p.paymentEmployeeName,
+        p.basicAmount,
+        p.overtimeAmount,
+        p.paymentDate
+    FROM
+        ems.payment p
+    JOIN
+        ems.company c ON p.companyID = c.companyID  <!-- Added JOIN clause -->
+    WHERE
+        p.paymentMonth = #{paymentMonth}
+    ORDER BY
+        p.paymentDate DESC
+</select>
+  <select id="getPaymentInfo" resultType="com.softtech.entity.Payment">
+ SELECT *
+    FROM ems.payment p
+    WHERE p.paymentID = #{paymentID}
+</select>
+
+
+   <update id="updatePayment">
+    UPDATE ems.payment SET
+        paymentMonth = #{paymentMonth},
+        companyID = #{companyID},
+        paymentEmployeeName = #{paymentEmployeeName},
+        basicAmount = #{basicAmount},
+        overtimeAmount = #{overtimeAmount},
+        paymentDate = #{paymentDate}
+    WHERE
+        paymentID = #{paymentID}
+</update>
+
+
+    <!-- 支払情報を追加する -->
+  <insert id="insertPayment">
+    INSERT INTO ems.payment (
+        paymentID,
+        paymentMonth,
+        companyID,
+        paymentEmployeeName,
+        basicAmount,
+        overtimeAmount,
+        paymentDate
+    ) VALUES (
+        #{paymentID},
+        #{paymentMonth},
+        #{companyID},
+        #{paymentEmployeeName},
+        #{basicAmount},
+        #{overtimeAmount},
+        #{paymentDate}
+    )
+</insert>
+
+
+    <!-- 支払IDの最大値を取得する -->
+    <select id="getMaxPaymentID" resultType="java.lang.String">
+-- 「PM」で始まるpaymentIDの中で最大のIDを取得する
+    SELECT paymentID
+    FROM ems.payment
+    WHERE paymentID LIKE 'PM%'  -- paymentIDが「PM」で始まるデータを抽出する
+    ORDER BY CAST(SUBSTRING(paymentID, 3) AS UNSIGNED) DESC  -- 「PM」の後ろの数字部分を数値に変換し、降順で並び替える
+    LIMIT 1;  -- 最大の値（最新のID）を1件取得する
+
+    </select>
+
+</mapper>
