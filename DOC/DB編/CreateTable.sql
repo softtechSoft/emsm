@@ -1,3 +1,5 @@
+
+drop table if exists payment;
 CREATE TABLE payment (
 paymentID VARCHAR(6) NOT NULL COMMENT '支払いID',
 paymentMonth VARCHAR(6) NOT NULL COMMENT '支払い対象月',
@@ -7,7 +9,7 @@ basicAmount VARCHAR(8) NOT NULL COMMENT '基本金額',
 overtimeAmount VARCHAR(8) NULL COMMENT '残業額',
 paymentDate VARCHAR(8) NOT NULL COMMENT '支払い日（YYYYMMDD形式）',
 PRIMARY KEY (paymentID)
-) ;
+) comment'支払管理';
 INSERT INTO `ofcfunction` (
     `functionID`, `functionName`, `functionText`, `authority`, `functionLink`,
     `displayNo`, `deleteFlg`, `insertDate`, `updateDate`, `sysType`
@@ -15,6 +17,8 @@ INSERT INTO `ofcfunction` (
     'P6', 'payment', '&#xe60c;&emsp;支払い管理システム', '1', '/emsm/payment',
     '10', '0', '20250208', '20250208', '2'
 );
+
+
 drop table if exists employee;
 create table employee(
 employeeID varchar(6) not null primary key comment'社員ID',
