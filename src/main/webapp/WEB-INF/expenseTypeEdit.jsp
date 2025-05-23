@@ -52,6 +52,8 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 4px;
     display: none;
+    width: 200px;
+    max-width: 60%;
 }
 
 .error-message {
@@ -462,6 +464,8 @@ input[type="text"] {
 	  if (btn.classList.contains('edit-category-btn')) return editCategoryTitle(btn.dataset.categoryId);
 	  // 経費種別名の保存
 	  if (btn.classList.contains('save-category-btn')) return saveCategoryTitle(btn.dataset.categoryId);
+	  // 経費種別名のキャンセル
+	  if (btn.classList.contains('cancel-category-btn')) return cancelCategoryEdit(btn.dataset.categoryId);
 	  // 経費種別の削除
 	  if (btn.classList.contains('delete-category-btn')) return deleteCategory(btn.dataset.categoryId);
 	});
@@ -791,7 +795,23 @@ input[type="text"] {
 	  const btn = $('.edit-category-btn[data-category-id="'+cid+'"]');
 	  btn.textContent='保存'; 
 	  btn.classList.replace('edit-category-btn','save-category-btn');
+
+	  const cancel = document.createElement('button');
+	  cancel.type = 'button';
+	  cancel.textContent = 'キャンセル';
+	  cancel.className = 'cancel-category-btn';
+	  cancel.dataset.categoryId = cid;
+	  btn.insertAdjacentElement('afterend', cancel);
+	  
 	}
+		
+	 /**
+	  * 経費種別名の編集をキャンセルする
+	  * @param {string} cid - 経費種別ID
+	  */
+	 function cancelCategoryEdit(cid){
+	   location.reload();
+	 }
 	
 	/**
 	 * 経費種別名の変更を保存する
