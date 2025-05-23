@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -51,24 +50,6 @@ public class ExpenseInfoService {
     }
 
     /**
-     * 複数の経費エンティティを一括でデータベースに挿入する。
-     *
-     * @param expenseList 挿入する経費エンティティのリスト
-     */
-    @Transactional
-    public void addMultipleExpenses(List<ExpenseListEntity> expenseList) {
-        // 経費リストがnullまたは空の場合は処理を中断
-        if (expenseList == null || expenseList.isEmpty()) {
-            return;
-        }
-
-        // 各経費エンティティをサービス層を通じて挿入
-        for (ExpenseListEntity expense : expenseList) {
-            expenseListService.insertExpense(expense);
-        }
-    }
-
-    /**
      * 経費情報とレシート画像を同時に保存する
      *
      * @param expense     ExpenseListEntity
@@ -96,6 +77,7 @@ public class ExpenseInfoService {
                 throw new IOException("ファイル保存失敗: " + e.getMessage(), e);
             }
         }
+        
         expenseListService.insertExpense(expense);
     }
 

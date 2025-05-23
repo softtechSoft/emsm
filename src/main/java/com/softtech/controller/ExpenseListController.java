@@ -34,7 +34,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.softtech.entity.ExpenseListEntity;
+import com.softtech.entity.ExpenseTypeEntity;
 import com.softtech.service.ExpenseListService;
+import com.softtech.service.ExpenseTypeService;
 
 /**
  * 経費リストの管理を行うコントローラクラス。
@@ -48,6 +50,8 @@ public class ExpenseListController {
 
 	@Autowired
 	private ExpenseListService expenseListService;
+	@Autowired
+	private ExpenseTypeService expenseTypeService;
 
 	/**
 	 * 現在の年と月に基づいて経費データを初期表示する。
@@ -57,37 +61,41 @@ public class ExpenseListController {
 	 */
 	@GetMapping
 	public String init(Model model) {
-		LocalDate now = LocalDate.now();
-		int currentYear = now.getYear();
-		int currentMonth = now.getMonthValue();
+	    LocalDate now = LocalDate.now();
+	    int currentYear = now.getYear();
+	    int currentMonth = now.getMonthValue();
 
-		// 年リストを作成（現在の年から過去10年）
-		List<Integer> yearList = new ArrayList<>();
-		for (int y = currentYear; y > currentYear - 10; y--) {
-			yearList.add(y);
-		}
+	    // 年リストを作成（現在の年から過去10年）
+	    List<Integer> yearList = new ArrayList<>();
+	    for (int y = currentYear; y > currentYear - 10; y--) {
+	        yearList.add(y);
+	    }
 
-		// 月リストを作成（1月から12月）
-		List<Integer> monthList = new ArrayList<>();
-		for (int m = 1; m <= 12; m++) {
-			monthList.add(m);
-		}
+	    // 月リストを作成（1月から12月）
+	    List<Integer> monthList = new ArrayList<>();
+	    for (int m = 1; m <= 12; m++) {
+	        monthList.add(m);
+	    }
 
-		// 指定された年と月の経費データを取得
-		List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(currentYear, currentMonth);
+	    // 指定された年と月の経費データを取得
+	    List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(currentYear, currentMonth);
 
-		// 合計金額を計算
-		double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
+	    // 合計金額を計算
+	    double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
 
-		// モデルにデータを追加
-		model.addAttribute("yearList", yearList);
-		model.addAttribute("monthList", monthList);
-		model.addAttribute("currentYear", currentYear);
-		model.addAttribute("currentMonth", currentMonth);
-		model.addAttribute("expenseList", expenseList);
-		model.addAttribute("totalCost", totalCost);
+	    // 経費種別マスターデータを取得（追加）
+	    Map<String, List<ExpenseTypeEntity>> expenseTypeGroups = expenseTypeService.getAllExpenseTypesByGroup();
 
-		return "expenseList";
+	    // モデルにデータを追加
+	    model.addAttribute("yearList", yearList);
+	    model.addAttribute("monthList", monthList);
+	    model.addAttribute("currentYear", currentYear);
+	    model.addAttribute("currentMonth", currentMonth);
+	    model.addAttribute("expenseList", expenseList);
+	    model.addAttribute("totalCost", totalCost);
+	    model.addAttribute("expenseTypeGroups", expenseTypeGroups);
+
+	    return "expenseList";
 	}
 
 	/**
@@ -100,36 +108,40 @@ public class ExpenseListController {
 	 */
 	@GetMapping("/search")
 	public String search(@RequestParam("year") int year,
-			@RequestParam("month") int month,
-			Model model) {
-		// 年リストを作成（現在の年から過去10年）
-		int currentYear = LocalDate.now().getYear();
-		List<Integer> yearList = new ArrayList<>();
-		for (int y = currentYear; y > currentYear - 10; y--) {
-			yearList.add(y);
-		}
+	        @RequestParam("month") int month,
+	        Model model) {
+	    // 年リストを作成（現在の年から過去10年）
+	    int currentYear = LocalDate.now().getYear();
+	    List<Integer> yearList = new ArrayList<>();
+	    for (int y = currentYear; y > currentYear - 10; y--) {
+	        yearList.add(y);
+	    }
 
-		// 月リストを作成（1月から12月）
-		List<Integer> monthList = new ArrayList<>();
-		for (int m = 1; m <= 12; m++) {
-			monthList.add(m);
-		}
+	    // 月リストを作成（1月から12月）
+	    List<Integer> monthList = new ArrayList<>();
+	    for (int m = 1; m <= 12; m++) {
+	        monthList.add(m);
+	    }
 
-		// 指定された年と月の経費データを取得
-		List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(year, month);
+	    // 指定された年と月の経費データを取得
+	    List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(year, month);
 
-		// 合計金額を計算
-		double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
+	    // 合計金額を計算
+	    double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
 
-		// モデルにデータを追加
-		model.addAttribute("yearList", yearList);
-		model.addAttribute("monthList", monthList);
-		model.addAttribute("currentYear", year);
-		model.addAttribute("currentMonth", month);
-		model.addAttribute("expenseList", expenseList);
-		model.addAttribute("totalCost", totalCost);
+	    // 経費種別マスターデータを取得（追加）
+	    Map<String, List<ExpenseTypeEntity>> expenseTypeGroups = expenseTypeService.getAllExpenseTypesByGroup();
 
-		return "expenseList";
+	    // モデルにデータを追加
+	    model.addAttribute("yearList", yearList);
+	    model.addAttribute("monthList", monthList);
+	    model.addAttribute("currentYear", year);
+	    model.addAttribute("currentMonth", month);
+	    model.addAttribute("expenseList", expenseList);
+	    model.addAttribute("totalCost", totalCost);
+	    model.addAttribute("expenseTypeGroups", expenseTypeGroups);
+
+	    return "expenseList";
 	}
 
 	/**
@@ -172,63 +184,64 @@ public class ExpenseListController {
 	@PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> updateExpense(
-			@RequestParam("expenseData") String expenseDataJson,
-			@RequestParam(value = "receiptFile", required = false) MultipartFile file) {
-		Map<String, Object> result = new HashMap<>();
-		try {
-			// JSONデータのパース
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.registerModule(new JavaTimeModule());
-			mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-			ExpenseListEntity formExpense = mapper.readValue(expenseDataJson, ExpenseListEntity.class);
+	        @RequestParam("expenseData") String expenseDataJson,
+	        @RequestParam(value = "receiptFile", required = false) MultipartFile file) {
+	    Map<String, Object> result = new HashMap<>();
+	    try {
+	        // JSONデータのパース
+	        ObjectMapper mapper = new ObjectMapper();
+	        mapper.registerModule(new JavaTimeModule());
+	        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+	        ExpenseListEntity formExpense = mapper.readValue(expenseDataJson, ExpenseListEntity.class);
 
-			// 対象データの取得
-			ExpenseListEntity dbEntity = expenseListService.findById(formExpense.getExpensesID());
-			if (dbEntity == null) {
-				result.put("status", "error");
-				result.put("message", "対象データが存在しません。");
-				return ResponseEntity.badRequest().body(result);
-			}
+	        // 対象データの取得
+	        ExpenseListEntity dbEntity = expenseListService.findById(formExpense.getExpensesID());
+	        if (dbEntity == null) {
+	            result.put("status", "error");
+	            result.put("message", "対象データが存在しません。");
+	            return ResponseEntity.badRequest().body(result);
+	        }
 
-			// 精算済みデータの更新チェック
-			if (dbEntity.getSettlementDate() != null &&
-					dbEntity.getSettlementType() != null &&
-					!dbEntity.getSettlementType().isEmpty()) {
-				result.put("status", "error");
-				result.put("message", "精算済みのため更新できません。");
-				return ResponseEntity.badRequest().body(result);
-			}
+	        // 精算済みデータの更新チェック
+	        if (dbEntity.getSettlementDate() != null &&
+	                dbEntity.getSettlementType() != null &&
+	                !dbEntity.getSettlementType().isEmpty()) {
+	            result.put("status", "error");
+	            result.put("message", "精算済みのため更新できません。");
+	            return ResponseEntity.badRequest().body(result);
+	        }
 
-			// 経費データの更新
-			dbEntity.setExpensesType(formExpense.getExpensesType());
-			dbEntity.setAccrualDate(formExpense.getAccrualDate());
-			dbEntity.setCost(formExpense.getCost());
-			dbEntity.setHappenAddress(formExpense.getHappenAddress());
-			dbEntity.setTantouName(formExpense.getTantouName());
-			dbEntity.setSettlementDate(formExpense.getSettlementDate());
-			dbEntity.setSettlementType(formExpense.getSettlementType());
+	        // 経費データの更新
+	        dbEntity.setExpensesType(formExpense.getExpensesType());
+	        dbEntity.setAccrualDate(formExpense.getAccrualDate());
+	        dbEntity.setCost(formExpense.getCost());
+	        dbEntity.setHappenAddress(formExpense.getHappenAddress());
+	        dbEntity.setTantouName(formExpense.getTantouName());
+	        dbEntity.setSettlementDate(formExpense.getSettlementDate());
+	        dbEntity.setSettlementType(formExpense.getSettlementType());
+	        dbEntity.setmexpensesId(formExpense.getmexpensesId());
 
-			// 領収書画像の処理
-			if (file != null && !file.isEmpty()) {
-				String newPath = expenseListService.saveAndReturnReceiptPath(file);
-				dbEntity.setReceiptPath(newPath);
-			}
+	        // 領収書画像の処理
+	        if (file != null && !file.isEmpty()) {
+	            String newPath = expenseListService.saveAndReturnReceiptPath(file);
+	            dbEntity.setReceiptPath(newPath);
+	        }
 
-			// データベースの更新
-			expenseListService.updateExpense(dbEntity);
+	        // データベースの更新
+	        expenseListService.updateExpense(dbEntity);
 
-			// 正常終了レスポンス
-			result.put("status", "ok");
-			result.put("message", "更新成功");
-			return ResponseEntity.ok(result);
+	        // 正常終了レスポンス
+	        result.put("status", "ok");
+	        result.put("message", "更新成功");
+	        return ResponseEntity.ok(result);
 
-		} catch (Exception e) {
-			// エラー処理
-			e.printStackTrace();
-			result.put("status", "error");
-			result.put("message", "更新失敗: " + e.getMessage());
-			return ResponseEntity.badRequest().body(result);
-		}
+	    } catch (Exception e) {
+	        // エラー処理
+	        e.printStackTrace();
+	        result.put("status", "error");
+	        result.put("message", "更新失敗: " + e.getMessage());
+	        return ResponseEntity.badRequest().body(result);
+	    }
 	}
 
 	/**
@@ -355,6 +368,30 @@ public class ExpenseListController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("サムネイル表示中にエラーが発生しました: " + e.getMessage());
 		}
+	}
+	
+	/**
+	 * 特定の経費種別に属する経費名称リストを取得する（Ajax用）
+	 *
+	 * @param expensesType 経費種別コード
+	 * @return 経費名称リストのJSON
+	 */
+	@GetMapping("/getExpenseNamesByType/{expensesType}")
+	@ResponseBody
+	public ResponseEntity<List<ExpenseTypeEntity>> getExpenseNamesByType(@PathVariable("expensesType") String expensesType) {
+	    try {
+	        // 特定種別の経費名称リストを取得
+	        Map<String, List<ExpenseTypeEntity>> typeGroup = expenseTypeService.getExpenseTypesByType(expensesType);
+	        
+	        if (typeGroup.containsKey(expensesType)) {
+	            return ResponseEntity.ok(typeGroup.get(expensesType));
+	        } else {
+	            return ResponseEntity.ok(new ArrayList<>());
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.badRequest().body(new ArrayList<>());
+	    }
 	}
 
 }

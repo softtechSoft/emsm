@@ -5,95 +5,106 @@
 
 <mapper namespace="com.softtech.mappers.ExpenseListMapper">
 
-	<!-- 年/月で経費を検索: deleteFlg = '0' のデータのみ取得 -->
-	<select id="findByYearMonth"
-		resultType="com.softtech.entity.ExpenseListEntity">
-		SELECT
-			expensesID,
-			accrualDate,
-			cost,
-			tantouName,
-			settlementType,
-			settlementDate,
-			expensesType,
-			happenAddress,
-			deleteFlg,
-			receiptPath
-		FROM ems.expenses
-		WHERE deleteFlg = '0'
-		  AND YEAR(accrualDate) = #{year}
-		  AND MONTH(accrualDate) = #{month}
-		ORDER BY accrualDate ASC
-	</select>
+    <!-- 年/月で経費を検索: deleteFlg = '0' のデータのみ取得 -->
+    <select id="findByYearMonth"
+        resultType="com.softtech.entity.ExpenseListEntity">
+        SELECT
+            e.expensesID,
+            e.accrualDate,
+            e.cost,
+            e.tantouName,
+            e.settlementType,
+            e.settlementDate,
+            e.expensesType,
+            e.happenAddress,
+            e.deleteFlg,
+            e.receiptPath,
+            e.m_expenses_id as mexpensesId,
+            m.expensesTypeName,
+            m.expenseName as expenseNameText
+        FROM ems.expenses e
+        LEFT JOIN ems.m_expenses m ON e.m_expenses_id = m.id
+        WHERE e.deleteFlg = '0'
+          AND YEAR(e.accrualDate) = #{year}
+          AND MONTH(e.accrualDate) = #{month}
+        ORDER BY e.accrualDate ASC
+    </select>
 
-	<!-- 経費IDで単一経費を検索 (deleteFlg = '0') -->
-	<select id="findById"
-		resultType="com.softtech.entity.ExpenseListEntity">
-		SELECT
-			expensesID,
-			accrualDate,
-			cost,
-			tantouName,
-			settlementType,
-			settlementDate,
-			expensesType,
-			happenAddress,
-			deleteFlg,
-			receiptPath
-		FROM ems.expenses
-		WHERE expensesID = #{expensesID}
-		  AND deleteFlg = '0'
-	</select>
+    <!-- 経費IDで単一経費を検索 (deleteFlg = '0') -->
+    <select id="findById"
+        resultType="com.softtech.entity.ExpenseListEntity">
+        SELECT
+            e.expensesID,
+            e.accrualDate,
+            e.cost,
+            e.tantouName,
+            e.settlementType,
+            e.settlementDate,
+            e.expensesType,
+            e.happenAddress,
+            e.deleteFlg,
+            e.receiptPath,
+            e.m_expenses_id as mexpensesId,
+            m.expensesTypeName,
+            m.expenseName as expenseNameText
+        FROM ems.expenses e
+        LEFT JOIN ems.m_expenses m ON e.m_expenses_id = m.id
+        WHERE e.expensesID = #{expensesID}
+          AND e.deleteFlg = '0'
+    </select>
 
-	<!-- 経費IDに基づく論理削除 -->
-	<update id="deleteById">
-		UPDATE ems.expenses
-		SET deleteFlg = '1'
-		WHERE expensesID = #{expensesID}
-	</update>
+    <!-- 経費IDに基づく論理削除 -->
+    <update id="deleteById">
+        UPDATE ems.expenses
+        SET deleteFlg = '1'
+        WHERE expensesID = #{expensesID}
+    </update>
 
-	<!-- 経費データの更新 -->
-	<update id="update"
-		parameterType="com.softtech.entity.ExpenseListEntity">
-		UPDATE ems.expenses
-		SET accrualDate   = #{accrualDate},
-		    cost          = #{cost},
-		    tantouName    = #{tantouName},
-		    settlementType= #{settlementType},
-		    settlementDate= #{settlementDate},
-		    expensesType  = #{expensesType},
-		    happenAddress = #{happenAddress},
-		    receiptPath   = #{receiptPath}
-		WHERE expensesID = #{expensesID}
-		  AND deleteFlg = '0'
-	</update>
+    <!-- 経費データの更新 -->
+    <update id="update"
+        parameterType="com.softtech.entity.ExpenseListEntity">
+        UPDATE ems.expenses
+        SET accrualDate   = #{accrualDate},
+            cost          = #{cost},
+            tantouName    = #{tantouName},
+            settlementType= #{settlementType},
+            settlementDate= #{settlementDate},
+            expensesType  = #{expensesType},
+            happenAddress = #{happenAddress},
+            receiptPath   = #{receiptPath},
+            m_expenses_id = #{mexpensesId}
+        WHERE expensesID = #{expensesID}
+          AND deleteFlg = '0'
+    </update>
 
-	<!-- 新規経費レコードの挿入 -->
-	<insert id="insert"
-		parameterType="com.softtech.entity.ExpenseListEntity"
-		useGeneratedKeys="true" keyProperty="expensesID">
-		INSERT INTO ems.expenses (
-			accrualDate,
-			cost,
-			tantouName,
-			settlementType,
-			settlementDate,
-			expensesType,
-			happenAddress,
-			deleteFlg,
-			receiptPath
-		)
-		VALUES (
-			#{accrualDate},
-			#{cost},
-			#{tantouName},
-			#{settlementType},
-			#{settlementDate},
-			#{expensesType},
-			#{happenAddress},
-			'0', -- insert默认deleteFlg=0
-			#{receiptPath}
-		)
-	</insert>
+    <!-- 新規経費レコードの挿入 -->
+    <insert id="insert"
+        parameterType="com.softtech.entity.ExpenseListEntity"
+        useGeneratedKeys="true" keyProperty="expensesID">
+        INSERT INTO ems.expenses (
+            accrualDate,
+            cost,
+            tantouName,
+            settlementType,
+            settlementDate,
+            expensesType,
+            happenAddress,
+            deleteFlg,
+            receiptPath,
+            m_expenses_id
+        )
+        VALUES (
+            #{accrualDate},
+            #{cost},
+            #{tantouName},
+            #{settlementType},
+            #{settlementDate},
+            #{expensesType},
+            #{happenAddress},
+            '0',
+            #{receiptPath},
+            #{mexpensesId}
+        )
+    </insert>
 
 </mapper>

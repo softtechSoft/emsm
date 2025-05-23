@@ -110,6 +110,7 @@ tr:nth-child(even) {
 			<thead>
 				<tr>
 					<th>経費種別</th>
+					<th>経費名称</th>
 					<th>発生日付</th>
 					<th>金額</th>
 					<th>用途</th>
@@ -127,11 +128,13 @@ tr:nth-child(even) {
 						<c:forEach var="expense" items="${expenseList}">
 							<tr id="row${expense.expensesID}">
 								<!-- 経費種別 -->
-								<td class="col-expensesType"><c:choose>
-										<c:when test="${expense.expensesType eq '1'}">一般経費</c:when>
-										<c:when test="${expense.expensesType eq '2'}">固定経費</c:when>
-										<c:otherwise>その他</c:otherwise>
-									</c:choose></td>
+								<td class="col-expensesType" data-type-code="${expense.expensesType}">
+								<c:out value="${expense.expensesTypeName}" />
+								</td>
+								<!-- 经费名称 -->
+			                    <td class="col-expenseName" data-expense-id="${expense.mexpensesId}">
+			                        <c:out value="${expense.expenseNameText}" />
+			                    </td>
 								<!-- 発生日付 -->
 								<td class="col-accrualDate"><c:out
 										value="${expense.accrualDate}" /></td>
@@ -192,14 +195,14 @@ tr:nth-child(even) {
 						</c:forEach>
 						<!-- 合计行 -->
 						<tr>
-							<td colspan="2"></td>
+							<td colspan="3"></td>
 							<td><strong>合計: ${totalCost}円</strong></td>
 							<td colspan="7"></td>
 						</tr>
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="10">データがありません。</td>
+							<td colspan="11">データがありません。</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -207,7 +210,54 @@ tr:nth-child(even) {
 		</table>
 	</div>
 
+	<!-- 経費種別マスターデータをJavaScriptで使用できるように設定 -->
 	<script>
+	var expenseTypeGroups = {
+		<c:forEach var="group" items="${expenseTypeGroups}" varStatus="status">
+			"${group.key}": [
+				<c:forEach var="type" items="${group.value}" varStatus="typeStatus">
+					{
+						id: ${type.id},
+						expensesType: "${type.expensesType}",
+						expensesTypeName: "${type.expensesTypeName}",
+						expenseName: "${type.expenseName}"
+					}<c:if test="${!typeStatus.last}">,</c:if>
+				</c:forEach>
+			]<c:if test="${!status.last}">,</c:if>
+		</c:forEach>
+	};
+	
+	/**
+	* 経費種別が変更されたときに経費名称のオプションを更新する
+	* 
+	* @param {string} selectId - 経費種別セレクトボックスのID
+	* @param {string} targetId - 経費名称セレクトボックスのID
+	* @param {number} selectedValue - 選択する経費名称のID（任意）
+	*/
+	function updateExpenseNameOptions(selectId, targetId, selectedValue) {
+	    const typeSelect = document.getElementById(selectId);
+	    const nameSelect = document.getElementById(targetId);
+	    
+	    if (!typeSelect || !nameSelect) return;
+	    
+	    const selectedType = typeSelect.value;
+	    
+	    // 経費名称セレクトボックスをクリア
+	    nameSelect.innerHTML = '<option value="">選択してください</option>';
+	    
+	    // 選択された種別に対応する経費名称を追加
+	    if (selectedType && expenseTypeGroups[selectedType]) {
+	        expenseTypeGroups[selectedType].forEach(function(item) {
+	            const option = document.createElement('option');
+	            option.value = item.id;
+	            option.textContent = item.expenseName;
+	            if (selectedValue && item.id == selectedValue) {
+	                option.selected = true;
+	            }
+	            nameSelect.appendChild(option);
+	        });
+	    }
+	}
 	
 	/**
 	* 経費データの行内編集処理を行う
@@ -225,6 +275,7 @@ tr:nth-child(even) {
 
 	   // 各カラムの要素を取得
 	   const colExpensesType   = row.querySelector(".col-expensesType");
+	   const colExpenseName    = row.querySelector(".col-expenseName");
 	   const colAccrualDate    = row.querySelector(".col-accrualDate");
 	   const colCost           = row.querySelector(".col-cost");
 	   const colHappenAddress  = row.querySelector(".col-happenAddress");
@@ -235,7 +286,8 @@ tr:nth-child(even) {
 	   const colEdit           = row.querySelector(".col-edit");
 
 	   // 現在の表示値を取得
-	   const originalExpTypeTxt = colExpensesType.textContent.trim();
+	   const originalExpTypeCode = colExpensesType.getAttribute("data-type-code");
+	   const originalExpenseId = colExpenseName.getAttribute("data-expense-id");
 	   const originalAccrualDate= colAccrualDate.textContent.trim();
 	   const originalCostTxt    = colCost.textContent.replace("円","").trim();
 	   const originalHappenTxt  = colHappenAddress.textContent.trim();
@@ -249,21 +301,23 @@ tr:nth-child(even) {
 	       return;
 	   }
 
-	   // セレクトボックスの選択状態を設定
-	   let sel1="", sel2="";
-	   if (originalExpTypeTxt==="一般経費") sel1="selected";
-	   else if (originalExpTypeTxt==="固定経費") sel2="selected";
-
-	   let selCash="", selAcct="";
-	   if (originalSettlType==="現金") selCash="selected";
-	   else if (originalSettlType==="口座") selAcct="selected";
-
 	   // 経費種別の編集フォーム生成
-	   colExpensesType.innerHTML = 
-	       '<select id="editExpensesType_'+expensesID+'">' +
-	           '<option value="1" '+sel1+'>一般経費</option>' +
-	           '<option value="2" '+sel2+'>固定経費</option>' +
-	       '</select>';
+	   let typeOptions = '<select id="editExpensesType_'+expensesID+'" onchange="updateExpenseNameOptions(\'editExpensesType_'+expensesID+'\', \'editExpenseName_'+expensesID+'\')">';
+	   for (let typeCode in expenseTypeGroups) {
+	       const typeName = expenseTypeGroups[typeCode][0].expensesTypeName;
+	       const selected = (typeCode === originalExpTypeCode) ? 'selected' : '';
+	       typeOptions += '<option value="'+typeCode+'" '+selected+'>'+typeName+'</option>';
+	   }
+	   typeOptions += '</select>';
+	   colExpensesType.innerHTML = typeOptions;
+
+	   // 経費名称の編集フォーム生成
+	   colExpenseName.innerHTML = '<select id="editExpenseName_'+expensesID+'"><option value="">選択してください</option></select>';
+	   
+	   // 経費名称のオプションを設定
+	   setTimeout(function() {
+	       updateExpenseNameOptions('editExpensesType_'+expensesID, 'editExpenseName_'+expensesID, originalExpenseId);
+	   }, 100);
 
 	   // 発生日付の編集フォーム生成
 	   colAccrualDate.innerHTML =
@@ -286,6 +340,10 @@ tr:nth-child(even) {
 	       '<input type="date" id="editSettlementDate_'+expensesID+'" value="'+formatDateForInput(originalSettlDate)+'" style="width:90%;">';
 
 	   // 精算種別の編集フォーム生成
+	   let selCash="", selAcct="";
+	   if (originalSettlType==="現金") selCash="selected";
+	   else if (originalSettlType==="口座") selAcct="selected";
+	   
 	   colSettlementType.innerHTML =
 	       '<select id="editSettlementType_'+expensesID+'">' +
 	           '<option value=""></option>' +
@@ -408,6 +466,7 @@ tr:nth-child(even) {
 
 	   // フォーム値の取得
 	   const expensesType = document.getElementById("editExpensesType_"+expensesID).value;
+	   const mexpensesId = document.getElementById("editExpenseName_"+expensesID).value;
 	   const accrualDate = document.getElementById("editAccrualDate_"+expensesID).value;
 	   const cost = document.getElementById("editCost_"+expensesID).value;
 	   const happenAddress= document.getElementById("editHappenAddress_"+expensesID).value;
@@ -416,8 +475,8 @@ tr:nth-child(even) {
 	   const settlementType= document.getElementById("editSettlementType_"+expensesID).value;
 
 	   // 必須項目の入力チェック
-	   if (!accrualDate || !cost || !happenAddress || !tantouName) {
-	       alert("発生日付、金額、用途、担当者は必須です。");
+	   if (!mexpensesId || !accrualDate || !cost || !happenAddress || !tantouName) {
+	       alert("経費名称、発生日付、金額、用途、担当者は必須です。");
 	       return;
 	   }
 
@@ -428,6 +487,7 @@ tr:nth-child(even) {
 	   const expenseObj = {
 	       expensesID,
 	       expensesType,
+	       mexpensesId,
 	       accrualDate,
 	       cost,
 	       happenAddress,
@@ -444,7 +504,7 @@ tr:nth-child(even) {
 	   }
 
 	   // サーバーへのデータ送信
-	   fetch(`${pageContext.request.contextPath}/expenseList/update`, {
+	   fetch("${pageContext.request.contextPath}/expenseList/update", {
 	       method: "POST",
 	       body: formData
 	   })
@@ -507,7 +567,7 @@ tr:nth-child(even) {
 
 	   // 削除確認と実行
 	   if (confirm("削除しますか？")) {
-	       location.href = `${pageContext.request.contextPath}/expenseList/delete/${expensesID}`;
+	       location.href = "${pageContext.request.contextPath}/expenseList/delete/" + expensesID;
 	   }
 	}
 	

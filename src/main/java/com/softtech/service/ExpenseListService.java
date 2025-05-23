@@ -65,9 +65,6 @@ public class ExpenseListService {
            // 解決されたパスをフィールドに保持
            this.receiptFolderPath = path;
 
-           // 設定完了ログ出力
-           System.out.println("領収書保存ディレクトリ: " + this.receiptFolderPath);
-
        } catch (IOException e) {
            throw new RuntimeException("ファイル保存用ディレクトリ作成失敗: " + e.getMessage(), e);
        }

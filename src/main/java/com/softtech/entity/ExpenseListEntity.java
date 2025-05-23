@@ -19,10 +19,13 @@ public class ExpenseListEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate settlementDate; // 精算日
-	private String expensesType; // 経費種別 '1':一般経費, '2':固定経費
+	private String expensesType; // 経費種別
 	private String deleteFlg; // 削除フラグ '0':未削除, '1':削除
 	private String happenAddress; // 用途
 	private String receiptPath; //画像
+	private Integer mexpensesId; // 経費種別明細ID（m_expensesのid）
+    private String expensesTypeName; // 経費種別名称（表示用）
+    private String expenseNameText; // 経費名称（表示用）
 
 	// ------------------ Getter / Setter ------------------
 	public String getExpensesID() {
@@ -103,6 +106,30 @@ public class ExpenseListEntity {
 
     public void setReceiptPath(String receiptPath) {
         this.receiptPath = receiptPath;
+    }
+    
+    public Integer getmexpensesId() {
+        return mexpensesId;
+    }
+
+    public void setmexpensesId(Integer mexpensesId) {
+        this.mexpensesId = mexpensesId;
+    }
+
+    public String getExpensesTypeName() {
+        return expensesTypeName;
+    }
+
+    public void setExpensesTypeName(String expensesTypeName) {
+        this.expensesTypeName = expensesTypeName;
+    }
+
+    public String getExpenseNameText() {
+        return expenseNameText;
+    }
+
+    public void setExpenseNameText(String expenseNameText) {
+        this.expenseNameText = expenseNameText;
     }
 
 }

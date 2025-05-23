@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.ExpenseTypeMapper">
+
+    <sql id="Base_Column_List">
+        id, expensesType, expensesTypeName, expenseName, deleteFlg, createdBy, updatedBy, insertDate, updateDate
+    </sql>
+
+    <select id="findAllActive" resultType="com.softtech.entity.ExpenseTypeEntity">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            ems.m_expenses
+        WHERE
+            deleteFlg = '0'
+        ORDER BY
+            expensesType ASC, id ASC
+    </select>
+
+    <select id="findByExpensesType" resultType="com.softtech.entity.ExpenseTypeEntity">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            ems.m_expenses
+        WHERE
+            deleteFlg = '0'
+        AND
+            expensesType = #{expensesType}
+        ORDER BY
+            id ASC
+    </select>
+    
+    <select id="findAllCategories" resultType="java.util.Map">
+	    SELECT DISTINCT
+	        expensesType, 
+	        expensesTypeName
+	    FROM
+	        ems.m_expenses
+	    WHERE
+	        deleteFlg = '0'
+	    GROUP BY
+	        expensesType, expensesTypeName
+	    ORDER BY
+	        expensesType ASC
+	</select>
+    
+    <select id="findMaxId" resultType="java.lang.Integer">
+        SELECT
+            MAX(id)
+        FROM
+            ems.m_expenses
+        WHERE
+            deleteFlg = '0'
+    </select>
+    
+    <insert id="insert" parameterType="com.softtech.entity.ExpenseTypeEntity">
+        INSERT INTO ems.m_expenses (
+            expensesType,
+            expensesTypeName,
+            expenseName,
+            deleteFlg,
+            createdBy,
+            updatedBy,
+            insertDate,
+            updateDate
+        ) VALUES (
+            #{expensesType},
+            #{expensesTypeName},
+            #{expenseName},
+            #{deleteFlg},
+            #{createdBy},
+            #{updatedBy},
+            #{insertDate},
+            #{updateDate}
+        )
+        <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    
+    <update id="updateItemById" parameterType="java.util.Map">
+        UPDATE ems.m_expenses
+        SET
+            expenseName = #{expenseName},
+            updatedBy = #{updatedBy},
+            updateDate = #{updateDate}
+        WHERE
+            id = #{id}
+        AND
+            deleteFlg = '0'
+    </update>
+    
+    <update id="deleteItemById" parameterType="java.util.Map">
+        UPDATE ems.m_expenses
+        SET
+            deleteFlg = '1',
+            updatedBy = #{updatedBy},
+            updateDate = #{updateDate}
+        WHERE
+            id = #{id}
+        AND
+            deleteFlg = '0'
+    </update>
+    
+    <select id="getNextCategoryId" resultType="java.lang.String">
+        SELECT
+            IFNULL(MAX(CAST(expensesType AS SIGNED)) + 1, 1)
+        FROM
+            ems.m_expenses
+        WHERE
+            deleteFlg = '0'
+    </select>
+    
+    <insert id="insertCategory" parameterType="java.util.Map">
+	    INSERT INTO ems.m_expenses (
+	        expensesType,
+	        expensesTypeName,
+	        expenseName,
+	        deleteFlg,
+	        createdBy,
+	        updatedBy,
+	        insertDate,
+	        updateDate
+	    ) VALUES (
+	        #{expensesType},
+	        #{expensesTypeName},
+	        #{expenseName},
+	        '0',
+	        #{createdBy},
+	        #{updatedBy},
+	        #{insertDate},
+	        #{updateDate}
+	    )
+	</insert>
+    
+    <update id="updateCategory" parameterType="java.util.Map">
+        UPDATE ems.m_expenses
+        SET
+            expensesTypeName = #{expensesTypeName},
+            updatedBy = #{updatedBy},
+            updateDate = #{updateDate}
+        WHERE
+            expensesType = #{expensesType}
+        AND
+            deleteFlg = '0'
+    </update>
+    
+    <update id="deleteItemsByType" parameterType="java.util.Map">
+        UPDATE ems.m_expenses
+        SET
+            deleteFlg = '1',
+            updatedBy = #{updatedBy},
+            updateDate = #{updateDate}
+        WHERE
+            expensesType = #{expensesType}
+        AND
+            deleteFlg = '0'
+    </update>
+    
+    <select id="findByIdIncludeDeleted" resultType="com.softtech.entity.ExpenseTypeEntity">
+        SELECT
+            <include refid="Base_Column_List" />
+        FROM
+            ems.m_expenses
+        WHERE
+            id = #{id}
+    </select>
+    
+    <select id="checkRecordExists" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM ems.m_expenses
+        WHERE
+            id = #{id}
+        AND
+            deleteFlg = '0'
+    </select>
+</mapper>

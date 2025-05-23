@@ -656,19 +656,39 @@ INSERT INTO ems.ofcfunction (
     ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '0');
 
 
---新規経費管理テーブル
+-- 経費種別マスタ表
+drop table if exists ems.expenses;
+CREATE TABLE ems.m_expenses (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    expensesType VARCHAR(2) NOT NULL COMMENT '経費種別コード',
+    expensesTypeName VARCHAR(50) NOT NULL COMMENT '経費種別名称',
+    expenseName VARCHAR(50) NOT NULL COMMENT '経費名称',
+    deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除',
+    createdBy VARCHAR(50) NOT NULL COMMENT '作成者',
+    updatedBy VARCHAR(50) NOT NULL COMMENT '更新者',
+    insertDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    updateDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時'
+) COMMENT='経費種別マスタ';
+
+-- 経費管理表
+drop table if exists ems.m_expenses;
 CREATE TABLE ems.expenses (
-    expensesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 経費ID (自増)
-    accrualDate DATE NOT NULL,                          -- 発生日
-    cost DECIMAL(15, 2) NOT NULL,                       -- 金額
-    tantouName VARCHAR(6) NOT NULL,                     -- 担当者
-    settlementType CHAR(1) DEFAULT NULL COMMENT '0:現金, 1:口座', -- 精算種別
-    settlementDate DATE DEFAULT NULL,                   -- 精算日
-    expensesType VARCHAR(2) NOT NULL COMMENT '1:一般経費 2:固定経費', -- 経費種別
-    deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除', -- 削除フラグ
-    happenAddress VARCHAR(255) NOT NULL,                -- 用途
-    receiptPath VARCHAR(255) DEFAULT NULL COMMENT '小票画像ファイルのパス'
-);
+    expensesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '経費ID',
+    accrualDate DATE NOT NULL COMMENT '発生日',
+    cost DECIMAL(15, 2) NOT NULL COMMENT '金額',
+    tantouName VARCHAR(6) NOT NULL COMMENT '担当者',
+    settlementType CHAR(1) DEFAULT NULL COMMENT '0:現金, 1:口座',
+    settlementDate DATE DEFAULT NULL COMMENT '精算日',
+    expensesType VARCHAR(2) NOT NULL COMMENT '経費種別コード',
+    m_expenses_id INT DEFAULT NULL COMMENT '経費種別明細ID（m_expensesのid）',
+    deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除',
+    happenAddress VARCHAR(255) NOT NULL COMMENT '用途',
+    receiptPath VARCHAR(255) DEFAULT NULL COMMENT '領収書画像ファイルのパス',
+    
+    CONSTRAINT fk_expenses_m_expenses_id FOREIGN KEY (m_expenses_id) REFERENCES m_expenses(id)
+) COMMENT='経費管理';   
+
+
 --経費管理画面をofcfunction表に挿入する
 INSERT INTO ems.ofcfunction (
     `functionID`,
@@ -683,3 +703,17 @@ INSERT INTO ems.ofcfunction (
     `sysType`
 ) VALUES
     ('B3', 'expenseList', '&#xe65d;&emsp;経費管理', '1', '/emsm/expenseList', '11', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
+--経費種別管理画面をofcfunction表に挿入する
+INSERT INTO ems.ofcfunction (
+    `functionID`,
+    `functionName`,
+    `functionText`,
+    `authority`,
+    `functionLink`,
+    `displayNo`,
+    `deleteFlg`,
+    `insertDate`,
+    `updateDate`,
+    `sysType`
+) VALUES
+    ('B6', 'expenseType', '&#xe65d;&emsp;経費種別管理', '1', '/emsm/expenseType', '16', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
