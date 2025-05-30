@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.BaseSalaryInfoMapper">
-    <select id="insertBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity">
+    <insert id="insertBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity">
         insert
         into m_basesalary
         (baseSalaryID,
@@ -30,7 +30,7 @@
                 date_format(now(), '%Y%m%d'),
                 date_format(now(), '%Y%m%d') )
 
-    </select>
+    </insert>
     <!-- 基本給リストの検索 -->
     <select id="getBaseSalaryInfoList" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
         select *
@@ -47,7 +47,7 @@
     </select>
 
     <!-- 基本給更新 -->
-    <select id="updateBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity">
+    <update id="updateBaseSalaryInfo" parameterType="com.softtech.entity.BaseSalaryInfoEntity">
         update
             m_basesalary
         set employeeID=#{employeeID},
@@ -61,7 +61,7 @@
             insertDate=date_format(now(), '%Y%m%d'),
             updateDate=date_format(now(), '%Y%m%d')
         where baseSalaryID = #{baseSalaryID}
-    </select>
+    </update>
     <!--最大ID取得。-->
     <select id="getMaxBaseSalaryID" resultType="string">
         <!--基本給情報IDを取得する。-->

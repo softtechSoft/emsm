@@ -31,7 +31,7 @@
 		and ct.contractID = #{contractID}
 	</select>
 	<!--契約情報を更新する。-->
-	<select id="updateContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
+	<update id="updateContractInfo" parameterType="com.softtech.entity.ContractInfoEntity">
 	update ems.contract set
 		contractName=#{contractName},
 		employeeID=#{employeeID},
@@ -50,7 +50,7 @@
 		invoice=#{invoice},
 		status=#{status}
 	where contractID=#{contractID}
-	</select>
+	</update>
 	<!--最大ID取得。-->
 	<select id="getMaxContractID"  resultType="string">
 		 <!--契約情報IDを取得する。-->
@@ -61,7 +61,7 @@
 
 	</select>
 	<!--契約情報を新規する。-->
-	<select id="insertContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
+	<insert id="insertContractInfo" parameterType="com.softtech.entity.ContractInfoEntity">
 
 	insert into ems.contract(
 		contractID,
@@ -87,5 +87,5 @@
         #{upperPrice},#{contractBeginDate},#{contractEndDate},#{paymentTerm},#{postNeed},#{timeReportPath},#{invoice},#{status},
        date_format(now(),'%Y%m%d'), date_format(now(),'%Y%m%d'))
 
-	</select>
+	</insert>
  </mapper>

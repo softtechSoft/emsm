@@ -151,7 +151,7 @@
             <span style="white-space: nowrap;">
                 <c:out value="${employeeInfoList.phoneNumber.substring(0, 3)}"/>-
                 <c:out value="${employeeInfoList.phoneNumber.substring(3, 7)}"/>-
-                <c:out value="${employeeInfoList.phoneNumber.substring(7, 10)}"/>
+                <c:out value="${employeeInfoList.phoneNumber.substring(7)}"/>
             </span>
         </c:otherwise>
     </c:choose>

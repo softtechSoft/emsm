@@ -155,18 +155,19 @@ Insert into contract values
 ('CT003','水遁忍術開発支援','E003','C003',600000,'0',150,1000,200,1000,'20210101','20210131','10','0','D:/tmp/work',' 土遁忍術開発支援', '1',date_format(now(), '%Y%m%d'), date_format(now(), '%Y%m%d'));
 
 drop table if exists workinfo;
-create table workinfo(
-contractID varchar(10) not null  comment'契約ID',
-workMonth varchar(6) not null comment'稼働月',
-workStartDay varchar(8)	not null comment'稼働開始日',
-workEndDay varchar(8) not null comment'稼働最終日',
-workTime int(3) not null comment'稼働時間',
-workInfoFile varchar(50) comment'稼働表パス',
-insertDate varchar(8) comment'作成日',
-updateDate varchar(8) comment'更新日',
-primary key(contractID,workMonth)
-)comment'勤怠情報';
-alter table workinfo modify workTime float not null default 0 comment'稼働時間';
+CREATE TABLE ems.workinfo (
+    contractID    VARCHAR(10)  NOT NULL COMMENT '契約ID',
+    workMonth     VARCHAR(6)   NOT NULL COMMENT '稼働月 (YYYYMM)',
+    workStartDay  DATE         NOT NULL COMMENT '稼働開始日',  -- 修正：DATE型に変更
+    workEndDay    DATE         NOT NULL COMMENT '稼働最終日',  -- 修正：DATE型に変更
+    workTime      FLOAT        NOT NULL DEFAULT 0 COMMENT '稼働時間 (h)',
+    workInfoFile  VARCHAR(50)           COMMENT '稼働表パス',
+    insertDate    DATE                 COMMENT '作成日',  -- 修正：DATE型に変更
+    updateDate    DATE                 COMMENT '更新日',  -- 修正：DATE型に変更
+    PRIMARY KEY (contractID, workMonth)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COMMENT='勤怠情報';
 
 drop table if exists claim;
 create table claim(
@@ -235,30 +236,32 @@ alter table ems.salaryinfo CHANGE welfareComp welfareHealthComp int DEFAULT 0 CO
 alter table ems.salaryinfo add column welfareHealthSelf int DEFAULT 0 COMMENT '厚生健康控除個人' after welfarePensionSelf;
 
 drop table if exists transport;
-create table transport(
-employeeID varchar(6) not null comment'社員ID',
-workMonth varchar(6) not null comment'対象月',
-startDate varchar(8) not null comment'開始日',
-startStation varchar(20) not null comment'起点駅',
-endStation varchar(20) not null comment'終点駅',
-transportFacility varchar(20) not null comment'交通機関(代表)',
-transportExpense1 float(6) not null comment'定期券金額(1ヶ月)',
-midStation1 varchar(20) comment'中間駅1',
-transportFacility1 varchar(20) comment'交通機関1',
-midStation2 varchar(20) comment'中間駅2',
-transportFacility2 varchar(20) comment'交通機関2',
-midStation3 varchar(20) comment'中間駅3',
-transportFacility3 varchar(20) comment'交通機関3',
-transportExpense2 float(6) comment'定期券金額(2ヶ月)',
-transportExpense3 float(6) comment'定期券金額(3ヶ月)',
-transport int(7) comment'交通費',
-businessTrip int(7) comment'出張旅費',
-BusinessTripName varchar(50) comment'出張旅費ファイル',
-status varchar(1) not null comment'使用ステータス',
-insertDate varchar(8) comment'作成日',
-updateDate varchar(8) comment'更新日',
-primary key(employeeID,workMonth)
-) comment'交通情報';
+CREATE TABLE ems.transport(
+    employeeID VARCHAR(6) NOT NULL COMMENT '社員ID',
+    workMonth VARCHAR(6) NOT NULL COMMENT '対象月',
+    startDate DATE NOT NULL COMMENT '開始日',  -- 修正：DATE型に変更
+    startStation VARCHAR(20) NOT NULL COMMENT '起点駅',
+    endStation VARCHAR(20) NOT NULL COMMENT '終点駅',
+    transportFacility VARCHAR(20) NOT NULL COMMENT '交通機関(代表)',
+    transportExpense1 DECIMAL(10,2) NOT NULL COMMENT '定期券金額(1ヶ月)',  -- 修正：DECIMAL型に変更（金額なので）
+    midStation1 VARCHAR(20) COMMENT '中間駅1',
+    transportFacility1 VARCHAR(20) COMMENT '交通機関1',
+    midStation2 VARCHAR(20) COMMENT '中間駅2',
+    transportFacility2 VARCHAR(20) COMMENT '交通機関2',  -- 修正：列名を統一
+    midStation3 VARCHAR(20) COMMENT '中間駅3',
+    transportFacility3 VARCHAR(20) COMMENT '交通機関3',  -- 修正：列名を統一
+    transportExpense2 DECIMAL(10,2) COMMENT '定期券金額(2ヶ月)',  -- 修正：DECIMAL型に変更
+    transportExpense3 DECIMAL(10,2) COMMENT '定期券金額(3ヶ月)',  -- 修正：DECIMAL型に変更
+    transport DECIMAL(10,2) COMMENT '交通費',  -- 修正：DECIMAL型に変更（金額なので）
+    businessTrip DECIMAL(10,2) COMMENT '出張旅費',  -- 修正：DECIMAL型に変更（金額なので）
+    BusinessTripName VARCHAR(50) COMMENT '出張旅費ファイル',
+    status VARCHAR(1) NOT NULL COMMENT '使用ステータス',
+    insertDate DATE COMMENT '作成日',  -- 修正：DATE型に変更
+    updateDate DATE COMMENT '更新日',  -- 修正：DATE型に変更
+    PRIMARY KEY(employeeID, workMonth)
+) ENGINE=InnoDB 
+  DEFAULT CHARSET=utf8mb4 
+  COMMENT='交通情報';
 insert into transport values
 ("E001","202104","20210101","西川口駅","銀座駅","京浜東北線",3000,"赤羽駅","埼京線","新宿駅","埼京線","新宿駅","丸の内線",0,0,10000,2500,'D:\\TName\\',"0",date_format(now(), '%Y%m%d'), null);
 
