@@ -19,7 +19,7 @@ public interface WelfareBabyInfoMapper {
     void updateWelfareBabyInfo(WelfareBabyInfoEntity welfareBabyInfoEntity);
 
     // 最大のRateIDを探す
-    String getMaxRateID();
+//    String getMaxRateID();
     // insert
     void insertWelfareBabyInfo(WelfareBabyInfoEntity welfareBabyInfoEntity);
     // 選択枠

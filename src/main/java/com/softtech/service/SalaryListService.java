@@ -67,6 +67,14 @@ public class SalaryListService {
 		//給料テーブルから最大年月（month）を取得
 
 		String maxMonth=salarylistMapper.getMaxMonth();
+		
+		// 空表の場合の処理
+		if (maxMonth == null || maxMonth.isEmpty()) {
+	        // 現在の年月を取得（yyyy/MM形式）
+	        String currentMonth = DateUtil.getNowMonth();
+	        // yyyy/MM → yyyyMM形式に変換
+	        return DateUtil.chgMonthToYM(currentMonth);
+	    }
 
 		//最大年月の次の年月を取得
 		String nextMonth=DateUtil.monthplus(maxMonth);

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class ContractInfoBean {
 	//契約ID
-		private String ContractID;
+		private Integer ContractID;
 		//契約名称
 		private String ContractName;
 		//社員ID
@@ -48,13 +48,13 @@ public class ContractInfoBean {
 		/**
 		 * @return contractID
 		 */
-		public String getContractID() {
+		public Integer getContractID() {
 			return ContractID;
 		}
 		/**
 		 * @param contractID セットする contractID
 		 */
-		public void setContractID(String contractID) {
+		public void setContractID(Integer contractID) {
 			ContractID = contractID;
 		}
 		/**

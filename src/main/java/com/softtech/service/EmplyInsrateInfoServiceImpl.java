@@ -12,7 +12,6 @@ import com.softtech.actionForm.EmplyinsrateInfoFormBean;
 import com.softtech.common.ListIDName;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.mappers.EmplyinsrateMapper;
-import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
 
 /**
@@ -55,7 +54,7 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
      * @date:2022/08/08
      */
     @Override
-    public List<EmplyinsrateInfoEntity> getUpdateEmplyinsrateInfoList(String emplyinsrateID) {
+    public List<EmplyinsrateInfoEntity> getUpdateEmplyinsrateInfoList(Integer emplyinsrateID) {
         List<EmplyinsrateInfoEntity> updateEmplyinsrateInfoList =
                 emplyinsrateMapper.getUpdateEmplyinsrateInfoList(emplyinsrateID);
         return updateEmplyinsrateInfoList;
@@ -96,10 +95,11 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
      * @date:2022/08/08
      */
     @Override
-    public String getNextEmplyinsrateID() {
-        String maxEmplyinsrateID = emplyinsrateMapper.getMaxEmplyinsrateID();
-        String nextEmplyinsrateID = DataUtil.getNextID(maxEmplyinsrateID, 1);
-        return nextEmplyinsrateID;
+    public Integer getNextEmplyinsrateID() {
+//        String maxEmplyinsrateID = emplyinsrateMapper.getMaxEmplyinsrateID();
+//        String nextEmplyinsrateID = DataUtil.getNextID(maxEmplyinsrateID, 1);
+//        return nextEmplyinsrateID;
+    	return null;
     }
     /**
      * 概要:更新用BeanToEntity
@@ -184,9 +184,9 @@ public class EmplyInsrateInfoServiceImpl implements EmplyInsrateInfoService {
 
 
         //新規追加用　ID+1を取得
-        String maxEmplyinsrateID = emplyinsrateMapper.getMaxEmplyinsrateID();
-        String nextEmplyinsrateID = DataUtil.getNextID(maxEmplyinsrateID, 1);
-        emplyinsrateInfoEntity.setEmplyinsrateID(nextEmplyinsrateID);
+//        String maxEmplyinsrateID = emplyinsrateMapper.getMaxEmplyinsrateID();
+//        String nextEmplyinsrateID = DataUtil.getNextID(maxEmplyinsrateID, 1);
+//        emplyinsrateInfoEntity.setEmplyinsrateID(nextEmplyinsrateID);
         //年度
         String year = emplyinsrateInfoFormBean.getYear();
         emplyinsrateInfoEntity.setYear(year);

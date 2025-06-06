@@ -33,11 +33,11 @@
     </div>
 </c:if>
 		<table  border="1">
-			<tr style="background-color:#dcfeeb">
+<%-- 			<tr style="background-color:#dcfeeb">
 				<td width="200px">取引先ID</td>
 				<td width="200px"><input  type="text" id="companyID" name="companyID"
 				 value="${companyInfoBean.companyID}" maxlength = "6" /></td>
-			</tr>
+			</tr> --%>
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">取引先名称</td>
 				<td width="200px"><input type="text" id="companyName" name="companyName"

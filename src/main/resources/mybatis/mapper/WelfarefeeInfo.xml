@@ -5,35 +5,15 @@
 
 <mapper namespace="com.softtech.mappers.WelfarefeeInfoMapper">
     <!--データ新規追加-->
-    <insert id="insertWelfarefeeInfo" parameterType="com.softtech.entity.WelfarefeeInfoEntity">
-        insert into m_welfarefee
-        (welfarefeeID,
-         year,
-         area,
-         standSalary,
-         salaryFrom,
-         salaryTo,
-         notCareRatio,
-         careRatio,
-         annuityRatio,
-         status,
-         insertDate,
-         updateDate)
-            value
-            ( #{welfarefeeID},
-            #{year},
-            #{area},
-            #{standSalary},
-            #{salaryFrom},
-            #{salaryTo},
-            #{notCareRatio},
-            #{careRatio},
-            #{annuityRatio},
-            #{status},
-            date_format(now(),'%Y%m%d'),
-            date_format(now(),'%Y%m%d')
-            )
-    </insert>
+    <insert id="insertWelfarefeeInfo" 
+	        parameterType="com.softtech.entity.WelfarefeeInfoEntity" 
+	        useGeneratedKeys="true" 
+	        keyProperty="welfarefeeID">
+	    insert into m_welfarefee
+	    (year, area, standSalary, salaryFrom, salaryTo, notCareRatio, careRatio, annuityRatio, status, insertDate, updateDate)
+	    values
+	    (#{year}, #{area}, #{standSalary}, #{salaryFrom}, #{salaryTo}, #{notCareRatio}, #{careRatio}, #{annuityRatio}, #{status}, date_format(now(),'%Y%m%d'), date_format(now(),'%Y%m%d'))
+	</insert>
     <!--画面表示用のquery,入力の収入により、検索する-->
     <!--保険料を納付したいとき、検索用-->
     <!--<select id="getWelfarefeeInfoByEnterSalary" parameterType="String"
@@ -63,14 +43,14 @@
     </select>-->
 
     <!--更新画面への検索,表示される画面の厚生保険料IDにより、検索する-->
-    <select id="getUpdateWelfarefeeInfoList" parameterType="String"
+    <select id="getUpdateWelfarefeeInfoList" parameterType="Integer"
             resultType="com.softtech.entity.WelfarefeeInfoEntity">
         select *
         from m_welfarefee
         where welfarefeeID = #{welfarefeeID}
     </select>
     <!--最大のwelfarefeeIDを取得、+1用-->
-    <select id="getMaxWelfarefeeID" resultType="String">
+    <select id="getMaxWelfarefeeID" resultType="Integer">
         select MAX(welfarefeeID)
         from m_welfarefee ct
     </select>

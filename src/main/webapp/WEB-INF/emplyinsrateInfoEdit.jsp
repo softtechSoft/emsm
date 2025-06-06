@@ -37,10 +37,10 @@
            value="${emplyinsrateInfoFormBean.insertFlg}"/>
 
     <table border="1">
-        <tr style="background-color:#dcfeeb">
+        <%-- <tr style="background-color:#dcfeeb">
             <td width="200px">雇用保険ID</td>
             <td width="200px"><c:out value="${emplyinsrateInfoFormBean.emplyinsrateID}"/></td>
-        </tr>
+        </tr> --%>
 
         <tr style="background-color:#dcfeeb">
 

@@ -4,29 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.EmplyinsrateMapper">
-    <insert id="insertEmplyinsrate" parameterType="com.softtech.entity.EmplyinsrateInfoEntity">
-        insert into m_emplyinsrate
-        (emplyinsrateID,
-         year,
-         laborBurdenRate,
-         employerBurdenRate,
-         industrialAccidentInsuranceRate,
-         contributionRate,
-         status,
-         insertDate,
-         updateDate)
-            value
-            ( #{emplyinsrateID},
-            #{year},
-            #{laborBurdenRate},
-            #{employerBurdenRate},
-            #{industrialAccidentInsuranceRate},
-            #{contributionRate},
-            #{status},
-            date_format(now(),'%Y%m%d'),
-            date_format(now(),'%Y%m%d')
-            )
-    </insert>
+    <insert id="insertEmplyinsrate" parameterType="com.softtech.entity.EmplyinsrateInfoEntity"
+	        useGeneratedKeys="true" keyProperty="emplyinsrateID">
+	    insert into m_emplyinsrate
+	    (year,
+	     laborBurdenRate,
+	     employerBurdenRate,
+	     industrialAccidentInsuranceRate,
+	     contributionRate,
+	     status,
+	     insertDate,
+	     updateDate)
+	    values
+	    (#{year},
+	     #{laborBurdenRate},
+	     #{employerBurdenRate},
+	     #{industrialAccidentInsuranceRate},
+	     #{contributionRate},
+	     #{status},
+	     date_format(now(),'%Y%m%d'),
+	     date_format(now(),'%Y%m%d'))
+	</insert>
     <!--画面表示用のquery,入力の年度により、検索する-->
     <select id="getEmplyinsrateInfoByYear" parameterType="String"
             resultType="com.softtech.entity.EmplyinsrateInfoEntity">

@@ -112,7 +112,7 @@ public class WelfarefeeInfoController {
     @RequestMapping("/toinitWelfarefeeInfo")
     public String toinitWelfarefeeInfo(@ModelAttribute("welfarefeeInfoFormBean") WelfarefeeInfoFormBean welfarefeeInfoFormBean, Model model) {
         //IDを取得
-        String welfarefeeID = welfarefeeInfoFormBean.getWelfarefeeID();
+    	Integer welfarefeeID = welfarefeeInfoFormBean.getWelfarefeeID();
 
         //新規フラグを取得
         String insertFlg = welfarefeeInfoFormBean.getInsertFlg();
@@ -126,8 +126,8 @@ public class WelfarefeeInfoController {
             String format = formatter.format(now);
 
           //welfarefeeIDを採番する（既存の最大値＋１）
-            String maxWelfarefeeID = welfarefeeInfoService.getNextWelfarefeeID();
-            welfarefeeInfoFormBean1.setWelfarefeeID(maxWelfarefeeID);
+//            String maxWelfarefeeID = welfarefeeInfoService.getNextWelfarefeeID();
+//            welfarefeeInfoFormBean1.setWelfarefeeID(maxWelfarefeeID);
 
             //新規
             welfarefeeInfoFormBean1.setInsertFlg(insertFlg);
@@ -139,9 +139,13 @@ public class WelfarefeeInfoController {
             //更新の場合
         } else {
             //選択された内容を取得する
-            welfarefeeID = welfarefeeInfoFormBean.getWelfarefeeID();
-            List<WelfarefeeInfoEntity> bList =
-                    welfarefeeInfoService.getUpdateWelfarefeeInfoList(welfarefeeID);
+//            welfarefeeID = welfarefeeInfoFormBean.getWelfarefeeID();
+//        	welfarefeeID = String.valueOf(welfarefeeInfoFormBean.getWelfarefeeID());
+//            List<WelfarefeeInfoEntity> bList =
+//                    welfarefeeInfoService.getUpdateWelfarefeeInfoList(welfarefeeID);
+            
+            String welfarefeeIDStr = String.valueOf(welfarefeeID);List<WelfarefeeInfoEntity> bList =
+                    welfarefeeInfoService.getUpdateWelfarefeeInfoList(welfarefeeIDStr);
 
             WelfarefeeInfoFormBean welfarefeeInfoFormBean2 =
                     welfarefeeInfoService.transforEntityToUI(bList);
@@ -189,7 +193,7 @@ public class WelfarefeeInfoController {
             welfarefeeInfoService.insertWelfarefeeInfo(welfarefeeInfoFormBean);
         } else {
             //DBに更新入力
-        	String str = welfarefeeInfoFormBean.getWelfarefeeID();
+//        	String str = welfarefeeInfoFormBean.getWelfarefeeID();
             welfarefeeInfoService.updateWelfarefeeInfo(welfarefeeInfoFormBean);
         }
         //DBから年度リスト生成

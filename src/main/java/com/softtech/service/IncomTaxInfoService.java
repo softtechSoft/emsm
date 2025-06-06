@@ -1,12 +1,13 @@
 package com.softtech.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.softtech.actionForm.EmployeeActionForm;
 import com.softtech.actionForm.IncomeTaxInfoFormBean;
 import com.softtech.common.IncomeTaxIDName;
 import com.softtech.entity.IncomeTaxInfoEntity;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @program
@@ -45,7 +46,7 @@ public interface IncomTaxInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-    String getNextIncomeTaxID();
+//    String getNextIncomeTaxID();
 
     /**
      * 概要:更新の時、更新画面の年度を表示する用

@@ -36,10 +36,10 @@
     <input type="hidden" id="insertFlg" name="insertFlg" value="${welfarefeeInfoFormBean.insertFlg}"/>
 
     <table  border="1">
-        <tr style="background-color:#dcfeeb">
+        <%-- <tr style="background-color:#dcfeeb">
             <td width="200px">厚生保険料ID</td>
             <td width="200px"><c:out  value="${welfarefeeInfoFormBean.welfarefeeID}"/></td>
-        </tr>
+        </tr> --%>
 
         <tr style="background-color:#dcfeeb">
 

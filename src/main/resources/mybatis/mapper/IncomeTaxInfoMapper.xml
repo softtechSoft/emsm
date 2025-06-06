@@ -5,10 +5,12 @@
 
 <mapper namespace="com.softtech.mappers.IncomeTaxInfoMapper">
 
-    <insert id="insertIncomeTaxInfo" parameterType="com.softtech.entity.IncomeTaxInfoEntity">
+    <insert id="insertIncomeTaxInfo" 
+    		parameterType="com.softtech.entity.IncomeTaxInfoEntity" 
+			useGeneratedKeys="true" 
+			keyProperty="incomeTaxID">
         insert into m_incomeTax
-        (incomeTaxID,
-         employeeID,
+        (employeeID,
          year,
          incomeTax1,
          incomeTax2,
@@ -38,8 +40,7 @@
          insertDate,
          updateDate)
             value
-            (#{incomeTaxID},
-             #{employeeID},
+            (#{employeeID},
              #{year},
              #{incomeTax1},
              #{incomeTax2},
@@ -72,7 +73,8 @@
     </insert>
     <!--画面表示getIncomeTax用のquery,入力の社員IDにより、検索する-->
     <select id="getIncomeTaxByEmployeeID" parameterType="string" resultType="com.softtech.entity.IncomeTaxInfoEntity">
-        select *
+        select m_incomeTax.*,
+           employee.employeeName
         from m_incomeTax
                  LEFT JOIN employee
                            on m_incomeTax.employeeID = employee.employeeID
@@ -82,16 +84,19 @@
     <!--更新画面への検索,表示される画面の所得税IDにより、検索する-->
     <select id="getUpdateIncomeTaxByIncomeTaxID" parameterType="String"
             resultType="com.softtech.entity.IncomeTaxInfoEntity">
-        select *
+        select m_incomeTax.*,
+           employee.employeeName
         from m_incomeTax
-        where incomeTaxID = #{incomeTaxID}
+	    LEFT JOIN employee
+	    on m_incomeTax.employeeID = employee.employeeID
+	    where incomeTaxID = #{incomeTaxID}
     </select>
 
     <!--最大のIncomeTaxIDを取得、+1用-->
-    <select id="getMaxIncomeTaxID" resultType="String">
+<!--     <select id="getMaxIncomeTaxID" resultType="String">
         select MAX(incomeTaxID)
         from m_incomeTax
-    </select>
+    </select> -->
 
     <!--更新の時、更新画面の年度を表示用-->
     <select id="getYear" resultType="com.softtech.common.IncomeTaxIDName">

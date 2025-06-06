@@ -1,12 +1,13 @@
 package com.softtech.mappers;
 
-import com.softtech.common.IncomeTaxIDName;
-import com.softtech.entity.Employee;
-import com.softtech.entity.IncomeTaxInfoEntity;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.softtech.common.IncomeTaxIDName;
+import com.softtech.entity.Employee;
+import com.softtech.entity.IncomeTaxInfoEntity;
 
 /**
  * @program
@@ -25,7 +26,7 @@ public interface IncomeTaxInfoMapper {
     List<IncomeTaxInfoEntity> getUpdateIncomeTaxByIncomeTaxID(@Param("incomeTaxID") String incomeTaxID);
 
     //最大のIncomeTaxIDを取得、+1用
-    String getMaxIncomeTaxID();
+//    String getMaxIncomeTaxID();
 
     //更新の時、更新画面の年度を表示する用
     List<IncomeTaxIDName> getYear();

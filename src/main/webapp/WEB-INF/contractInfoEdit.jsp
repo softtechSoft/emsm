@@ -35,10 +35,10 @@
 		<input type="hidden" id="insertFlg" name="insertFlg" value="${contractInfoBean.insertFlg}"/>
 
 		<table  border="1">
-			<tr style="background-color:#dcfeeb">
+			<%-- <tr style="background-color:#dcfeeb">
 				<td width="200px">契約ID</td>
 				<td width="200px"><c:out  value="${contractInfoBean.getContractID()}"/></td>
-			</tr>
+			</tr> --%>
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">契約名称</td>
 				<td width="200px"><input type="text" id="contractName" name="contractName"

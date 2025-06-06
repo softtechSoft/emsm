@@ -107,7 +107,7 @@ public class EmplyInsrateInfoController {
     @RequestMapping("/toinitEmplyinsrateInfo")
     public String toinitEmplyinsrateInfo(@ModelAttribute("emplyinsrateInfoFormBean") EmplyinsrateInfoFormBean emplyinsrateInfoFormBean, Model model) {
         //IDを取得
-        String emplyinsrateID = emplyinsrateInfoFormBean.getEmplyinsrateID();
+    	Integer emplyinsrateID = emplyinsrateInfoFormBean.getEmplyinsrateID();
 
         //新規フラグを取得
         String insertFlg = emplyinsrateInfoFormBean.getInsertFlg();
@@ -121,8 +121,8 @@ public class EmplyInsrateInfoController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             String format = formatter.format(now);
           //emplyinsrateIDを採番する（既存の最大値＋１）
-            String maxEmplyinsrateID = emplyinsrateInfoService.getNextEmplyinsrateID();
-            emplyinsrateInfoFormBean1.setEmplyinsrateID(maxEmplyinsrateID);
+//            String maxEmplyinsrateID = emplyinsrateInfoService.getNextEmplyinsrateID();
+//            emplyinsrateInfoFormBean1.setEmplyinsrateID(maxEmplyinsrateID);
             //新規
             emplyinsrateInfoFormBean1.setInsertFlg(insertFlg);
             emplyinsrateInfoFormBean1.setInsertDate(format);

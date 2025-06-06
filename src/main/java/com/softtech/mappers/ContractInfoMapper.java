@@ -14,11 +14,11 @@ import com.softtech.entity.ContractInfoEntity;
 	//検索処理の契約リスト
 	List<ContractInfoEntity> getContractInfoList(@Param("employeeID")String employeeID);
 	//更新処理の契約情報
-	List<ContractInfoEntity> getContractInfo(@Param("contractID")String contractID);
+	List<ContractInfoEntity> getContractInfo(@Param("contractID")Integer contractID);
 	//画面データをDBデータ登録
 	public void updateContractInfo(ContractInfoEntity contractInfoEntity);
 	// contrctidの最大値を取得
-	public String getMaxContractID();
+	public Integer getMaxContractID();
 	public void insertContractInfo(ContractInfoEntity contractInfoEntity);
 }
 

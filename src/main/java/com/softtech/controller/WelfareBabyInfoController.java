@@ -119,8 +119,8 @@ public class WelfareBabyInfoController {
 	            String format = formatter.format(now);
 
 	          //RateIDを採番する（既存の最大値＋１）
-	            String maxRateID = welfareBabyInfoService.getNextRateID();
-	            welfareBabyInfoFormBean1.setRateID(maxRateID);
+//	            String maxRateID = welfareBabyInfoService.getNextRateID();
+//	            welfareBabyInfoFormBean1.setRateID(maxRateID);
 
 	            //新規
 	            welfareBabyInfoFormBean1.setInsertFlg(insertFlg);

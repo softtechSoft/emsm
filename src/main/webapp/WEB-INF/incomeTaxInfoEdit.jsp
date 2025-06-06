@@ -37,15 +37,30 @@
            value="${incomeTaxInfoFormBean.insertFlg}"/>
 
     <table border="1">
-        <tr style="background-color:#dcfeeb">
+        <%-- <tr style="background-color:#dcfeeb">
             <td width="200px">所得税ID</td>
             <td width="200px"><c:out value="${incomeTaxInfoFormBean.incomeTaxID}"/></td>
-        </tr>
+        </tr> --%>
 
         <tr style="background-color:#dcfeeb">
-            <td width="200px">社員ID</td>
-            <td width="200px"><input type="text" id="employeeID" name="employeeID"
-                                     value="${incomeTaxInfoFormBean.employeeID}"/></td>
+            <td width="200px">社員</td>
+            <td width="200px"><%-- <input type="text" id="employeeID" name="employeeID"
+                                     value="${incomeTaxInfoFormBean.employeeID}"/> --%>
+                <c:choose>
+            		<c:when test="${incomeTaxInfoFormBean.insertFlg == '0'}">
+                		<form:select path="employeeID">
+	                    <form:options items="${employeeList}" 
+	                                 itemLabel="employeeName" 
+	                                 itemValue="employeeID"/>
+                		</form:select>
+            		</c:when>
+		            <c:otherwise>
+		                <c:out value="${incomeTaxInfoFormBean.employeeName}"/>
+		                <input type="hidden" id="employeeID" name="employeeID" 
+		                       value="${incomeTaxInfoFormBean.employeeID}"/>
+		            </c:otherwise>
+		        </c:choose>
+               </td>
         </tr>
         <tr style="background-color:#dcfeeb">
 

@@ -65,12 +65,12 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-    @Override
-    public String getNextIncomeTaxID() {
-        String maxIncomTaxID = incomeTaxInfoMapper.getMaxIncomeTaxID();
-        String nextIncomeTaxID = String.valueOf(Integer.parseInt(maxIncomTaxID) + 1);
-        return nextIncomeTaxID;
-    }
+//    @Override
+//    public String getNextIncomeTaxID() {
+//        String maxIncomTaxID = incomeTaxInfoMapper.getMaxIncomeTaxID();
+//        String nextIncomeTaxID = String.valueOf(Integer.parseInt(maxIncomTaxID) + 1);
+//        return nextIncomeTaxID;
+//    }
 
     /**
      * 概要:更新の時、更新画面の年度を表示する用
@@ -105,6 +105,7 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
         IncomeTaxInfoFormBean incomeTaxInfoFormBean = new IncomeTaxInfoFormBean();
         for (IncomeTaxInfoEntity incomeTaxInfoEntity : eList) {
             incomeTaxInfoFormBean.setIncomeTaxID(incomeTaxInfoEntity.getIncomeTaxID());
+            incomeTaxInfoFormBean.setEmployeeName(incomeTaxInfoEntity.getEmployeeName());
             incomeTaxInfoFormBean.setYear(incomeTaxInfoEntity.getYear());
             incomeTaxInfoFormBean.setEmployeeID(incomeTaxInfoEntity.getEmployeeID());
             incomeTaxInfoFormBean.setIncomeTax1(incomeTaxInfoEntity.getIncomeTax1());
@@ -199,7 +200,7 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
 
     public IncomeTaxInfoEntity transforUItoEntityByInsert(IncomeTaxInfoFormBean incomeTaxInfoFormBean) {
         IncomeTaxInfoEntity incomeTaxInfoEntity = new IncomeTaxInfoEntity();
-        incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
+//        incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
         incomeTaxInfoEntity.setYear(incomeTaxInfoFormBean.getYear());
         incomeTaxInfoEntity.setEmployeeID(incomeTaxInfoFormBean.getEmployeeID());
         incomeTaxInfoEntity.setIncomeTax1(incomeTaxInfoFormBean.getIncomeTax1());

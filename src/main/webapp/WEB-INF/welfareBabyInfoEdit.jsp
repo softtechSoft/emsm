@@ -32,10 +32,10 @@
     <input type="hidden" id="insertFlg" name="insertFlg" value="${welfareBabyInfoFormBean.insertFlg}"/>
 
     <table  border="1">
-        <tr style="background-color:#dcfeeb">
+        <%-- <tr style="background-color:#dcfeeb">
             <td width="200px">徴収ID</td>
             <td width="200px"><c:out  value="${welfareBabyInfoFormBean.rateID}"/></td>
-        </tr>
+        </tr> --%>
 
         <tr style="background-color:#dcfeeb">
 

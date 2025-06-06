@@ -2,7 +2,7 @@ package com.softtech.entity;
 
 public class CompanyEntity {
     // 取引先ID
-    private String companyID;
+    private Integer companyID;
 
     // 取引先名称
     private String companyName;
@@ -42,11 +42,11 @@ public class CompanyEntity {
 
     // Getters and Setters
 
-    public String getCompanyID() {
+    public Integer getCompanyID() {
         return companyID;
     }
 
-    public void setCompanyID(String companyID) {
+    public void setCompanyID(Integer companyID) {
         this.companyID = companyID;
     }
 

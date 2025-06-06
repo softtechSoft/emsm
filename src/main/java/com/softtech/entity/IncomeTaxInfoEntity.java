@@ -9,9 +9,11 @@ package com.softtech.entity;
  */
 public class IncomeTaxInfoEntity {
     //所得税ID
-    private String incomeTaxID;
+    private Integer incomeTaxID;
     //社員ID
     private String employeeID;
+    //社員name
+    private String employeeName;
     //年度
     private String year;
     //所得税
@@ -48,11 +50,11 @@ public class IncomeTaxInfoEntity {
     private String updateDate;
     private String tax;
 
-    public String getIncomeTaxID() {
+    public Integer getIncomeTaxID() {
         return incomeTaxID;
     }
 
-    public void setIncomeTaxID(String incomeTaxID) {
+    public void setIncomeTaxID(Integer incomeTaxID) {
         this.incomeTaxID = incomeTaxID;
     }
 
@@ -62,6 +64,14 @@ public class IncomeTaxInfoEntity {
 
     public void setEmployeeID(String employeeID) {
         this.employeeID = employeeID;
+    }
+    
+    public String getEmployeeName() {
+        return employeeName;
+    }
+    
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public String getYear() {

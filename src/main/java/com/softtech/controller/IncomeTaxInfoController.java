@@ -97,7 +97,7 @@ public class IncomeTaxInfoController {
     public String toinitIncomeTaxInfo(@ModelAttribute("incomeTaxInfoFormBean") IncomeTaxInfoFormBean incomeTaxInfoFormBean,
                                       Model model) {
         //IDを取得
-        String incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
+//        String incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
 
         //新規フラグを取得
         String insertFlg = incomeTaxInfoFormBean.getInsertFlg();
@@ -111,8 +111,8 @@ public class IncomeTaxInfoController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             String format = formatter.format(now);
 
-            String maxIncomeTaxID = incomTaxInfoService.getNextIncomeTaxID();
-            incomeTaxInfoFormBean1.setIncomeTaxID(maxIncomeTaxID);
+//            String maxIncomeTaxID = incomTaxInfoService.getNextIncomeTaxID();
+//            incomeTaxInfoFormBean1.setIncomeTaxID(maxIncomeTaxID);
             //新規
             incomeTaxInfoFormBean1.setInsertFlg(insertFlg);
             incomeTaxInfoFormBean1.setInsertDate(format);
@@ -123,16 +123,24 @@ public class IncomeTaxInfoController {
             //更新の場合
         } else {
             //選択された内容を取得する
-            incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
-            List<IncomeTaxInfoEntity> bList =
-                    incomTaxInfoService.getUpdateIncomeTaxByIncomeTaxID(incomeTaxID);
+//            incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
+//            List<IncomeTaxInfoEntity> bList =
+//                    incomTaxInfoService.getUpdateIncomeTaxByIncomeTaxID(incomeTaxID);
+//
+//            IncomeTaxInfoFormBean incomeTaxInfoFormBean2 =
+//                    incomTaxInfoService.transforEntityToUI(bList);
+        	Integer incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
+        	List<IncomeTaxInfoEntity> bList = incomTaxInfoService.getUpdateIncomeTaxByIncomeTaxID(incomeTaxID.toString());
+            
+            IncomeTaxInfoFormBean incomeTaxInfoFormBean2 = incomTaxInfoService.transforEntityToUI(bList);
 
-            IncomeTaxInfoFormBean incomeTaxInfoFormBean2 =
-                    incomTaxInfoService.transforEntityToUI(bList);
             //更新
             incomeTaxInfoFormBean2.setInsertFlg(insertFlg);
             model.addAttribute("incomeTaxInfoFormBean", incomeTaxInfoFormBean2);
         }
+        //DBから社員情報を取得する,画面の社員ID選択,枠に表示する
+        List<EmployeeActionForm> employeeList = incomTaxInfoService.queryEmployeeInfo();
+        model.addAttribute("employeeList", employeeList);
 
 
         //更新画面の年度を表示する用リスト候補生成
@@ -157,6 +165,9 @@ public class IncomeTaxInfoController {
             //DBから年度リスト生成
             List<IncomeTaxIDName> year = incomTaxInfoService.getYear();
             model.addAttribute("year", year);
+            
+            List<EmployeeActionForm> employeeList = incomTaxInfoService.queryEmployeeInfo();
+            model.addAttribute("employeeList", employeeList);
 
             //年度を任意設定
             incomeTaxInfoFormBean.setYear("2020");

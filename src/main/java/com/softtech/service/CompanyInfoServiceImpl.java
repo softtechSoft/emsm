@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.softtech.actionForm.CompanyInfoFormBean;
 import com.softtech.entity.CompanyEntity;
 import com.softtech.mappers.CompanyInfoMapper;
-import com.softtech.util.DataUtil;
 
 @Service
 public class CompanyInfoServiceImpl implements CompanyInfoService {
@@ -17,7 +16,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 	private CompanyInfoMapper companyInfoMapper ;
 
 	@Override
-	public List<CompanyEntity> getCompanyID(String companyID) {
+	public List<CompanyEntity> getCompanyID(Integer companyID) {
 		 List<CompanyEntity> companyEntity = companyInfoMapper.getCompanyID(companyID);
 		return companyEntity;
 	}
@@ -57,15 +56,16 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 		List<CompanyInfoFormBean> CompanyInfoFormBeanToUI = transferDBTOUI(cpn);
 	return CompanyInfoFormBeanToUI;
 	}
-	@Override
-	public String getNextCompanyID() {
-		String maxCompanyID = companyInfoMapper.getMaxCompanyID();
-		String nextCompanyID = DataUtil.getNextID(maxCompanyID, 2);
-		return nextCompanyID;
-	}
+//	@Override
+//	public Integer getNextCompanyID() {
+////		String maxCompanyID = companyInfoMapper.getMaxCompanyID();
+////		String nextCompanyID = DataUtil.getNextID(maxCompanyID, 2);
+////		return nextCompanyID;
+//		return null;
+//	}
 
 	@Override
-	public List<CompanyEntity> getCompanyInfo(String companyID) {
+	public List<CompanyEntity> getCompanyInfo(Integer companyID) {
 		List<CompanyEntity> companyInfo = companyInfoMapper.getCompanyID(companyID);
 		return companyInfo;
 	}
@@ -99,7 +99,7 @@ public class CompanyInfoServiceImpl implements CompanyInfoService {
 	    public void addCompany(CompanyInfoFormBean companyInfoFormBean) {
 
 	        CompanyEntity companyEntity = new CompanyEntity();
-	        companyEntity.setCompanyID(companyInfoFormBean.getCompanyID());
+//	        companyEntity.setCompanyID(companyInfoFormBean.getCompanyID());
 	        companyEntity.setCompanyName(companyInfoFormBean.getCompanyName());
 	        companyEntity.setCompanyType(companyInfoFormBean.getCompanyType());
 	        companyEntity.setPostCode(companyInfoFormBean.getPostCode());

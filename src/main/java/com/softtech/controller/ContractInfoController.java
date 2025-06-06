@@ -121,9 +121,9 @@ public class ContractInfoController {
 		if("0".equals(insertFlg)) {
 			ContractInfoFormBean contractInfoFormBean = new ContractInfoFormBean();
 
-			// 契約情報を採番する（既存の最大値＋１）
-			String maxContractID =contractInfoService.getNextContractID();
-			contractInfoFormBean.setContractID(maxContractID);
+//			// 契約情報を採番する（既存の最大値＋１）
+//			String maxContractID =contractInfoService.getNextContractID();
+//			contractInfoFormBean.setContractID(maxContractID);
 			//新規
 			contractInfoFormBean.setInsertFlg(insertFlg);
 
@@ -139,7 +139,7 @@ public class ContractInfoController {
 		//更新の場合
 		} else {
 			//　選択された契約の内容を取得する
-			String contractID = contractInfoBean.getContractID();
+			Integer contractID = contractInfoBean.getContractID();
 			List<ContractInfoEntity> sList= contractInfoService.queryContractInfo(contractID);
 
 			ContractInfoFormBean contractInfoFormBean=contractInfoService.trasferEntityToUI(sList);

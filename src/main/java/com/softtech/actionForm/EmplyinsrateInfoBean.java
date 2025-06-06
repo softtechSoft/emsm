@@ -8,7 +8,7 @@ package com.softtech.actionForm;
  * @return:
  */
 public class EmplyinsrateInfoBean {
-    private String emplyinsrateID;
+    private Integer emplyinsrateID;
     //対象年度
     private String year;
     //雇用保険労働者負担料率‰
@@ -26,11 +26,11 @@ public class EmplyinsrateInfoBean {
     //更新日
     private String updateDate;
 
-    public String getEmplyinsrateID() {
+    public Integer getEmplyinsrateID() {
         return emplyinsrateID;
     }
 
-    public void setEmplyinsrateID(String emplyinsrateID) {
+    public void setEmplyinsrateID(Integer emplyinsrateID) {
         this.emplyinsrateID = emplyinsrateID;
     }
 

@@ -720,3 +720,12 @@ INSERT INTO ems.ofcfunction (
     `sysType`
 ) VALUES
     ('B6', 'expenseType', '&#xe65d;&emsp;経費種別管理', '1', '/emsm/expenseType', '16', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
+
+--各idを更新
+ALTER TABLE ems.m_welfarefee MODIFY COLUMN welfarefeeID INT NOT NULL AUTO_INCREMENT COMMENT'厚生保険料ID';
+ALTER TABLE ems.company MODIFY COLUMN companyID INT NOT NULL AUTO_INCREMENT COMMENT '取引先ID';
+ALTER TABLE ems.m_incometax MODIFY incomeTaxID INT AUTO_INCREMENT COMMENT '所得税ID';
+ALTER TABLE ems.m_welfarebabyrate MODIFY COLUMN rateID int NOT NULL AUTO_INCREMENT COMMENT '徴収ID';
+ALTER TABLE ems.m_emplyinsrate MODIFY COLUMN emplyinsrateID INT NOT NULL AUTO_INCREMENT COMMENT '雇用保险ID';
+
+
