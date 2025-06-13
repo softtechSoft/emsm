@@ -52,11 +52,16 @@ public class ContractInfoController {
 
 		ContractInfoFormBean contractInfoBean = new ContractInfoFormBean();
 		//社員項目IDを任意設定
-		contractInfoBean.setEmployeeID("1");
+//		contractInfoBean.setEmployeeID("1");
+		contractInfoBean.setEmployeeID("");
+		
+		List<ContractInfoEntity> allContractList = contractInfoService.queryAllContractInfoList();
 
 		model.addAttribute("contractInfoBean",contractInfoBean);
 		//社員IDリスト候補を画面へ渡す
 		model.addAttribute("contractList",contractList);
+		//全社員list
+		model.addAttribute("list", allContractList);
 
 		return "contractInfoList";
 
@@ -208,9 +213,11 @@ public class ContractInfoController {
 		//新規の場合
 		if("0".equals(insertFlg)) {
 			contractInfoService.insertContractInfoDetail(contractInfoBean);
+			model.addAttribute("successMessage", "登録完了");
 		} else {
 			//DB登録
 			contractInfoService.updateContractInfoDetail(contractInfoBean);
+			model.addAttribute("successMessage", "更新完了");
 		}
 
 
@@ -227,7 +234,8 @@ public class ContractInfoController {
 
 		//会社項目IDを任意設定
 		contractInfoBean.setCompanyID("1");
-		return "contractInfoEdit";
+//		return "contractInfoEdit";
+		return "redirect:/contractInfoList";
 	}
 
 }

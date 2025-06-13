@@ -282,5 +282,12 @@ import com.softtech.util.DateUtil;
 //		return  nextContractID;
 		return null;
 	}
+	
+	//全社員list
+	@Override
+	public List<ContractInfoEntity> queryAllContractInfoList() {
+	    List<ContractInfoEntity> allContractInfoList = contractinfoMapper.getAllContractInfoList();
+	    return allContractInfoList;
+	}
 
 	}

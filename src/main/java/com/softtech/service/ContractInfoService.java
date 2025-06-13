@@ -35,5 +35,6 @@ public interface ContractInfoService {
 	//新規処理
 	public boolean insertContractInfoDetail(ContractInfoFormBean contractInfoBean);
 
+	public List<ContractInfoEntity> queryAllContractInfoList();
 
 }

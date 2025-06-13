@@ -22,6 +22,9 @@ public class IncomeTaxInfoFormBean {
     @NotEmpty(message = "年度を入力してください。")
     @Pattern(message = "年度に数値のみを入力してください。", regexp = "^[0-9]*$")
     private String year;
+    
+    private String searchYear;
+    
     //所得税
     @NotEmpty(message = "所得税を入力してください。")
     @Pattern(message = "所得税に数値のみを入力してください。", regexp = "^[0-9]*$")
@@ -127,6 +130,14 @@ public class IncomeTaxInfoFormBean {
 
     public void setYear(String year) {
         this.year = year;
+    }
+    
+    public String getSearchYear() {
+        return searchYear;  
+    }
+
+    public void setSearchYear(String searchYear) {
+        this.searchYear = searchYear;
     }
 
     public String getIncomeTax1() {

@@ -71,4 +71,24 @@
         m_basesalary ct
 
     </select>
+    
+	<select id="getBaseSalaryInfoByCondition" resultType="com.softtech.entity.BaseSalaryInfoEntity">
+	    SELECT *
+	    FROM m_basesalary
+	    WHERE 1=1
+	    <if test="employeeID != null and employeeID != ''">
+	        AND employeeID = #{employeeID}
+	    </if>
+	    <if test="year != null and year != ''">
+	        AND year = #{year}
+	    </if>
+	    ORDER BY employeeID, year DESC
+	</select>
+	
+	<select id="getDistinctYears" resultType="string">
+	    SELECT DISTINCT year
+	    FROM m_basesalary
+	    WHERE year IS NOT NULL
+	    ORDER BY year DESC
+	</select>
 </mapper>

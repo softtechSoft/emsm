@@ -20,6 +20,8 @@ public class BaseSalaryInfoFormBean {
 	@NotEmpty(message = "対象年度を入力してください。")
 	@Pattern(message = "対象年度のみを入力してください。", regexp = "^[0-9]*$")
 	private String year;
+	
+	private String searchYear;
 
 	//稼働期間From
 	@NotEmpty(message = "稼働期間Fromを入力してください。")
@@ -71,6 +73,14 @@ public class BaseSalaryInfoFormBean {
 	public void setYear(String year) {
 		this.year = year;
 	}
+	
+	public String getSearchYear() {
+        return searchYear;
+    }
+    
+    public void setSearchYear(String searchYear) {
+        this.searchYear = searchYear;
+    }
 
 	public String getWkPeriodFrom() {
 		return wkPeriodFrom;

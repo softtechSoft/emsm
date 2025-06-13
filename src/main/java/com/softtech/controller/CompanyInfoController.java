@@ -1,4 +1,6 @@
 package com.softtech.controller;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,8 +111,14 @@ public class CompanyInfoController {
 			// 契約情報を採番する（既存の最大値＋１）
 //			String maxCompanyID =companyInfoService.getNextCompanyID();
 //			companyInfoBeans.setCompanyID(maxCompanyID);
+			
+			 LocalDateTime now = LocalDateTime.now();
+	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+	            String currentDate = formatter.format(now);
 
-
+	            companyInfoBeans.setInsertDate(currentDate);
+	            companyInfoBeans.setUpdateDate(currentDate);
+				
 			model.addAttribute("companyInfoBean",companyInfoBeans);
 			return "companyAdd" ;
 
@@ -145,6 +153,11 @@ public class CompanyInfoController {
 	        }
 
 	        try {
+	        	LocalDateTime now = LocalDateTime.now();
+	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+	            String currentDate = formatter.format(now);
+	            companyInfoFormBean.setInsertDate(currentDate);
+	            companyInfoFormBean.setUpdateDate(currentDate);
 
 	        	companyInfoService.addCompany(companyInfoFormBean);
 	            model.addAttribute("message", "登録完了");
@@ -167,6 +180,10 @@ public class CompanyInfoController {
 	            model.addAttribute("errors", result.getFieldErrors());
 	            return "companyInfoEdit";
 	        }
+	        LocalDateTime now = LocalDateTime.now();
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+	        String currentDate = formatter.format(now);
+	        companyInfoFormBean.setUpdateDate(currentDate);
 
 	        // 取引先情報を更新
 	        boolean updateSuccess = companyInfoService.updateCompany(companyInfoFormBean);

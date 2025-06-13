@@ -188,7 +188,8 @@ public class WelfareBabyInfoController {
 	        List<RateIDName> year =  welfareBabyInfoService.getYear();
 	        model.addAttribute("year", year);
 
-	        return "welfareBabyInfoEdit";
+//	        return "welfareBabyInfoEdit";
+	        return "redirect:/welfareBabyInfoList";
 
 	        }
 	    }

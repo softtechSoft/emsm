@@ -44,6 +44,7 @@
 
 	<b>社員:</b>
 	<form:select path="employeeID">
+    	<form:option value="">全社員</form:option>
 		<form:options items="${contractList}" itemLabel="employeeName"  itemValue="employeeID"/>
 	</form:select>
 

@@ -37,6 +37,10 @@ public interface IncomeTaxInfoMapper {
 
     //DBから社員リスト生成
     List<Employee> getEmployee();
+    
+    List<IncomeTaxInfoEntity> getIncomeTaxByCondition(@Param("employeeID") String employeeID, 
+                                                      @Param("year") String year);
 
+    List<String> getDistinctYears();
 
 }

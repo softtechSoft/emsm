@@ -93,4 +93,9 @@ public interface IncomTaxInfoService {
     *@date:2022/08/12
     */
     List<EmployeeActionForm> queryEmployeeInfo();
+    
+    
+    List<IncomeTaxInfoEntity> getIncomeTaxByCondition(String employeeID, String year);
+
+    List<String> getDistinctYears();
 }

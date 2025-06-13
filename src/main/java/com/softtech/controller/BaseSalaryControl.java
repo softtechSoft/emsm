@@ -56,14 +56,20 @@ public class BaseSalaryControl {
 		logger.info("start index()");
 		//社員IDリスト候補生成
 		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeList();
+		
+		//年度をとる
+		List<String> yearList = baseSalaryInfoService.getYearList();
 
 		BaseSalaryInfoFormBean baseSalaryInfoBean = new BaseSalaryInfoFormBean();
 		//社員項目IDを任意設定
-		baseSalaryInfoBean.setEmployeeID("1");
+//		baseSalaryInfoBean.setEmployeeID("1");
+	    baseSalaryInfoBean.setEmployeeID("");
+	    baseSalaryInfoBean.setSearchYear("");
 
 		model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
 		//社員IDリスト候補を画面へ渡す
 		model.addAttribute("baseSalaryList",baseSalaryList);
+		model.addAttribute("yearList", yearList);
 
 		return "baseSalaryInfoList";
 
@@ -83,13 +89,18 @@ public class BaseSalaryControl {
 		logger.warn("warn test");
 		logger.error("error test");
 		String employeeID = baseSalaryInfoBean.getEmployeeID();
+		String searchYear = baseSalaryInfoBean.getSearchYear();
 
-		List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfoList(employeeID);
+		List<BaseSalaryInfoEntity> bList= baseSalaryInfoService.queryBaseSalaryInfoByCondition(employeeID,searchYear);
 
 		//社員IDリスト候補生成
-		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeID();
+//		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeID();
+		List<EmployeeIDName> baseSalaryList = loginService.getEmployeeList();
+		//年度をとる
+		List<String> yearList = baseSalaryInfoService.getYearList();
 		//社員IDリスト候補を画面へ渡す
 		model.addAttribute("baseSalaryList",baseSalaryList);
+		model.addAttribute("yearList", yearList);
 		model.addAttribute("baseSalaryInfoBean",baseSalaryInfoBean);
 		model.addAttribute("list",bList);
 
@@ -173,15 +184,18 @@ public class BaseSalaryControl {
 		//新規の場合
 		if("0".equals(insertFlg)) {
 			baseSalaryInfoService.insertBaseSalaryInfoDetail(baseSalaryInfoBean);
+			model.addAttribute("successMessage", "登録完了");
 		} else {
 			//DBに更新入力
 			baseSalaryInfoService.updateBaseSalaryInfoList(baseSalaryInfoBean);
+			model.addAttribute("successMessage", "更新完了");
 		}
 
 		//社員IDリスト候補生成
 		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
 		model.addAttribute("employeeList",employeeList);
 
-		return "baseSalaryInfoEdit";
+		return "redirect:/baseSalaryInfoList";
+//		return "baseSalaryInfoEdit";
 	}
 }

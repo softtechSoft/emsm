@@ -48,12 +48,18 @@
 <body>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="baseSalaryInfoBean"  action="baseSalaryInfoEdit" >
 				<h1>基本給情報更新</h1>
-		<p style="color: red;">
-        <!--エラーメッセージ-->
-    	<c:forEach  items="${errors}" var="error">
-			<spring:message message="${error}" /><br/>
-		</c:forEach>
-		</p>
+ <!--エラーメッセージ-->
+    <p style="color: red;">
+        <c:forEach items="${errors}" var="error">
+            <spring:message message="${error}"/><br>
+        </c:forEach>
+    </p>
+     <c:if test="${not empty successMessage}">
+    <div style="color: red;">
+        <p><c:out value="${successMessage}" /></p>
+    </div>
+</c:if>
+
 
 		<input type="hidden" id="baseSalaryID" name="baseSalaryID" value="${baseSalaryInfoBean.baseSalaryID}"/>
 		<!--新規フラグ　０　新規　１　更新-->

@@ -201,7 +201,8 @@ public class WelfarefeeInfoController {
        // List<WelfarefeeIDName> year =  welfarefeeInfoService.getYear();
        // model.addAttribute("year", year);
 
-        return "welfarefeeInfoEdit";
+//        return "welfarefeeInfoEdit";
+        return "redirect:/welfarefeeInfoList";
 
         }
     }

@@ -281,4 +281,15 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
         List<EmployeeActionForm> rtn = transferDBTOUI(employee);
         return rtn;
     }
+    
+    
+    @Override
+    public List<IncomeTaxInfoEntity> getIncomeTaxByCondition(String employeeID, String year) {
+        return incomeTaxInfoMapper.getIncomeTaxByCondition(employeeID, year);
+    }
+
+    @Override
+    public List<String> getDistinctYears() {
+        return incomeTaxInfoMapper.getDistinctYears();
+    }
 }

@@ -28,4 +28,11 @@ public interface BaseSalaryInfoMapper {
 	public String getMaxBaseSalaryID();
 	//insert
 	public void insertBaseSalaryInfo(BaseSalaryInfoEntity baseSalaryInfoEntity);
+	
+	// IDと年度検索
+	List<BaseSalaryInfoEntity> getBaseSalaryInfoByCondition(@Param("employeeID") String employeeID, 
+	                                                        @Param("year") String year);
+
+	// 年度
+	List<String> getDistinctYears();
 }

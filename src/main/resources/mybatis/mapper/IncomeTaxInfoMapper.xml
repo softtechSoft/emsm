@@ -142,4 +142,27 @@
         select employeeName, employeeID
         FROM employee;
     </select>
+    
+	<select id="getIncomeTaxByCondition" resultType="com.softtech.entity.IncomeTaxInfoEntity">
+	    SELECT m_incomeTax.*,
+	           employee.employeeName
+	    FROM m_incomeTax
+	    LEFT JOIN employee ON m_incomeTax.employeeID = employee.employeeID
+	    WHERE 1=1
+	    <if test="employeeID != null and employeeID != ''">
+	        AND m_incomeTax.employeeID = #{employeeID}
+	    </if>
+	    <if test="year != null and year != ''">
+	        AND m_incomeTax.year = #{year}
+	    </if>
+	    ORDER BY m_incomeTax.employeeID, m_incomeTax.year DESC
+	</select>
+	
+	<!-- 获取所有年度 -->
+	<select id="getDistinctYears" resultType="string">
+	    SELECT DISTINCT year
+	    FROM m_incomeTax
+	    WHERE year IS NOT NULL
+	    ORDER BY year DESC
+	</select>
 </mapper>

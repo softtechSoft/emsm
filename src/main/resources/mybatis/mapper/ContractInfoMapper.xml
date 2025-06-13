@@ -15,7 +15,10 @@
 		where ct.status = '1'
 		and ct.employeeID = e.employeeID
 		and ct.companyID = cm.companyID
-		and ct.employeeID = #{employeeID}
+		<!-- and ct.employeeID = #{employeeID} -->
+	    <if test="employeeID != null and employeeID != ''">
+	        and ct.employeeID = #{employeeID}
+	    </if>
 	</select>
 	<select id="getContractInfo" parameterType="string" resultType="com.softtech.entity.ContractInfoEntity">
 		 <!--契約情報を取得する。-->
@@ -87,4 +90,17 @@
        date_format(now(),'%Y%m%d'), date_format(now(),'%Y%m%d'))
 
 	</insert>
+	
+	<select id="getAllContractInfoList" resultType="com.softtech.entity.ContractInfoEntity">
+	    select
+	        ct.*,e.employeeName,cm.companyName
+	    from
+	        ems.employee e,
+	        ems.contract ct,
+	        ems.company cm
+	    where ct.status = '1'
+	    and ct.employeeID = e.employeeID
+	    and ct.companyID = cm.companyID
+	    order by ct.contractID
+	</select>
  </mapper>

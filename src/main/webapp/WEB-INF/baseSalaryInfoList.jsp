@@ -41,8 +41,15 @@
 
     <b>社員:</b>
     <form:select path="employeeID">
+    	<form:option value="">全社員</form:option>
         <form:options items="${baseSalaryList}" itemLabel="employeeName" itemValue="employeeID"/>
     </form:select>
+    
+    <b>年度:</b>
+	<form:select path="year">
+	    <form:option value="">全年度</form:option>
+	    <form:options items="${yearList}"/>
+	</form:select>
 
     <input type="button" name="search" value="検索" onclick="toSearchJsp();"/>
 

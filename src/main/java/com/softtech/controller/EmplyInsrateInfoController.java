@@ -196,7 +196,8 @@ public class EmplyInsrateInfoController {
             //年度を任意設定
            // emplyinsrateInfoFormBean.setYear("2020");
 
-            return "emplyinsrateInfoEdit";
+//            return "emplyinsrateInfoEdit";
+            return "redirect:/emplyinsrateInfoList";
         }
 
     }

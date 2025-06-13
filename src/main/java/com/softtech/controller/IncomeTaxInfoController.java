@@ -51,9 +51,15 @@ public class IncomeTaxInfoController {
         //DBから社員情報を取得する,画面の社員ID選択,枠に表示する
         List<EmployeeActionForm> employeeList = incomTaxInfoService.queryEmployeeInfo();
         model.addAttribute("employeeList", employeeList);
+        
+        List<String> yearList = incomTaxInfoService.getDistinctYears();
+        model.addAttribute("yearList", yearList);
 
         //画面初期表示用のFormBeam
         IncomeTaxInfoFormBean incomeTaxInfoFormBean = new IncomeTaxInfoFormBean();
+        incomeTaxInfoFormBean.setEmployeeID("");
+        incomeTaxInfoFormBean.setSearchYear("");
+        
         model.addAttribute("incomeTaxInfoFormBean", incomeTaxInfoFormBean);
         return "incomeTaxInfoList";
     }
@@ -75,13 +81,19 @@ public class IncomeTaxInfoController {
         logger.fatal("fatal test");
 
         String employeeID = incomeTaxInfoFormBean.getEmployeeID();
+        String searchYear = incomeTaxInfoFormBean.getSearchYear();
         //社員IDにより、検索する
-        List<IncomeTaxInfoEntity> bList =
-                incomTaxInfoService.getIncomeTaxByEmployeeID(employeeID);
+//        List<IncomeTaxInfoEntity> bList =
+//                incomTaxInfoService.getIncomeTaxByEmployeeID(employeeID);
+        List<IncomeTaxInfoEntity> bList = 
+                incomTaxInfoService.getIncomeTaxByCondition(employeeID, searchYear);
         //社員ID候補を取得する
         List<EmployeeActionForm> employeeList = incomTaxInfoService.queryEmployeeInfo();
+        
+        List<String> yearList = incomTaxInfoService.getDistinctYears();
 
         model.addAttribute("employeeList", employeeList);
+        model.addAttribute("yearList", yearList);
         model.addAttribute("incomeTaxInfoFormBean", incomeTaxInfoFormBean);
         model.addAttribute("list", bList);
         return "incomeTaxInfoList";
@@ -190,7 +202,8 @@ public class IncomeTaxInfoController {
 
         //年度を任意設定
         //incomeTaxInfoFormBean.setYear("2020");
-        return "incomeTaxInfoEdit";
+//        return "incomeTaxInfoEdit";
+        return "redirect:/incomeTaxInfoList";
     }
 
 }

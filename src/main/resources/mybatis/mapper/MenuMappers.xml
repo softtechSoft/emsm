@@ -10,7 +10,8 @@
 		from
 			ems.ofcfunction
 		where deleteFlg='0'
-		 and authority='1'
+<!-- 		 and authority='1' -->
+		 and sysType='2'
 		 order by displayNo
  </select>
 

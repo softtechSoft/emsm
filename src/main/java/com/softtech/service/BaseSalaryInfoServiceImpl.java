@@ -247,4 +247,14 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		}
 		return baseSalaryInfoFormBean;
 	}
+	
+	@Override
+	public List<BaseSalaryInfoEntity> queryBaseSalaryInfoByCondition(String employeeID, String year) {
+	    return baseSalaryInfoMapper.getBaseSalaryInfoByCondition(employeeID, year);
+	}
+
+	@Override
+	public List<String> getYearList() {
+	    return baseSalaryInfoMapper.getDistinctYears();
+	}
 }

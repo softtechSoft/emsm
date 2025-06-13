@@ -50,8 +50,14 @@
     <b>社員:</b>
     <form:select path="employeeID">
         <%-- <form:options items="${employeeList}" itemLabel="employeeID" itemValue="employeeID"/> --%>
+        <form:option value="">全社員</form:option>
         <form:options items="${employeeList}" itemLabel="employeeName" itemValue="employeeID"/>
     </form:select>
+    <b>年度:</b>
+	<form:select path="year">
+	    <form:option value="">全年度</form:option>
+	    <form:options items="${yearList}"/>
+	</form:select>
     <td></td>
     <input type="button" name="search" value="検索" onclick="toSearchJsp()"/>
 
