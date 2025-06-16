@@ -1,0 +1,8 @@
+機能情報にデータを挿入
+INSERT INTO ofcfunction (
+    functionID, functionName, functionText, authority, functionLink,
+    displayNo, deleteFlg, insertDate, updateDate, sysType
+) VALUES (
+    'T1', 'torihiki', '&#xe65c;&emsp;取引先', 1, '/emsm/torihiki',
+    2, 0, '20250605', '20250605', 2
+);
