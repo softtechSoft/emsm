@@ -6,3 +6,7 @@ INSERT INTO ofcfunction (
     'T1', 'torihiki', '&#xe65c;&emsp;取引先', 1, '/emsm/torihiki',
     2, 0, '20250605', '20250605', 2
 );
+
+
+
+
