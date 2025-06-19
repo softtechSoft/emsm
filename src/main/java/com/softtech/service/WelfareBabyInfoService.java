@@ -87,4 +87,9 @@ public interface WelfareBabyInfoService {
 	//boolean updateWelfareBabyInfo(WelfareBabyInfoEntity welfareBabyInfoEntity1);
 	//boolean insertWelfareBabyInfo(WelfareBabyInfoFormBean welfarebabyInfoFormBean);
 
+	/**
+	 * 全てのデータを取得
+	 */
+	List<WelfareBabyInfoEntity> getAllWelfareBabyInfo();
+	
 }

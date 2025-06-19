@@ -12,6 +12,8 @@ import java.util.Objects;
 public class BaseSalaryInfoEntity {
     //社員ID
     private String employeeID;
+    //社員名
+    private String employeeName;
     //基本給
     private String baseSalary;
     //対象年度
@@ -46,6 +48,14 @@ public class BaseSalaryInfoEntity {
 
 	public void setEmployeeID(String employeeID) {
         this.employeeID = employeeID;
+    }
+	
+	public String getEmployeeName() {
+        return employeeName;
+    }
+    
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public String getBaseSalary() {

@@ -51,7 +51,7 @@
         </tr>
 
         <tr style="background-color:#dcfeeb">
-            <td width="200px">徴収率</td>
+            <td width="200px">徴収率（‰）</td>
             <td width="200px"><input type="text" id="rate" name="rate"
                                      value="${welfareBabyInfoFormBean.rate}" /></td>
 

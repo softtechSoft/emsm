@@ -37,7 +37,7 @@ public interface EmplyInsrateInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/08
      */
-    List<EmplyinsrateInfoEntity> getUpdateEmplyinsrateInfoList(Integer emplyinsrateID);
+    List<EmplyinsrateInfoEntity> getUpdateEmplyinsrateInfoList(String emplyinsrateID);
 
     /**
      * 概要:DB Entityからui使用のformへ変更
@@ -57,7 +57,7 @@ public interface EmplyInsrateInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/08
      */
-    Integer getNextEmplyinsrateID();
+    String getNextEmplyinsrateID();
 
     /**
      * 概要:update
@@ -98,5 +98,10 @@ public interface EmplyInsrateInfoService {
      */
     //ArrayList<EmplyinsrateIDName> getOldYears(int oldYear);
     ArrayList<ListIDName> getOldYears(int oldYear);
+    
+    /**
+     * 全てのデータを取得
+     */
+    List<EmplyinsrateInfoEntity> getAllEmplyinsrateInfo();
 
 }

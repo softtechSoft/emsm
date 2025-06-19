@@ -35,6 +35,13 @@
             document.theForm.action = "toinitEmplyinsrateInfo";
             document.theForm.submit();
         }
+
+     	// 全量検索ボタン処理
+        function toSearchAllJsp() {
+            document.theForm.action = "emplyinsrateInfoListAll";
+            document.theForm.submit();
+        }
+        
     </script>
     <title>ソフトテク株式会社-社内管理システム</title>
 </head>
@@ -54,6 +61,7 @@
     </form:select>
     <td></td>
     <input type="button" name="search" value="検索" onclick="toSearchJsp()"/>
+    <input type="button" name="searchAll" value="全量検索" onclick="toSearchAllJsp()"/>
 
     <!--エラーメッセージ-->
     <p style="color: red;">
@@ -87,7 +95,7 @@
                 <td><c:out value="${emplyinsrateInfoList.employerBurdenRate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.industrialAccidentInsuranceRate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.contributionRate}"/></td>
-                <td><c:out value="${emplyinsrateInfoList.status}"/></td>
+                <td><c:out value="${emplyinsrateInfoList.status == '0' ? '未使用' : '使用中'}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.insertDate}"/></td>
                 <td><c:out value="${emplyinsrateInfoList.updateDate}"/></td>
                 <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out

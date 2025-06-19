@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 
 public class ContractInfoFormBean {
 	//契約ID
-	private Integer contractID;
+	private String contractID;
 	//契約名称
 	@NotEmpty(message = "契約名称を入力してください。")
 	private String contractName;
@@ -57,7 +57,7 @@ public class ContractInfoFormBean {
 	//原本郵送フラグ
 	private String postNeed;
 	//タイムレポートパス
-	@NotEmpty(message = "タイムレポートパスを入力してください。")
+//	@NotEmpty(message = "タイムレポートパスを入力してください。")
 	private String timeReportPath;
 	//請求書名称
 	private String invoice;
@@ -83,13 +83,13 @@ public class ContractInfoFormBean {
 	/**
 	 * @return contractID
 	 */
-	public Integer getContractID() {
+	public String getContractID() {
 		return contractID;
 	}
 	/**
 	 * @param contractID セットする contractID
 	 */
-	public void setContractID(Integer contractID) {
+	public void setContractID(String contractID) {
 		this.contractID = contractID;
 	}
 	/**

@@ -22,7 +22,7 @@ public interface EmplyinsrateMapper {
     List<EmplyinsrateInfoEntity> getEmplyinsrateInfoByYear(@Param("year") String year);
 
     //更新画面への検索,表示される画面の厚生保険料IDにより、検索する
-    List<EmplyinsrateInfoEntity> getUpdateEmplyinsrateInfoList(@Param("emplyinsrateID") Integer emplyinsrateID);
+    List<EmplyinsrateInfoEntity> getUpdateEmplyinsrateInfoList(@Param("emplyinsrateID") String emplyinsrateID);
 
     //ID最大値+1を取得
     String getMaxEmplyinsrateID();
@@ -38,5 +38,8 @@ public interface EmplyinsrateMapper {
 
   //DBから社員リスト生成
     List<Employee> getEmployee();
+    
+    // 全量検索
+    List<EmplyinsrateInfoEntity> getAllEmplyinsrateInfo();
 
 }

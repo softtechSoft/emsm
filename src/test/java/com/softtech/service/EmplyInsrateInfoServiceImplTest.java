@@ -65,7 +65,7 @@ class EmplyInsrateInfoServiceImplTest {
         EmplyinsrateInfoEntity testEntity = new EmplyinsrateInfoEntity();
         emplyinsrateInfoByYear.add(testEntity);
         emplyinsrateInfoByYear.forEach(emplyinsrateInfoEntity -> {
-            emplyinsrateInfoEntity.setEmplyinsrateID(1);
+            emplyinsrateInfoEntity.setEmplyinsrateID("1");
             emplyinsrateInfoEntity.setYear("2020");
             emplyinsrateInfoEntity.setLaborBurdenRate("1");
             emplyinsrateInfoEntity.setEmployerBurdenRate("2");
@@ -76,7 +76,7 @@ class EmplyInsrateInfoServiceImplTest {
             emplyinsrateInfoEntity.setInsertDate("9");
         });
         EmplyinsrateInfoFormBean emplyinsrateInfoFormBean = new EmplyinsrateInfoFormBean();
-        emplyinsrateInfoFormBean.setEmplyinsrateID(1);
+        emplyinsrateInfoFormBean.setEmplyinsrateID("1");
         emplyinsrateInfoFormBean.setYear("2020");
         emplyinsrateInfoFormBean.setLaborBurdenRate("1");
         emplyinsrateInfoFormBean.setEmployerBurdenRate("2");

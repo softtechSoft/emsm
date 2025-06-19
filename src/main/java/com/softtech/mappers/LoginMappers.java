@@ -1,10 +1,16 @@
 package com.softtech.mappers;
 
-import com.softtech.common.*;
-import com.softtech.entity.LoginEntity;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import com.softtech.common.BaseSalaryIDName;
+import com.softtech.common.CompanyIDName;
+import com.softtech.common.ContractIDName;
+import com.softtech.common.EmployeeIDName;
+import com.softtech.common.LoginEmployee;
+import com.softtech.common.WelfarefeeIDName;
+import com.softtech.entity.LoginEntity;
 /**
  *社員情報DAO
  *
@@ -15,6 +21,7 @@ public interface LoginMappers {
 	//LoginEntity getMailAdress(String mailAdress);
 	LoginEntity getOldPassword(LoginEmployee em);
 	LoginEntity getEmployeeByID(LoginEmployee em);
+	LoginEntity getEmployeeByMailAddress(LoginEmployee em);
 	//社員情報IDリストを取得する
 	List<EmployeeIDName> getEmployees();
 	//契約情報IDリストを取得する

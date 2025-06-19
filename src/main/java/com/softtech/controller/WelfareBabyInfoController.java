@@ -119,8 +119,8 @@ public class WelfareBabyInfoController {
 	            String format = formatter.format(now);
 
 	          //RateIDを採番する（既存の最大値＋１）
-//	            String maxRateID = welfareBabyInfoService.getNextRateID();
-//	            welfareBabyInfoFormBean1.setRateID(maxRateID);
+	            String maxRateID = welfareBabyInfoService.getNextRateID();
+	            welfareBabyInfoFormBean1.setRateID(maxRateID);
 
 	            //新規
 	            welfareBabyInfoFormBean1.setInsertFlg(insertFlg);
@@ -185,13 +185,39 @@ public class WelfareBabyInfoController {
 	        	welfareBabyInfoService.updateWelfareBabyInfo(WelfareBabyInfoFormBean);
 	        }
 	        //DBから年度リスト生成
-	        List<RateIDName> year =  welfareBabyInfoService.getYear();
-	        model.addAttribute("year", year);
+//	        List<RateIDName> year =  welfareBabyInfoService.getYear();
+//	        model.addAttribute("year", year);
+	        String year = WelfareBabyInfoFormBean.getYear();
 
 //	        return "welfareBabyInfoEdit";
-	        return "redirect:/welfareBabyInfoList";
+	        return "redirect:/welfareBabyInfoList?year=" + year;
 
 	        }
+	    }
+	    
+	    /**
+	     * 全量検索（全てのデータを表示）
+	     */
+	    @RequestMapping("/welfareBabyInfoListAll")
+	    public String welfareBabyInfoListAll(Model model) {
+	        
+	        // 全てのデータを検索
+	        List<WelfareBabyInfoEntity> allList = 
+	                welfareBabyInfoService.getAllWelfareBabyInfo();
+	        
+	        // 年度リスト候補生成
+	        ArrayList<ListIDName> listIDNameList = 
+	                welfareBabyInfoService.getOldYears(3);
+	        
+	        // 新しいFormBeanを作成（年度選択をクリア）
+	        WelfareBabyInfoFormBean welfareBabyInfoFormBean = new WelfareBabyInfoFormBean();
+	        
+	        // 画面へ渡す
+	        model.addAttribute("listIDNameList", listIDNameList);
+	        model.addAttribute("welfareBabyInfoFormBean", welfareBabyInfoFormBean);
+	        model.addAttribute("list", allList);
+	        
+	        return "welfareBabyInfoList";
 	    }
 
 }

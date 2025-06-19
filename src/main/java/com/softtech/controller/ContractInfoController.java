@@ -55,13 +55,13 @@ public class ContractInfoController {
 //		contractInfoBean.setEmployeeID("1");
 		contractInfoBean.setEmployeeID("");
 		
-		List<ContractInfoEntity> allContractList = contractInfoService.queryAllContractInfoList();
+//		List<ContractInfoEntity> allContractList = contractInfoService.queryAllContractInfoList();
 
 		model.addAttribute("contractInfoBean",contractInfoBean);
 		//社員IDリスト候補を画面へ渡す
 		model.addAttribute("contractList",contractList);
 		//全社員list
-		model.addAttribute("list", allContractList);
+//		model.addAttribute("list", allContractList);
 
 		return "contractInfoList";
 
@@ -127,8 +127,8 @@ public class ContractInfoController {
 			ContractInfoFormBean contractInfoFormBean = new ContractInfoFormBean();
 
 //			// 契約情報を採番する（既存の最大値＋１）
-//			String maxContractID =contractInfoService.getNextContractID();
-//			contractInfoFormBean.setContractID(maxContractID);
+			String maxContractID =contractInfoService.getNextContractID();
+			contractInfoFormBean.setContractID(maxContractID);
 			//新規
 			contractInfoFormBean.setInsertFlg(insertFlg);
 
@@ -144,7 +144,7 @@ public class ContractInfoController {
 		//更新の場合
 		} else {
 			//　選択された契約の内容を取得する
-			Integer contractID = contractInfoBean.getContractID();
+			String contractID = contractInfoBean.getContractID();
 			List<ContractInfoEntity> sList= contractInfoService.queryContractInfo(contractID);
 
 			ContractInfoFormBean contractInfoFormBean=contractInfoService.trasferEntityToUI(sList);

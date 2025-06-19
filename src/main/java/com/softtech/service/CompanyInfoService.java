@@ -13,14 +13,14 @@ public interface CompanyInfoService {
 
 
      */
-	public List<CompanyEntity> getCompanyID(Integer companyID);
+	public List<CompanyEntity> getCompanyID(String companyID);
 	/**　全量検索　
 	 * @param なし
 	 */
 	public List<CompanyEntity> getAllCompany();
 	 List<CompanyInfoFormBean> queryCompanyInfo();
-//	public Integer getNextCompanyID();
-	public List<CompanyEntity> getCompanyInfo(Integer companyID);
+	public String getNextCompanyID();
+	public List<CompanyEntity> getCompanyInfo(String companyID);
 	public CompanyInfoFormBean tranforEntitytoUI(List<CompanyEntity> sList);
 
 

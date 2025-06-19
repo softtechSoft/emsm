@@ -9,7 +9,7 @@ package com.softtech.entity;
  */
 public class EmplyinsrateInfoEntity {
     //雇用保険ID PKです。
-    private Integer emplyinsrateID;
+    private String emplyinsrateID;
     //対象年度
     private String year;
     //雇用保険労働者負担料率‰
@@ -28,11 +28,11 @@ public class EmplyinsrateInfoEntity {
     private String updateDate;
     private String Emplyinsrate;
 
-    public Integer getEmplyinsrateID() {
+    public String getEmplyinsrateID() {
         return emplyinsrateID;
     }
 
-    public void setEmplyinsrateID(Integer emplyinsrateID) {
+    public void setEmplyinsrateID(String emplyinsrateID) {
         this.emplyinsrateID = emplyinsrateID;
     }
 

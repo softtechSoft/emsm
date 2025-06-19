@@ -33,10 +33,11 @@
     </div>
 </c:if>
 		<table  border="1">
-<%-- 			<tr style="background-color:#dcfeeb">
+		<input type="hidden" id="companyID" name="companyID" value="${companyInfoBean.companyID}"/>
+			<%-- <tr style="background-color:#dcfeeb">
 				<td width="200px">取引先ID</td>
 				<td width="200px"><input  type="text" id="companyID" name="companyID"
-				 value="${companyInfoBean.companyID}" maxlength = "6" /></td>
+				 value="${companyInfoBean.companyID}" maxlength = "6"/></td>
 			</tr> --%>
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">取引先名称</td>
@@ -110,12 +111,12 @@
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">作成日</td>
 	            <td width="200px"> <input type="text" id="insertDate" name="insertDate"
-									value="${companyInfoBean.insertDate}" maxlength = "8" /></td>
+									value="${companyInfoBean.insertDate}" maxlength = "8" readonly/></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">更新日</td>
 	            <td width="200px"> <input type="text" id="updateDate" name="updateDate"
-									value="${companyInfoBean.updateDate}" maxlength = "8"  /></td>
+									value="${companyInfoBean.updateDate}" maxlength = "8"  readonly/></td>
 			</tr>
 		</table>
 		<table  border="0">

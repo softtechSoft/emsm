@@ -58,15 +58,16 @@
 	<select id="getMaxContractID"  resultType="string">
 		 <!--契約情報IDを取得する。-->
  		select
-			MAX(contractID)
+			IFNULL(MAX(contractID), 'CT0000')
 		from
 			contract ct
 
 	</select>
 	<!--契約情報を新規する。-->
-	<insert id="insertContractInfo" parameterType="com.softtech.entity.ContractInfoEntity" useGeneratedKeys="true" keyProperty="contractID">
+	<insert id="insertContractInfo" parameterType="com.softtech.entity.ContractInfoEntity">
 
 	insert into ems.contract(
+		contractID,
         contractName,
         employeeID,
         companyID,
@@ -85,7 +86,7 @@
         status,
         insertDate,
         updateDate) values (
-        #{contractName},#{employeeID},#{companyID},#{price},#{payOff},#{lowerTime},#{lowerPrice},#{upperTime},
+        #{contractID},#{contractName},#{employeeID},#{companyID},#{price},#{payOff},#{lowerTime},#{lowerPrice},#{upperTime},
         #{upperPrice},#{contractBeginDate},#{contractEndDate},#{paymentTerm},#{postNeed},#{timeReportPath},#{invoice},#{status},
        date_format(now(),'%Y%m%d'), date_format(now(),'%Y%m%d'))
 

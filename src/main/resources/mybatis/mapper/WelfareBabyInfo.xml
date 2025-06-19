@@ -5,17 +5,18 @@
 
 <mapper namespace="com.softtech.mappers.WelfareBabyInfoMapper">
     <!--データ新規追加-->
-    <insert id="insertWelfareBabyInfo" parameterType="com.softtech.entity.WelfareBabyInfoEntity"
-    		useGeneratedKeys="true" keyProperty="rateID">
+    <insert id="insertWelfareBabyInfo" parameterType="com.softtech.entity.WelfareBabyInfoEntity">
         insert into m_welfarebabyrate
-        (year,
+        (rateID,
+         year,
          area,
          rate,
          status,
          insertDate,
          updateDate)
             value
-            (#{year},
+            ( #{rateID},
+            #{year},
             #{area},
             #{rate},
             #{status},
@@ -43,10 +44,10 @@
         where rateID = #{rateID}
     </select>
     <!--最大のRateIDを取得、+1用-->
-<!--     <select id="getMaxRateID" resultType="String">
-        select MAX(rateID)
+    <select id="getMaxRateID" resultType="String">
+        select IFNULL(MAX(rateID), 'R00000')
         from m_welfarebabyrate ct
-    </select> -->
+    </select>
     <!--更新の時、更新画面の年度を表示用-->
     <select id="getYear" resultType="com.softtech.common.RateIDName">
         select year
@@ -64,4 +65,12 @@
             updateDate=date_format(now(), '%Y%m%d')
         where rateID = #{rateID}
     </update>
+    
+    <!--全量検索-->
+	<select id="getAllWelfareBabyInfo" 
+	        resultType="com.softtech.entity.WelfareBabyInfoEntity">
+	    select *
+	    from m_welfarebabyrate
+	    order by rateID
+	</select>
 </mapper>

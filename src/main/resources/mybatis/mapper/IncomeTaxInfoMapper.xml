@@ -5,12 +5,10 @@
 
 <mapper namespace="com.softtech.mappers.IncomeTaxInfoMapper">
 
-    <insert id="insertIncomeTaxInfo" 
-    		parameterType="com.softtech.entity.IncomeTaxInfoEntity" 
-			useGeneratedKeys="true" 
-			keyProperty="incomeTaxID">
+    <insert id="insertIncomeTaxInfo" parameterType="com.softtech.entity.IncomeTaxInfoEntity">
         insert into m_incomeTax
-        (employeeID,
+        (incomeTaxID,
+         employeeID,
          year,
          incomeTax1,
          incomeTax2,
@@ -40,7 +38,8 @@
          insertDate,
          updateDate)
             value
-            (#{employeeID},
+            (#{incomeTaxID},
+             #{employeeID},
              #{year},
              #{incomeTax1},
              #{incomeTax2},
@@ -93,10 +92,10 @@
     </select>
 
     <!--最大のIncomeTaxIDを取得、+1用-->
-<!--     <select id="getMaxIncomeTaxID" resultType="String">
-        select MAX(incomeTaxID)
+	<select id="getMaxIncomeTaxID" resultType="String">
+        select IFNULL(MAX(incomeTaxID), 'I00000')
         from m_incomeTax
-    </select> -->
+    </select>
 
     <!--更新の時、更新画面の年度を表示用-->
     <select id="getYear" resultType="com.softtech.common.IncomeTaxIDName">

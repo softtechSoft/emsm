@@ -18,15 +18,15 @@
 	from company
 
 </select>
-<!-- <select id="getMaxCompanyID" resultType="Integer">
-select MAX(companyID)
+<select id="getMaxCompanyID" resultType="string">
+select IFNULL(MAX(companyID), 'C00000')
 from company
 Where companyID LIKE 'C%' ;
 
-</select> -->
-<insert id="insertCompany" parameterType="com.softtech.entity.CompanyEntity" useGeneratedKeys="true" keyProperty="companyID">
-    INSERT INTO company (companyName, companyType, postCode, address, basicContractDate, phoneNumber, contactName, mail, contractStatus, level, insertDate, updateDate)
-    VALUES (#{companyName}, #{companyType}, #{postCode}, #{address}, #{basicContractDate}, #{phoneNumber}, #{contactName}, #{mail}, #{contractStatus}, #{level}, #{insertDate}, #{updateDate});
+</select>
+<insert id="insertCompany" parameterType="com.softtech.entity.CompanyEntity">
+    INSERT INTO company (companyID, companyName, companyType, postCode, address, basicContractDate, phoneNumber, contactName, mail, contractStatus, level, insertDate, updateDate)
+    VALUES (#{companyID}, #{companyName}, #{companyType}, #{postCode}, #{address}, #{basicContractDate}, #{phoneNumber}, #{contactName}, #{mail}, #{contractStatus}, #{level}, #{insertDate}, #{updateDate});
 </insert>
  <update id="updateCompanyInfo" parameterType="com.softtech.actionForm.CompanyInfoFormBean">
         UPDATE company

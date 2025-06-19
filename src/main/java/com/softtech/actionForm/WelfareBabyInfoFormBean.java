@@ -20,7 +20,7 @@ public class WelfareBabyInfoFormBean {
  private String area;
 // 徴収率
  @NotEmpty(message = "徴収率を入力してください。")
- @Pattern(message = "徴収率に数値のみを入力してください。", regexp = "^[0-9]*$")
+ @Pattern(message = "徴収率に数値のみを入力してください。", regexp = "^[0-9]+(\\.[0-9]+)?$")
  private String rate;
 // 利用ステータス 0:未使用　1:使用中
  private int status;

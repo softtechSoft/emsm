@@ -109,7 +109,7 @@ public class IncomeTaxInfoController {
     public String toinitIncomeTaxInfo(@ModelAttribute("incomeTaxInfoFormBean") IncomeTaxInfoFormBean incomeTaxInfoFormBean,
                                       Model model) {
         //IDを取得
-//        String incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
+        String incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
 
         //新規フラグを取得
         String insertFlg = incomeTaxInfoFormBean.getInsertFlg();
@@ -123,8 +123,8 @@ public class IncomeTaxInfoController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             String format = formatter.format(now);
 
-//            String maxIncomeTaxID = incomTaxInfoService.getNextIncomeTaxID();
-//            incomeTaxInfoFormBean1.setIncomeTaxID(maxIncomeTaxID);
+            String maxIncomeTaxID = incomTaxInfoService.getNextIncomeTaxID();
+            incomeTaxInfoFormBean1.setIncomeTaxID(maxIncomeTaxID);
             //新規
             incomeTaxInfoFormBean1.setInsertFlg(insertFlg);
             incomeTaxInfoFormBean1.setInsertDate(format);
@@ -135,16 +135,12 @@ public class IncomeTaxInfoController {
             //更新の場合
         } else {
             //選択された内容を取得する
-//            incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
-//            List<IncomeTaxInfoEntity> bList =
-//                    incomTaxInfoService.getUpdateIncomeTaxByIncomeTaxID(incomeTaxID);
-//
-//            IncomeTaxInfoFormBean incomeTaxInfoFormBean2 =
-//                    incomTaxInfoService.transforEntityToUI(bList);
-        	Integer incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
-        	List<IncomeTaxInfoEntity> bList = incomTaxInfoService.getUpdateIncomeTaxByIncomeTaxID(incomeTaxID.toString());
-            
-            IncomeTaxInfoFormBean incomeTaxInfoFormBean2 = incomTaxInfoService.transforEntityToUI(bList);
+            incomeTaxID = incomeTaxInfoFormBean.getIncomeTaxID();
+            List<IncomeTaxInfoEntity> bList =
+                    incomTaxInfoService.getUpdateIncomeTaxByIncomeTaxID(incomeTaxID);
+
+            IncomeTaxInfoFormBean incomeTaxInfoFormBean2 =
+                    incomTaxInfoService.transforEntityToUI(bList);
 
             //更新
             incomeTaxInfoFormBean2.setInsertFlg(insertFlg);

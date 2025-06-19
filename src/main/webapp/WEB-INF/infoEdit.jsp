@@ -287,7 +287,7 @@
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">電話番号</td>
 		<td width="250px"><input type="text" id="phoneNumber" name="phoneNumber"
-                                     value="${employeeInfoFormBean.phoneNumber}" maxlength="10"  style="width: 98%;" /></td>
+                                     value="${employeeInfoFormBean.phoneNumber}" maxlength="11"  style="width: 98%;" /></td>
 
 	</tr>
 	<tr style = "background-color:#dcfeeb">

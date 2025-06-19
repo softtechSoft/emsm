@@ -14,6 +14,7 @@ import com.softtech.common.ListIDName;
 import com.softtech.common.RateIDName;
 import com.softtech.entity.WelfareBabyInfoEntity;
 import com.softtech.mappers.WelfareBabyInfoMapper;
+import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
 
 @Service
@@ -84,10 +85,9 @@ public class WelfareBabyInfoServiceImpl implements WelfareBabyInfoService {
      */
     @Override
     public String getNextRateID() {
-//        String maxRateID = welfareBabyInfoMapper.getMaxRateID();
-//        String nextRateID = DataUtil.getNextID(maxRateID, 1);
-//        return nextRateID;
-    	return "自動採番";
+        String maxRateID = welfareBabyInfoMapper.getMaxRateID();
+        String nextRateID = DataUtil.getNextID(maxRateID, 1);
+        return nextRateID;
     }
 
     /**
@@ -158,9 +158,9 @@ public class WelfareBabyInfoServiceImpl implements WelfareBabyInfoService {
     	WelfareBabyInfoEntity welfareBabyInfoEntity = new WelfareBabyInfoEntity();
 
         // 厚生保険料ID+1、新規追加用
-//        String maxRateID = welfareBabyInfoMapper.getMaxRateID();
-//        String nextRateID = DataUtil.getNextID(maxRateID, 1);
-//        welfareBabyInfoEntity.setRateID(nextRateID);
+        String maxRateID = welfareBabyInfoMapper.getMaxRateID();
+        String nextRateID = DataUtil.getNextID(maxRateID, 1);
+        welfareBabyInfoEntity.setRateID(nextRateID);
 
         // 対象年度
         String year = welfareBabyInfoFormBean.getYear();
@@ -224,5 +224,14 @@ public class WelfareBabyInfoServiceImpl implements WelfareBabyInfoService {
 		return (ArrayList<ListIDName>) DateUtil.getYears(oldYear);
 	}
 
+	/**
+	 * 全てのデータを取得
+	 */
+	@Override
+	public List<WelfareBabyInfoEntity> getAllWelfareBabyInfo() {
+	    List<WelfareBabyInfoEntity> allWelfareBabyInfo = 
+	            welfareBabyInfoMapper.getAllWelfareBabyInfo();
+	    return allWelfareBabyInfo;
+	}
 
 }

@@ -115,4 +115,9 @@ public interface WelfarefeeInfoService {
      */
    // ArrayList<WelfarefeeIDName> getOldYears(int oldYear);
     ArrayList<ListIDName> getOldYears(int oldYear);
+    
+    /**
+     * 全てのデータを取得
+     */
+    List<WelfarefeeInfoEntity> getAllWelfarefeeInfo();
 }

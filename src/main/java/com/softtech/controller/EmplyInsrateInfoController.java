@@ -107,7 +107,7 @@ public class EmplyInsrateInfoController {
     @RequestMapping("/toinitEmplyinsrateInfo")
     public String toinitEmplyinsrateInfo(@ModelAttribute("emplyinsrateInfoFormBean") EmplyinsrateInfoFormBean emplyinsrateInfoFormBean, Model model) {
         //IDを取得
-    	Integer emplyinsrateID = emplyinsrateInfoFormBean.getEmplyinsrateID();
+    	String emplyinsrateID = emplyinsrateInfoFormBean.getEmplyinsrateID();
 
         //新規フラグを取得
         String insertFlg = emplyinsrateInfoFormBean.getInsertFlg();
@@ -121,8 +121,8 @@ public class EmplyInsrateInfoController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             String format = formatter.format(now);
           //emplyinsrateIDを採番する（既存の最大値＋１）
-//            String maxEmplyinsrateID = emplyinsrateInfoService.getNextEmplyinsrateID();
-//            emplyinsrateInfoFormBean1.setEmplyinsrateID(maxEmplyinsrateID);
+            String maxEmplyinsrateID = emplyinsrateInfoService.getNextEmplyinsrateID();
+            emplyinsrateInfoFormBean1.setEmplyinsrateID(maxEmplyinsrateID);
             //新規
             emplyinsrateInfoFormBean1.setInsertFlg(insertFlg);
             emplyinsrateInfoFormBean1.setInsertDate(format);
@@ -190,16 +190,43 @@ public class EmplyInsrateInfoController {
         	}
 
         	 //DBから年度リスト生成
-            List<ListIDName> year = emplyinsrateInfoService.getYear();
-            model.addAttribute("year", year);
+//            List<ListIDName> year = emplyinsrateInfoService.getYear();
+//            model.addAttribute("year", year);
+        	String year = emplyinsrateInfoFormBean.getYear();
 
             //年度を任意設定
            // emplyinsrateInfoFormBean.setYear("2020");
 
 //            return "emplyinsrateInfoEdit";
-            return "redirect:/emplyinsrateInfoList";
+        	return "redirect:/emplyinsrateInfoList?year=" + year;
         }
 
     }
+    
+    /**
+     * 全量検索（全てのデータを表示）
+     */
+    @RequestMapping("/emplyinsrateInfoListAll")
+    public String emplyinsrateInfoListAll(Model model) {
+        
+        // 全てのデータを検索
+        List<EmplyinsrateInfoEntity> allList = 
+                emplyinsrateInfoService.getAllEmplyinsrateInfo();
+        
+        // 年度リスト候補生成
+        ArrayList<ListIDName> listIDNameList = 
+                emplyinsrateInfoService.getOldYears(3);
+        
+        // 新しいFormBeanを作成（年度選択をクリア）
+        EmplyinsrateInfoFormBean emplyinsrateInfoFormBean = new EmplyinsrateInfoFormBean();
+        
+        // 画面へ渡す
+        model.addAttribute("listIDNameList", listIDNameList);
+        model.addAttribute("emplyinsrateInfoFormBean", emplyinsrateInfoFormBean);
+        model.addAttribute("list", allList);
+        
+        return "emplyinsrateInfoList";
+    }
+    
 }
 

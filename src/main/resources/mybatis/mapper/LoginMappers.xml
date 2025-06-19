@@ -21,6 +21,13 @@
         WHERE status = #{status}
 		and employeeID = #{employeeID}
  </select>
+ 
+ <select id="getEmployeeByMailAddress" parameterType="com.softtech.common.LoginEmployee" resultType="com.softtech.entity.LoginEntity">
+    SELECT *
+    FROM employee
+    WHERE status = '0'
+    and mailAdress = #{mailAdress}
+</select>
 
 <!-- 社員情報IDを取得する-->
 <select id="getEmployees" resultType="com.softtech.common.EmployeeIDName">

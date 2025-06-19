@@ -2,6 +2,7 @@
 <%@ page session="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -147,13 +148,22 @@
         <c:when test="${empty employeeInfoList.phoneNumber}">
             <c:out value=""/>
         </c:when>
-        <c:otherwise>
+        <c:when test="${fn:length(employeeInfoList.phoneNumber) == 10}">
+        <!-- XX-XXXX-XXXX -->
+            <span style="white-space: nowrap;">
+                <c:out value="${employeeInfoList.phoneNumber.substring(0, 2)}"/>-
+                <c:out value="${employeeInfoList.phoneNumber.substring(2, 6)}"/>-
+                <c:out value="${employeeInfoList.phoneNumber.substring(6)}"/>
+            </span>
+        </c:when>
+        <c:when test="${fn:length(employeeInfoList.phoneNumber) == 11}">
+            <!-- XXX-XXXX-XXXX -->
             <span style="white-space: nowrap;">
                 <c:out value="${employeeInfoList.phoneNumber.substring(0, 3)}"/>-
                 <c:out value="${employeeInfoList.phoneNumber.substring(3, 7)}"/>-
                 <c:out value="${employeeInfoList.phoneNumber.substring(7)}"/>
             </span>
-        </c:otherwise>
+        </c:when>
     </c:choose>
 </td>
 

@@ -12,6 +12,7 @@ import com.softtech.common.IncomeTaxIDName;
 import com.softtech.entity.Employee;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import com.softtech.mappers.IncomeTaxInfoMapper;
+import com.softtech.util.DataUtil;
 
 /**
  * @program
@@ -65,12 +66,13 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-//    @Override
-//    public String getNextIncomeTaxID() {
-//        String maxIncomTaxID = incomeTaxInfoMapper.getMaxIncomeTaxID();
+    @Override
+    public String getNextIncomeTaxID() {
+        String maxIncomTaxID = incomeTaxInfoMapper.getMaxIncomeTaxID();
 //        String nextIncomeTaxID = String.valueOf(Integer.parseInt(maxIncomTaxID) + 1);
-//        return nextIncomeTaxID;
-//    }
+        String nextIncomeTaxID = DataUtil.getNextID(maxIncomTaxID, 1);
+        return nextIncomeTaxID;
+    }
 
     /**
      * 概要:更新の時、更新画面の年度を表示する用
@@ -200,7 +202,7 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
 
     public IncomeTaxInfoEntity transforUItoEntityByInsert(IncomeTaxInfoFormBean incomeTaxInfoFormBean) {
         IncomeTaxInfoEntity incomeTaxInfoEntity = new IncomeTaxInfoEntity();
-//        incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
+        incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
         incomeTaxInfoEntity.setYear(incomeTaxInfoFormBean.getYear());
         incomeTaxInfoEntity.setEmployeeID(incomeTaxInfoFormBean.getEmployeeID());
         incomeTaxInfoEntity.setIncomeTax1(incomeTaxInfoFormBean.getIncomeTax1());

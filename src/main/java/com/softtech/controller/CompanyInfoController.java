@@ -76,7 +76,7 @@ public class CompanyInfoController {
 		if ("0".equals(selectFlg)){
 			//IDを取得
 
-			Integer companyID = companyInfoBean.getCompanyID();
+			String companyID = companyInfoBean.getCompanyID();
 			List<CompanyEntity> list = companyInfoService.getCompanyID(companyID);
 			model.addAttribute("list",list);
 
@@ -109,8 +109,8 @@ public class CompanyInfoController {
 			CompanyInfoFormBean companyInfoBeans = new CompanyInfoFormBean();
 
 			// 契約情報を採番する（既存の最大値＋１）
-//			String maxCompanyID =companyInfoService.getNextCompanyID();
-//			companyInfoBeans.setCompanyID(maxCompanyID);
+			String maxCompanyID =companyInfoService.getNextCompanyID();
+			companyInfoBeans.setCompanyID(maxCompanyID);
 			
 			 LocalDateTime now = LocalDateTime.now();
 	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -125,7 +125,7 @@ public class CompanyInfoController {
 		//更新の場合
 		} else {
 			//　選択された契約の内容を取得する
-			Integer companyID = companyInfoBean.getCompanyID();
+			String companyID = companyInfoBean.getCompanyID();
 			List<CompanyEntity> sList= companyInfoService.getCompanyInfo(companyID);
 
 			CompanyInfoFormBean companyInfoBean1 = companyInfoService.tranforEntitytoUI(sList);
@@ -161,6 +161,9 @@ public class CompanyInfoController {
 
 	        	companyInfoService.addCompany(companyInfoFormBean);
 	            model.addAttribute("message", "登録完了");
+	            
+	            return "redirect:/companyInfoList?selectFlg=1";
+	            
 	        } catch (Exception e) {
 
 	            model.addAttribute("errors", "Error occurred while adding company: " + e.getMessage());
@@ -190,6 +193,9 @@ public class CompanyInfoController {
 
 	        if (updateSuccess) {
 	            model.addAttribute("message", "更新に成功しました");
+	            
+	            return "redirect:/companyInfoList?selectFlg=1";
+	            
 	        } else {
 	            model.addAttribute("message", "更新に失敗しました");
 	        }

@@ -139,17 +139,17 @@
 
 			</tr>
 
-			<tr style="background-color:#dcfeeb">
+			<%-- <tr style="background-color:#dcfeeb">
 				<td width="200px">タイムレポートパス</td>
 				<td width="200px"><input type="text" id="timeReportPath" name="timeReportPath"
 									value="${contractInfoBean.timeReportPath}" /></td>
-			</tr>
+			</tr> --%>
 
-			<tr style="background-color:#dcfeeb">
+			<%-- <tr style="background-color:#dcfeeb">
 				<td width="200px">請求書名称</td>
 				<td width="200px"><input type="text" id="invoice" name="invoice"
 									value="${contractInfoBean.invoice}" /></td>
-			</tr>
+			</tr> --%>
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">進行ステータス</td>

@@ -15,7 +15,7 @@ import com.softtech.common.EmplyinsrateIDName;
  * @return:
  */
 public class EmplyinsrateInfoFormBean {
-	private Integer emplyinsrateID;
+	private String emplyinsrateID;
 	//対象年度
 	@NotEmpty(message = "年度を入力してください")
 	@Pattern(message = "対象年度に数値のみを入力してください。", regexp ="[0-9]+")
@@ -51,11 +51,11 @@ public class EmplyinsrateInfoFormBean {
 	//更新画面への用 data伝送 PK welfarefeeIDのList
 	private ArrayList<EmplyinsrateIDName> emplyinsrateIDNameList;
 
-	public Integer getEmplyinsrateID() {
+	public String getEmplyinsrateID() {
 		return emplyinsrateID;
 	}
 
-	public void setEmplyinsrateID(Integer emplyinsrateID) {
+	public void setEmplyinsrateID(String emplyinsrateID) {
 		this.emplyinsrateID = emplyinsrateID;
 	}
 

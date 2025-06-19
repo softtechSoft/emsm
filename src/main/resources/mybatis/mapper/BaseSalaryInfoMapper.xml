@@ -33,9 +33,12 @@
     </insert>
     <!-- 基本給リストの検索 -->
     <select id="getBaseSalaryInfoList" parameterType="string" resultType="com.softtech.entity.BaseSalaryInfoEntity">
-        select *
-        from m_basesalary
-        where employeeID = #{employeeID}
+        select 
+	        b.*,
+	        e.employeeName
+	    from m_basesalary b
+	    left join employee e on b.employeeID = e.employeeID
+	    where b.employeeID = #{employeeID}
     </select>
 
     <!-- 基本給更新画面へのときの検索 -->
@@ -66,23 +69,26 @@
     <select id="getMaxBaseSalaryID" resultType="string">
         <!--基本給情報IDを取得する。-->
         select
-        MAX(baseSalaryID)
+        IFNULL(MAX(baseSalaryID), 'B00000')
         from
         m_basesalary ct
 
     </select>
     
 	<select id="getBaseSalaryInfoByCondition" resultType="com.softtech.entity.BaseSalaryInfoEntity">
-	    SELECT *
-	    FROM m_basesalary
+	    SELECT 
+	        b.*,
+	        e.employeeName
+	    FROM m_basesalary b
+	    LEFT JOIN employee e ON b.employeeID = e.employeeID
 	    WHERE 1=1
 	    <if test="employeeID != null and employeeID != ''">
-	        AND employeeID = #{employeeID}
+	        AND b.employeeID = #{employeeID}
 	    </if>
 	    <if test="year != null and year != ''">
-	        AND year = #{year}
+	        AND b.year = #{year}
 	    </if>
-	    ORDER BY employeeID, year DESC
+	    ORDER BY b.employeeID, b.year DESC
 	</select>
 	
 	<select id="getDistinctYears" resultType="string">

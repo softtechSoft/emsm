@@ -117,7 +117,7 @@
 				<td width="200px">残業単価</td>
 				<td width="200px">
 				 <input type="text" id="overtimePay" name="overtimePay"
-									value="${baseSalaryInfoList.overtimePay}" />
+									value="${baseSalaryInfoBean.overtimePay}" />
 
 				</td>
 			</tr>
@@ -126,17 +126,17 @@
 				<td width="200px">控除単価</td>
 				<td>
 				<input type ="text" id ="insufficienttimePay" name = "insufficienttimePay"
-				                    value="${baseSalaryInfoList.insufficienttimePay}"/>
+				                    value="${baseSalaryInfoBean.insufficienttimePay}"/>
 				</td>
 			</tr>
 
 
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">進行ステータス</td>
-				<td width="200px"><input type="radio" name="status" <c:if test="${baseSalaryInfoBean.status == '0'}">
-									checked</c:if> value="0" /> する
-									<input type="radio" name="status" <c:if test="${baseSalaryInfoBean.status == '1'}">
-									checked</c:if> value="1" /> しない</td>
+				<td width="200px"><input type="radio" name="status" <c:if test="${baseSalaryInfoBean.status == '1'}">
+									checked</c:if> value="1" /> する
+									<input type="radio" name="status" <c:if test="${baseSalaryInfoBean.status == '0'}">
+									checked</c:if> value="0" /> しない</td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">

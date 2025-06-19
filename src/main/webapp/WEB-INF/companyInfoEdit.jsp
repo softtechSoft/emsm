@@ -35,13 +35,13 @@
 </c:if>
 
 
-
 		<table  border="1">
-			<tr style="background-color:#dcfeeb">
+		<input type="hidden" id="companyID" name="companyID" value="${companyInfoBean.companyID}"/>
+			<%-- <tr style="background-color:#dcfeeb">
 				<td width="200px">取引先ID</td>
 				<td width="200px"><input  type="text" id="companyID" name="companyID"
 				 value="${companyInfoBean.companyID}" maxlength = "6" /></td>
-			</tr>
+			</tr> --%>
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">取引先名称</td>
 				<td width="200px"><input type="text" id="companyName" name="companyName"
@@ -78,7 +78,7 @@
 				<tr style="background-color:#dcfeeb">
 				<td width="200px">電話番号</td>
 				<td width="200px"><input type="text" id="phoneNumber" name="phoneNumber"
-									value="${companyInfoBean.phoneNumber}" maxlength = "10"  /></td>
+									value="${companyInfoBean.phoneNumber}" maxlength = "11"  /></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 				<td width="200px">連絡先名</td>

@@ -92,7 +92,7 @@
 					<td><c:out value="${contractInfoList.getCompanyID()}"/></td>
 					<td><c:out value="${contractInfoList.getCompanyName()}"/></td>
 					<td><c:out value="${contractInfoList.getPrice()}"/></td>
-					<td><c:out value="${contractInfoList.getPayOff()}"/></td>
+					<td><c:out value="${contractInfoList.getPayOff() == '0' ? '清算あり' : '固定額'}"/></td>
 					<td><c:out value="${contractInfoList.getLowerTime()}"/></td>
 					<td><c:out value="${contractInfoList.getLowerPrice()}"/></td>
 					<td><c:out value="${contractInfoList.getUpperTime()}"/></td>
@@ -100,10 +100,10 @@
 					<td><c:out value="${contractInfoList.getContractBeginDate()}"/></td>
 					<td><c:out value="${contractInfoList.getContractEndDate()}"/></td>
 					<td><c:out value="${contractInfoList.getPaymentTerm()}"/></td>
-					<td><c:out value="${contractInfoList.getPostNeed()}"/></td>
+					<td><c:out value="${contractInfoList.getPostNeed() == '0' ? '要郵送' : '不要'}"/></td>
 					<td><c:out value="${contractInfoList.getTimeReportPath()}"/></td>
 					<td><c:out value="${contractInfoList.getInvoice()}"/></td>
-					<td><c:out value="${contractInfoList.getStatus()}"/></td>
+					<td><c:out value="${contractInfoList.getStatus() == '1' ? '進行中' : '終了'}"/></td>
 					<td><c:out value="${contractInfoList.getInsertDate()}"/></td>
 					<td><c:out value="${contractInfoList.getUpdateDate()}"/></td>
 					<!-- ①ボタンにする -->

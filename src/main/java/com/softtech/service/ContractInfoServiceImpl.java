@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.softtech.actionForm.ContractInfoFormBean;
 import com.softtech.entity.ContractInfoEntity;
 import com.softtech.mappers.ContractInfoMapper;
+import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
 
 	/**
@@ -39,7 +40,7 @@ import com.softtech.util.DateUtil;
 	 *
 	 * @author テー@ソフトテク
 	 */
-	public List<ContractInfoEntity> queryContractInfo(Integer contractID) {
+	public List<ContractInfoEntity> queryContractInfo(String contractID) {
 		List<ContractInfoEntity> contractinfo = contractinfoMapper.getContractInfo(contractID);
 		return  contractinfo;
 	}
@@ -84,7 +85,7 @@ import com.softtech.util.DateUtil;
 	private ContractInfoEntity tranferBeanToEntity(ContractInfoFormBean contractInfoBean) {
 		ContractInfoEntity contractInfoEntity = new ContractInfoEntity();
 		//契約ID
-		Integer contractID=contractInfoBean.getContractID();
+		String contractID=contractInfoBean.getContractID();
 		contractInfoEntity.setContractID(contractID);
 		//契約名称
 		String contractName=contractInfoBean.getContractName();
@@ -261,11 +262,11 @@ import com.softtech.util.DateUtil;
 	 * @param なし
 	 * @return 最大ID
 	 */
-//	private Integer getMaxContractID()
-//	{
-//		Integer maxContractID = contractinfoMapper.getMaxContractID();
-//		return  maxContractID;
-//	}
+	private String getMaxContractID()
+	{
+		String maxContractID = contractinfoMapper.getMaxContractID();
+		return  maxContractID;
+	}
 
 	/*
 	 * 機能概要:契約情報の契約IDを採番する
@@ -273,14 +274,13 @@ import com.softtech.util.DateUtil;
 	 * @param なし
 	 * @return 契約ID
 	 */
-	public Integer getNextContractID()
+	public String getNextContractID()
 	{
-//		//契約情報の最大IDを取得する
-//		String maxContractID = getMaxContractID();
-//		// 採番する
-//		String nextContractID = DataUtil.getNextID(maxContractID,2);
-//		return  nextContractID;
-		return null;
+		//契約情報の最大IDを取得する
+		String maxContractID = getMaxContractID();
+		// 採番する
+		String nextContractID = DataUtil.getNextID(maxContractID,2);
+		return  nextContractID;
 	}
 	
 	//全社員list

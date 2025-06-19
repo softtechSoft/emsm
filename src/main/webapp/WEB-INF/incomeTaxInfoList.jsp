@@ -135,7 +135,7 @@
                 <td><c:out value="${incomeTaxInfoList.residentTax10}"/></td>
                 <td><c:out value="${incomeTaxInfoList.residentTax11}"/></td>
                 <td><c:out value="${incomeTaxInfoList.residentTax12}"/></td>
-                <td><c:out value="${incomeTaxInfoList.status}"/></td>
+                <td><c:out value="${incomeTaxInfoList.status == '0' ? '使用完了' : '使用中'}"/></td>
                 <td><c:out value="${incomeTaxInfoList.insertDate}"/></td>
                 <td><c:out value="${incomeTaxInfoList.updateDate}"/></td>
                 <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out

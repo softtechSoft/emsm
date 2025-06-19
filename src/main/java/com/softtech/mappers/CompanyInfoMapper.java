@@ -13,7 +13,7 @@ public interface CompanyInfoMapper{
 	//検索用のquery,companyIDにより、検索する
 	public List<CompanyEntity> getCompanyID(Object companyID);
 	public List<CompanyEntity> getCompany();
-//	public Integer getMaxCompanyID();
+	public String getMaxCompanyID();
 
 	 void insertCompany(CompanyEntity companyEntity);
 	  int updateCompanyInfo(CompanyInfoFormBean companyInfoFormBean);

@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 public class WelfarefeeInfoFormBean {
   // 厚生保険料ID PKです。
-  private Integer welfarefeeID;
+  private String welfarefeeID;
   // 対象年度
   // 年度と収入、２の１選択、@NotEmptyは必要ない
   @Pattern(message = "対象年度に数値のみを入力してください。", regexp = "^[0-9]{4}$")
@@ -69,7 +69,7 @@ public class WelfarefeeInfoFormBean {
 	return welfarefeeID;
 	}*/
 
-  public void setWelfarefeeID(Integer welfarefeeID) {
+  public void setWelfarefeeID(String welfarefeeID) {
     this.welfarefeeID = welfarefeeID;
   }
 

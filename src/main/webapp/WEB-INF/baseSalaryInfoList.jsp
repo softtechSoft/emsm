@@ -55,7 +55,8 @@
 
     <table border="1" class="baseSalaryInfoList-table">
         <tr>
-            <th width="100">基本給ID</th>
+            <!-- <th width="100">基本給ID</th> -->
+            <th width="100">社員名</th>
             <th width="200">基本給</th>
             <th width="200">対象年度</th>
             <th width="100">稼働期間From</th>
@@ -71,14 +72,15 @@
         <c:forEach items="${list}" var="baseSalaryInfoList" varStatus="status">
             <tr <c:if test="${status.count%2==0}"> style="background-color:#bfe1ff"</c:if>
                     <c:if test="${status.count%2!=0}"> style="background-color:#dcfeeb"</c:if>>
-                <td><c:out value="${baseSalaryInfoList.baseSalaryID}"/></td>
+                <%-- <td><c:out value="${baseSalaryInfoList.baseSalaryID}"/></td> --%>
+                <td><c:out value="${baseSalaryInfoList.employeeName}"/></td>
                 <td><c:out value="${baseSalaryInfoList.baseSalary}"/></td>
                 <td><c:out value="${baseSalaryInfoList.year}"/></td>
                 <td><c:out value="${baseSalaryInfoList.wkPeriodFrom}"/></td>
                 <td><c:out value="${baseSalaryInfoList.wkPeriodTo}"/></td>
                 <td><c:out value="${baseSalaryInfoList.overtimePay}"/></td>
                 <td><c:out value="${baseSalaryInfoList.insufficienttimePay}"/></td>
-                <td><c:out value="${baseSalaryInfoList.status}"/></td>
+                <td><c:out value="${baseSalaryInfoList.status == '0' ? '未使用' : '使用中'}"/></td>
                 <td><c:out value="${baseSalaryInfoList.insertDate}"/></td>
                 <td><c:out value="${baseSalaryInfoList.updateDate}"/></td>
                 <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out

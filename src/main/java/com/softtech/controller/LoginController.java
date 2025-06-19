@@ -56,12 +56,24 @@ public class LoginController {
 			model.addAttribute("errors", result.getFieldErrors());
 			return "login";
 		}
+		
+		LoginEntity userEmployee = loginService.getEmployeeByMailAddress(loginBean);
+	    
+	    if (userEmployee == null) {
+	        // ユーザがない
+	        List<FieldError> lst = new ArrayList<FieldError>();
+	        FieldError err1 = new FieldError("", "", "ユーザーが存在しません。");
+	        lst.add(err1);
+	        model.addAttribute("errors", lst);
+	        return "login";
+	    }
+	    
 		//Login処理
 		boolean rtnbl = loginService.doLogin(loginBean);
 
 		// ログイン成功。
 		if (rtnbl) {
-			LoginEntity userEmployee=loginService.qureyEmployee(loginBean);
+			userEmployee=loginService.qureyEmployee(loginBean);
 			session.setAttribute("loginUserName",userEmployee.getEmployeeName());
 			session.setAttribute("loginUserID",userEmployee.getEmployeeID());
 			session.setAttribute("userMailAdress",userEmployee.getMailAdress());
@@ -74,10 +86,16 @@ public class LoginController {
 		}else {
 			// エラーメッセージを表示する
 			List<FieldError> lst = new ArrayList<FieldError>();
-			FieldError err1 = new FieldError("", "", "ログインは失敗しました。再ログインしてください。");
-			FieldError err2 = new FieldError("", "", "またはシステム管理者へ連絡してください。");
-			lst.add(err1);
-			lst.add(err2);
+				if (userEmployee != null && !"1".equals(userEmployee.getAuthority())) {
+		            // 权限不足
+		            FieldError err1 = new FieldError("", "", "権限が不足しています。");
+		            lst.add(err1);
+		        } else {
+					FieldError err1 = new FieldError("", "", "ログインは失敗しました。再ログインしてください。");
+					FieldError err2 = new FieldError("", "", "またはシステム管理者へ連絡してください。");
+					lst.add(err1);
+					lst.add(err2);
+		        }
 			model.addAttribute("errors", lst);
 			return "login";
 		}

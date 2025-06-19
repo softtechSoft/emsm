@@ -152,7 +152,8 @@ public class EmployeeInfoController {
 	        // ユーザー情報の登録
 		 employeeInfoService.save(employeeInfoFormBean);
 		 model.addAttribute("successMessage", "登録完了");
-		 return "employeeInfoEdit";
+//		 return "employeeInfoEdit";
+		 return "redirect:/employeeInfoList?selectFlg=1";
 
 	}
 	@RequestMapping(value = "/employeeInfoEdit1", method = RequestMethod.POST)
@@ -173,7 +174,8 @@ public class EmployeeInfoController {
 	        // ユーザー情報の登録
 		 employeeInfoService.update(employeeInfoFormBean);
 		 model.addAttribute("successMessage", "更新完了");
-		 return "infoEdit";
+//		 return "infoEdit";
+		 return "redirect:/employeeInfoList?selectFlg=1";
 
 	}
 

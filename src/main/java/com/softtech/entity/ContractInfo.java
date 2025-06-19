@@ -2,7 +2,7 @@ package com.softtech.entity;
 
 public class ContractInfo {
 			//契約ID
-			private Integer contractID;
+			private String contractID;
 			//契約名称
 			private String contractName;
 			//社員ID
@@ -46,13 +46,13 @@ public class ContractInfo {
 			/**
 			 * @return contractID
 			 */
-			public Integer getContractID() {
+			public String getContractID() {
 				return contractID;
 			}
 			/**
 			 * @param contractID セットする contractID
 			 */
-			public void setContractID(Integer contractID) {
+			public void setContractID(String contractID) {
 				this.contractID = contractID;
 			}
 			/**

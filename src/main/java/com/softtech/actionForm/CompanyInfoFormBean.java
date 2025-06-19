@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 public class CompanyInfoFormBean {
 	 // 取引先ID
 //    @NotEmpty(message = "取引先IDを入力してください")
-    private Integer companyID;
+    private String companyID;
 
     // 取引先名称
     @NotEmpty(message = "取引先名称を入力してください")
@@ -58,11 +58,11 @@ public class CompanyInfoFormBean {
     private String selectFlg;
     // Getters and Setters
 
-    public Integer getCompanyID() {
+    public String getCompanyID() {
         return companyID;
     }
 
-    public void setCompanyID(Integer companyID) {
+    public void setCompanyID(String companyID) {
         this.companyID = companyID;
     }
 

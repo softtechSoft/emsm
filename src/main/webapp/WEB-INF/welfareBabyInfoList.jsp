@@ -2,6 +2,7 @@
 <%@ page session="false" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 
@@ -30,6 +31,13 @@
             document.theForm.action="toinitWelfareBabyInfo";
             document.theForm.submit();
         }
+
+     	// 全量検索ボタン処理
+        function toSearchAllJsp(){
+            document.theForm.action="welfareBabyInfoListAll";
+            document.theForm.submit();
+        }
+        
     </script>
     <title> ソフトテク株式会社-社内管理システム </title>
 </head>
@@ -47,12 +55,14 @@
     <td></td>
 
  <input type="button" name="search" value="検索" onclick="toSearchJsp()" />
+ <input type="button" name="searchAll" value="全量検索" onclick="toSearchAllJsp()" />
+ 
 <table border="1"class="welfareBabyInfoList-table">
         <tr>
             <th width="100">徴収ID</th>
             <th width="100">対象年度</th>
             <th width="100">対象エリア</th>
-            <th width="100">徴収率</th>
+            <th width="100">徴収率（‰）</th>
             <th width="100">利用ステータス</th>
             <th width="100">作成日</th>
             <th width="100">更新日</th>
@@ -65,8 +75,13 @@
                 <td><c:out value="${welfareBabyInfoList.getRateID()}"/></td>
                 <td><c:out value="${welfareBabyInfoList.getYear()}"/></td>
                 <td><c:out value="${welfareBabyInfoList.getArea()}"/></td>
-                <td><c:out value="${welfareBabyInfoList.getRate()}"/></td>
-                <td><c:out value="${welfareBabyInfoList.getStatus()}"/></td>
+                <%-- <td><c:out value="${welfareBabyInfoList.getRate()}"/></td> --%>
+                <td>
+	                <fmt:formatNumber value="${welfareBabyInfoList.getRate()}" 
+	                                  type="number" 
+	                                  pattern="#,##0.##" />‰
+	            </td>
+                <td><c:out value="${welfareBabyInfoList.getStatus() == '0' ? '未使用' : '使用中'}"/></td>
                 <td><c:out value="${welfareBabyInfoList.getInsertDate()}"/></td>
                 <td><c:out value="${welfareBabyInfoList.getUpdateDate()}"/></td>
                 <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out value="${welfareBabyInfoList.getRateID()}"/>');" /></td>

@@ -156,24 +156,9 @@ public class BaseSalaryInfoServiceImpl implements BaseSalaryInfoService {
 		baseSalaryInfoEntity.setStatus(status);
 
 		//基本給ID
-//		String maxBaseSalaryID = getMaxBaseSalaryID();
-//		String nextBaseSalaryID = DataUtil.getNextID(maxBaseSalaryID,1);
-//		baseSalaryInfoEntity.setBaseSalaryID(nextBaseSalaryID);
-	    String maxBaseSalaryID = getMaxBaseSalaryID();
-	    String nextBaseSalaryID;
-	    
-	    if (maxBaseSalaryID == null || maxBaseSalaryID.isEmpty()) {
-	        nextBaseSalaryID = "1";
-	    } else {
-	        try {
-	            int maxNum = Integer.parseInt(maxBaseSalaryID);
-	            nextBaseSalaryID = String.valueOf(maxNum + 1);
-	        } catch (NumberFormatException e) {
-	            nextBaseSalaryID = "1";
-	        }
-	    }
-	    
-	    baseSalaryInfoEntity.setBaseSalaryID(nextBaseSalaryID);
+		String maxBaseSalaryID = getMaxBaseSalaryID();
+		String nextBaseSalaryID = DataUtil.getNextID(maxBaseSalaryID,1);
+		baseSalaryInfoEntity.setBaseSalaryID(nextBaseSalaryID);
 
 		//社員ID
 		String employeeID = baseSalaryInfoBean.getEmployeeID();

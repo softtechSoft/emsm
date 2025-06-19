@@ -26,13 +26,13 @@ public interface WelfarefeeInfoMapper {
     //List<WelfarefeeInfoEntity> getWelfarefeeInfoByYearAndEnterSalary(@Param("enterSalary") String enterSalary, @Param("year") String year);
 
     // 更新画面への検索,表示される画面の厚生保険料IDにより、検索する
-    List<WelfarefeeInfoEntity> getUpdateWelfarefeeInfoList(@Param("welfarefeeID")Integer welfarefeeID);
+    List<WelfarefeeInfoEntity> getUpdateWelfarefeeInfoList(@Param("welfarefeeID")String welfarefeeID);
 
     // update
     void updateWelfarefeeInfo(WelfarefeeInfoEntity welfarefeeInfoEntity);
 
     // 最大のwelfarefeeIDを探す
-    Integer getMaxWelfarefeeID();
+    String getMaxWelfarefeeID();
     // insert
     void insertWelfarefeeInfo(WelfarefeeInfoEntity welfarefeeInfoEntity);
 
@@ -41,4 +41,7 @@ public interface WelfarefeeInfoMapper {
     List<WelfarefeeIDName> getYear();
   //DBから社員リスト生成
     List<Employee> getEmployee();
+    
+    // 全量検索
+    List<WelfarefeeInfoEntity> getAllWelfarefeeInfo();
 }

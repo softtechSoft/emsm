@@ -1,14 +1,20 @@
 package com.softtech.service;
 
-import com.softtech.actionForm.LoginBean;
-import com.softtech.common.*;
-import com.softtech.entity.LoginEntity;
-import com.softtech.mappers.LoginMappers;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.softtech.actionForm.LoginBean;
+import com.softtech.common.BaseSalaryIDName;
+import com.softtech.common.CompanyIDName;
+import com.softtech.common.ContractIDName;
+import com.softtech.common.EmployeeIDName;
+import com.softtech.common.LoginEmployee;
+import com.softtech.common.WelfarefeeIDName;
+import com.softtech.entity.LoginEntity;
+import com.softtech.mappers.LoginMappers;
 
 @Service
 public class LoginService {
@@ -35,7 +41,7 @@ public class LoginService {
 		employeeID = loginMappers.getOldPassword(em);
 
 		//ログイン成功
-	   if(employeeID !=null) {
+	   if(employeeID !=null && "1".equals(employeeID.getAuthority())) {
            return true;
          //ログイン失敗
 	   } else {
@@ -157,5 +163,13 @@ public class LoginService {
 		contractList = loginMappers.getCompanys();
 
 		return contractList;
+	}
+	
+	public LoginEntity getEmployeeByMailAddress(LoginBean loginBean) {
+	    LoginEmployee em = new LoginEmployee();
+	    em.setMailAdress(loginBean.getEmployeeID());
+	    
+	    LoginEntity employee = loginMappers.getEmployeeByMailAddress(em);
+	    return employee;
 	}
 }

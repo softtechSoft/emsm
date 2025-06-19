@@ -13,6 +13,7 @@ import com.softtech.common.ListIDName;
 import com.softtech.common.WelfarefeeIDName;
 import com.softtech.entity.WelfarefeeInfoEntity;
 import com.softtech.mappers.WelfarefeeInfoMapper;
+import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
 
 /**
@@ -82,11 +83,8 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
      */
     @Override
     public List<WelfarefeeInfoEntity> getUpdateWelfarefeeInfoList(String welfarefeeID) {
-//        List<WelfarefeeInfoEntity> updateWelfarefeeInfoList =
-//                welfarefeeInfoMapper.getUpdateWelfarefeeInfoList(welfarefeeID);
-//        return updateWelfarefeeInfoList;
-    	Integer id = Integer.parseInt(welfarefeeID);
-        List<WelfarefeeInfoEntity> updateWelfarefeeInfoList = welfarefeeInfoMapper.getUpdateWelfarefeeInfoList(id);
+        List<WelfarefeeInfoEntity> updateWelfarefeeInfoList =
+                welfarefeeInfoMapper.getUpdateWelfarefeeInfoList(welfarefeeID);
         return updateWelfarefeeInfoList;
     }
 
@@ -128,10 +126,9 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
      */
     @Override
     public String getNextWelfarefeeID() {
-//        String maxWelfarefeeID = welfarefeeInfoMapper.getMaxWelfarefeeID();
-//        String nextWelfarefeeID = DataUtil.getNextID(maxWelfarefeeID, 1);
-//        return nextWelfarefeeID;
-    	return null; 
+        String maxWelfarefeeID = welfarefeeInfoMapper.getMaxWelfarefeeID();
+        String nextWelfarefeeID = DataUtil.getNextID(maxWelfarefeeID, 1);
+        return nextWelfarefeeID;
     }
 
     /**
@@ -231,9 +228,9 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
         WelfarefeeInfoEntity welfarefeeInfoEntity = new WelfarefeeInfoEntity();
 
         // 厚生保険料ID+1、新規追加用
-//        String maxWelfarefeeID = welfarefeeInfoMapper.getMaxWelfarefeeID();
-//        String nextWelfarefeeID = DataUtil.getNextID(maxWelfarefeeID, 1);
-//        welfarefeeInfoEntity.setWelfarefeeID(nextWelfarefeeID);
+        String maxWelfarefeeID = welfarefeeInfoMapper.getMaxWelfarefeeID();
+        String nextWelfarefeeID = DataUtil.getNextID(maxWelfarefeeID, 1);
+        welfarefeeInfoEntity.setWelfarefeeID(nextWelfarefeeID);
 
         // 対象年度
         String year = welfarefeeInfoFormBean.getYear();
@@ -321,6 +318,16 @@ public class WelfarefeeInfoServiceImpl implements WelfarefeeInfoService {
 	}*/
 	public ArrayList<ListIDName> getOldYears(int oldYear){
 		return (ArrayList<ListIDName>) DateUtil.getYears(oldYear);
+	}
+	
+	/**
+	 * 全てのデータを取得
+	 */
+	@Override
+	public List<WelfarefeeInfoEntity> getAllWelfarefeeInfo() {
+	    List<WelfarefeeInfoEntity> allWelfarefeeInfo = 
+	            welfarefeeInfoMapper.getAllWelfarefeeInfo();
+	    return allWelfarefeeInfo;
 	}
 
 }

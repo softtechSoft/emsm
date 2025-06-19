@@ -6,7 +6,7 @@ package com.softtech.entity;
  */
 public class WelfarefeeInfoEntity {
   // 厚生保険料ID PKです。
-  private Integer welfarefeeID;
+  private String welfarefeeID;
   // 対象年度
   private String year;
   // 対象エリア 都道府県の名前
@@ -33,11 +33,11 @@ public class WelfarefeeInfoEntity {
   private String WfPension;
 
 
-  public Integer getWelfarefeeID() {
+  public String getWelfarefeeID() {
     return welfarefeeID;
   }
 
-  public void setWelfarefeeID(Integer welfarefeeID) {
+  public void setWelfarefeeID(String welfarefeeID) {
     this.welfarefeeID = welfarefeeID;
   }
 

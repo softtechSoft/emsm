@@ -41,6 +41,13 @@
             document.theForm.action="toinitWelfarefeeInfo";
             document.theForm.submit();
         }
+
+     	// 全量検索ボタン処理
+        function toSearchAllJsp(){
+            document.theForm.action="welfarefeeInfoListAll";
+            document.theForm.submit();
+        }
+        
     </script>
     <title> ソフトテク株式会社-社内管理システム </title>
 </head>
@@ -58,6 +65,7 @@
     <td></td>
     <!--<td><span>収入:<input type="text" size="8" ></span></td>-->
     <input type="button" name="search" value="検索" onclick="toSearchJsp()" />
+    <input type="button" name="searchAll" value="全量検索" onclick="toSearchAllJsp()" />
 
 
     <!--エラーメッセージ-->
@@ -95,7 +103,7 @@
                 <td><c:out value="${welfarefeeInfoList.getNotCareRatio()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getCareRatio()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getAnnuityRatio()}"/></td>
-                <td><c:out value="${welfarefeeInfoList.getStatus()}"/></td>
+                <td><c:out value="${welfarefeeInfoList.getStatus() == '0' ? '未使用' : '使用中'}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getInsertDate()}"/></td>
                 <td><c:out value="${welfarefeeInfoList.getUpdateDate()}"/></td>
                 <td><input type="button" name="uptade" value="更新" onclick="toUpdateJsp('<c:out value="${welfarefeeInfoList.getWelfarefeeID()}"/>');" /></td>

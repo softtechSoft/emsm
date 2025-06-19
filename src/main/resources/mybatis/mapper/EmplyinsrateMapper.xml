@@ -4,27 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.EmplyinsrateMapper">
-    <insert id="insertEmplyinsrate" parameterType="com.softtech.entity.EmplyinsrateInfoEntity"
-	        useGeneratedKeys="true" keyProperty="emplyinsrateID">
-	    insert into m_emplyinsrate
-	    (year,
-	     laborBurdenRate,
-	     employerBurdenRate,
-	     industrialAccidentInsuranceRate,
-	     contributionRate,
-	     status,
-	     insertDate,
-	     updateDate)
-	    values
-	    (#{year},
-	     #{laborBurdenRate},
-	     #{employerBurdenRate},
-	     #{industrialAccidentInsuranceRate},
-	     #{contributionRate},
-	     #{status},
-	     date_format(now(),'%Y%m%d'),
-	     date_format(now(),'%Y%m%d'))
-	</insert>
+    <insert id="insertEmplyinsrate" parameterType="com.softtech.entity.EmplyinsrateInfoEntity">
+        insert into m_emplyinsrate
+        (emplyinsrateID,
+         year,
+         laborBurdenRate,
+         employerBurdenRate,
+         industrialAccidentInsuranceRate,
+         contributionRate,
+         status,
+         insertDate,
+         updateDate)
+            value
+            ( #{emplyinsrateID},
+            #{year},
+            #{laborBurdenRate},
+            #{employerBurdenRate},
+            #{industrialAccidentInsuranceRate},
+            #{contributionRate},
+            #{status},
+            date_format(now(),'%Y%m%d'),
+            date_format(now(),'%Y%m%d')
+            )
+    </insert>
     <!--画面表示用のquery,入力の年度により、検索する-->
     <select id="getEmplyinsrateInfoByYear" parameterType="String"
             resultType="com.softtech.entity.EmplyinsrateInfoEntity">
@@ -42,7 +44,7 @@
     </select>
     <!--最大のemplyinsrateIDを取得、+1用-->
     <select id="getMaxEmplyinsrateID" resultType="String">
-        select MAX(emplyinsrateID)
+        select IFNULL(MAX(emplyinsrateID), 'E00000')
         from m_emplyinsrate
     </select>
     <!--更新の時、更新画面の年度を表示用-->
@@ -63,4 +65,13 @@
             updateDate                      = date_format(now(), '%Y%m%d')
         where emplyinsrateID = #{emplyinsrateID}
     </update>
+    
+    <!--全量検索-->
+	<select id="getAllEmplyinsrateInfo" 
+	        resultType="com.softtech.entity.EmplyinsrateInfoEntity">
+	    select *
+	    from m_emplyinsrate
+	    order by emplyinsrateID
+	</select>
+
 </mapper>

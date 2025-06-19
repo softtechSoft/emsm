@@ -46,7 +46,7 @@ public interface IncomTaxInfoService {
      * @author:孫曄@SOFTTECH
      * @date:2022/08/10
      */
-//    String getNextIncomeTaxID();
+    String getNextIncomeTaxID();
 
     /**
      * 概要:更新の時、更新画面の年度を表示する用

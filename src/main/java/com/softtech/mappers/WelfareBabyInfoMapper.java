@@ -19,7 +19,7 @@ public interface WelfareBabyInfoMapper {
     void updateWelfareBabyInfo(WelfareBabyInfoEntity welfareBabyInfoEntity);
 
     // 最大のRateIDを探す
-//    String getMaxRateID();
+    String getMaxRateID();
     // insert
     void insertWelfareBabyInfo(WelfareBabyInfoEntity welfareBabyInfoEntity);
     // 選択枠
@@ -27,5 +27,8 @@ public interface WelfareBabyInfoMapper {
     List<RateIDName> getYear();
   //DBから社員リスト生成
     List<Employee> getEmployee();
+    
+    // 全量検索
+    List<WelfareBabyInfoEntity> getAllWelfareBabyInfo();
 
 }
