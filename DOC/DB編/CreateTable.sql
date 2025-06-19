@@ -656,7 +656,7 @@ INSERT INTO ems.ofcfunction (
     `sysType`
 ) VALUES
     ('B4', 'Adjustment', '&#xe681;&emsp;年末調整', '0', '/adjustment', '6', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '1'),
-    ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '0');
+    ('B5', 'adjustmentList', '&#xe60c;&emsp;年末調整', '1', '/emsm/adjustmentList', '10', '0', DATE_FORMAT(CURDATE(), '%Y%m%d'), DATE_FORMAT(CURDATE(), '%Y%m%d'), '2');
 
 
 -- 経費種別マスタ表
@@ -721,11 +721,7 @@ INSERT INTO ems.ofcfunction (
 ) VALUES
     ('B6', 'expenseType', '&#xe65d;&emsp;経費種別管理', '1', '/emsm/expenseType', '16', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
 
---各idを更新
-ALTER TABLE ems.m_welfarefee MODIFY COLUMN welfarefeeID INT NOT NULL AUTO_INCREMENT COMMENT'厚生保険料ID';
-ALTER TABLE ems.company MODIFY COLUMN companyID INT NOT NULL AUTO_INCREMENT COMMENT '取引先ID';
-ALTER TABLE ems.m_incometax MODIFY incomeTaxID INT AUTO_INCREMENT COMMENT '所得税ID';
-ALTER TABLE ems.m_welfarebabyrate MODIFY COLUMN rateID int NOT NULL AUTO_INCREMENT COMMENT '徴収ID';
-ALTER TABLE ems.m_emplyinsrate MODIFY COLUMN emplyinsrateID INT NOT NULL AUTO_INCREMENT COMMENT '雇用保险ID';
+--m_welfarebabyrateのidを更新
+ALTER TABLE ems.m_welfarebabyrate MODIFY COLUMN rateID VARCHAR(10) NOT NULL COMMENT '徴収ID';
 
 
