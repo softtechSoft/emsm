@@ -1,0 +1,9 @@
+[
+{"type":"header","version":"5.0.4","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"ems"},
+{"type":"table","name":"employee","database":"ems","data":
+[
+{"employeeID":"e00029","employeeName":"テスト　太郎","password":"60474c9c10d7142b7508ce7a50acf414","status":"0","sex":null,"epType":"0","birthday":null,"age":null,"joinedDate":null,"joinedTime":null,"postCode":null,"address":null,"phoneNumber":null,"authority":"0","mailAdress":"test001@it-softtech.com","insertDate":"20250625","updateDate":null,"department":null,"personNumber":null}
+]
+}
+]
