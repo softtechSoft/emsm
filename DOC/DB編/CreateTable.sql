@@ -155,15 +155,15 @@ Insert into contract values
 ('CT003','水遁忍術開発支援','E003','C003',600000,'0',150,1000,200,1000,'20210101','20210131','10','0','D:/tmp/work',' 土遁忍術開発支援', '1',date_format(now(), '%Y%m%d'), date_format(now(), '%Y%m%d'));
 
 drop table if exists workinfo;
-CREATE TABLE ems.workinfo (
+  CREATE TABLE ems.workinfo (
     contractID    VARCHAR(10)  NOT NULL COMMENT '契約ID',
     workMonth     VARCHAR(6)   NOT NULL COMMENT '稼働月 (YYYYMM)',
-    workStartDay  DATE         NOT NULL COMMENT '稼働開始日',  -- 修正：DATE型に変更
-    workEndDay    DATE         NOT NULL COMMENT '稼働最終日',  -- 修正：DATE型に変更
+    workStartDay  VARCHAR(8)   NOT NULL COMMENT '稼働開始日',
+    workEndDay    VARCHAR(8)   NOT NULL COMMENT '稼働最終日',
     workTime      FLOAT        NOT NULL DEFAULT 0 COMMENT '稼働時間 (h)',
     workInfoFile  VARCHAR(50)           COMMENT '稼働表パス',
-    insertDate    DATE                 COMMENT '作成日',  -- 修正：DATE型に変更
-    updateDate    DATE                 COMMENT '更新日',  -- 修正：DATE型に変更
+    insertDate    VARCHAR(8)            COMMENT '作成日',
+    updateDate    VARCHAR(8)            COMMENT '更新日',
     PRIMARY KEY (contractID, workMonth)
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
@@ -236,29 +236,29 @@ alter table ems.salaryinfo CHANGE welfareComp welfareHealthComp int DEFAULT 0 CO
 alter table ems.salaryinfo add column welfareHealthSelf int DEFAULT 0 COMMENT '厚生健康控除個人' after welfarePensionSelf;
 
 drop table if exists transport;
-CREATE TABLE ems.transport(
+CREATE TABLE ems.transport (
     employeeID VARCHAR(6) NOT NULL COMMENT '社員ID',
     workMonth VARCHAR(6) NOT NULL COMMENT '対象月',
-    startDate DATE NOT NULL COMMENT '開始日',  -- 修正：DATE型に変更
+    startDate VARCHAR(8) NOT NULL COMMENT '開始日',
     startStation VARCHAR(20) NOT NULL COMMENT '起点駅',
     endStation VARCHAR(20) NOT NULL COMMENT '終点駅',
     transportFacility VARCHAR(20) NOT NULL COMMENT '交通機関(代表)',
-    transportExpense1 DECIMAL(10,2) NOT NULL COMMENT '定期券金額(1ヶ月)',  -- 修正：DECIMAL型に変更（金額なので）
+    transportExpense1 INT NOT NULL COMMENT '定期券金額(1ヶ月)',
     midStation1 VARCHAR(20) COMMENT '中間駅1',
     transportFacility1 VARCHAR(20) COMMENT '交通機関1',
     midStation2 VARCHAR(20) COMMENT '中間駅2',
-    transportFacility2 VARCHAR(20) COMMENT '交通機関2',  -- 修正：列名を統一
+    transportFacility2 VARCHAR(20) COMMENT '交通機関2',
     midStation3 VARCHAR(20) COMMENT '中間駅3',
-    transportFacility3 VARCHAR(20) COMMENT '交通機関3',  -- 修正：列名を統一
-    transportExpense2 DECIMAL(10,2) COMMENT '定期券金額(2ヶ月)',  -- 修正：DECIMAL型に変更
-    transportExpense3 DECIMAL(10,2) COMMENT '定期券金額(3ヶ月)',  -- 修正：DECIMAL型に変更
-    transport DECIMAL(10,2) COMMENT '交通費',  -- 修正：DECIMAL型に変更（金額なので）
-    businessTrip DECIMAL(10,2) COMMENT '出張旅費',  -- 修正：DECIMAL型に変更（金額なので）
+    transportFacility3 VARCHAR(20) COMMENT '交通機関3',
+    transportExpense2 FLOAT COMMENT '定期券金額(2ヶ月)',
+    transportExpense3 FLOAT COMMENT '定期券金額(3ヶ月)',
+    transport INT COMMENT '交通費',
+    businessTrip INT COMMENT '出張旅費',
     BusinessTripName VARCHAR(50) COMMENT '出張旅費ファイル',
     status VARCHAR(1) NOT NULL COMMENT '使用ステータス',
-    insertDate DATE COMMENT '作成日',  -- 修正：DATE型に変更
-    updateDate DATE COMMENT '更新日',  -- 修正：DATE型に変更
-    PRIMARY KEY(employeeID, workMonth)
+    insertDate VARCHAR(8) COMMENT '作成日',
+    updateDate VARCHAR(8) COMMENT '更新日',
+    PRIMARY KEY (employeeID, workMonth)
 ) ENGINE=InnoDB 
   DEFAULT CHARSET=utf8mb4 
   COMMENT='交通情報';
