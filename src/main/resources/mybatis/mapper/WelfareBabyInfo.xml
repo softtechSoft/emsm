@@ -45,7 +45,7 @@
     </select>
     <!--最大のRateIDを取得、+1用-->
     <select id="getMaxRateID" resultType="String">
-        select IFNULL(MAX(rateID), 'R00000')
+        select IFNULL(MAX(rateID), 'R000000000')
         from m_welfarebabyrate ct
     </select>
     <!--更新の時、更新画面の年度を表示用-->

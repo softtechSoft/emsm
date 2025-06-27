@@ -69,7 +69,7 @@
     <select id="getMaxBaseSalaryID" resultType="string">
         <!--基本給情報IDを取得する。-->
         select
-        IFNULL(MAX(baseSalaryID), 'B00000')
+        IFNULL(MAX(baseSalaryID), 'B0000000')
         from
         m_basesalary ct
 

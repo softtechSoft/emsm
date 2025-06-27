@@ -93,7 +93,7 @@
 
     <!--最大のIncomeTaxIDを取得、+1用-->
 	<select id="getMaxIncomeTaxID" resultType="String">
-        select IFNULL(MAX(incomeTaxID), 'I00000')
+        select IFNULL(MAX(incomeTaxID), 'I000000000')
         from m_incomeTax
     </select>
 

@@ -71,7 +71,7 @@
     </select>
     <!--最大のwelfarefeeIDを取得、+1用-->
     <select id="getMaxWelfarefeeID" resultType="String">
-        select IFNULL(MAX(welfarefeeID), 'W00000')
+        select IFNULL(MAX(welfarefeeID), 'W000000000')
         from m_welfarefee ct
     </select>
     <!--更新の時、更新画面の年度を表示用-->
