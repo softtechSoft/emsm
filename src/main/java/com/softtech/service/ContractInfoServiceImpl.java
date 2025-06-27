@@ -126,6 +126,9 @@ import com.softtech.util.DateUtil;
 		contractInfoEntity.setPostNeed(postNeed);
 		//タイムレポートパス
 		String timeReportPath=contractInfoBean.getTimeReportPath();
+		if (timeReportPath == null) {
+		    timeReportPath = "";
+		}
 		contractInfoEntity.setTimeReportPath(timeReportPath);
 		//支払サイト
 		String paymentTerm=contractInfoBean.getPaymentTerm();

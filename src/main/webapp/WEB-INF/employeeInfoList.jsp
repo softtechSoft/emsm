@@ -100,9 +100,7 @@
         </c:when>
         <c:otherwise>
             <span style="white-space: nowrap;">
-                <c:out value="${employeeInfoList.birthday.substring(0, 4)}"/>/
-                <c:out value="${employeeInfoList.birthday.substring(4, 6)}"/>/
-                <c:out value="${employeeInfoList.birthday.substring(6)}"/>
+                <c:out value="${employeeInfoList.birthday.substring(0, 4)}"/>/<c:out value="${employeeInfoList.birthday.substring(4, 6)}"/>/<c:out value="${employeeInfoList.birthday.substring(6)}"/>
             </span>
         </c:otherwise>
     </c:choose>
@@ -117,9 +115,7 @@
         </c:when>
         <c:otherwise>
             <span style="white-space: nowrap;">
-                <c:out value="${employeeInfoList.joinedDate.substring(0, 4)}"/>/
-                <c:out value="${employeeInfoList.joinedDate.substring(4, 6)}"/>/
-                <c:out value="${employeeInfoList.joinedDate.substring(6)}"/>
+                <c:out value="${employeeInfoList.joinedDate.substring(0, 4)}"/>/<c:out value="${employeeInfoList.joinedDate.substring(4, 6)}"/>/<c:out value="${employeeInfoList.joinedDate.substring(6)}"/>
             </span>
         </c:otherwise>
     </c:choose>
@@ -134,8 +130,7 @@
         </c:when>
         <c:otherwise>
             <span style="white-space: nowrap;">
-                <c:out value="${employeeInfoList.postCode.substring(0, 3)}"/>-
-                <c:out value="${employeeInfoList.postCode.substring(3, 7)}"/>
+                <c:out value="${employeeInfoList.postCode.substring(0, 3)}"/>-<c:out value="${employeeInfoList.postCode.substring(3, 7)}"/>
             </span>
         </c:otherwise>
     </c:choose>
@@ -151,17 +146,13 @@
         <c:when test="${fn:length(employeeInfoList.phoneNumber) == 10}">
         <!-- XX-XXXX-XXXX -->
             <span style="white-space: nowrap;">
-                <c:out value="${employeeInfoList.phoneNumber.substring(0, 2)}"/>-
-                <c:out value="${employeeInfoList.phoneNumber.substring(2, 6)}"/>-
-                <c:out value="${employeeInfoList.phoneNumber.substring(6)}"/>
+                <c:out value="${employeeInfoList.phoneNumber.substring(0, 2)}"/>-<c:out value="${employeeInfoList.phoneNumber.substring(2, 6)}"/>-<c:out value="${employeeInfoList.phoneNumber.substring(6)}"/>
             </span>
         </c:when>
         <c:when test="${fn:length(employeeInfoList.phoneNumber) == 11}">
             <!-- XXX-XXXX-XXXX -->
             <span style="white-space: nowrap;">
-                <c:out value="${employeeInfoList.phoneNumber.substring(0, 3)}"/>-
-                <c:out value="${employeeInfoList.phoneNumber.substring(3, 7)}"/>-
-                <c:out value="${employeeInfoList.phoneNumber.substring(7)}"/>
+                <c:out value="${employeeInfoList.phoneNumber.substring(0, 3)}"/>-<c:out value="${employeeInfoList.phoneNumber.substring(3, 7)}"/>-<c:out value="${employeeInfoList.phoneNumber.substring(7)}"/>
             </span>
         </c:when>
     </c:choose>

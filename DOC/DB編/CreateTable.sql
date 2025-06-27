@@ -599,45 +599,52 @@ END
 
 
 --新規年末調整テーブル
+DROP TABLE IF EXISTS ems.adjustmentDetail;
 CREATE TABLE ems.adjustmentDetail (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `employeeID` VARCHAR(6) NOT NULL,
-    `employeeEmail` VARCHAR(255) NOT NULL,
-    `year` VARCHAR(4) NOT NULL,
-    `uploadStatus` VARCHAR(50),
-    `adjustmentStatus` VARCHAR(50) DEFAULT '0',
-    `insertDate` DATETIME,
-    `updateDate` DATETIME,
+    `employeeID` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '社員ID',
+    `employeeEmail` VARCHAR(255) NOT NULL COMMENT '社員メール',
+    `year` VARCHAR(4) NOT NULL COMMENT '年度',
+    `uploadStatus` VARCHAR(50) COMMENT 'アップロードステータス',
+    `adjustmentStatus` VARCHAR(50) DEFAULT '0' COMMENT '調整ステータス',
+    `insertDate` DATETIME COMMENT '作成日時',
+    `updateDate` DATETIME COMMENT '更新日時',
     FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE,
-    INDEX(`year`, `employeeID`, `employeeEmail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    INDEX idx_year_employee (`year`, `employeeID`),
+    INDEX idx_email (`employeeEmail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整詳細テーブル';
 
+DROP TABLE IF EXISTS ems.adjustmentFile;
 CREATE TABLE ems.adjustmentFile (
-    `employeeID` VARCHAR(6) NOT NULL PRIMARY KEY,
-    `fileType` VARCHAR(255) NOT NULL,
-    `fileYear` INT NOT NULL,
-    `fileName` VARCHAR(255) NOT NULL,
-    `fileStatus` VARCHAR(50) NOT NULL,
-    `filePath` VARCHAR(255) NOT NULL,
-    FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `employeeID` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '社員ID',
+    `fileType` VARCHAR(255) NOT NULL COMMENT 'ファイルタイプ',
+    `fileYear` INT NOT NULL COMMENT 'ファイル年度',
+    `fileName` VARCHAR(255) NOT NULL COMMENT 'ファイル名',
+    `fileStatus` VARCHAR(50) NOT NULL COMMENT 'ファイルステータス',
+    `filePath` VARCHAR(255) NOT NULL COMMENT 'ファイルパス',
+    `insertDate` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    `updateDate` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    -- 复合主键：确保每个员工每种文件类型每年只有一个文件
+    PRIMARY KEY (employeeID, fileType, fileYear, fileName),
+    -- 外键约束
+    FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE,
+    -- 索引
+    INDEX idx_employee_year (`employeeID`, `fileYear`),
+    INDEX idx_file_type (`fileType`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整ファイルテーブル';
 
-
+DROP TABLE IF EXISTS ems.adjustmentRequestFiles;
 CREATE TABLE ems.adjustmentRequestFiles (
-    `fileName` VARCHAR(255) NOT NULL,
-    `fileYear` INT NOT NULL,
-    `fileULStatus` VARCHAR(50) NOT NULL DEFAULT '0',
-    `filePath` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`fileName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `id` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    `fileName` VARCHAR(255) NOT NULL COMMENT 'ファイル名',
+    `fileYear` INT NOT NULL COMMENT 'ファイル年度',
+    `fileULStatus` VARCHAR(50) NOT NULL DEFAULT '0' COMMENT 'アップロードステータス',
+    `filePath` VARCHAR(255) NOT NULL COMMENT 'ファイルパス',
+    `insertDate` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    `updateDate` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    UNIQUE KEY uk_filename_year (`fileName`, `fileYear`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='年末調整要求ファイルテーブル';
 
-
-ALTER TABLE ems.adjustmentFile
-ADD CONSTRAINT uniq_employee_file
-UNIQUE (employeeID, fileYear, fileName, fileType);
-ALTER TABLE ems.adjustmentFile
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (employeeID, fileType, fileYear, fileName);
 
 --年末調整画面をofcfunction表に挿入する
 ALTER TABLE ems.ofcfunction
@@ -705,7 +712,7 @@ INSERT INTO ems.ofcfunction (
     `updateDate`,
     `sysType`
 ) VALUES
-    ('B3', 'expenseList', '&#xe65d;&emsp;経費管理', '1', '/emsm/expenseList', '11', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
+    ('B8', 'expenseList', '&#xe65d;&emsp;経費管理', '1', '/emsm/expenseList', '11', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '2');
 --経費種別管理画面をofcfunction表に挿入する
 INSERT INTO ems.ofcfunction (
     `functionID`,
@@ -719,7 +726,7 @@ INSERT INTO ems.ofcfunction (
     `updateDate`,
     `sysType`
 ) VALUES
-    ('B6', 'expenseType', '&#xe65d;&emsp;経費種別管理', '1', '/emsm/expenseType', '16', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '0');
+    ('B9', 'expenseType', '&#xe65d;&emsp;経費種別管理', '1', '/emsm/expenseType', '16', '0', DATE_FORMAT(NOW(), '%Y%m%d'), DATE_FORMAT(NOW(), '%Y%m%d'), '2');
 
 --m_welfarebabyrateのidを更新
 ALTER TABLE ems.m_welfarebabyrate MODIFY COLUMN rateID VARCHAR(10) NOT NULL COMMENT '徴収ID';

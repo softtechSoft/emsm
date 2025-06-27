@@ -21,10 +21,12 @@
     	document.theForm.submit();
    }
 	// 更新ボタン処理
-	function toUpdateJsp(cpmpanyID){
+	function toUpdateJsp(companyID){
 		// 更新
 		document.getElementById('insertFlg').value='1';
 
+		document.getElementById('companyID').value = companyID;
+		
 		document.theForm.action="toInitCompanyInfo";
 		document.theForm.submit();
 	}

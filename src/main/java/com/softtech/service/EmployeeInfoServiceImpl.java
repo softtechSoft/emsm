@@ -203,8 +203,12 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
     @Override
     public String getNextEmployeeID() {
         String maxEmployeeID = employeeInfoMapper.getMaxEmployeeID();
+        if (maxEmployeeID != null) {
+            maxEmployeeID = maxEmployeeID.toUpperCase();
+        }
         String nextEmployeeID = DataUtil.getNextID(maxEmployeeID, 1);
-        return nextEmployeeID;
+//        return nextEmployeeID;
+        return nextEmployeeID != null ? nextEmployeeID.toUpperCase() : null;
     }
     /**
      * 概要:新規BeanToEntityByInsert
