@@ -624,11 +624,8 @@ CREATE TABLE ems.adjustmentFile (
     `filePath` VARCHAR(255) NOT NULL COMMENT 'ファイルパス',
     `insertDate` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
     `updateDate` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
-    -- 复合主键：确保每个员工每种文件类型每年只有一个文件
     PRIMARY KEY (employeeID, fileType, fileYear, fileName),
-    -- 外键约束
     FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE,
-    -- 索引
     INDEX idx_employee_year (`employeeID`, `fileYear`),
     INDEX idx_file_type (`fileType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整ファイルテーブル';
