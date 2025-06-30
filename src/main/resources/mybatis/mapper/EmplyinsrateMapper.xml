@@ -44,7 +44,7 @@
     </select>
     <!--最大のemplyinsrateIDを取得、+1用-->
     <select id="getMaxEmplyinsrateID" resultType="String">
-        select IFNULL(MAX(emplyinsrateID), 'ER00000000')
+        select IFNULL(MAX(emplyinsrateID), 'E000000000')
         from m_emplyinsrate
     </select>
     <!--更新の時、更新画面の年度を表示用-->
