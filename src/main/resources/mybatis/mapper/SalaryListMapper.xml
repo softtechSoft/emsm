@@ -88,5 +88,21 @@
 
 </insert>
 
+<select id="getWfPensionByStandSalary" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
+    SELECT 
+        standardMonthlyRemuneration as standSalary,
+        annuityRatio,
+        careRatio,
+        notCareRatio
+    FROM 
+        welfareinfo
+    WHERE 
+        standardMonthlyRemuneration = #{standSalary}
+        AND deleteFlg = '0'
+    ORDER BY 
+        insertDate DESC
+    LIMIT 1
+</select>
+
 
 </mapper>

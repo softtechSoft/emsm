@@ -46,5 +46,7 @@ public interface SalarylistMapper {
 	SalaryInfoEntity getDate() ;
 
 	int insertSalaryList(SalaryInfoEntity salaryInfoEntity);
+	
+	WelfarefeeInfoEntity getWfPensionByStandSalary(String standSalary);
 
 }

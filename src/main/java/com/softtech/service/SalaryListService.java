@@ -199,8 +199,14 @@ public class SalaryListService {
 
 			 //厚生マスタを取る
 			 //⑤厚生保険料を取得
-			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+//			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+			 WelfarefeeInfoEntity welfarefeeInfoEntity = null;
 //			 if( welfarefeeInfoEntity == null ||  welfarefeeInfoEntity.getWfPension() == null || welfarefeeInfoEntity.getWfPension().length()==0) {
+			 if (Float.parseFloat(basesalary) >= 665000) {
+				    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
+				} else {
+				    welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+				}
 			 if( welfarefeeInfoEntity == null) {
 				 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
 				 autoSalaryRtn.setYear(year);
