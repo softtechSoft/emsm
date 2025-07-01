@@ -18,27 +18,23 @@ public class EmplyinsrateInfoFormBean {
 	private String emplyinsrateID;
 	//対象年度
 	@NotEmpty(message = "年度を入力してください")
-	@Pattern(message = "対象年度に数値のみを入力してください。", regexp ="[0-9]+")
+    @Pattern(message = "対象年度に数値のみを入力してください。", regexp ="[0-9]+")
 	private String year;
 	//雇用保険労働者負担料率‰
 	@NotEmpty(message = "雇用保険労働者負担料率‰を入力してください")
-	@Pattern(message = "雇用保険労働者負担料率‰に小数点5位までの数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
-	@Pattern(message = "雇用保険労働者負担料率‰に数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
+    @Pattern(message = "雇用保険労働者負担料率‰に数値のみを入力してください。", regexp = "^[0-9]+(\\.[0-9]{1,5})?$")
 	private String laborBurdenRate;
 	//雇用保険事業主負担料率‰
 	@NotEmpty(message = "雇用保険事業主負担料率‰を入力してください")
-	@Pattern(message = "雇用保険事業主負担料率‰に小数点5位までの数字のみを入力してください。", regexp = "^[0-9]+.[0-9]{0,5}")
-	@Pattern(message = "雇用保険事業主負担料率‰に数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
+    @Pattern(message = "雇用保険事業主負担料率‰に数値のみを入力してください。", regexp = "^[0-9]+(\\.[0-9]{1,5})?$")
 	private String employerBurdenRate;
 	//雇用保険料率‰
-	@NotEmpty(message = "雇用保険料率‰を入力してください")
-	@Pattern(message = "雇用保険料率‰に小数点5位までの数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
-	@Pattern(message = "雇用保険料率‰に数字のみを入力してください。",  regexp ="^[0-9]+.[0-9]{0,5}")
+	@NotEmpty(message = "労災保険料率(全額事業主)‰を入力してください")
+    @Pattern(message = "労災保険料率(全額事業主)‰に数値のみを入力してください。", regexp = "^[0-9]+(\\.[0-9]{1,5})?$")
 	private String industrialAccidentInsuranceRate;
 	//労働保険料率‰
-	@NotEmpty(message = "労働保険料率‰を入力してください")
-	@Pattern(message = "労働保険料率‰に小数点5位までの数字のみを入力してください。",  regexp = "^[0-9]+.[0-9]{0,5}")
-	@Pattern(message = "労働保険料率‰に数字のみを入力してください。",  regexp ="^[0-9]+.[0-9]{0,5}")
+	@NotEmpty(message = "一般拠出金料率(全額事業主)‰を入力してください")
+    @Pattern(message = "一般拠出金料率(全額事業主)‰に数値のみを入力してください。", regexp = "^[0-9]+(\\.[0-9]{1,5})?$")
 	private String contributionRate;
 	//利用ステータス 0:未使用　1:使用中
 	private String status;

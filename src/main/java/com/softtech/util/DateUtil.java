@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-
 import com.softtech.common.ListIDName;
 
 /**
@@ -223,6 +222,9 @@ public class DateUtil {
 	 * @author 馬@ソフトテク
 	 * */
 	public static String modifyDateToYMDH(String month) {
+		if (month == null || month.trim().isEmpty()) {
+	        return "";
+	    }
 		String month1 = month.substring(0, 4) + "-" + month.substring(4, 6) + "-" + month.substring(6, 8);
 		return month1;
 	}

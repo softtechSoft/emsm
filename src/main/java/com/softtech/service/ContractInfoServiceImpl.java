@@ -247,8 +247,14 @@ import com.softtech.util.DateUtil;
 			contractInfoFormBean.setLowerPrice(contractInfoEntity.getLowerPrice());
 			contractInfoFormBean.setUpperTime(contractInfoEntity.getUpperTime());
 			contractInfoFormBean.setUpperPrice(contractInfoEntity.getUpperPrice());
-			contractInfoFormBean.setContractBeginDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractBeginDate())));
-			contractInfoFormBean.setContractEndDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractEndDate())));
+//			contractInfoFormBean.setContractBeginDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractBeginDate())));
+			if(contractInfoEntity.getContractBeginDate() != null && !contractInfoEntity.getContractBeginDate().isEmpty()) {
+	            contractInfoFormBean.setContractBeginDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractBeginDate())));
+	        }
+//			contractInfoFormBean.setContractEndDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractEndDate())));
+			if(contractInfoEntity.getContractEndDate() != null && !contractInfoEntity.getContractEndDate().isEmpty()) {
+	            contractInfoFormBean.setContractEndDate(Date.valueOf(DateUtil.modifyDateToYMDH(contractInfoEntity.getContractEndDate())));
+	        }
 			contractInfoFormBean.setPaymentTerm(contractInfoEntity.getPaymentTerm());
 			contractInfoFormBean.setPostNeed(contractInfoEntity.getPostNeed());
 			contractInfoFormBean.setTimeReportPath(contractInfoEntity.getTimeReportPath());
