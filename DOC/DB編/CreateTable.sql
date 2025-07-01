@@ -728,4 +728,11 @@ INSERT INTO ems.ofcfunction (
 --m_welfarebabyrateのidを更新
 ALTER TABLE ems.m_welfarebabyrate MODIFY COLUMN rateID VARCHAR(10) NOT NULL COMMENT '徴収ID';
 
-
+--新取引先画面をofcfunction表に挿入する
+INSERT INTO ofcfunction (
+    functionID, functionName, functionText, authority, functionLink,
+    displayNo, deleteFlg, insertDate, updateDate, sysType
+) VALUES (
+    'T1', 'torihiki', '&#xe65c;&emsp;取引先', 1, '/emsm/torihiki',
+    2, 0, '20250605', '20250605', 2
+);

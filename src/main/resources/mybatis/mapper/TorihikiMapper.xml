@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.TorihikiMapper">
+    <resultMap id="BaseResultMap" type="com.softtech.entity.Torihiki">
+        <id column="companyID" jdbcType="VARCHAR" property="companyID" />
+        <result column="companyName" jdbcType="VARCHAR" property="companyName" />
+        <result column="companyType" jdbcType="VARCHAR" property="companyType" />
+        <result column="postCode" jdbcType="VARCHAR" property="postCode" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="basicContractDate" jdbcType="VARCHAR" property="basicContractDate" />
+        <result column="phoneNumber" jdbcType="VARCHAR" property="phoneNumber" />
+        <result column="contactName" jdbcType="VARCHAR" property="contactName" />
+        <result column="mail" jdbcType="VARCHAR" property="mail" />
+        <result column="contractStatus" jdbcType="VARCHAR" property="contractStatus" />
+        <result column="level" jdbcType="VARCHAR" property="level" />
+        <result column="insertDate" jdbcType="VARCHAR" property="insertDate" />
+        <result column="updateDate" jdbcType="VARCHAR" property="updateDate" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        companyID, companyName, companyType, postCode, address, basicContractDate, 
+        phoneNumber, contactName, mail, contractStatus, level, insertDate, updateDate
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from company
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from company
+        where companyID = #{companyID,jdbcType=VARCHAR}
+    </select>
+
+    <select id="search" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from company
+        where companyName like concat('%', #{keyword}, '%')
+        or companyID like concat('%', #{keyword}, '%')
+    </select>
+
+    <insert id="insert" parameterType="com.softtech.entity.Torihiki">
+        insert into company (
+            companyID, companyName, companyType, postCode, address, basicContractDate,
+            phoneNumber, contactName, mail, contractStatus, level, insertDate, updateDate
+        )
+        values (
+            #{companyID,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+            #{companyType,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR},
+            #{address,jdbcType=VARCHAR}, #{basicContractDate,jdbcType=VARCHAR},
+            #{phoneNumber,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR},
+            #{mail,jdbcType=VARCHAR}, #{contractStatus,jdbcType=VARCHAR},
+            #{level,jdbcType=VARCHAR}, #{insertDate,jdbcType=VARCHAR},
+            #{updateDate,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.softtech.entity.Torihiki">
+        update company
+        set companyName = #{companyName,jdbcType=VARCHAR},
+            companyType = #{companyType,jdbcType=VARCHAR},
+            postCode = #{postCode,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            basicContractDate = #{basicContractDate,jdbcType=VARCHAR},
+            phoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+            contactName = #{contactName,jdbcType=VARCHAR},
+            mail = #{mail,jdbcType=VARCHAR},
+            contractStatus = #{contractStatus,jdbcType=VARCHAR},
+            level = #{level,jdbcType=VARCHAR},
+            updateDate = #{updateDate,jdbcType=VARCHAR}
+        where companyID = #{companyID,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from company where companyID = #{companyID,jdbcType=VARCHAR}
+    </delete>
+</mapper> 
