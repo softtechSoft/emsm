@@ -763,3 +763,118 @@ ADD UNIQUE idx_unique_tx (
   description
 );
 
+--BP·支払管理テーブル結合
+-- 删除旧表（按依赖顺序）
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS bp_invoice;
+DROP TABLE IF EXISTS bp_payment;
+DROP TABLE IF EXISTS bp_contract;
+DROP TABLE IF EXISTS bp_employee;
+DROP TABLE IF EXISTS bp_company;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- =====================================================
+-- 1. 公司表（上家公司，派遣公司）
+-- =====================================================
+CREATE TABLE company 略
+    
+-- =====================================================
+-- 2. 契约表（上家公司合同）
+-- =====================================================
+CREATE TABLE contract 略
+
+-- =====================================================
+-- 3. BP公司表（下家公司，客户公司）
+-- =====================================================
+CREATE TABLE bp_company (
+    company_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '会社ID',
+    company_name VARCHAR(100) NOT NULL COMMENT '会社名称',
+    unit_price INT NOT NULL COMMENT '単価',
+    address VARCHAR(200) COMMENT '住所',
+    phone VARCHAR(20) COMMENT '電話番号',
+    contact_person VARCHAR(50) COMMENT '連絡先名',
+    email VARCHAR(100) COMMENT 'メール',
+    status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日'
+) COMMENT 'BP会社情報';
+
+-- =====================================================
+-- ４. BP员工表
+-- =====================================================
+CREATE TABLE bp_employee (
+    employee_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '社員ID',
+    name VARCHAR(50) NOT NULL COMMENT '社員名称',
+    role VARCHAR(50) COMMENT '役割',
+    phone VARCHAR(20) COMMENT '電話番号',
+    email VARCHAR(100) COMMENT 'メール',
+    status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日'
+) COMMENT 'BP社員情報';
+
+-- =====================================================
+-- 5. BP契约表（下家公司合同）
+-- =====================================================
+CREATE TABLE bp_contract (
+    contract_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '契約ID',
+    employee_id VARCHAR(6) NOT NULL COMMENT '社員ID',
+    company_id VARCHAR(6) NOT NULL COMMENT '会社ID',
+    contract_name VARCHAR(100) COMMENT '契約名称',
+    start_date DATE NOT NULL COMMENT '契約開始日',
+    end_date DATE COMMENT '契約終了日',
+    unit_price DECIMAL(12,2) COMMENT '単価',
+    status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+    FOREIGN KEY (employee_id) REFERENCES bp_employee(employee_id),
+    FOREIGN KEY (company_id) REFERENCES bp_company(company_id)
+) COMMENT 'BP契約情報';
+
+-- =====================================================
+-- 6. BP支付表
+-- =====================================================
+CREATE TABLE bp_payment (
+    payment_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '支払ID',
+    month VARCHAR(10) NOT NULL COMMENT '対象月',
+    employee_id VARCHAR(6) COMMENT '社員ID',
+    company_id VARCHAR(6) COMMENT '会社ID',
+    dispatch_company_id VARCHAR(6) COMMENT '派遣会社ID',
+    contract_id VARCHAR(10) COMMENT '契約ID',
+    bp_contract_id VARCHAR(6) COMMENT 'BP契約ID',
+    unit_price_ex_tax INT COMMENT '税抜単価',
+    outsourcing_amount_ex_tax INT COMMENT '税抜外注金額',
+    outsourcing_amount_in_tax INT COMMENT '税込外注金額',
+    commission INT DEFAULT 0 COMMENT '手数料',
+    transfer_date DATE NOT NULL COMMENT '振込日',
+    entry_date DATE COMMENT '登録日',
+    remarks TEXT COMMENT '備考',
+    invoice_number VARCHAR(50) COMMENT '請書番号',
+    status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+    FOREIGN KEY (employee_id) REFERENCES bp_employee(employee_id),
+    FOREIGN KEY (company_id) REFERENCES bp_company(company_id),
+    FOREIGN KEY (dispatch_company_id) REFERENCES company(companyID),
+    FOREIGN KEY (contract_id) REFERENCES contract(contractID),
+    FOREIGN KEY (bp_contract_id) REFERENCES bp_contract(contract_id)
+) COMMENT 'BP支払情報';
+
+-- =====================================================
+-- 7. BP发票表
+-- =====================================================
+CREATE TABLE bp_invoice (
+    invoice_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '請求書ID',
+    invoice_number VARCHAR(50) NOT NULL UNIQUE COMMENT '請求書番号',
+    month VARCHAR(10) NOT NULL COMMENT '対象月',
+    payment_id VARCHAR(6) COMMENT '支払ID',
+    file_path VARCHAR(255) COMMENT 'ファイルパス',
+    file_name VARCHAR(100) COMMENT 'ファイル名',
+    file_size BIGINT COMMENT 'ファイルサイズ',
+    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'アップロード日',
+    status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
+    FOREIGN KEY (payment_id) REFERENCES bp_payment(payment_id)
+) COMMENT 'BP請求書情報';

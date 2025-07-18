@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.BpPaymentMapper">
+    <!-- 指定月の支払リスト取得 -->
+    <select id="getBpPaymentList" parameterType="string" resultType="com.softtech.entity.BpPayment">
+        SELECT 
+            p.payment_id AS paymentId,
+            p.month,
+            p.employee_id AS employeeId,
+            e.name AS employeeName, 
+            p.company_id AS companyId,
+            c.company_name AS companyName, 
+            p.dispatch_company_id AS dispatchCompanyId,
+            dc.companyName AS dispatchCompanyName,
+            p.contract_id AS contractId,
+            p.bp_contract_id AS bpContractId,
+            p.unit_price_ex_tax AS unitPriceExTax,
+            p.outsourcing_amount_ex_tax AS outsourcingAmountExTax,
+            p.outsourcing_amount_in_tax AS outsourcingAmountInTax,
+            p.commission,
+            p.transfer_date AS transferDate,
+            p.entry_date AS entryDate,
+            p.remarks,
+            p.invoice_number AS invoiceNumber,
+            p.status
+        FROM bp_payment p
+        LEFT JOIN bp_employee e ON p.employee_id = e.employee_id
+        LEFT JOIN bp_company c ON p.company_id = c.company_id
+        LEFT JOIN company dc ON p.dispatch_company_id = dc.companyID
+        <where>
+            <if test="month != null and month != ''">
+                p.month = #{month}
+            </if>
+        </where>
+        ORDER BY p.payment_id
+    </select>
+
+    <!-- 指定月の支払汇总リスト取得 -->
+    <select id="getBpPaymentSummaryList" parameterType="string" resultType="com.softtech.entity.BpPayment">
+        SELECT 
+            p.month,
+            dc.companyName AS dispatchCompanyName,
+            COUNT(p.employee_id) AS employeeCount,
+            SUM(p.outsourcing_amount_ex_tax) AS outsourcingAmountExTax,
+            SUM(p.outsourcing_amount_in_tax) AS outsourcingAmountInTax,
+            SUM(p.commission) AS commission,
+            MAX(p.invoice_number) AS invoiceNumber
+        FROM bp_payment p
+        LEFT JOIN company dc ON p.dispatch_company_id = dc.companyID
+        <where>
+            <if test="month != null and month != ''">
+                p.month = #{month}
+            </if>
+        </where>
+        GROUP BY p.month, dc.companyName
+        ORDER BY p.month, dc.companyName
+    </select>
+
+    <!-- 支払IDで1件取得 -->
+    <select id="getBpPaymentById" parameterType="string" resultType="com.softtech.entity.BpPayment">
+        SELECT 
+            payment_id AS paymentId,
+            month,
+            employee_id AS employeeId,
+            company_id AS companyId,
+            dispatch_company_id AS dispatchCompanyId,
+            contract_id AS contractId,
+            bp_contract_id AS bpContractId,
+            unit_price_ex_tax AS unitPriceExTax,
+            outsourcing_amount_ex_tax AS outsourcingAmountExTax,
+            outsourcing_amount_in_tax AS outsourcingAmountInTax,
+            commission,
+            transfer_date AS transferDate,
+            entry_date AS entryDate,
+            remarks,
+            invoice_number AS invoiceNumber,
+            status
+        FROM bp_payment WHERE payment_id = #{paymentId}
+    </select>
+
+    <!-- 新規登録 -->
+    <insert id="insertBpPayment" parameterType="com.softtech.entity.BpPayment">
+        INSERT INTO bp_payment (
+            payment_id, month, employee_id, company_id, dispatch_company_id, contract_id, bp_contract_id,
+            unit_price_ex_tax, outsourcing_amount_ex_tax, outsourcing_amount_in_tax, commission,
+            transfer_date, entry_date, remarks, invoice_number, status
+        ) VALUES (
+            #{paymentId}, #{month}, #{employeeId}, #{companyId}, #{dispatchCompanyId}, #{contractId}, #{bpContractId},
+            #{unitPriceExTax}, #{outsourcingAmountExTax}, #{outsourcingAmountInTax}, #{commission},
+            #{transferDate}, #{entryDate}, #{remarks}, #{invoiceNumber}, #{status}
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateBpPayment" parameterType="com.softtech.entity.BpPayment">
+        UPDATE bp_payment SET
+            month = #{month},
+            employee_id = #{employeeId},
+            company_id = #{companyId},
+            dispatch_company_id = #{dispatchCompanyId},
+            contract_id = #{contractId},
+            bp_contract_id = #{bpContractId},
+            unit_price_ex_tax = #{unitPriceExTax},
+            outsourcing_amount_ex_tax = #{outsourcingAmountExTax},
+            outsourcing_amount_in_tax = #{outsourcingAmountInTax},
+            commission = #{commission},
+            transfer_date = #{transferDate},
+            entry_date = #{entryDate},
+            remarks = #{remarks},
+            invoice_number = #{invoiceNumber},
+            status = #{status}
+        WHERE payment_id = #{paymentId}
+    </update>
+
+    <!-- 削除 -->
+    <delete id="deleteBpPayment" parameterType="string">
+        DELETE FROM bp_payment WHERE payment_id = #{paymentId}
+    </delete>
+    
+    <!-- 利用可能な月リスト取得 -->
+    <select id="getAvailableMonths" resultType="string">
+        SELECT DISTINCT month FROM bp_payment ORDER BY month DESC
+    </select>
+    
+    <!-- 請求書リスト取得 -->
+    <select id="getInvoiceList" resultType="com.softtech.entity.BpPayment">
+        SELECT 
+            p.payment_id AS paymentId,
+            p.month,
+            p.employee_id AS employeeId,
+            e.name AS employeeName, 
+            p.company_id AS companyId,
+            c.company_name AS companyName, 
+            p.dispatch_company_id AS dispatchCompanyId,
+            dc.companyName AS dispatchCompanyName,
+            p.invoice_number AS invoiceNumber
+        FROM bp_payment p
+        LEFT JOIN bp_employee e ON p.employee_id = e.employee_id
+        LEFT JOIN bp_company c ON p.company_id = c.company_id
+        LEFT JOIN company dc ON p.dispatch_company_id = dc.companyID
+        WHERE p.invoice_number IS NOT NULL AND p.invoice_number != ''
+        ORDER BY p.month DESC, p.payment_id
+    </select>
+
+    <!-- 查询当前最大支付ID -->
+    <select id="getMaxPaymentId" resultType="string">
+        SELECT MAX(payment_id) FROM bp_payment
+    </select>
+</mapper> 
