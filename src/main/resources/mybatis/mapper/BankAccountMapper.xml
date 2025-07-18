@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.BankAccountMapper">
+
+    <!-- 日付範囲で口座情報を検索 -->
+    <select id="findByDateRange" resultType="com.softtech.entity.BankAccount">
+        SELECT 
+            id,
+            transactionDate,
+            transactionType,
+            description,
+            withdrawal,
+            deposit,
+            balance,
+            remarks,
+            insertDate,
+            path
+        FROM ems.bankAccount
+        WHERE 1=1
+        <if test="startDate != null">
+            AND transactionDate >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND transactionDate &lt;= #{endDate}
+        </if>
+        ORDER BY transactionDate, id
+    </select>
+
+    <!-- 出金総額 -->
+    <select id="sumWithdrawalByDateRange" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(withdrawal), 0)
+        FROM ems.bankAccount
+        WHERE 1=1
+        <if test="startDate != null">
+            AND transactionDate >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND transactionDate &lt;= #{endDate}
+        </if>
+    </select>
+
+    <!-- 入金総額 -->
+    <select id="sumDepositByDateRange" resultType="java.math.BigDecimal">
+        SELECT COALESCE(SUM(deposit), 0)
+        FROM ems.bankAccount
+        WHERE 1=1
+        <if test="startDate != null">
+            AND transactionDate >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND transactionDate &lt;= #{endDate}
+        </if>
+    </select>
+
+    <!-- 最新残高 -->
+    <select id="findLatestBalance" resultType="java.math.BigDecimal">
+        SELECT balance
+        FROM ems.bankAccount
+        WHERE 1=1
+        <if test="startDate != null">
+            AND transactionDate >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND transactionDate &lt;= #{endDate}
+        </if>
+        ORDER BY transactionDate DESC, id DESC
+        LIMIT 1
+    </select>
+
+    <!-- ID 検索 -->
+    <select id="findById" parameterType="long" resultType="com.softtech.entity.BankAccount">
+        SELECT 
+            id,
+            transactionDate,
+            transactionType,
+            description,
+            withdrawal,
+            deposit,
+            balance,
+            remarks,
+            insertDate,
+            path
+        FROM ems.bankAccount
+        WHERE id = #{id}
+    </select>
+
+    <!-- 単件登録 -->
+    <insert id="insert" parameterType="com.softtech.entity.BankAccount" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ems.bankAccount (
+            transactionDate,
+            transactionType,
+            description,
+            withdrawal,
+            deposit,
+            balance,
+            remarks,
+            path,
+            insertDate
+        ) VALUES (
+            #{transactionDate},
+            #{transactionType},
+            #{description},
+            #{withdrawal},
+            #{deposit},
+            #{balance},
+            #{remarks},
+            #{path},
+            NOW()
+        )
+    </insert>
+
+    <!-- 一括登録 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO ems.bankAccount (
+            transactionDate,
+            transactionType,
+            description,
+            withdrawal,
+            deposit,
+            balance,
+            remarks,
+            path,
+            insertDate
+        ) VALUES 
+        <foreach collection="list" item="account" separator=",">
+            (
+                #{account.transactionDate},
+                #{account.transactionType},
+                #{account.description},
+                #{account.withdrawal},
+                #{account.deposit},
+                #{account.balance},
+                #{account.remarks},
+                #{account.path},
+                NOW()
+            )
+        </foreach>
+    </insert>
+
+    <!-- 備考更新 -->
+    <update id="updateRemarks">
+        UPDATE ems.bankAccount
+        SET 
+            remarks = #{remarks},
+            insertDate = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 重複存在チェック -->
+    <select id="existsByUniqueKeys" resultType="int">
+        SELECT COUNT(*) 
+        FROM ems.bankAccount
+        WHERE transactionDate = #{transactionDate}
+          AND transactionType  = #{transactionType}
+          AND withdrawal       = #{withdrawal}
+          AND deposit          = #{deposit}
+          AND description      = #{description}
+    </select>
+
+</mapper>

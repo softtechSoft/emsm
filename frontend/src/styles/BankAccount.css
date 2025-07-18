@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.table-container {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+h1 {
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+input[type="date"] {
+  margin-right: 20px;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+table {
+  width: 100%;
+  margin-top: 30px;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 2px solid #b3cbde;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.col-withdrawal,
+.col-deposit,
+.col-balance {
+  width: 12%;
+}
+
+.col-remarks {
+  width: 15%;
+}
+
+.col-edit {
+  width: 8%;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-red {
+  color: red;
+}
+
+.text-blue {
+  color: blue;
+}
+
+.edit-btn, .save-btn, .cancel-btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.remarks-input {
+  width: 90%;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}

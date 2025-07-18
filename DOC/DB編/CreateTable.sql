@@ -736,3 +736,30 @@ INSERT INTO ofcfunction (
     'T1', 'torihiki', '&#xe65c;&emsp;取引先', 1, '/emsm/torihiki',
     2, 0, '20250605', '20250605', 2
 );
+
+
+-- 銀行口座テーブル
+CREATE TABLE ems.bankAccount (
+    id BIGINT NOT NULL AUTO_INCREMENT COMMENT '主キー',
+    transactionDate DATE NOT NULL COMMENT '取引日付',
+    transactionType VARCHAR(50) COMMENT '取引区分',
+    description VARCHAR(200) COMMENT '摘要',
+    withdrawal DECIMAL(15,2) DEFAULT 0 COMMENT '出金額',
+    deposit DECIMAL(15,2) DEFAULT 0 COMMENT '入金額',
+    balance DECIMAL(15,2) NOT NULL COMMENT '残高',
+    remarks TEXT COMMENT 'メモ',
+    insertDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '挿入日',
+    path VARCHAR(500) COMMENT 'ファイルパス',
+    PRIMARY KEY (id),
+    INDEX idx_transactionDate (transactionDate)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='銀行口座テーブル';
+
+ALTER TABLE ems.bankAccount
+ADD UNIQUE idx_unique_tx (
+  transactionDate,
+  transactionType,
+  withdrawal,
+  deposit,
+  description
+);
+
