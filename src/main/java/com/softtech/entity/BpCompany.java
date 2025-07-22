@@ -10,7 +10,7 @@ public class BpCompany {
     private String status;
     
 
-    public String getCompanyIdString() {
+    public String getCompanyId() {
         return companyId;
     }
 

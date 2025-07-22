@@ -33,13 +33,13 @@
         }
 
         // 削除処理
-        function toDeleteJsp(paymentId) {
+        /* function toDeleteJsp(paymentId) {
             if(confirm("本当に削除しますか？")) {
                 document.getElementById('no').value = paymentId;
                 document.theForm.action = "deleteBpPayment";
                 document.theForm.submit();
             }
-        }
+        } */
 
         // 新規登録画面への遷移処理
         function toMakeJsp() {
@@ -111,7 +111,7 @@
                             <th width="150">備考</th>
                             <th width="120">インボイス登録番号</th>
                             <th width="80">更新へ</th>
-                            <th width="80">削除</th>
+                           <!--<th width="80">削除</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -135,10 +135,10 @@
                                     <input type="button" value="更新" 
                                         onclick="toUpdateJsp('${bpPayment.paymentId}');"/>
                                 </td>
-                                <td>
+                                <!--<td>
                                     <input type="button" value="削除" 
                                         onclick="toDeleteJsp('${bpPayment.paymentId}');"/>
-                                </td>
+                                </td>-->
                             </tr>
                         </c:forEach> 
                     </tbody>

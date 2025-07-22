@@ -1,7 +1,9 @@
 package com.softtech.service;
 
-import com.softtech.entity.BpPayment;
 import java.util.List;
+
+import com.softtech.actionForm.BpPaymentFormBean;
+import com.softtech.entity.BpPayment;
 
 /**
  * BP支払管理用Service
@@ -32,13 +34,13 @@ public interface BpPaymentService {
      * 新規登録
      * @param bpPayment 支払信息
      */
-    void insertBpPayment(BpPayment bpPayment);
+    void insertBpPayment(BpPaymentFormBean formBean);
 
     /**
      * 更新
-     * @param bpPayment 支払信息
+     * @param BpPaymentFormBean 支払信息
      */
-    void updateBpPayment(BpPayment bpPayment);
+    void updateBpPayment(BpPaymentFormBean formBean);
 
     /**
      * 削除
@@ -57,4 +59,18 @@ public interface BpPaymentService {
      * @return 請求書リスト
      */
     List<BpPayment> getInvoiceList();
+    
+    /**
+     * 最大値ID取得
+     * @return 最大値ID
+     */
+     String getMaxPaymentId();
+     
+     /**
+      * frombean to entity
+      * @param frombean 画面データ
+      */
+     BpPayment transferToEntity(BpPaymentFormBean formBean);
+
+     
 } 

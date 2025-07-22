@@ -1,13 +1,19 @@
 package com.softtech.controller;
 
 import java.util.List;
+import java.util.UUID;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.softtech.actionForm.BpPaymentFormBean;
 import com.softtech.entity.BpPayment;
@@ -31,7 +37,7 @@ public class BpPaymentController {
     private BpCompanyService bpCompanyService;
     
     @Autowired
-    private DpCompanyService companyService;
+    private DpCompanyService dpCompanyService;
 
     /**
      * 支払リスト画面
@@ -53,21 +59,27 @@ public class BpPaymentController {
 
         return "bpPaymentList";
     }
-
     
     /**
-     * 新規登録・編集画面初期化
+     * 新規、変更初期化画面
      */
-    @RequestMapping(value = "/toInitBpPayment", method = RequestMethod.POST)
-    public String toInitBpPayment(@ModelAttribute BpPaymentFormBean bpPaymentFormBean, Model model) {
+    @RequestMapping(value = "/toInitBpPayment", method = {RequestMethod.GET, RequestMethod.POST})
+    public String toInitBpPayment(@RequestParam("insertFlg") String insertFlg,
+                                @RequestParam(name = "no", required = false) String paymentId,
+                                Model model) {
+        BpPaymentFormBean bpPaymentFormBean = new BpPaymentFormBean();
         try {
-            String insertFlg = bpPaymentFormBean.getInsertFlg();
-            String paymentId = bpPaymentFormBean.getNo();
-            
             if ("1".equals(insertFlg)) {
-                // 編集モード
+                if (paymentId == null || paymentId.isEmpty()) {
+                    model.addAttribute("error", "更新対象のIDが指定されていません。");
+                    loadDropdownData(model);
+                    model.addAttribute("bpPaymentFormBean", bpPaymentFormBean);
+                    return "bpPaymentEdit";
+                }
+                // 変更ボタン押下時
                 BpPayment bpPayment = bpPaymentService.getBpPaymentById(paymentId);
                 if (bpPayment != null) {
+                    bpPaymentFormBean.setNo(paymentId);
                     bpPaymentFormBean.setMonth(bpPayment.getMonth());
                     bpPaymentFormBean.setEmployeeId(bpPayment.getEmployeeId());
                     bpPaymentFormBean.setCompanyId(bpPayment.getCompanyId());
@@ -76,106 +88,85 @@ public class BpPaymentController {
                     bpPaymentFormBean.setOutsourcingAmountExTax(bpPayment.getOutsourcingAmountExTax());
                     bpPaymentFormBean.setOutsourcingAmountInTax(bpPayment.getOutsourcingAmountInTax());
                     bpPaymentFormBean.setCommission(bpPayment.getCommission());
-                    // 确保日期字段在转换为String之前进行空值检查
                     bpPaymentFormBean.setTransferDate(bpPayment.getTransferDate() != null ? 
                         bpPayment.getTransferDate().toString() : "");
                     bpPaymentFormBean.setEntryDate(bpPayment.getEntryDate() != null ? 
                         bpPayment.getEntryDate().toString() : "");
                     bpPaymentFormBean.setRemarks(bpPayment.getRemarks());
                     bpPaymentFormBean.setInvoiceNumber(bpPayment.getInvoiceNumber());
+                    bpPaymentFormBean.setInsertFlg("1");
                 } else {
-                    // 如果找不到对应的paymentId，可以添加错误信息
                     model.addAttribute("error", "指定された支払情報が見つかりませんでした。");
+                    // 加载下拉菜单数据以保留表单可用性
+                    loadDropdownData(model);
+                    model.addAttribute("bpPaymentFormBean", bpPaymentFormBean);
+                    return "bpPaymentEdit"; // 留在编辑页面
                 }
+            } else if ("0".equals(insertFlg)) {
+                // 新規ボタン押下時
+                // 生成新的 paymentId（最大値ID）
+                String newPaymentId = bpPaymentService.getMaxPaymentId();
+                bpPaymentFormBean.setNo(newPaymentId);
+                bpPaymentFormBean.setInsertFlg("0");
+                // 初始化默认值（可选）
+                bpPaymentFormBean.setCommission(0);
+                bpPaymentFormBean.setEntryDate(java.time.LocalDate.now().toString());
+            } else {
+                model.addAttribute("error", "无效的操作类型");
+                loadDropdownData(model);
+                model.addAttribute("bpPaymentFormBean", bpPaymentFormBean);
+                return "bpPaymentEdit";
             }
-            
-            // マスタデータを取得
-//            List<BpEmployee> employeeList = bpEmployeeService.getAllEmployees();
-//            List<BpCompany> companyList = bpCompanyService.getAllCompanies();
-//            List<DpCompany> dispatchCompanyList = companyService.getAllCompanies();
-//            
-//            model.addAttribute("employeeList", employeeList);
-//            model.addAttribute("companyList", companyList);
-//            model.addAttribute("dispatchCompanyList", dispatchCompanyList);
-//            model.addAttribute("bpPaymentFormBean", bpPaymentFormBean);
-            
+
+            // 加载下拉菜单数据
+            loadDropdownData(model);
+            model.addAttribute("bpPaymentFormBean", bpPaymentFormBean);
             return "bpPaymentEdit";
         } catch (Exception e) {
-            e.printStackTrace(); // 打印堆栈跟踪到控制台
+            e.printStackTrace();
             model.addAttribute("error", "支払登録・編集画面の初期化中にエラーが発生しました: " + e.getMessage());
-            // 可以选择返回一个错误页面，或者返回到列表页面并显示错误
-            return "bpPaymentList"; // 返回到列表页面，并显示错误信息
+            loadDropdownData(model);
+            model.addAttribute("bpPaymentFormBean", bpPaymentFormBean);
+            return "bpPaymentEdit"; // 错误时留在编辑页面
         }
     }
 
     /**
-     * 支払情報保存
+     * 保存支払信息
      */
-//    @RequestMapping(value = "/saveBpPayment", method = RequestMethod.POST)
-//    public String saveBpPayment(@ModelAttribute BpPaymentFormBean bpPaymentFormBean, 
-//                               @RequestParam("invoiceFile") MultipartFile invoiceFile,
-//                               RedirectAttributes redirectAttributes) {
-//        try {
-//            String insertFlg = bpPaymentFormBean.getInsertFlg();
-//            BpPayment bpPayment = new BpPayment();
-//            
-//            // フォームデータをエンティティに設定
-//            bpPayment.setMonth(bpPaymentFormBean.getMonth());
-//            bpPayment.setEmployeeId(bpPaymentFormBean.getEmployeeId());
-//            bpPayment.setCompanyId(bpPaymentFormBean.getCompanyId());
-//            bpPayment.setDispatchCompanyId(bpPaymentFormBean.getDispatchCompanyId());
-//            bpPayment.setUnitPriceExTax(bpPaymentFormBean.getUnitPriceExTax());
-//            bpPayment.setOutsourcingAmountExTax(bpPaymentFormBean.getOutsourcingAmountExTax());
-//            bpPayment.setOutsourcingAmountInTax(bpPaymentFormBean.getOutsourcingAmountInTax());
-//            bpPayment.setCommission(bpPaymentFormBean.getCommission());
-//            bpPayment.setRemarks(bpPaymentFormBean.getRemarks());
-//            bpPayment.setInvoiceNumber(bpPaymentFormBean.getInvoiceNumber());
-//            
-//            if ("0".equals(insertFlg)) {
-//                // 新規登録
-//                // 不需要手动生成ID，Service会自动生成
-//                bpPaymentService.insertBpPayment(bpPayment);
-//                redirectAttributes.addFlashAttribute("message", "新規登録が完了しました。");
-//            } else {
-//                // 更新
-//                bpPayment.setPaymentId(bpPaymentFormBean.getNo());
-//                bpPaymentService.updateBpPayment(bpPayment);
-//                redirectAttributes.addFlashAttribute("message", "更新が完了しました。");
-//            }
-//            
-//            // 請求書ファイルのアップロード処理
-//            if (!invoiceFile.isEmpty()) {
-//                // ファイル保存処理
-//                String fileName = invoiceFile.getOriginalFilename();
-//                String filePath = "uploads/bp_invoices/" + fileName;
-//                File dest = new File(filePath);
-//                if (!dest.getParentFile().exists()) {
-//                    dest.getParentFile().mkdirs();
-//                }
-//                invoiceFile.transferTo(dest);
-//            }
-//            
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("error", "保存中にエラーが発生しました: " + e.getMessage());
-//        }
-//        
-//        return "redirect:bpPaymentList";
-//    }
+    @RequestMapping(value = "/saveBpPayment", method = RequestMethod.POST)
+    public String saveBpPayment(@Valid @ModelAttribute BpPaymentFormBean bpPaymentFormBean,
+                                    @RequestParam("insertFlg") String insertFlg,
+                                    Model model) {
+        try {
+            if ("0".equals(insertFlg)) {
+                // 新建保存逻辑
+                bpPaymentService.insertBpPayment(bpPaymentFormBean);
+            } else {
+                // 编辑保存逻辑
+                bpPaymentService.updateBpPayment(bpPaymentFormBean);
+            }
+            return "redirect:/bpPaymentList";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "保存过程中发生错误: " + e.getMessage());
+            loadDropdownData(model);
+            return "bpPaymentEdit";
+        }
+    }
 
     /**
-     * 支払情報削除
+     * 加载下拉菜单数据
      */
-//    @RequestMapping(value = "/deleteBpPayment", method = RequestMethod.POST)
-//    public String deleteBpPayment(@ModelAttribute BpPaymentFormBean bpPaymentFormBean, 
-//                                 RedirectAttributes redirectAttributes) {
-//        try {
-//            String paymentId = bpPaymentFormBean.getNo();
-//            bpPaymentService.deleteBpPayment(paymentId);
-//            redirectAttributes.addFlashAttribute("message", "削除が完了しました。");
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("error", "削除中にエラーが発生しました: " + e.getMessage());
-//        }
-//        
-//        return "redirect:bpPaymentList";
-//    }
+    private void loadDropdownData(Model model) {
+        try {
+            model.addAttribute("employeeList", bpEmployeeService.getAllEmployees());
+            model.addAttribute("companyList", bpCompanyService.getAllCompanies());
+            model.addAttribute("dispatchCompanyList", dpCompanyService.getAllCompanies());
+            model.addAttribute("bpPaymentForm", new BpPaymentFormBean());
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "加载下拉菜单数据时发生错误: " + e.getMessage());
+        }
+    }
 }

@@ -1,7 +1,8 @@
 package com.softtech.mappers;
 
-import com.softtech.entity.BpPayment;
 import java.util.List;
+
+import com.softtech.entity.BpPayment;
 
 /**
  * BP支払管理用Mapper
@@ -58,6 +59,9 @@ public interface BpPaymentMapper {
      */
     List<BpPayment> getInvoiceList();
 
-     // 查询当前最大支付ID
+    /**
+     * 最大値ID取得
+     * @return 最大値ID
+     */
      String getMaxPaymentId();
 }

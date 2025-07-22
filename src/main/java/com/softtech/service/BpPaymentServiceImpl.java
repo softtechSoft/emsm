@@ -1,14 +1,16 @@
 package com.softtech.service;
 
-import com.softtech.entity.BpPayment;
-import com.softtech.mappers.BpPaymentMapper;
-import com.softtech.util.DataUtil;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
+
+import com.softtech.actionForm.BpPaymentFormBean;
+import com.softtech.entity.BpPayment;
+import com.softtech.mappers.BpPaymentMapper;
+import com.softtech.util.DataUtil;
 
 /**
  * BP支払管理用Service实现
@@ -61,14 +63,15 @@ public class BpPaymentServiceImpl implements BpPaymentService {
      * 新規登録
      */
     @Override
-    public void insertBpPayment(BpPayment bpPayment) {
+    public void insertBpPayment(BpPaymentFormBean formBean) {
         try {
              // 查询当前最大支付ID
-        String maxId = bpPaymentMapper.getMaxPaymentId();
-        // 生成新ID
-        String newId = (maxId == null) ? "PY001" : DataUtil.getNextID(maxId, 2);
-        // 设置新ID
-        bpPayment.setPaymentId(newId);
+        // String maxId = bpPaymentMapper.getMaxPaymentId();
+        // // 生成新ID
+        // String newId = (maxId == null) ? "PY001" : DataUtil.getNextID(maxId, 2);
+        // // 设置新ID
+        // bpPayment.setPaymentId(newId);
+        BpPayment bpPayment = transferToEntity(formBean);
         // 插入数据库
         bpPaymentMapper.insertBpPayment(bpPayment);
         } catch (Exception e) {
@@ -80,8 +83,10 @@ public class BpPaymentServiceImpl implements BpPaymentService {
      * 更新
      */
     @Override
-    public void updateBpPayment(BpPayment bpPayment) {
+    public void updateBpPayment(BpPaymentFormBean formBean) {
         try {
+            BpPayment bpPayment = transferToEntity(formBean);
+            // 更新数据库
             bpPaymentMapper.updateBpPayment(bpPayment);
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,6 +126,7 @@ public class BpPaymentServiceImpl implements BpPaymentService {
     public List<BpPayment> getInvoiceList() {
         try {
             return bpPaymentMapper.getInvoiceList();
+            
         } catch (Exception e) {
             e.printStackTrace();
             // 仮のデータを返す
@@ -128,6 +134,41 @@ public class BpPaymentServiceImpl implements BpPaymentService {
         }
     }
 
+    /**
+     * 最大値ID取得
+     * @return 最大値ID
+     */
+    @Override
+    public String getMaxPaymentId() {
+    	
+		String maxBpPaymentId = bpPaymentMapper.getMaxPaymentId();
+        
+        if (maxBpPaymentId != null) {
+        	maxBpPaymentId = maxBpPaymentId.toUpperCase();
+        }
+        String nextBpPaymentId = DataUtil.getNextID(maxBpPaymentId, 2);
+//          return nextEmployeeID;
+        return nextBpPaymentId != null ? nextBpPaymentId.toUpperCase() : null;
+     
+    }
+    /**
+     * transferToEntity
+     * @return BpPayment
+     */
+	@Override
+	public BpPayment transferToEntity(BpPaymentFormBean formBean) {
+		BpPayment bpPayment = new BpPayment();
+
+		bpPayment.setMonth(formBean.getMonth());
+        bpPayment.setPaymentId(formBean.getNo());
+        bpPayment.setEmployeeId(formBean.getEmployeeId());
+        bpPayment.setCompanyId(formBean.getCompanyId());
+        bpPayment.setDispatchCompanyId(formBean.getDispatchCompanyId());
+        bpPayment.setUnitPriceExTax(formBean.getUnitPriceExTax());
+        bpPayment.setOutsourcingAmountExTax(formBean.getOutsourcingAmountExTax());
+		//
+		return bpPayment;
+	}
     
 
 

@@ -27,6 +27,7 @@
         LEFT JOIN bp_employee e ON p.employee_id = e.employee_id
         LEFT JOIN bp_company c ON p.company_id = c.company_id
         LEFT JOIN company dc ON p.dispatch_company_id = dc.companyID
+        LEFT JOIN bp_contract bc ON p.bp_contract_id = bc.contract_id
         <where>
             <if test="month != null and month != ''">
                 p.month = #{month}
