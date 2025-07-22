@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.BpCompanyMapper">
+    <!-- 全会社リスト取得 -->
+    <select id="getAllCompanies" resultType="com.softtech.entity.BpCompany">
+        SELECT 
+            company_id AS companyId,
+            company_name AS companyName,
+            unit_price AS unitPrice,
+            address,
+            phone,
+            contact_person AS contactPerson,
+            status
+        FROM bp_company 
+        WHERE status = '1'
+        ORDER BY company_id
+    </select>
+
+    <!-- 会社IDで1件取得 -->
+    <select id="getCompanyById" parameterType="string" resultType="com.softtech.entity.BpCompany">
+        SELECT 
+            company_id AS companyId,
+            company_name AS companyName,
+            unit_price AS unitPrice,
+            address,
+            phone,
+            contact_person AS contactPerson,
+            status
+        FROM bp_company 
+        WHERE company_id = #{companyId}
+    </select>
+
+    <!-- 新規登録 -->
+    <insert id="insertCompany" parameterType="com.softtech.entity.BpCompany">
+        INSERT INTO bp_company (
+            company_id, company_name, unit_price, address, phone, contact_person, status
+        ) VALUES (
+            #{companyId}, #{companyName}, #{unitPrice}, #{address}, #{phone}, #{contactPerson}, #{status}
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateCompany" parameterType="com.softtech.entity.BpCompany">
+        UPDATE bp_company SET
+            company_name = #{companyName},
+            unit_price = #{unitPrice},
+            address = #{address},
+            phone = #{phone},
+            contact_person = #{contactPerson},
+            status = #{status}
+        WHERE company_id = #{companyId}
+    </update>
+
+    <!-- 削除 -->
+    <delete id="deleteCompany" parameterType="string">
+        DELETE FROM bp_company WHERE company_id = #{companyId}
+    </delete>
+</mapper> 

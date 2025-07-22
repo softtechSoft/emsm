@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.DpCompanyMapper">
+    <!-- 全会社リスト取得 -->
+    <select id="getAllCompanies" resultType="com.softtech.entity.DpCompany">
+        SELECT 
+            companyId,
+            companyName,
+            companyType,
+            postCode,
+            address,
+            basicContractDate,
+            phoneNumber,
+            contactName,
+            mail,
+            contractStatus,
+            level,
+            insertDate,
+            updateDate
+        FROM company 
+        WHERE contractStatus = '0' OR contractStatus IS NULL
+        ORDER BY companyId
+    </select>
+
+    <!-- 会社IDで検索 -->
+    <select id="getCompanyInfoID" parameterType="object" resultType="com.softtech.entity.DpCompany">
+        SELECT 
+            companyID,
+            companyName,
+            companyType,
+            postCode,
+            address,
+            basicContractDate,
+            phoneNumber,
+            contactName,
+            mail,
+            contractStatus,
+            level,
+            insertDate,
+            updateDate
+        FROM company 
+        WHERE companyID = #{companyId}
+    </select>
+
+    <!-- 会社リスト取得 -->
+    <select id="getCompany" resultType="com.softtech.entity.DpCompany">
+        SELECT 
+            companyID,
+            companyName,
+            companyType,
+            postCode,
+            address,
+            basicContractDate,
+            phoneNumber,
+            contactName,
+            mail,
+            contractStatus,
+            level,
+            insertDate,
+            updateDate
+        FROM company 
+        ORDER BY companyID
+    </select>
+
+    <!-- 最大会社ID取得 -->
+    <select id="getMaxCompanyId" resultType="string">
+        SELECT MAX(companyId) FROM company
+    </select>
+
+    <!-- 会社情報更新 -->
+    <update id="updateCompanyInfo" parameterType="com.softtech.actionForm.DpCompanyFormBean">
+        UPDATE company SET
+            companyName = #{companyName},
+            companyType = #{companyType},
+            postCode = #{postCode},
+            address = #{address},
+            basicContractDate = #{basicContractDate},
+            phoneNumber = #{phoneNumber},
+            contactName = #{contactName},
+            mail = #{mail},
+            contractStatus = #{contractStatus},
+            level = #{level},
+            updateDate = NOW()
+        WHERE companyID = #{companyId}
+    </update>
+
+    <!-- 会社IDで1件取得 -->
+    <select id="getCompanyById" parameterType="string" resultType="com.softtech.entity.DpCompany">
+        SELECT 
+            companyID,
+            companyName,
+            companyType,
+            postCode,
+            address,
+            basicContractDate,
+            phoneNumber,
+            contactName,
+            mail,
+            contractStatus,
+            level,
+            insertDate,
+            updateDate
+        FROM company 
+        WHERE companyID = #{companyID}
+    </select>
+
+    <!-- 新規登録 -->
+    <insert id="insertCompany" parameterType="com.softtech.entity.DpCompany">
+        INSERT INTO company (
+            companyID, companyName, companyType, postCode, address, 
+            basicContractDate, phoneNumber, contactName, mail, 
+            contractStatus, level, insertDate, updateDate
+        ) VALUES (
+            #{companyID}, #{companyName}, #{companyType}, #{postCode}, #{address},
+            #{basicContractDate}, #{phoneNumber}, #{contactName}, #{mail},
+            #{contractStatus}, #{level}, NOW(), NOW()
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateCompany" parameterType="com.softtech.entity.DpCompany">
+        UPDATE company SET
+            companyName = #{companyName},
+            companyType = #{companyType},
+            postCode = #{postCode},
+            address = #{address},
+            basicContractDate = #{basicContractDate},
+            phoneNumber = #{phoneNumber},
+            contactName = #{contactName},
+            mail = #{mail},
+            contractStatus = #{contractStatus},
+            level = #{level},
+            updateDate = NOW()
+        WHERE companyID = #{companyID}
+    </update>
+
+    <!-- 削除 -->
+    <delete id="deleteCompany" parameterType="string">
+        DELETE FROM company WHERE companyID = #{companyID}
+    </delete>
+</mapper>

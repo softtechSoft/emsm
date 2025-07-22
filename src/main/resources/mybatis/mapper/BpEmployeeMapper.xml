@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.BpEmployeeMapper">
+    <!-- 全社員リスト取得 -->
+    <select id="getAllEmployees" resultType="com.softtech.entity.BpEmployee">
+        SELECT 
+            employee_id AS employeeId,
+            name,
+            role,
+            phone,
+            email,
+            status
+        FROM bp_employee 
+        WHERE status = '1'
+        ORDER BY employee_id
+    </select>
+
+    <!-- 社員IDで1件取得 -->
+    <select id="getEmployeeById" parameterType="string" resultType="com.softtech.entity.BpEmployee">
+        SELECT 
+            employee_id AS employeeId,
+            name,
+            role,
+            phone,
+            email,
+            status
+        FROM bp_employee 
+        WHERE employee_id = #{employeeId}
+    </select>
+
+    <!-- 新規登録 -->
+    <insert id="insertEmployee" parameterType="com.softtech.entity.BpEmployee">
+        INSERT INTO bp_employee (
+            employee_id, name, role, phone, email, status
+        ) VALUES (
+            #{employeeId}, #{name}, #{role}, #{phone}, #{email}, #{status}
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateEmployee" parameterType="com.softtech.entity.BpEmployee">
+        UPDATE bp_employee SET
+            name = #{name},
+            role = #{role},
+            phone = #{phone},
+            email = #{email},
+            status = #{status}
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <!-- 削除 -->
+    <delete id="deleteEmployee" parameterType="string">
+        DELETE FROM bp_employee WHERE employee_id = #{employeeId}
+    </delete>
+</mapper> 
