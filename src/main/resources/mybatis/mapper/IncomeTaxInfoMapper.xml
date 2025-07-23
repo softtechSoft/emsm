@@ -139,7 +139,8 @@
     <!--画面の社員ID選択-->
     <select id="getEmployee" resultType="com.softtech.entity.Employee">
         select employeeName, employeeID
-        FROM employee;
+        FROM employee
+        where employee.status = "0"
     </select>
     
 	<select id="getIncomeTaxByCondition" resultType="com.softtech.entity.IncomeTaxInfoEntity">
