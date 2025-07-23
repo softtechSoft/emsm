@@ -4,9 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
-public class EmsmApplication  extends SpringBootServletInitializer{
+@MapperScan("com.softtech.mappers")
+public class EmsmApplication extends SpringBootServletInitializer {
 	  @Override
 	    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 	        return application.sources(EmsmApplication.class);
