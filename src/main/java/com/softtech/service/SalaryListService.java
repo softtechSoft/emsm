@@ -67,7 +67,7 @@ public class SalaryListService {
 		//給料テーブルから最大年月（month）を取得
 
 		String maxMonth=salarylistMapper.getMaxMonth();
-		
+
 		// 空表の場合の処理
 		if (maxMonth == null || maxMonth.isEmpty()) {
 	        // 現在の年月を取得（yyyy/MM形式）
@@ -202,11 +202,9 @@ public class SalaryListService {
 //			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
 			 WelfarefeeInfoEntity welfarefeeInfoEntity = null;
 //			 if( welfarefeeInfoEntity == null ||  welfarefeeInfoEntity.getWfPension() == null || welfarefeeInfoEntity.getWfPension().length()==0) {
-			 if (Float.parseFloat(basesalary) >= 665000) {
-				    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
-				} else {
-				    welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
-				}
+
+			 welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+
 			 if( welfarefeeInfoEntity == null) {
 				 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
 				 autoSalaryRtn.setYear(year);
@@ -244,7 +242,27 @@ public class SalaryListService {
 					wfHealthComp=wfHealthSelf;
 					salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
 			}
+			//最大段階の厚生年金再計算
+			if (Float.parseFloat(basesalary) >= 665000) {
+			    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
+			    if( welfarefeeInfoEntity == null) {
+					 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+					 autoSalaryRtn.setYear(year);
+					 autoSalaryRtn.setRtn("2");
+					 return autoSalaryRtn;
+				 }
 
+				//厚生年金控除個人
+				wfPensionSelf =
+						(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
+				salaryInfoEntity.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+
+
+				 //厚生年金控除会社
+				wfPensionComp = wfPensionSelf;
+				salaryInfoEntity.setWelfarePensionComp(Float.toString(wfPensionComp));
+
+			}
 			 //厚生控除子育(会社)
 			//⑩厚生子育徴収率を取得
 			 WelfareBabyInfoEntity welfareBabyInfoEntity = salarylistMapper.getWfBaby(year) ;
