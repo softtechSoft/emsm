@@ -65,6 +65,7 @@
 		<th width="50">社員ID</th>
 		<th width="150">社員氏名</th>
 		<th width="33">性別</th>
+		<th width="70">役職</th>
 		<th width="70">タイプ</th>
 		<th width="75">生年月日</th>
 		<th width="33">年齢</th>
@@ -85,6 +86,10 @@
        <td><c:out value="${empty employeeInfoList.employeeID ? '' : employeeInfoList.employeeID}"/></td>
 <td><c:out value="${empty employeeInfoList.employeeName ? '' : employeeInfoList.employeeName}"/></td>
 <td><c:out value="${empty employeeInfoList.sex ? '' : employeeInfoList.sex}"/></td>
+<td><c:out value="${empty employeeInfoList.position ? '' : 
+		(employeeInfoList.position == '0' ? '取締役' :
+        (employeeInfoList.position == '1' ? '普通社員' : ''))}"/>
+</td>
 <td>
     <c:out value="${empty employeeInfoList.epType ? '' :
         (employeeInfoList.epType == '0' ? '正社員' :

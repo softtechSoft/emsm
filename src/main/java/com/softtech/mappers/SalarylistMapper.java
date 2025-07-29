@@ -10,7 +10,6 @@ import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.entity.TransportEntity;
-import com.softtech.entity.WelfareBabyInfoEntity;
 import com.softtech.entity.WelfarefeeInfoEntity;
 import com.softtech.entity.WorkInfo;
 
@@ -37,7 +36,8 @@ public interface SalarylistMapper {
 
 	String getAge(String employeeID);
 
-	WelfareBabyInfoEntity getWfBaby(@Param("year")String year);
+//	WelfareBabyInfoEntity getWfBaby(@Param("year")String year);
+	WelfarefeeInfoEntity getWfBaby(@Param("year")String year);
 
 	EmplyinsrateInfoEntity getEmplyinsrate(@Param("year")String year);
 
@@ -48,5 +48,7 @@ public interface SalarylistMapper {
 	int insertSalaryList(SalaryInfoEntity salaryInfoEntity);
 	
 	WelfarefeeInfoEntity getWfPensionByStandSalary(String standSalary);
+	
+//	WelfarefeeInfoEntity getStandSalary(String basesalary);
 
 }

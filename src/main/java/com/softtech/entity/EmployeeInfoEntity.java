@@ -37,6 +37,8 @@ public class EmployeeInfoEntity {
 	private String insertDate;
 //	//更新日
 	private String updateDate;
+	//役職
+	private String position;
 	//更新と新規区別用のFlg
 	private String insertFlg;
 	//検索と全量検索区別用のFlg
@@ -228,6 +230,20 @@ public class EmployeeInfoEntity {
 
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+
+	/**
+	 * @return position
+	 */
+	public String getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position セットする position
+	 */
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 

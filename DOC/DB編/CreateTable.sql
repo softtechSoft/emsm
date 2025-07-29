@@ -878,3 +878,39 @@ CREATE TABLE bp_invoice (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
     FOREIGN KEY (payment_id) REFERENCES bp_payment(payment_id)
 ) COMMENT 'BP請求書情報';
+
+
+-- 厚生保険料マスタ
+ALTER TABLE m_welfarefee 
+ADD COLUMN babyCareCompanyRate DECIMAL(6,5) NOT NULL DEFAULT 0.0036 
+COMMENT '厚生控除子育(会社)の控除率（固定0.36%）';
+-- 社員情報
+ALTER TABLE employee
+MODIFY COLUMN position VARCHAR(2) NOT NULL DEFAULT '1'
+COMMENT '役職（''0''取締役/''1''一般社員等）';
+-- 所得税と住民税マスター管理
+ALTER TABLE m_incometax
+ADD COLUMN rental01 int DEFAULT 0 COMMENT '1月社宅家賃',
+ADD COLUMN rental02 int DEFAULT 0 COMMENT '2月社宅家賃',
+ADD COLUMN rental03 int DEFAULT 0 COMMENT '3月社宅家賃',
+ADD COLUMN rental04 int DEFAULT 0 COMMENT '4月社宅家賃',
+ADD COLUMN rental05 int DEFAULT 0 COMMENT '5月社宅家賃',
+ADD COLUMN rental06 int DEFAULT 0 COMMENT '6月社宅家賃',
+ADD COLUMN rental07 int DEFAULT 0 COMMENT '7月社宅家賃',
+ADD COLUMN rental08 int DEFAULT 0 COMMENT '8月社宅家賃',
+ADD COLUMN rental09 int DEFAULT 0 COMMENT '9月社宅家賃',
+ADD COLUMN rental10 int DEFAULT 0 COMMENT '10月社宅家賃',
+ADD COLUMN rental11 int DEFAULT 0 COMMENT '11月社宅家賃',
+ADD COLUMN rental12 int DEFAULT 0 COMMENT '12月社宅家賃',
+ADD COLUMN rentalMgmtFee01 int DEFAULT 0 COMMENT '1月共益費',
+ADD COLUMN rentalMgmtFee02 int DEFAULT 0 COMMENT '2月共益費',
+ADD COLUMN rentalMgmtFee03 int DEFAULT 0 COMMENT '3月共益費',
+ADD COLUMN rentalMgmtFee04 int DEFAULT 0 COMMENT '4月共益費',
+ADD COLUMN rentalMgmtFee05 int DEFAULT 0 COMMENT '5月共益費',
+ADD COLUMN rentalMgmtFee06 int DEFAULT 0 COMMENT '6月共益費',
+ADD COLUMN rentalMgmtFee07 int DEFAULT 0 COMMENT '7月共益費',
+ADD COLUMN rentalMgmtFee08 int DEFAULT 0 COMMENT '8月共益費',
+ADD COLUMN rentalMgmtFee09 int DEFAULT 0 COMMENT '9月共益費',
+ADD COLUMN rentalMgmtFee10 int DEFAULT 0 COMMENT '10月共益費',
+ADD COLUMN rentalMgmtFee11 int DEFAULT 0 COMMENT '11月共益費',
+ADD COLUMN rentalMgmtFee12 int DEFAULT 0 COMMENT '12月共益費';

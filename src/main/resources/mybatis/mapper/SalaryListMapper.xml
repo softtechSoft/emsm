@@ -23,6 +23,13 @@
  <select id="getBaseSalary" parameterType="String" resultType="com.softtech.entity.BaseSalaryInfoEntity">
  	select * from m_basesalary where employeeID=#{employeeID} AND year=#{year}
 </select>
+<!-- 基本給所属段階の標準報酬を取得 -->
+<!--<select id="getStandSalary" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">-->
+<!-- 	select * from m_welfarefee -->
+<!-- 	where salaryFrom <= #{basesalary} -->
+<!-- 	AND salaryTo >= #{basesalary} -->
+<!-- 	AND year=#{year}-->
+<!--</select>-->
 
 
  <select id="getWkTime" parameterType="String" resultType="com.softtech.entity.WorkInfo">
@@ -56,9 +63,11 @@
 </select>
 
 
-<select id="getWfBaby"  parameterType="String" resultType="com.softtech.entity.WelfareBabyInfoEntity">
-	SELECT rate
-	From m_welfarebabyrate where year=#{year}
+<select id="getWfBaby"  parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
+<!--	SELECT rate-->
+<!--	From m_welfarebabyrate where year=#{year}-->
+	SELECT babyCareCompanyRate
+	From m_welfarefee where year=#{year}
 </select>
 
 <select id="getEmplyinsrate"  parameterType="String" resultType="com.softtech.entity.EmplyinsrateInfoEntity">

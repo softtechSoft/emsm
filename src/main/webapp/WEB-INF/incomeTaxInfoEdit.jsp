@@ -192,6 +192,130 @@
             <td width="200px"><input type="text" id="residentTax12" name="residentTax12"
                                      value="${incomeTaxInfoFormBean.residentTax12}"/></td>
         </tr>
+        
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">一月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental01" name="rental01"
+                                     value="${incomeTaxInfoFormBean.rental01}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">二月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental02" name="rental02"
+                                     value="${incomeTaxInfoFormBean.rental02}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">三月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental03" name="rental03"
+                                     value="${incomeTaxInfoFormBean.rental03}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">四月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental04" name="rental04"
+                                     value="${incomeTaxInfoFormBean.rental04}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">五月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental05" name="rental05"
+                                     value="${incomeTaxInfoFormBean.rental05}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">六月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental06" name="rental06"
+                                     value="${incomeTaxInfoFormBean.rental06}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">七月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental07" name="rental07"
+                                     value="${incomeTaxInfoFormBean.rental07}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">八月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental08" name="rental08"
+                                     value="${incomeTaxInfoFormBean.rental08}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">九月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental09" name="rental09"
+                                     value="${incomeTaxInfoFormBean.rental09}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">十月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental10" name="rental10"
+                                     value="${incomeTaxInfoFormBean.rental10}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">十一月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental11" name="rental11"
+                                     value="${incomeTaxInfoFormBean.rental11}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">十二月社宅家賃</td>
+            <td width="200px"><input type="text" id="rental12" name="rental12"
+                                     value="${incomeTaxInfoFormBean.rental12}"/></td>
+        </tr>
+        
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">一月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee01" name="rentalMgmtFee01"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee01}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">二月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee02" name="rentalMgmtFee02"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee02}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">三月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee03" name="rentalMgmtFee03"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee03}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">四月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee04" name="rentalMgmtFee04"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee04}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">五月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee05" name="rentalMgmtFee05"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee05}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">六月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee06" name="rentalMgmtFee06"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee06}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">七月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee07" name="rentalMgmtFee07"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee07}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">八月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee08" name="rentalMgmtFee08"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee08}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">九月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee09" name="rentalMgmtFee09"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee09}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">十月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee10" name="rentalMgmtFee10"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee10}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">十一月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee11" name="rentalMgmtFee11"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee11}"/></td>
+        </tr>
+        <tr style="background-color:#dcfeeb">
+            <td width="200px">十二月共益費</td>
+            <td width="200px"><input type="text" id="rentalMgmtFee12" name="rentalMgmtFee12"
+                                     value="${incomeTaxInfoFormBean.rentalMgmtFee12}"/></td>
+        </tr>
+
+>
         <tr style="background-color:#dcfeeb">
             <td width="200px">利用ステータス</td>
             <td width="200px"><input type="radio" name="status" <c:if

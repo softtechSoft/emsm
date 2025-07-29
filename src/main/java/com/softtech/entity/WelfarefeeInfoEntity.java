@@ -23,6 +23,8 @@ public class WelfarefeeInfoEntity {
   private String careRatio;
   // 厚生年金保険料率
   private String annuityRatio;
+  //厚生控除子育(会社)の控除率（固定0.36%）
+  private String babyCareCompanyRate;
   // 利用ステータス 0:未使用　1:使用中
   private int status;
   // 作成日
@@ -141,6 +143,20 @@ public String getWfPension() {
  */
 public void setWfPension(String wfPension) {
 	WfPension = wfPension;
+}
+
+/**
+ * @return babyCareCompanyRate
+ */
+public String getBabyCareCompanyRate() {
+	return babyCareCompanyRate;
+}
+
+/**
+ * @param babyCareCompanyRate セットする babyCareCompanyRate
+ */
+public void setBabyCareCompanyRate(String babyCareCompanyRate) {
+	this.babyCareCompanyRate = babyCareCompanyRate;
 }
 
 
