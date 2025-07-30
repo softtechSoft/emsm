@@ -65,11 +65,11 @@
 
 <select id="getWfBaby"  parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
 <!--	SELECT rate-->
-<!--	From m_welfarebabyrate where year=#{year}
+<!--	From m_welfarebabyrate where year=#{year}-->
+
 	SELECT babyCareCompanyRate
 	From m_welfarefee where year=#{year}
 </select>
--->
 <select id="getEmplyinsrate"  parameterType="String" resultType="com.softtech.entity.EmplyinsrateInfoEntity">
 	SELECT *
 	From m_emplyinsrate where year=#{year}
