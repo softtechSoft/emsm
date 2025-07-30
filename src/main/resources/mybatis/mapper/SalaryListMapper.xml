@@ -50,10 +50,10 @@
  <select id= "getWfPension" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
  	 SELECT *
  	From m_welfarefee
- 	where m_welfarefee.status = '0' 
- 	AND #{basesalary} >= salaryFrom 
- 	AND salaryTo > #{basesalary} 
- 	
+ 	where m_welfarefee.status = '0'
+ 	AND #{basesalary} >= salaryFrom
+ 	AND salaryTo > #{basesalary}
+
 </select>
 
 
@@ -65,11 +65,11 @@
 
 <select id="getWfBaby"  parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
 <!--	SELECT rate-->
-<!--	From m_welfarebabyrate where year=#{year}-->
+<!--	From m_welfarebabyrate where year=#{year}
 	SELECT babyCareCompanyRate
 	From m_welfarefee where year=#{year}
 </select>
-
+-->
 <select id="getEmplyinsrate"  parameterType="String" resultType="com.softtech.entity.EmplyinsrateInfoEntity">
 	SELECT *
 	From m_emplyinsrate where year=#{year}
@@ -101,17 +101,17 @@
 </insert>
 
 <select id="getWfPensionByStandSalary" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
-    SELECT 
+    SELECT
         standardMonthlyRemuneration as standSalary,
         annuityRatio,
         careRatio,
         notCareRatio
-    FROM 
+    FROM
         welfareinfo
-    WHERE 
+    WHERE
         standardMonthlyRemuneration = #{standSalary}
         AND deleteFlg = '0'
-    ORDER BY 
+    ORDER BY
         insertDate DESC
     LIMIT 1
 </select>

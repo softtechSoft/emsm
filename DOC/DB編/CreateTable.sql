@@ -259,8 +259,8 @@ CREATE TABLE ems.transport (
     insertDate VARCHAR(8) COMMENT '作成日',
     updateDate VARCHAR(8) COMMENT '更新日',
     PRIMARY KEY (employeeID, workMonth)
-) ENGINE=InnoDB 
-  DEFAULT CHARSET=utf8mb4 
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
   COMMENT='交通情報';
 insert into transport values
 ("E001","202104","20210101","西川口駅","銀座駅","京浜東北線",3000,"赤羽駅","埼京線","新宿駅","埼京線","新宿駅","丸の内線",0,0,10000,2500,'D:\\TName\\',"0",date_format(now(), '%Y%m%d'), null);
@@ -691,9 +691,9 @@ CREATE TABLE ems.expenses (
     deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除',
     happenAddress VARCHAR(255) NOT NULL COMMENT '用途',
     receiptPath VARCHAR(255) DEFAULT NULL COMMENT '領収書画像ファイルのパス',
-    
+
     CONSTRAINT fk_expenses_m_expenses_id FOREIGN KEY (m_expenses_id) REFERENCES m_expenses(id)
-) COMMENT='経費管理';   
+) COMMENT='経費管理';
 
 
 --経費管理画面をofcfunction表に挿入する
@@ -778,7 +778,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- 1. 公司表（上家公司，派遣公司）
 -- =====================================================
 CREATE TABLE company 略
-    
+
 -- =====================================================
 -- 2. 契约表（上家公司合同）
 -- =====================================================
@@ -881,8 +881,8 @@ CREATE TABLE bp_invoice (
 
 
 -- 厚生保険料マスタ
-ALTER TABLE m_welfarefee 
-ADD COLUMN babyCareCompanyRate DECIMAL(6,5) NOT NULL DEFAULT 0.0036 
+ALTER TABLE m_welfarefee
+ADD COLUMN babyCareCompanyRate DECIMAL(6,5) NOT NULL DEFAULT 0.36
 COMMENT '厚生控除子育(会社)の控除率（固定0.36%）';
 -- 社員情報
 ALTER TABLE employee
