@@ -14,6 +14,7 @@
 		from workinfo wk,contract ct
 		where wk.contractID=ct.contractID
 		AND wk.workMonth=#{month}
+		AND   ct.status='1'
 	</select>
 	<!--社員交通情報を取得する。-->
 	<select id="geTransportDetail" parameterType="string" resultType="com.softtech.entity.TransportEntity">
@@ -34,6 +35,7 @@
 		       tt.businessTrip
 		from workinfo wk,contract ct,transport tt,employee ee
 		where wk.contractID=ct.contractID
+		AND   ct.status='1'
 		AND   ct.employeeID=tt.employeeID
 		AND   tt.employeeID=ee.employeeID
 		AND   wk.workMonth=#{month}
