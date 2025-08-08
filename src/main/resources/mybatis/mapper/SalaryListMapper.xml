@@ -50,7 +50,7 @@
  <select id= "getWfPension" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">
  	 SELECT *
  	From m_welfarefee
- 	where m_welfarefee.status = '0'
+ 	where m_welfarefee.status = '1'
  	AND #{basesalary} >= salaryFrom
  	AND salaryTo > #{basesalary}
 
