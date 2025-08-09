@@ -271,7 +271,7 @@ public class SalaryListService {
 
 			//⑧雇用保険率をを取得
 			 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
-			 if( emplyinsrateInfoEntity == null ||  emplyinsrateInfoEntity.getEmplyinsrate() == null || emplyinsrateInfoEntity.getEmplyinsrate().length()==0) {
+			 if( emplyinsrateInfoEntity == null ) {
 				 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
 				 autoSalaryRtn.setYear(nextMonth);
 				 autoSalaryRtn.setRtn("5");
