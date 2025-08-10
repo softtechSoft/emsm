@@ -324,7 +324,7 @@ public class SalaryListService {
 			 //源泉控除
 			 //所得税と住民税を取得
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
-			 if( incomeTaxInfoEntity == null ||  incomeTaxInfoEntity.getTax() == null || incomeTaxInfoEntity.getTax().length()==0) {
+			 if( incomeTaxInfoEntity == null) {
 				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
 				 autoSalaryRtn.setYearMonth(nextMonth);
 				 autoSalaryRtn.setRtn("6");
