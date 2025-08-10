@@ -492,17 +492,61 @@ public class SalaryListService {
 			 float specialReduce = 0 ;
 			 salaryInfoEntity.setSpecialReduce(Float.toString(specialReduce));
 
-			 //総額
-			 float sum= Float.parseFloat(basesalary) - shortageReduce - allowanceReduce  -
-					 	wfPensionSelf- wfHealthSelf- laborBurden -
-					 	incomeTax- residentTax -
-					 	 rental-rentalMgmtFee- specialReduce +
-					 	 overTimePlus +transportExpense+ specialAddition + allowancePlus   ;
+			 //振込総額=基本給basesalary
+			 //ー稼働不足減shortageReduce
+			 //ー手当減算allowanceReduce
+			 //ー厚生年金控除個人wfPensionSelf
+			 //ー厚生健康控除個人wfHealthSelf
+			 //ー雇用保険個人負担laborBurden
+			 //ー源泉incomeTax
+			 //ー住民税residentTax
+			 //ー社宅家賃控除rental
+			 //ー社宅共益費控除rentalMgmtFee
+			 //ー特別控除specialReduce
+			 //+残業加算overTimePlus
+			 //+交通費(通勤交通+他の交通費）transportExpense
+			 //+特別加算specialAddition
+			 //+手当加算allowancePlus
+			 float sum= Float.parseFloat(basesalary)
+					 - shortageReduce
+					 - allowanceReduce
+					 - wfPensionSelf
+					 - wfHealthSelf
+					 - laborBurden
+					 - incomeTax
+					 - residentTax
+					 - rental
+					 - rentalMgmtFee
+					 - specialReduce
+					 + overTimePlus
+					 + transportExpense
+					 + specialAddition
+					 + allowancePlus   ;
 			 salaryInfoEntity.setSum(Float.toString(sum));
 
-			 //総費用
-			 float totalFee = sum + wfPensionComp + wfHealthComp + welfareBaby + employerBurden + employmentInsurance
-					 + industrialAccidentInsurance ;
+			 //総費用＝基本給basesalary
+			 //＋厚生年金控除会社wfPensionComp
+			 //＋厚生健康控除会社wfHealthComp
+			 //＋厚生控除子育(会社)welfareBaby
+			 //＋雇用保険会社負担employerBurden
+			 //＋雇用保拠出金（会社)employmentInsurance
+			 //＋労災保険（会社負担のみ）industrialAccidentInsurance
+			 //+残業加算overTimePlus
+			 //+交通費(通勤交通+他の交通費）transportExpense
+			 //+特別加算specialAddition
+			 //+手当加算allowancePlus
+
+			 float totalFee = Float.parseFloat(basesalary)
+					 + wfPensionComp
+					 + wfHealthComp
+					 + welfareBaby
+					 + employerBurden
+					 + employmentInsurance
+					 + industrialAccidentInsurance
+					 + overTimePlus
+					 + transportExpense
+					 + specialAddition
+					 + allowancePlus   ;
 			 salaryInfoEntity.setTotalFee(Float.toString(totalFee));
 
 			 //備考
