@@ -66,13 +66,13 @@ function init(){
 		document.getElementById("Registration").disabled=true;
 	  }else{
 		//作成ボタンを1回だけEnable
-		document.getElementById("makeSalary").disabled=true;
+		//document.getElementById("makeSalary").disabled=true;
 	  }
 
 	//画面モード 0:画面初期表示、1：給料情報の新規作成。2：給料情報の更新。
 	if(gamenMode=="2"){
 		//作成ボタンと変更ボタンの変更
-		document.getElementById('makeSalary').value="変更";
+		//document.getElementById('makeSalary').value="変更";
 	}
 }
 
@@ -100,7 +100,7 @@ function setSum(){
 	 var employerBurden = 0.006;  //雇用保険会社負担
 	 var employmentInsurance = 0.003;  //雇用保拠出金（会社)
 	 var industrialAccidentInsurance = 0.001;  //労災保険（会社負担のみ）
-	 
+
 	//基本給の値を取得
 	var base = document.getElementById('base').value;
 	//数字化する
@@ -211,8 +211,8 @@ function setSum(){
 				-rentalMgmtFee
 				-specialReduce;
 
-	document.getElementById('sum').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-
+	//document.getElementById('sum').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+	document.getElementById('sum').value=salarySum;
 
 	//厚生年金控除会社の値を取得
 	var welfarePensionComp = document.getElementById('welfarePensionComp').value;
@@ -262,7 +262,7 @@ function setSum(){
 	// 			-稼働不足減
 	// 			-手当減算
 	// 			-特別減
-	var salarySum=base
+	var fee=base
 				+overTimePlus
 				+transportExpense
 				+allowancePlus
@@ -277,8 +277,8 @@ function setSum(){
 				-allowanceReduce
 				-specialReduce;
 
-	document.getElementById('totalFee').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-
+	//document.getElementById('totalFee').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+	document.getElementById('totalFee').value=fee
 }
 //文字列を数字に変換
 function toNumberDisp(strNumber){
@@ -315,7 +315,9 @@ function chageMonth(){
 			<tr>
 			<td></td>
 			<td style="text-align: right;">
-			<input type="button" id="makeSalary" name="makeSalary"  value="作成" onclick="doMake()" /></td>
+			<!--  input type="button" id="makeSalary" name="makeSalary"  value="作成" onclick="doMake()" / -->
+
+			</td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>社員ID：</td>
@@ -448,11 +450,18 @@ function chageMonth(){
 
 			<tr style="background-color:#dcfeeb">
 			<td>総額：</td>
-			<td><input id="sum"name="sum" type="text"  value="${salaryInfoBean.sum}" onchange="chageNumberDisp(this)"></td>
+			<td>
+			 <!-- input id="sum"name="sum" type="text"  value="${salaryInfoBean.sum}" onchange="chageNumberDisp(this)" -->
+			 <input id="sum"name="sum" type="text"  value="${salaryInfoBean.sum}" />
+
+			 </td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>総費用：</td>
-			<td><input id="totalFee"name="totalFee" type="text"  value="${salaryInfoBean.totalFee}" onchange="chageNumberDisp(this)"></td>
+			<td>
+			  <!-- input id="totalFee"name="totalFee" type="text"  value="${salaryInfoBean.totalFee}" onchange="chageNumberDisp(this)" -->
+			  <input id="totalFee"name="totalFee" type="text"  value="${salaryInfoBean.totalFee}" />
+			  </td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>備考：</td>

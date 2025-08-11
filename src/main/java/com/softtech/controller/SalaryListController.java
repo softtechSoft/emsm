@@ -85,6 +85,7 @@ public class SalaryListController {
 		 } else if(salarylistBean2.getDownloadFlg()==1){
 			     model.addAttribute("list", sl);
 		 // 画面の給料リスト中の社員IDを押す時。
+		 //  給料変更画面へ遷移
 		 }else if(salarylistBean2.getDownloadFlg()==3) {
 			 SalaryInfoRecord em = new SalaryInfoRecord();
 			//社員ID
@@ -95,7 +96,8 @@ public class SalaryListController {
 			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
 			// 初期モードに設定
-			salaryInfoBean.setGamenMode("0");
+			//salaryInfoBean.setGamenMode("0");
+			salaryInfoBean.setGamenMode("1");
 			model.addAttribute("salaryInfoBean",salaryInfoBean);
 
 		    return "salaryInfo";
