@@ -33,14 +33,14 @@ public class ExpenseListService {
     private String configuredReceiptLocation;
 
     private Path receiptFolderPath;
-    
+
     public Path getReceiptFolderPath() {
         return this.receiptFolderPath;
     }
 
     /**
     * アプリケーション起動時に領収書保存用ディレクトリの初期設定を行う
-    * 
+    *
     * @throws RuntimeException ディレクトリ作成に失敗した場合
     * @details
     * - 設定ファイルから保存先パスを読み込み
@@ -50,6 +50,7 @@ public class ExpenseListService {
     @PostConstruct
     public void init() {
        try {
+
            // 設定ファイルのパスを正規化
            Path path = Paths.get(configuredReceiptLocation).normalize();
 
@@ -120,7 +121,7 @@ public class ExpenseListService {
     public void insertExpense(ExpenseListEntity expense) {
         expenseListMapper.insert(expense);
     }
-    
+
     /**
     * 領収書ファイルの保存と経費データの更新を行う
     *
@@ -171,7 +172,7 @@ public class ExpenseListService {
        expense.setReceiptPath("ems_files/receipt/" + newFileName);
        expenseListMapper.update(expense);
     }
-    
+
     /**
     * 領収書画像を保存し、相対パスを返却する
     *

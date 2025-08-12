@@ -293,6 +293,13 @@ function toNumberDisp(strNumber){
 function chageMonth(){
 	document.getElementById('municipalTax').value="0";
 }
+//入力バリデーション修正
+function validateTimeInput(input) {
+    // 小数点以下1桁までの数値かチェック
+    if (!/^\d*\.?\d{0,1}$/.test(input.value)) {
+        input.value = input.value.substring(0, input.value.length-1);
+    }
+}
 </script>
 </head >
 <body onload="init()">
@@ -304,6 +311,10 @@ function chageMonth(){
 	<input type="hidden" id="make" name="make" />
 	<!--input入力できるかどうか、判断用データ -->
 	<input type="hidden" id="gamenMode" name="gamenMode" value="${salaryInfoBean.gamenMode}"/>
+	<!-- 其他费率也类似添加 -->
+	<input type="hidden" id="welfarePensionRate" value="${welfarePensionRate}">
+	<input type="hidden" id="welfareHealthRate" value="${welfareHealthRate}">
+	<input type="hidden" id="laborBurdenRate" value="${laborBurdenRate}">
 	<!--エラーメッセージ-->
  	<p style="color: red;">
     	<c:forEach  items="${errors}" var="error">　　　　　　　
@@ -354,11 +365,13 @@ function chageMonth(){
 			</tr>
 			<tr style="background-color:#bfe1ff">
 			<td>残業時間：</td>
-			<td><input id="overTime"name="overTime" type="text"  value="${salaryInfoBean.overTime}" onchange="chageNumberDisp(this)"></td>
+			<td><input id="overTime"name="overTime" type="text"  value="${salaryInfoBean.overTime}" onchange="chageNumberDisp(this)"
+			oninput="validateTimeInput(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>不足時間：</td>
-			<td><input id="shortage"name="shortage" type="text"  value="${salaryInfoBean.shortage}"></td>
+			<td><input id="shortage"name="shortage" type="text"  value="${salaryInfoBean.shortage}" onchange="chageNumberDisp(this)"
+           oninput="validateTimeInput(this)"></td>
 			</tr>
 			<tr  style="background-color:#bfe1ff">
 			<td>残業加算：</td>

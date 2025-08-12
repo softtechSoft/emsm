@@ -112,7 +112,7 @@ tr:nth-child(even) {
 					<th>経費種別</th>
 					<th>経費名称</th>
 					<th>発生日付</th>
-					<th>金額</th>
+					<th>金額(円)</th>
 					<th>用途</th>
 					<th>担当者</th>
 					<th>精算日付</th>
@@ -226,10 +226,10 @@ tr:nth-child(even) {
 			]<c:if test="${!status.last}">,</c:if>
 		</c:forEach>
 	};
-	
+
 	/**
 	* 経費種別が変更されたときに経費名称のオプションを更新する
-	* 
+	*
 	* @param {string} selectId - 経費種別セレクトボックスのID
 	* @param {string} targetId - 経費名称セレクトボックスのID
 	* @param {number} selectedValue - 選択する経費名称のID（任意）
@@ -237,14 +237,14 @@ tr:nth-child(even) {
 	function updateExpenseNameOptions(selectId, targetId, selectedValue) {
 	    const typeSelect = document.getElementById(selectId);
 	    const nameSelect = document.getElementById(targetId);
-	    
+
 	    if (!typeSelect || !nameSelect) return;
-	    
+
 	    const selectedType = typeSelect.value;
-	    
+
 	    // 経費名称セレクトボックスをクリア
 	    nameSelect.innerHTML = '<option value="">選択してください</option>';
-	    
+
 	    // 選択された種別に対応する経費名称を追加
 	    if (selectedType && expenseTypeGroups[selectedType]) {
 	        expenseTypeGroups[selectedType].forEach(function(item) {
@@ -258,10 +258,10 @@ tr:nth-child(even) {
 	        });
 	    }
 	}
-	
+
 	/**
 	* 経費データの行内編集処理を行う
-	* 
+	*
 	* @param {string} expensesID - 経費ID
 	* @details
 	* - 画像のプレビュー機能あり
@@ -313,7 +313,7 @@ tr:nth-child(even) {
 
 	   // 経費名称の編集フォーム生成
 	   colExpenseName.innerHTML = '<select id="editExpenseName_'+expensesID+'"><option value="">選択してください</option></select>';
-	   
+
 	   // 経費名称のオプションを設定
 	   setTimeout(function() {
 	       updateExpenseNameOptions('editExpensesType_'+expensesID, 'editExpenseName_'+expensesID, originalExpenseId);
@@ -343,7 +343,7 @@ tr:nth-child(even) {
 	   let selCash="", selAcct="";
 	   if (originalSettlType==="現金") selCash="selected";
 	   else if (originalSettlType==="口座") selAcct="selected";
-	   
+
 	   colSettlementType.innerHTML =
 	       '<select id="editSettlementType_'+expensesID+'">' +
 	           '<option value=""></option>' +
@@ -354,9 +354,9 @@ tr:nth-child(even) {
 	   // 領収書画像の処理
 	   let thumbHTML = "";
 	   let oldThumbSrc = "";
-	   const imgTag = colReceipt.querySelector("img.thumb-img"); 
+	   const imgTag = colReceipt.querySelector("img.thumb-img");
 	   if (imgTag) {
-	       oldThumbSrc = imgTag.getAttribute("src"); 
+	       oldThumbSrc = imgTag.getAttribute("src");
 	       thumbHTML =
 	         '<img id="previewImg_'+expensesID+'" class="thumb-img" src="'+oldThumbSrc+'" alt="receipt">';
 	   } else {
@@ -375,7 +375,7 @@ tr:nth-child(even) {
 	       '<button type="button" onclick="confirmEdit(\''+expensesID+'\')">確定</button>'+
 	       '<button type="button" onclick="cancelEdit(\''+expensesID+'\')">キャンセル</button>';
 	}
-	
+
 	/**
 	* 日付文字列をHTML5の日付入力形式（yyyy-MM-dd）に変換する
 	*
@@ -402,20 +402,20 @@ tr:nth-child(even) {
 
 	   return val;
 	}
-	
+
 	/**
 	* ファイル選択ダイアログを表示する
-	* 
+	*
 	* @param {string} expensesID - 経費ID
 	* @details 非表示のファイル入力欄をクリックして表示
 	*/
 	function triggerFileSelect(expensesID) {
 	   document.getElementById("editReceiptFile_"+expensesID).click();
 	}
-	
+
 	/**
 	* 選択されたファイルの処理とプレビュー表示を行う
-	* 
+	*
 	* @param {string} expensesID - 経費ID
 	* @details
 	* - 画像ファイルの場合はプレビュー表示
@@ -442,19 +442,19 @@ tr:nth-child(even) {
 	       previewImg.style.display="none";
 	   }
 	}
-	
+
 	/**
 	* 編集をキャンセルし、画面を再読み込みする
-	* 
+	*
 	* @param {string} expensesID - 経費ID
 	*/
 	function cancelEdit(expensesID) {
 	   window.location.reload();
 	}
-	
+
 	/**
 	* 経費データの更新処理を実行する
-	* 
+	*
 	* @param {string} expensesID - 経費ID
 	* @details
 	* - 必須入力項目の検証
@@ -527,10 +527,10 @@ tr:nth-child(even) {
 	       alert("更新失敗: "+err.message);
 	   });
 	}
-	
+
 	/**
 	* 領収書ファイルのダウンロード処理を実行する
-	* 
+	*
 	* @param {string} expensesID - 経費ID
 	* @details IDの存在チェック後、ダウンロードを実行
 	*/
@@ -541,10 +541,10 @@ tr:nth-child(even) {
 	   }
 	   window.location.href = '${pageContext.request.contextPath}/expenseList/downloadReceipt/' + expensesID;
 	}
-	
+
 	/**
 	* 経費データの削除処理を実行する
-	* 
+	*
 	* @param {string} expensesID - 経費ID
 	* @details
 	* - 精算済みデータは削除不可
@@ -570,10 +570,10 @@ tr:nth-child(even) {
 	       location.href = "${pageContext.request.contextPath}/expenseList/delete/" + expensesID;
 	   }
 	}
-	
+
 	/**
 	* アップロードファイルのサイズ検証を行う
-	* 
+	*
 	* @param {HTMLInputElement} input - ファイル入力要素
 	* @param {number} maxMB - 許容最大サイズ（MB単位）
 	* @details
@@ -584,7 +584,7 @@ tr:nth-child(even) {
 	   if (input.files && input.files[0]) {
 	       // ファイルサイズをMB単位で計算
 	       const size = input.files[0].size / 1024 / 1024;
-	       
+
 	       // サイズ制限チェック
 	       if (size > maxMB) {
 	           alert("ファイルサイズは"+maxMB+"MB以下にしてください。");

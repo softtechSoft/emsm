@@ -23,6 +23,7 @@ table {
 	width: 100%;
 	margin-top: 30px;
 	border-collapse: collapse;
+	table-layout: fixed;
 }
 
 th, td {
@@ -34,6 +35,49 @@ th, td {
 
 th {
 	background-color: #f2f2f2;
+}
+
+/* 各列幅設定 */
+th:nth-child(1), td:nth-child(1) { width: 12%; }  /* 経費種別 */
+th:nth-child(2), td:nth-child(2) { width: 12%; }  /* 経費名称 */
+th:nth-child(3), td:nth-child(3) { width: 10%; }  /* 発生日付 */
+th:nth-child(4), td:nth-child(4) { width: 12%; }  /* 金額 */
+th:nth-child(5), td:nth-child(5) { width: 25%; }  /* 用途 */
+th:nth-child(6), td:nth-child(6) { width: 8%; }   /* 担当者 */
+th:nth-child(7), td:nth-child(7) { width: 10%; }  /* 精算日付 */
+th:nth-child(8), td:nth-child(8) { width: 8%; }   /* 精算種別 */
+th:nth-child(9), td:nth-child(9) { width: 8%; }   /* 画像 */
+th:nth-child(10), td:nth-child(10) { width: 8%; } /* 操作 */
+
+/* 入力項目・選択項目の共通スタイル */
+td input[type="text"],
+td input[type="number"],
+td input[type="date"],
+td select {
+   box-sizing: border-box;
+   padding: 5px;
+   border: 1px solid #ccc;
+   width: calc(100% - 10px);
+   max-width: 100%;
+}
+
+/* 特定入力項目のスタイル調整 */
+.expensesType, .expenseName {
+   width: calc(100% - 10px) !important;
+}
+.accrualDate, .settlementDate {
+   width: calc(100% - 10px) !important;
+}
+.settlementType {
+   width: calc(100% - 10px) !important;
+}
+
+/* 特定入力項目の幅調整 */
+.happenAddress {
+   width: calc(100% - 10px) !important;
+}
+.cost {
+   width: calc(100% - 30px) !important;
 }
 
 .error-message {
@@ -64,6 +108,7 @@ button {
 .hidden-file-input {
 	display: none;
 }
+
 </style>
 </head>
 <body>
@@ -84,12 +129,12 @@ button {
 					<th>経費種別</th>
 					<th>経費名称</th>
 					<th>発生日付</th>
-					<th>金額</th>
+					<th>金額(円)</th>
 					<th>用途</th>
 					<th>担当者</th>
 					<th>精算日付</th>
 					<th>精算種別</th>
-					<th>画像</th>
+					<th>証跡</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -120,13 +165,13 @@ button {
 			]<c:if test="${!status.last}">,</c:if>
 		</c:forEach>
 	};
-	
+
 	/**
 	* 未保存データの有無を管理するフラグ
 	* @type {boolean}
 	*/
 	let unsavedData = false;
-	
+
 	/**
 	* 行番号を管理するカウンター
 	*/
@@ -148,20 +193,20 @@ button {
 
 	/**
 	* 経費種別が変更されたときに経費名称のオプションを更新する
-	* 
+	*
 	* @param {string} rowId - 行ID
 	*/
 	function updateExpenseNameOptions(rowId) {
 	    const typeSelect = document.getElementById('expensesType_' + rowId);
 	    const nameSelect = document.getElementById('expenseName_' + rowId);
-	    
+
 	    if (!typeSelect || !nameSelect) return;
-	    
+
 	    const selectedType = typeSelect.value;
-	    
+
 	    // 経費名称セレクトボックスをクリア
 	    nameSelect.innerHTML = '<option value="">選択してください</option>';
-	    
+
 	    // 選択された種別に対応する経費名称を追加
 	    if (selectedType && expenseTypeGroups[selectedType]) {
 	        expenseTypeGroups[selectedType].forEach(function(item) {
@@ -175,7 +220,7 @@ button {
 
 	/**
 	* アップロードファイルのサイズ検証を行う
-	* 
+	*
 	* @param {HTMLInputElement} input - ファイル入力要素
 	* @param {number} maxMB - 許容最大サイズ（MB単位）
 	* @returns {boolean} 検証結果（true: OK、false: NG）
@@ -194,7 +239,7 @@ button {
 
 	/**
 	* 経費入力用の新規行を追加する
-	* 
+	*
 	* @details
 	* - 経費種別、経費名称は選択式（マスターデータから取得）
 	* - 発生日付、金額、用途、担当者は必須入力
@@ -205,7 +250,7 @@ button {
 	   // 行IDの生成
 	   rowCounter++;
 	   const rowId = rowCounter;
-	   
+
 	   // テーブルボディの取得
 	   const tableBody = document.getElementById("expenseTableBody");
 	   const newRow = document.createElement("tr");
@@ -235,7 +280,7 @@ button {
 
 	   // 金額セルの生成
 	   const cell4 = document.createElement("td");
-	   cell4.innerHTML = '<input type="number" step="0.01" class="cost" required />円';
+	   cell4.innerHTML = '<input type="number" step="0.01" class="cost" required />';
 	   newRow.appendChild(cell4);
 
 	   // 用途セルの生成
@@ -272,7 +317,7 @@ button {
 	           onchange="onFileSelected(this)" />
 	       <button type="button"
 	           onclick="this.previousElementSibling.click();">
-	           ファイル選択
+	           証跡
 	       </button>
 	       <img class="thumb-img" alt="プレビュー" />
 	   `;
@@ -290,13 +335,13 @@ button {
 
 	/**
 	* 行を削除する
-	* 
+	*
 	* @param {number} rowId - 削除する行のID
 	*/
 	function deleteRow(rowId) {
 	   const row = document.getElementById("row_" + rowId);
 	   if (!row) return;
-	   
+
 	   // 行内の入力値チェック
 	   let hasData = false;
 	   row.querySelectorAll("input, select").forEach(el => {
@@ -304,12 +349,12 @@ button {
 	           hasData = true;
 	       }
 	   });
-	   
+
 	   // データが存在する場合は削除確認
 	   if (hasData && !confirm("該当行を削除します。よろしいですか？")) {
 	       return;
 	   }
-	   
+
 	   // 行の削除と状態更新
 	   row.remove();
 	   unsavedData = true;
@@ -317,7 +362,7 @@ button {
 
 	/**
 	* ファイル選択時の処理を実行する
-	* 
+	*
 	* @param {HTMLInputElement} input - ファイル入力要素
 	* @details
 	* - ファイルサイズの上限は5MB
@@ -354,7 +399,7 @@ button {
 
 	/**
 	* 確定ボタンクリック時の保存処理を実行する
-	* 
+	*
 	* @details
 	* - 必須項目: 経費種別、経費名称、発生日付、金額、用途、担当者
 	* - 任意項目: 精算日付、精算種別、領収書画像
@@ -389,8 +434,8 @@ button {
 	           };
 
 	           // 必須項目の入力チェック
-	           if (!expenseData.expensesType || !expenseData.mexpensesId || 
-	               !expenseData.accrualDate || !expenseData.cost || 
+	           if (!expenseData.expensesType || !expenseData.mexpensesId ||
+	               !expenseData.accrualDate || !expenseData.cost ||
 	               !expenseData.happenAddress || !expenseData.tantouName) {
 	               alert("経費種別、経費名称、発生日付、金額、用途、担当者は必須項目です。");
 	               return;
@@ -449,7 +494,7 @@ button {
 
 	/**
 	* 戻るボタンクリック時の処理を実行する
-	* 
+	*
 	* @details
 	* - 未保存データがある場合は確認ダイアログを表示
 	* - 確認後、一覧画面に遷移
@@ -459,7 +504,7 @@ button {
 	   if (unsavedData && !confirm("まだ保存していないデータがあります。放棄してよろしいですか？")) {
 	       return;
 	   }
-	   
+
 	   // 一覧画面へ遷移
 	   location.href = '${pageContext.request.contextPath}/expenseList';
 	});

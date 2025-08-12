@@ -95,6 +95,10 @@ public class SalaryListController {
 			// DBから社員IDの対象年月の給料情報を取得
 			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
+			//税率を取得
+			//model.addAttribute("welfarePensionRate", welfarefeeInfoEntity.getPensionInsuranceRate());
+			//model.addAttribute("welfareHealthRate", welfarefeeInfoEntity.getEmploymentInsuranceRate());
+
 			// 初期モードに設定
 			//salaryInfoBean.setGamenMode("0");
 			salaryInfoBean.setGamenMode("1");
