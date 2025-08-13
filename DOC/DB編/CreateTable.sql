@@ -664,7 +664,7 @@ INSERT INTO ems.ofcfunction (
 
 
 -- 経費種別マスタ表
-drop table if exists ems.expenses;
+drop table if exists ems.m_expenses;
 CREATE TABLE ems.m_expenses (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     expensesType VARCHAR(2) NOT NULL COMMENT '経費種別コード',
@@ -676,9 +676,10 @@ CREATE TABLE ems.m_expenses (
     insertDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
     updateDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時'
 ) COMMENT='経費種別マスタ';
-
+INSERT into m_expenses(expensesType,expensesTypeName,expenseName,deleteFlg,createdBy,updatedBy)
+values('01','一般経費','接待交際費',0,'','');
 -- 経費管理表
-drop table if exists ems.m_expenses;
+drop table if exists ems.expenses;
 CREATE TABLE ems.expenses (
     expensesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '経費ID',
     accrualDate DATE NOT NULL COMMENT '発生日',
@@ -914,3 +915,4 @@ ADD COLUMN rentalMgmtFee09 int DEFAULT 0 COMMENT '9月共益費',
 ADD COLUMN rentalMgmtFee10 int DEFAULT 0 COMMENT '10月共益費',
 ADD COLUMN rentalMgmtFee11 int DEFAULT 0 COMMENT '11月共益費',
 ADD COLUMN rentalMgmtFee12 int DEFAULT 0 COMMENT '12月共益費';
+
