@@ -681,7 +681,7 @@ values('01','一般経費','接待交際費',0,'','');
 -- 経費管理表
 drop table if exists ems.expenses;
 CREATE TABLE ems.expenses (
-    expensesID INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '経費ID',
+    expensesID VARCHAR(10) NOT NULL PRIMARY KEY COMMENT '経費ID',
     accrualDate DATE NOT NULL COMMENT '発生日',
     cost DECIMAL(15, 2) NOT NULL COMMENT '金額',
     tantouName VARCHAR(6) NOT NULL COMMENT '担当者',
