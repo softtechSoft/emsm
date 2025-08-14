@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softtech.entity.ExpenseListEntity;
+import com.softtech.entity.SaveFolder;
 import com.softtech.mappers.ExpenseListMapper;
+import com.softtech.util.DataUtil;
 
 /**
  * 経費リストを管理するサービスクラス。
@@ -28,6 +30,8 @@ public class ExpenseListService {
 
     @Autowired
     private ExpenseListMapper expenseListMapper;
+    @Autowired
+	private SaveFolderService saveFolderService;
 
     @Value("${file.receipt.location}")
     private String configuredReceiptLocation;
@@ -37,6 +41,7 @@ public class ExpenseListService {
     public Path getReceiptFolderPath() {
         return this.receiptFolderPath;
     }
+
 
     /**
     * アプリケーション起動時に領収書保存用ディレクトリの初期設定を行う
@@ -51,8 +56,11 @@ public class ExpenseListService {
     public void init() {
        try {
 
+    	    SaveFolder saveFolder = saveFolderService.findFileTypeCode("01");
+    	    String baseDir = saveFolder.getSaveFolder();
+
            // 設定ファイルのパスを正規化
-           Path path = Paths.get(configuredReceiptLocation).normalize();
+           Path path = Paths.get(baseDir).normalize();
 
            // 相対パスの場合は実行ディレクトリを基準に解決
            if (!path.isAbsolute()) {
@@ -79,7 +87,23 @@ public class ExpenseListService {
      * @return 経費リスト
      */
     public List<ExpenseListEntity> findExpensesByYearMonth(int year, int month) {
-        return expenseListMapper.findByYearMonth(year, month);
+//        return expenseListMapper.findByYearMonth(year, month);
+    	List<ExpenseListEntity> expList = expenseListMapper.findByYearMonth(year, month);;
+    	for(ExpenseListEntity exp : expList) {
+            // 如果需要提取文件名，处理 receiptPath
+            if(exp.getReceiptPath() != null && !exp.getReceiptPath().isEmpty()) {
+                String fileName = extractFileName(exp.getReceiptPath());
+                exp.setReceiptPath(fileName);
+            }
+        }
+
+        return expList;
+    }
+    /**
+     * 从完整路径中提取文件名
+     */
+    private String extractFileName(String fullPath) {
+        return Paths.get(fullPath).getFileName().toString();
     }
 
     /**
@@ -205,5 +229,24 @@ public class ExpenseListService {
        // 相対パスを返却
        return "ems_files/receipt/" + newFileName;
     }
+
+    /**
+     * 最大値
+     *
+     * @param
+     */
+    public String getMaxExpensesID() {
+
+		String maxExpensesID = expenseListMapper.getMaxExpensesID();
+
+        if (maxExpensesID != null) {
+        	maxExpensesID = maxExpensesID.toUpperCase();
+        }
+        String nextExpensesID = DataUtil.getNextID(maxExpensesID, 2);
+//          return nextEmployeeID;
+        return nextExpensesID != null ? nextExpensesID.toUpperCase() : null;
+
+
+	}
 
 }

@@ -8,7 +8,7 @@
 <title>経費管理</title>
 <style>
 .table-container {
-	width: 90%;
+	width: 95%;
 	margin: 0 auto;
 	margin-bottom: 20px;
 }
@@ -161,9 +161,11 @@ tr:nth-child(even) {
                                             なし
                                         </c:when>
 										<c:otherwise>
-											<img class="thumb-img"
+											<!--<img class="thumb-img"
 												src="${pageContext.request.contextPath}/expenseList/showThumbnail?path=${expense.receiptPath}"
-												alt="receipt" />
+												alt="receipt" />-->
+											<c:out
+										value="${expense.receiptPath}"/>
 											<button type="button"
 												onclick="downloadReceipt('${expense.expensesID}')">
 												ダウンロード</button>

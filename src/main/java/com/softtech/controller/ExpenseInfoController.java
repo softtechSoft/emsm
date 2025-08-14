@@ -35,7 +35,7 @@ public class ExpenseInfoController {
 
 	@Autowired
 	private ExpenseListService expenseListService;
-	
+
 	@Autowired
 	private ExpenseTypeService expenseTypeService;
 
@@ -49,7 +49,7 @@ public class ExpenseInfoController {
 	    // 経費種別データを取得
 		Map<String, List<ExpenseTypeEntity>> expenseTypeGroups = expenseTypeService.getAllExpenseTypesByGroup();
 	    model.addAttribute("expenseTypeGroups", expenseTypeGroups);
-	    
+
 	    return "expenseInfo";
 	}
 
@@ -111,10 +111,6 @@ public class ExpenseInfoController {
 	 * - ファイル形式がJPG、PNG、PDFのいずれかであることを確認
 	 */
 	private void validateFile(MultipartFile file) {
-	    // ファイルサイズの検証（上限5MB）
-	    if (file.getSize() > 5 * 1024 * 1024) {
-	        throw new IllegalArgumentException("ファイルサイズは5MB以下にしてください。");
-	    }
 
 	    // ファイル形式の検証（JPG、PNG、PDF のみ許可）
 	    String contentType = file.getContentType();

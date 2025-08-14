@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper 
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.softtech.mappers.ExpenseListMapper">
@@ -79,9 +79,9 @@
 
     <!-- 新規経費レコードの挿入 -->
     <insert id="insert"
-        parameterType="com.softtech.entity.ExpenseListEntity"
-        useGeneratedKeys="true" keyProperty="expensesID">
+        parameterType="com.softtech.entity.ExpenseListEntity">
         INSERT INTO ems.expenses (
+            expensesID,
             accrualDate,
             cost,
             tantouName,
@@ -94,6 +94,7 @@
             m_expenses_id
         )
         VALUES (
+        	#{expensesID},
             #{accrualDate},
             #{cost},
             #{tantouName},
@@ -106,5 +107,10 @@
             #{mexpensesId}
         )
     </insert>
+
+    <!-- 查询当前最大支付ID -->
+    <select id="getMaxExpensesID" resultType="string">
+        SELECT MAX(expensesID) FROM expenses
+    </select>
 
 </mapper>

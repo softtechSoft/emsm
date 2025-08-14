@@ -8,7 +8,7 @@
 <title>経費新規追加</title>
 <style>
 .table-container {
-	width: 90%;
+	width: 95%;
 	margin: 0 auto;
 	margin-bottom: 20px;
 }
@@ -28,7 +28,7 @@ table {
 
 th, td {
 	border: 2px solid #b3cbde;
-	padding: 15px;
+	padding: 5px;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -38,16 +38,16 @@ th {
 }
 
 /* 各列幅設定 */
-th:nth-child(1), td:nth-child(1) { width: 12%; }  /* 経費種別 */
-th:nth-child(2), td:nth-child(2) { width: 12%; }  /* 経費名称 */
-th:nth-child(3), td:nth-child(3) { width: 10%; }  /* 発生日付 */
-th:nth-child(4), td:nth-child(4) { width: 12%; }  /* 金額 */
+th:nth-child(1), td:nth-child(1) { width: 10%; }  /* 経費種別 */
+th:nth-child(2), td:nth-child(2) { width: 10%; }  /* 経費名称 */
+th:nth-child(3), td:nth-child(3) { width: 15%; }  /* 発生日付 */
+th:nth-child(4), td:nth-child(4) { width: 10%; }  /* 金額 */
 th:nth-child(5), td:nth-child(5) { width: 25%; }  /* 用途 */
 th:nth-child(6), td:nth-child(6) { width: 8%; }   /* 担当者 */
-th:nth-child(7), td:nth-child(7) { width: 10%; }  /* 精算日付 */
+th:nth-child(7), td:nth-child(7) { width: 15%; }  /* 精算日付 */
 th:nth-child(8), td:nth-child(8) { width: 8%; }   /* 精算種別 */
-th:nth-child(9), td:nth-child(9) { width: 8%; }   /* 画像 */
-th:nth-child(10), td:nth-child(10) { width: 8%; } /* 操作 */
+th:nth-child(9), td:nth-child(9) { width: 5%; }   /* 画像 */
+th:nth-child(10), td:nth-child(10) { width: 5%; } /* 操作 */
 
 /* 入力項目・選択項目の共通スタイル */
 td input[type="text"],
@@ -63,21 +63,21 @@ td select {
 
 /* 特定入力項目のスタイル調整 */
 .expensesType, .expenseName {
-   width: calc(100% - 10px) !important;
+   width: calc(100% - 5px) !important;
 }
 .accrualDate, .settlementDate {
-   width: calc(100% - 10px) !important;
+   width: calc(100% - 5px) !important;
 }
 .settlementType {
-   width: calc(100% - 10px) !important;
+   width: calc(100% - 5px) !important;
 }
 
 /* 特定入力項目の幅調整 */
 .happenAddress {
-   width: calc(100% - 10px) !important;
+   width: calc(100% - 5px) !important;
 }
 .cost {
-   width: calc(100% - 30px) !important;
+   width: calc(100% - 5px) !important;
 }
 
 .error-message {
@@ -259,7 +259,7 @@ button {
 	   // 経費種別セルの生成
 	   const cell1 = document.createElement("td");
 	   let typeOptions = '<select id="expensesType_' + rowId + '" class="expensesType" required onchange="updateExpenseNameOptions(' + rowId + ')">';
-	   typeOptions += '<option value="">選択してください</option>';
+	   typeOptions += '<option value="">選択</option>';
 	   for (let typeCode in expenseTypeGroups) {
 	       const typeName = expenseTypeGroups[typeCode][0].expensesTypeName;
 	       typeOptions += '<option value="' + typeCode + '">' + typeName + '</option>';
@@ -270,7 +270,7 @@ button {
 
 	   // 経費名称セルの生成
 	   const cell2 = document.createElement("td");
-	   cell2.innerHTML = '<select id="expenseName_' + rowId + '" class="expenseName" required><option value="">選択してください</option></select>';
+	   cell2.innerHTML = '<select id="expenseName_' + rowId + '" class="expenseName" required><option value="">選択</option></select>';
 	   newRow.appendChild(cell2);
 
 	   // 発生日付セルの生成
@@ -280,7 +280,7 @@ button {
 
 	   // 金額セルの生成
 	   const cell4 = document.createElement("td");
-	   cell4.innerHTML = '<input type="number" step="0.01" class="cost" required />';
+	   cell4.innerHTML = '<input type="text" class="cost" required />';
 	   newRow.appendChild(cell4);
 
 	   // 用途セルの生成

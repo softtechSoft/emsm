@@ -19,7 +19,9 @@ import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.SalarylistBean2;
 import com.softtech.common.AutoSalaryRtn;
 import com.softtech.common.SalaryInfoRecord;
+import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
+import com.softtech.mappers.SalarylistMapper;
 import com.softtech.service.SalaryInfoService;
 import com.softtech.service.SalaryListService;
 import com.softtech.util.DateUtil;
@@ -38,6 +40,8 @@ public class SalaryListController {
 	SalaryListService salarylistService;
 	@Autowired
 	SalaryInfoService salaryInfoService;
+	@Autowired
+	SalarylistMapper salarylistMapper;
 
 	/**
 	 *    給料リスト画面初期処理
@@ -98,6 +102,22 @@ public class SalaryListController {
 			//税率を取得
 			//model.addAttribute("welfarePensionRate", welfarefeeInfoEntity.getPensionInsuranceRate());
 			//model.addAttribute("welfareHealthRate", welfarefeeInfoEntity.getEmploymentInsuranceRate());
+			String time = salarylistBean2.getMonth();
+			String year = time.substring(0, 4);
+			EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
+			if(emplyinsrateInfoEntity==null) {
+				model.addAttribute("laborBurdenRate", 0.001);
+				model.addAttribute("employerBurdenRate", 0.002);
+				model.addAttribute("industrialAccidentInsuranceRate", 0.003);
+				model.addAttribute("employmentInsurance", 0.004);
+			}else {
+
+				model.addAttribute("laborBurdenRate", emplyinsrateInfoEntity.getLaborBurdenRate());
+				model.addAttribute("employerBurdenRate", emplyinsrateInfoEntity.getEmployerBurdenRate());
+				model.addAttribute("industrialAccidentInsuranceRate", emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate());
+				model.addAttribute("employmentInsurance", emplyinsrateInfoEntity.getEmplyinsrate());
+			}
+
 
 			// 初期モードに設定
 			//salaryInfoBean.setGamenMode("0");

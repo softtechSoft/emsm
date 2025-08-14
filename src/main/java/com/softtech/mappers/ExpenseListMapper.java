@@ -52,4 +52,11 @@ public interface ExpenseListMapper {
 	 * @param expense 挿入する新しい経費エンティティ
 	 */
 	void insert(ExpenseListEntity expense);
+
+	/**
+	 * 最大値を取得。
+	 *
+	 * @param
+	 */
+	String getMaxExpensesID();
 }

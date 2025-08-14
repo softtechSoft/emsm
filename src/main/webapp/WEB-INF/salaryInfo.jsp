@@ -18,7 +18,6 @@ function doMake(){
 	var make =document.getElementById("make");
 	make.value= "1";
 
-
 	document.theForm.submit();
 }
 
@@ -78,11 +77,10 @@ function init(){
 
 //登録処理
 function doRegist(){
-
 	//登録処理に設定する。1:作成処理、2:登録処理
 	var make =document.getElementById('make');
 	make.value= "2";
-
+	setSum();
 	document.theForm.submit();
 }
 //数値表示方を変更する。２０００→２，０００
@@ -90,16 +88,18 @@ function chageNumberDisp(textObject){
 	var num = textObject.value;
 	num=toNumberDisp(num);
 	textObject.value = String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-	setSum();
+	
 }
 
 //総額、総費用を再計算
 function setSum(){
 	//税率を設定
-	 var laborBurden = 0.003;  //雇用保険個人負担
-	 var employerBurden = 0.006;  //雇用保険会社負担
-	 var employmentInsurance = 0.003;  //雇用保拠出金（会社)
-	 var industrialAccidentInsurance = 0.001;  //労災保険（会社負担のみ）
+	var laborBurden = toNumberDisp(document.getElementById('laborBurdenRate').value);  // 雇用保険個人負担
+    var employerBurden = toNumberDisp(document.getElementById('employerBurdenRate').value);  // 雇用保険会社負担
+    var employmentInsurance = toNumberDisp(document.getElementById('employmentInsurance').value);  // 雇用保拠出金（会社)
+    var industrialAccidentInsurance = toNumberDisp(document.getElementById('industrialAccidentInsuranceRate').value);  // 労災保険（会社負担のみ）
+    
+	 
 
 	//基本給の値を取得
 	var base = document.getElementById('base').value;
@@ -153,6 +153,7 @@ function setSum(){
 	//数字化する
 	//eplyInsSelf=toNumberDisp(eplyInsSelf);
 	eplyInsSelf=hoKenSalary * laborBurden;
+	document.getElementById('eplyInsSelf').value=eplyInsSelf;
 
 	//源泉控除の値を取得
 	var withholdingTax = document.getElementById('withholdingTax').value;
@@ -234,18 +235,21 @@ function setSum(){
 	//数字化する
 	//eplyInsComp=toNumberDisp(eplyInsComp);
 	eplyInsComp=hoKenSalary * employerBurden;
+	document.getElementById('eplyInsComp').value=eplyInsComp;
 
 	//一般拠出金（会社のみ)の値を取得(対象額)
 	var eplyInsWithdraw = document.getElementById('eplyInsWithdraw').value;
 	//数字化する
 	//eplyInsWithdraw=toNumberDisp(eplyInsWithdraw);
 	eplyInsWithdraw=hoKenSalary * employmentInsurance;
+	document.getElementById('eplyInsWithdraw').value=eplyInsWithdraw;
 
 	//労災保険（会社負担のみ）の値を取得(対象額)
 	var wkAcccpsIns = document.getElementById('wkAcccpsIns').value;
 	//数字化する
 	//wkAcccpsIns=toNumberDisp(wkAcccpsIns);
 	wkAcccpsIns=hoKenSalary * industrialAccidentInsurance;
+	document.getElementById('wkAcccpsIns').value=wkAcccpsIns;
 
 	//総費用を計算し、設定する。
 	//．総費用 = 基本給
@@ -311,10 +315,12 @@ function validateTimeInput(input) {
 	<input type="hidden" id="make" name="make" />
 	<!--input入力できるかどうか、判断用データ -->
 	<input type="hidden" id="gamenMode" name="gamenMode" value="${salaryInfoBean.gamenMode}"/>
+	
 	<!-- 其他费率也类似添加 -->
-	<input type="hidden" id="welfarePensionRate" value="${welfarePensionRate}">
-	<input type="hidden" id="welfareHealthRate" value="${welfareHealthRate}">
 	<input type="hidden" id="laborBurdenRate" value="${laborBurdenRate}">
+	<input type="hidden" id="employerBurdenRate" value="${employerBurdenRate}">
+	<input type="hidden" id="industrialAccidentInsuranceRate" value="${industrialAccidentInsuranceRate}">
+	<input type="hidden" id="employmentInsurance" value="${employmentInsurance}">
 	<!--エラーメッセージ-->
  	<p style="color: red;">
     	<c:forEach  items="${errors}" var="error">　　　　　　　

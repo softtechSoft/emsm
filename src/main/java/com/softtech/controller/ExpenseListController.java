@@ -37,6 +37,7 @@ import com.softtech.entity.ExpenseListEntity;
 import com.softtech.entity.ExpenseTypeEntity;
 import com.softtech.service.ExpenseListService;
 import com.softtech.service.ExpenseTypeService;
+import com.softtech.service.SaveFolderService;
 
 /**
  * 経費リストの管理を行うコントローラクラス。
@@ -52,6 +53,8 @@ public class ExpenseListController {
 	private ExpenseListService expenseListService;
 	@Autowired
 	private ExpenseTypeService expenseTypeService;
+	@Autowired
+	private SaveFolderService saveFolderService;
 
 	/**
 	 * 現在の年と月に基づいて経費データを初期表示する。
@@ -281,21 +284,24 @@ public class ExpenseListController {
 	            return ResponseEntity.notFound().build();
 	        }
 
-	        // 設定された保存先ディレクトリのパスを取得
-	        String baseDir = receiptFolder;
-	        if (!baseDir.endsWith(File.separator)) {
-	            baseDir += File.separator;
-	        }
+//	        // 設定された保存先ディレクトリのパスを取得
+//	        String baseDir = receiptFolder;
+////	        SaveFolder saveFolder = saveFolderService.findTypeAbbrName("経費管理");
+////	        String baseDir = saveFolder.getSaveFolder();
+//	        if (!baseDir.endsWith(File.separator)) {
+//	            baseDir += File.separator;
+//	        }
 
 	        // データベースの相対パスからファイルの完全パスを構築
 	        String dbPath = expense.getReceiptPath();
 	        // パスからファイル名部分を抽出（最後の/以降）
-	        String fileName = dbPath.substring(dbPath.lastIndexOf('/') + 1);
+	        String datefileName = dbPath.substring(dbPath.lastIndexOf('/') + 1);
+	        String fileName = datefileName.substring(datefileName.lastIndexOf('\\') + 1);
 	        // 完全なファイルパスを構築
-	        String fullPath = baseDir + fileName;
+//	        String fullPath = baseDir + fileName;
 
 	        // ファイルの存在確認
-	        File file = new File(fullPath);
+	        File file = new File(dbPath);
 	        if (!file.exists() || !file.isFile()) {
 	            return ResponseEntity.notFound().build();
 	        }
@@ -312,7 +318,7 @@ public class ExpenseListController {
 	        return ResponseEntity.ok()
 	                .contentType(MediaType.APPLICATION_OCTET_STREAM)
 	                .contentLength(file.length())
-	                .header(HttpHeaders.CONTENT_DISPOSITION, 
+	                .header(HttpHeaders.CONTENT_DISPOSITION,
 	                        "attachment; filename=\"" + encodedFileName + "\"")
 	                .body(resource);
 
@@ -369,7 +375,7 @@ public class ExpenseListController {
 					.body("サムネイル表示中にエラーが発生しました: " + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 特定の経費種別に属する経費名称リストを取得する（Ajax用）
 	 *
@@ -382,7 +388,7 @@ public class ExpenseListController {
 	    try {
 	        // 特定種別の経費名称リストを取得
 	        Map<String, List<ExpenseTypeEntity>> typeGroup = expenseTypeService.getExpenseTypesByType(expensesType);
-	        
+
 	        if (typeGroup.containsKey(expensesType)) {
 	            return ResponseEntity.ok(typeGroup.get(expensesType));
 	        } else {

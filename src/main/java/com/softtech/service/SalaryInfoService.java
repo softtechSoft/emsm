@@ -3,6 +3,7 @@ package com.softtech.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.FieldError;
@@ -92,14 +93,26 @@ public class SalaryInfoService {
 			errorlst.add(err1);
 		}
 		// 残業時間数字チェック。
-		if(DateUtil.isNumeric(salaryInfoBean.getOverTime())) {
-			FieldError err2 = new FieldError("", "", "残業時間が数字を入力してください。例：20");
-			errorlst.add(err2);
+//		if(DateUtil.isNumeric(salaryInfoBean.getOverTime())) {
+//			FieldError err2 = new FieldError("", "", "残業時間が数字を入力してください。例：20");
+//			errorlst.add(err2);
+//		}
+		// 残業時間数字チェック（正の整数または小数）
+		String overTime = salaryInfoBean.getOverTime();
+		if (!NumberUtils.isParsable(overTime) || Double.parseDouble(overTime) < 0) {
+		    FieldError err2 = new FieldError("", "", "残業時間は正の数字（整数または小数）で入力してください。例：20 または 1.5");
+		    errorlst.add(err2);
 		}
 		// 不足時間数字チェック。
-		if(DateUtil.isNumeric(salaryInfoBean.getShortage())) {
-			FieldError err3= new FieldError("", "", "不足時間が数字を入力してください。例：20");
-			errorlst.add(err3);
+//		if(DateUtil.isNumeric(salaryInfoBean.getShortage())) {
+//			FieldError err3= new FieldError("", "", "不足時間が数字を入力してください。例：20");
+//			errorlst.add(err3);
+//		}
+		// 不足時間数字チェック（正の整数または小数）
+		String shortage = salaryInfoBean.getShortage();
+		if (!NumberUtils.isParsable(shortage) || Double.parseDouble(shortage) < 0) {
+		    FieldError err3 = new FieldError("", "", "不足時間は正の数字（整数または小数）で入力してください。例：20 または 1.5");
+		    errorlst.add(err3);
 		}
 		// 残業加算数字チェック。
 		if(DateUtil.isNumeric(salaryInfoBean.getOverTimePlus())) {;
