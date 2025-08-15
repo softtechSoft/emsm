@@ -302,30 +302,6 @@ updateEmployee varchar(6) comment'更新者',
 primary key(employeeID,startDate)
 )comment'福祉情報';
 
-drop table if exists expenses;
-create table expenses
-(
-    expensesID         varchar(10) NOT NULL PRIMARY KEY COMMENT '経費ID',
-    accrualDate        varchar(8)  not null comment '発生日',
-    cost               int(6)      not null not null comment '金額',
-    tantouName         varchar(6)  not null comment '担当者',
-    confirmStaus       varchar(1)  not null comment '承認ステータス',
-    confirmDate        varchar(8)  not null comment '承認日',
-    confirmerID        varchar(6)  not null comment '承認者ID',
-    confirmerName      varchar(6)  not null comment '承認者',
-    stmtlStaus         varchar(1)  not null comment '精算ステータス',
-    stmtlDate          varchar(8)  not null comment '精算日',
-    paymentType        varchar(1)  not null comment '出金タイプ',
-    insertID           varchar(6)  not null comment '作成者ID',
-    insertDate         varchar(8)  not null comment '作成日',
-    updateID           varchar(6)  not null comment '更新者ID',
-    updateDate         varchar(8)  not null comment '更新日',
-    expensesType       varchar(2)  not null COMMENT '経費種別',
-    expensesTypeDetail varchar(2)  not null COMMENT '経費種別明細',
-    deleteFlg          varchar(2)  not null COMMENT '削除フラグ',
-    happenAddress      varchar(50) not null COMMENT '場所',
-    remark             varchar(50) not null COMMENT '備考'
-) comment '一般経費';
 
 drop table if exists m_basesalary;
 create table m_basesalary(
@@ -678,24 +654,6 @@ CREATE TABLE ems.m_expenses (
 ) COMMENT='経費種別マスタ';
 INSERT into m_expenses(expensesType,expensesTypeName,expenseName,deleteFlg,createdBy,updatedBy)
 values('01','一般経費','接待交際費',0,'','');
--- 経費管理表
-drop table if exists ems.expenses;
-CREATE TABLE ems.expenses (
-    expensesID VARCHAR(10) NOT NULL PRIMARY KEY COMMENT '経費ID',
-    accrualDate DATE NOT NULL COMMENT '発生日',
-    cost DECIMAL(15, 2) NOT NULL COMMENT '金額',
-    tantouName VARCHAR(6) NOT NULL COMMENT '担当者',
-    settlementType CHAR(1) DEFAULT NULL COMMENT '0:現金, 1:口座',
-    settlementDate DATE DEFAULT NULL COMMENT '精算日',
-    expensesType VARCHAR(2) NOT NULL COMMENT '経費種別コード',
-    m_expenses_id INT DEFAULT NULL COMMENT '経費種別明細ID（m_expensesのid）',
-    deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除',
-    happenAddress VARCHAR(255) NOT NULL COMMENT '用途',
-    receiptPath VARCHAR(255) DEFAULT NULL COMMENT '領収書画像ファイルのパス',
-
-    CONSTRAINT fk_expenses_m_expenses_id FOREIGN KEY (m_expenses_id) REFERENCES m_expenses(id)
-) COMMENT='経費管理';
-
 
 --経費管理画面をofcfunction表に挿入する
 INSERT INTO ems.ofcfunction (
@@ -915,4 +873,24 @@ ADD COLUMN rentalMgmtFee09 int DEFAULT 0 COMMENT '9月共益費',
 ADD COLUMN rentalMgmtFee10 int DEFAULT 0 COMMENT '10月共益費',
 ADD COLUMN rentalMgmtFee11 int DEFAULT 0 COMMENT '11月共益費',
 ADD COLUMN rentalMgmtFee12 int DEFAULT 0 COMMENT '12月共益費';
+
+--2025/08/15　下記リリース対象----
+-- 経費管理表
+drop table if exists ems.expenses;
+CREATE TABLE ems.expenses (
+    expensesID VARCHAR(10) NOT NULL PRIMARY KEY COMMENT '経費ID',
+    accrualDate DATE NOT NULL COMMENT '発生日',
+    cost DECIMAL(15, 2) NOT NULL COMMENT '金額',
+    tantouName VARCHAR(6) NOT NULL COMMENT '担当者',
+    settlementType CHAR(1) DEFAULT NULL COMMENT '0:現金, 1:口座',
+    settlementDate DATE DEFAULT NULL COMMENT '精算日',
+    expensesType VARCHAR(2) NOT NULL COMMENT '経費種別コード',
+    m_expenses_id INT DEFAULT NULL COMMENT '経費種別明細ID（m_expensesのid）',
+    deleteFlg CHAR(1) NOT NULL DEFAULT '0' COMMENT '0:未削除, 1:削除',
+    happenAddress VARCHAR(255) NOT NULL COMMENT '用途',
+    receiptPath VARCHAR(255) DEFAULT NULL COMMENT '領収書画像ファイルのパス',
+
+    CONSTRAINT fk_expenses_m_expenses_id FOREIGN KEY (m_expenses_id) REFERENCES m_expenses(id)
+) COMMENT='経費管理';
+
 
