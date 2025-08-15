@@ -892,6 +892,9 @@ CREATE TABLE ems.expenses (
 
     CONSTRAINT fk_expenses_m_expenses_id FOREIGN KEY (m_expenses_id) REFERENCES m_expenses(id)
 ) COMMENT='経費管理';
+-- 修正
+ALTER TABLE expenses MODIFY COLUMN cost DECIMAL(15,0) NOT NULL COMMENT '金額';
+
 
 DROP TABLE IF EXISTS ems.m_file;
 CREATE TABLE ems.m_file (
