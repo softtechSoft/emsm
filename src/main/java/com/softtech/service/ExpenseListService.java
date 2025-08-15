@@ -243,6 +243,7 @@ public class ExpenseListService {
         if (maxExpensesID != null) {
         	maxExpensesID = maxExpensesID.toUpperCase();
         	nextExpensesID = DataUtil.getNextID(maxExpensesID, 2);
+
         }
 
         return nextExpensesID != null ? nextExpensesID.toUpperCase() : null;
