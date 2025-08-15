@@ -8,7 +8,7 @@
 <title>経費管理</title>
 <style>
 .table-container {
-	width: 95%;
+	width: 100%;
 	margin: 0 auto;
 	margin-bottom: 20px;
 }
@@ -117,7 +117,7 @@ tr:nth-child(even) {
 					<th>担当者</th>
 					<th>精算日付</th>
 					<th>精算種別</th>
-					<th>画像</th>
+					<th>証跡</th>
 					<th>編集</th>
 					<th>削除</th>
 				</tr>
@@ -139,7 +139,7 @@ tr:nth-child(even) {
 								<td class="col-accrualDate"><c:out
 										value="${expense.accrualDate}" /></td>
 								<!-- 金額 -->
-								<td class="col-cost"><c:out value="${expense.cost}" />円</td>
+								<td class="col-cost"><c:out value="${expense.cost}" /></td>
 								<!-- 用途 -->
 								<td class="col-happenAddress"><c:out
 										value="${expense.happenAddress}" /></td>
@@ -327,7 +327,7 @@ tr:nth-child(even) {
 
 	   // 金額の編集フォーム生成
 	   colCost.innerHTML =
-	       '<input type="number" id="editCost_'+expensesID+'" value="'+originalCostTxt+'" step="1" style="width:60%;">円';
+	       '<input type="text" id="editCost_'+expensesID+'" value="'+originalCostTxt+'"  style="width:60%;">';
 
 	   // 用途の編集フォーム生成
 	   colHappenAddress.innerHTML =
@@ -354,23 +354,32 @@ tr:nth-child(even) {
 	       '</select>';
 
 	   // 領収書画像の処理
-	   let thumbHTML = "";
-	   let oldThumbSrc = "";
-	   const imgTag = colReceipt.querySelector("img.thumb-img");
-	   if (imgTag) {
-	       oldThumbSrc = imgTag.getAttribute("src");
-	       thumbHTML =
-	         '<img id="previewImg_'+expensesID+'" class="thumb-img" src="'+oldThumbSrc+'" alt="receipt">';
-	   } else {
-	       thumbHTML =
-	         '<img id="previewImg_'+expensesID+'" class="thumb-img" src="" style="display:none;" alt="receipt"><div>なし</div>';
-	   }
+   let thumbHTML = "";
+   let oldThumbSrc = "";
+   let currentFileName = "なし";
+   
+   // 既存のファイル名を取得
+   const receiptText = colReceipt.textContent.trim();
+   if (receiptText && receiptText !== "なし") {
+       currentFileName = receiptText.replace("ダウンロード", "").trim();
+   }
+   
+//    const imgTag = colReceipt.querySelector("img.thumb-img");
+//    if (imgTag) {
+//        oldThumbSrc = imgTag.getAttribute("src");
+//        thumbHTML =
+//          '<img id="previewImg_'+expensesID+'" class="thumb-img" src="'+oldThumbSrc+'" alt="receipt">';
+//    } else {
+//        thumbHTML =
+//          '<img id="previewImg_'+expensesID+'" class="thumb-img" src="" style="display:none;" alt="receipt">';
+//    }
 
-	   // 領収書更新フォームの生成
-	   colReceipt.innerHTML =
-	      thumbHTML+
-	      '<br/><button type="button" onclick="triggerFileSelect(\''+expensesID+'\')">更新</button>'+
-	      '<input type="file" id="editReceiptFile_'+expensesID+'" class="hidden-file-input" accept=".jpg,.jpeg,.png,.pdf" onchange="onFileChanged(\''+expensesID+'\')" />';
+   // 領収書更新フォームの生成
+   colReceipt.innerHTML =
+      thumbHTML+
+      '<div id="fileName_'+expensesID+'" style="margin-top:5px;">'+currentFileName+'</div>'+
+      '<br/><button type="button" onclick="triggerFileSelect(\''+expensesID+'\')">更新</button>'+
+      '<input type="file" id="editReceiptFile_'+expensesID+'" class="hidden-file-input" accept=".jpg,.jpeg,.png,.pdf" onchange="onFileChanged(\''+expensesID+'\')" />';
 
 	   // 操作ボタンの生成
 	   colEdit.innerHTML =
@@ -424,26 +433,33 @@ tr:nth-child(even) {
 	* - PDF等その他のファイルの場合はプレビューを非表示
 	*/
 	function onFileChanged(expensesID) {
-	   const fileInput = document.getElementById("editReceiptFile_"+expensesID);
-	   const previewImg= document.getElementById("previewImg_"+expensesID);
-	   if (!fileInput || !fileInput.files || fileInput.files.length===0) return;
+   const fileInput = document.getElementById("editReceiptFile_"+expensesID);
+   const previewImg= document.getElementById("previewImg_"+expensesID);
+   const fileNameDiv = document.getElementById("fileName_"+expensesID);
+   if (!fileInput || !fileInput.files || fileInput.files.length===0) return;
 
-	   const file = fileInput.files[0];
-	   const mime = file.type.toLowerCase();
-	   if (mime.includes("image/")) {
-	       // 画像ファイルのプレビュー表示
-	       const reader = new FileReader();
-	       reader.onload = e => {
-	           previewImg.src = e.target.result;
-	           previewImg.style.display = "block";
-	       };
-	       reader.readAsDataURL(file);
-	   } else {
-	       // 画像以外のファイルはプレビューを非表示
-	       previewImg.src="";
-	       previewImg.style.display="none";
-	   }
-	}
+   const file = fileInput.files[0];
+   const mime = file.type.toLowerCase();
+   
+   // ファイル名を表示
+   if (fileNameDiv) {
+       fileNameDiv.textContent = file.name;
+   }
+   
+   if (mime.includes("image/")) {
+       // 画像ファイルのプレビュー表示
+       const reader = new FileReader();
+       reader.onload = e => {
+           previewImg.src = e.target.result;
+           previewImg.style.display = "block";
+       };
+       reader.readAsDataURL(file);
+   } else {
+       // 画像以外のファイルはプレビューを非表示
+       previewImg.src="";
+       previewImg.style.display="none";
+   }
+}
 
 	/**
 	* 編集をキャンセルし、画面を再読み込みする

@@ -84,7 +84,8 @@ public class ExpenseListController {
 	    List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(currentYear, currentMonth);
 
 	    // 合計金額を計算
-	    double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
+	    //double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
+	    int totalCost = (int)expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
 
 	    // 経費種別マスターデータを取得（追加）
 	    Map<String, List<ExpenseTypeEntity>> expenseTypeGroups = expenseTypeService.getAllExpenseTypesByGroup();
@@ -226,7 +227,7 @@ public class ExpenseListController {
 
 	        // 領収書画像の処理
 	        if (file != null && !file.isEmpty()) {
-	            String newPath = expenseListService.saveAndReturnReceiptPath(file);
+	            String newPath = expenseListService.saveAndReturnReceiptPath(file, dbEntity);
 	            dbEntity.setReceiptPath(newPath);
 	        }
 

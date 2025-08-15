@@ -8,7 +8,7 @@
 <title>経費新規追加</title>
 <style>
 .table-container {
-	width: 95%;
+	width: 100%;
 	margin: 0 auto;
 	margin-bottom: 20px;
 }
@@ -92,21 +92,57 @@ button {
 	cursor: pointer;
 }
 
-.btn-container {
-	text-align: center;
-	margin-top: 20px;
+/* 删除按钮样式 */
+.deleteRowBtn {
+	font-size: 11px;
+	padding: 4px 8px;
+	margin: 2px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-color: #f8f9fa;
+	border-radius: 3px;
 }
 
-.thumb-img {
-	max-width: 100px;
-	max-height: 100px;
-	border: 1px solid #ccc;
-	display: none;
-	margin: 5px auto;
+.deleteRowBtn:hover {
+	background-color: #e9ecef;
 }
+
 
 .hidden-file-input {
 	display: none;
+}
+
+/* 证跡按钮样式 */
+.receipt-button {
+	font-size: 11px;
+	padding: 4px 8px;
+	margin: 2px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	background-color: #f8f9fa;
+	border-radius: 3px;
+}
+
+.receipt-button:hover {
+	background-color: #e9ecef;
+}
+
+/* 文件名显示样式 */
+.file-name-display {
+	font-size: 10px;
+	color: #666;
+	margin-bottom: 3px;
+	text-align: center;
+	word-break: break-all;
+	max-width: 100px;
+	line-height: 1.2;
+	display: none;
+}
+
+.btn-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
 }
 
 </style>
@@ -309,17 +345,17 @@ button {
 	   `;
 	   newRow.appendChild(cell8);
 
-	   // 領収書画像セルの生成
+	   // 领收书画像セルの生成
 	   const cell9 = document.createElement("td");
 	   cell9.innerHTML = `
 	       <input type="file" class="receiptFile hidden-file-input"
 	           accept=".jpg,.jpeg,.png,.pdf"
 	           onchange="onFileSelected(this)" />
-	       <button type="button"
-	           onclick="this.previousElementSibling.click();">
+	       <div class="file-name-display" id="fileName_${rowId}"></div>
+	       <button type="button" class="receipt-button"
+	           onclick="this.parentElement.querySelector('.receiptFile').click();">
 	           証跡
 	       </button>
-	       <img class="thumb-img" alt="プレビュー" />
 	   `;
 	   newRow.appendChild(cell9);
 
@@ -368,32 +404,37 @@ button {
 	* - ファイルサイズの上限は5MB
 	* - 画像ファイルの場合はプレビュー表示
 	* - 画像以外のファイルはプレビューを非表示
+	* - 選択されたファイル名を按钮上方に表示
 	*/
 	function onFileSelected(input) {
 	   // ファイルサイズの検証
-	   if (!validateFileSize(input, 5)) return;
+	   if (!validateFileSize(input, 5)) {
+	       // 验证失败时清除文件名显示
+	       const fileNameDisplay = input.parentElement.querySelector(".file-name-display");
+	       if (fileNameDisplay) {
+	           fileNameDisplay.textContent = "";
+	           fileNameDisplay.style.display = "none";
+	       }
+	       return;
+	   }
 
 	   // 選択ファイルの取得
 	   const file = input.files && input.files[0];
-	   if (!file) return;
+	   const fileNameDisplay = input.parentElement.querySelector(".file-name-display");
 
-	   // プレビュー用要素の取得
-	   const thumbImg = input.parentElement.querySelector(".thumb-img");
+	   if (!file) {
+	       // ファイルが選択されていない場合は表示をクリア
+	       if (fileNameDisplay) {
+	           fileNameDisplay.textContent = "";
+	           fileNameDisplay.style.display = "none";
+	       }
+	       return;
+	   }
 
-	   // ファイル種別に応じた処理
-	   const mimeType = file.type.toLowerCase();
-	   if (mimeType.includes("image/")) {
-	       // 画像ファイルの場合はプレビュー表示
-	       const reader = new FileReader();
-	       reader.onload = e => {
-	           thumbImg.src = e.target.result;
-	           thumbImg.style.display = "block";
-	       };
-	       reader.readAsDataURL(file);
-	   } else {
-	       // 画像以外はプレビューを非表示
-	       thumbImg.src = "";
-	       thumbImg.style.display = "none";
+	   // ファイル名の表示
+	   if (fileNameDisplay) {
+	       fileNameDisplay.textContent = file.name;
+	       fileNameDisplay.style.display = "block";
 	   }
 	}
 

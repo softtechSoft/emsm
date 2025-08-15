@@ -19,8 +19,11 @@ import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.SalarylistBean2;
 import com.softtech.common.AutoSalaryRtn;
 import com.softtech.common.SalaryInfoRecord;
+import com.softtech.entity.EmployeeInfoEntity;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
+import com.softtech.entity.WelfarefeeInfoEntity;
+import com.softtech.mappers.EmployeeInfoMapper;
 import com.softtech.mappers.SalarylistMapper;
 import com.softtech.service.SalaryInfoService;
 import com.softtech.service.SalaryListService;
@@ -42,6 +45,8 @@ public class SalaryListController {
 	SalaryInfoService salaryInfoService;
 	@Autowired
 	SalarylistMapper salarylistMapper;
+	@Autowired
+	EmployeeInfoMapper employeeInfoMapper;
 
 	/**
 	 *    給料リスト画面初期処理
@@ -99,12 +104,26 @@ public class SalaryListController {
 			// DBから社員IDの対象年月の給料情報を取得
 			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
-			//税率を取得
+			//雇用保険税率を取得
 			//model.addAttribute("welfarePensionRate", welfarefeeInfoEntity.getPensionInsuranceRate());
 			//model.addAttribute("welfareHealthRate", welfarefeeInfoEntity.getEmploymentInsuranceRate());
 			String time = salarylistBean2.getMonth();
 			String year = time.substring(0, 4);
-			EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
+			EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year);
+			//役職を取得
+			String employeeID = salarylistBean2.getEmployeeID();
+			List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
+			EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
+			String postion = emp.getPosition();
+			//厚生保険税率を取得
+			String basesalary = salarylistBean2.getBase();
+			WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+//			 if( welfarefeeInfoEntity == null) {
+//				 autoSalaryRtn.setYear(year);
+//				 autoSalaryRtn.setRtn("2");
+//				 return autoSalaryRtn;
+//			 }
+
 			if(emplyinsrateInfoEntity==null) {
 				model.addAttribute("laborBurdenRate", 0.001);
 				model.addAttribute("employerBurdenRate", 0.002);

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -201,6 +203,7 @@ public class ExpenseListService {
     * 領収書画像を保存し、相対パスを返却する
     *
     * @param file アップロードされたファイル
+    * @param expense 経費情報エンティティ（発生日取得用）
     * @return 保存された画像の相対パス（ems_files/receipt/ファイル名）、ファイルが無い場合はnull
     * @throws IOException ファイル保存処理で例外が発生した場合
     * @details
@@ -208,7 +211,7 @@ public class ExpenseListService {
     * - 拡張子は元のファイル名から取得
     * - 戻り値は常に相対パス形式
     */
-    public String saveAndReturnReceiptPath(MultipartFile file) throws IOException {
+    public String saveAndReturnReceiptPath(MultipartFile file, ExpenseListEntity expense) throws IOException {
        // 入力チェック
        if (file == null || file.isEmpty()) {
            return null;
@@ -216,18 +219,46 @@ public class ExpenseListService {
 
        // 保存用ファイル名の生成
        String originalName = file.getOriginalFilename();
-       String ext = "";
-       if (originalName != null && originalName.lastIndexOf('.') != -1) {
-           ext = originalName.substring(originalName.lastIndexOf('.'));
-       }
-       String newFileName = UUID.randomUUID().toString() + ext;
+    //    String ext = "";
+    //    if (originalName != null && originalName.lastIndexOf('.') != -1) {
+    //        ext = originalName.substring(originalName.lastIndexOf('.'));
+    //    }
+       //String newFileName = UUID.randomUUID().toString() + ext;
+       String expenseId = expense.getExpensesID();
+       String newFileName = expenseId + "_" + originalName;
+
+       SaveFolder saveFolder = saveFolderService.findFileTypeCode("01");
+        String baseDir = saveFolder.getSaveFolder();
+        LocalDate acDate = expense.getAccrualDate();
+        String acc = acDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+
+        String dateFolderPath = baseDir + File.separator + acc;
+        File dateFolder = new File(dateFolderPath);
+
+
+        if (!dateFolder.exists()) {
+            if (dateFolder.mkdirs()) {
+                System.out.println("新規フォルダ成功：" + dateFolderPath);
+            } else {
+                System.out.println("新規フォルダ成失敗：" + dateFolderPath);
+                throw new IOException("新規フォルダできない：" + dateFolderPath);
+            }
+        } else {
+            System.out.println("日期文件夹已存在：" + dateFolderPath);
+        }
+
+
+        String fullFilePath = dateFolderPath + File.separator + newFileName;
+        Path destPath = Paths.get(fullFilePath);
 
        // ファイルの保存
-       File dest = new File(receiptFolderPath.toFile(), newFileName);
-       file.transferTo(dest);
+       //File dest = new File(receiptFolderPath.toFile(), newFileName);
+       file.transferTo(destPath);
 
        // 相対パスを返却
-       return "ems_files/receipt/" + newFileName;
+       //return "ems_files/receipt/" + newFileName;
+       return baseDir + newFileName;
     }
 
     /**
