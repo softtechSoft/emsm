@@ -238,12 +238,13 @@ public class ExpenseListService {
     public String getMaxExpensesID() {
 
 		String maxExpensesID = expenseListMapper.getMaxExpensesID();
-
+//      return nextEmployeeID;
+		String nextExpensesID = "EX0001";
         if (maxExpensesID != null) {
         	maxExpensesID = maxExpensesID.toUpperCase();
+        	nextExpensesID = DataUtil.getNextID(maxExpensesID, 2);
         }
-        String nextExpensesID = DataUtil.getNextID(maxExpensesID, 2);
-//          return nextEmployeeID;
+
         return nextExpensesID != null ? nextExpensesID.toUpperCase() : null;
 
 
