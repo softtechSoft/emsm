@@ -893,13 +893,18 @@ CREATE TABLE ems.expenses (
     CONSTRAINT fk_expenses_m_expenses_id FOREIGN KEY (m_expenses_id) REFERENCES m_expenses(id)
 ) COMMENT='経費管理';
 
-DROP TABLE IF EXISTS m_file;
+DROP TABLE IF EXISTS ems.m_file;
 CREATE TABLE ems.m_file (
     fileTypeCode VARCHAR(2) NOT NULL PRIMARY KEY COMMENT 'ファイル種類コード',
     fileTypeName VARCHAR(30) NOT NULL COMMENT 'ファイル種類名称',
-    fileTypeAbbrName VARCHAR(5) NOT NULL COMMENT '略称', 
+    fileTypeAbbrName VARCHAR(5) NOT NULL COMMENT '略称',
     saveFolder VARCHAR(50) NOT NULL COMMENT '保存場所',
-    delFlg INT NOT NULL COMMENT '削除フラグ',
+    delFlg INT NOT NULL COMMENT '削除フラグ 1:削除',
     insertDate DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
     updateDate DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '更新日'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ファイル管理テーブル';
+INSERT INTO ems.m_file (
+    fileTypeCode, fileTypeName, fileTypeAbbrName, saveFolder, delFlg
+) VALUES (
+    '01', '経費管理', '経費管理', '/opt/emsm/file/',0
+);
