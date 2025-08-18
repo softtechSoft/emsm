@@ -207,7 +207,8 @@ public class ExpenseListService {
     * @return 保存された画像の相対パス（ems_files/receipt/ファイル名）、ファイルが無い場合はnull
     * @throws IOException ファイル保存処理で例外が発生した場合
     * @details
-    * - ファイル名はUUIDで一意に生成
+    * - 既存のファイルがある場合は削除
+    * - ファイル名は経費IDとオリジナルファイル名を組み合わせて生成
     * - 拡張子は元のファイル名から取得
     * - 戻り値は常に相対パス形式
     */
@@ -215,6 +216,21 @@ public class ExpenseListService {
        // 入力チェック
        if (file == null || file.isEmpty()) {
            return null;
+       }
+       
+       // 既存のファイルがある場合、そのファイルを削除
+       if (expense.getReceiptPath() != null && !expense.getReceiptPath().isEmpty()) {
+           try {
+               String oldPath = expense.getReceiptPath();
+               File oldFile = new File(oldPath);
+               
+               if (oldFile.exists() && oldFile.isFile()) {
+                   oldFile.delete();
+               }
+           } catch (Exception e) {
+               System.err.println("ファイル削除中にエラーが発生しました: " + e.getMessage());
+               e.printStackTrace();
+           }
        }
 
        // 保存用ファイル名の生成
@@ -229,23 +245,17 @@ public class ExpenseListService {
 
        SaveFolder saveFolder = saveFolderService.findFileTypeCode("01");
         String baseDir = saveFolder.getSaveFolder();
-        LocalDate acDate = expense.getAccrualDate();
-        String acc = acDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
+        LocalDate newAcDate = expense.getAccrualDate();
+        String acc = newAcDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         String dateFolderPath = baseDir + File.separator + acc;
         File dateFolder = new File(dateFolderPath);
 
-
         if (!dateFolder.exists()) {
-            if (dateFolder.mkdirs()) {
-                System.out.println("新規フォルダ成功：" + dateFolderPath);
-            } else {
-                System.out.println("新規フォルダ成失敗：" + dateFolderPath);
-                throw new IOException("新規フォルダできない：" + dateFolderPath);
-            }
-        } else {
-            System.out.println("日期文件夹已存在：" + dateFolderPath);
+	        if (!dateFolder.mkdirs()) {
+	            throw new IOException("新規フォルダできない：" + dateFolderPath);
+	        }
         }
 
 
@@ -258,7 +268,8 @@ public class ExpenseListService {
 
        // 相対パスを返却
        //return "ems_files/receipt/" + newFileName;
-       return baseDir + newFileName;
+       String relativePath = baseDir + acc + File.separator + newFileName;
+       return relativePath;
     }
 
     /**

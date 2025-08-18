@@ -227,6 +227,7 @@ public class ExpenseListController {
 
 	        // 領収書画像の処理
 	        if (file != null && !file.isEmpty()) {
+	            // 新しい領収書を保存
 	            String newPath = expenseListService.saveAndReturnReceiptPath(file, dbEntity);
 	            dbEntity.setReceiptPath(newPath);
 	        }
