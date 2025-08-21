@@ -22,7 +22,6 @@ import com.softtech.common.SalaryInfoRecord;
 import com.softtech.entity.EmployeeInfoEntity;
 import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
-import com.softtech.entity.WelfarefeeInfoEntity;
 import com.softtech.mappers.EmployeeInfoMapper;
 import com.softtech.mappers.SalarylistMapper;
 import com.softtech.service.SalaryInfoService;
@@ -104,26 +103,21 @@ public class SalaryListController {
 			// DBから社員IDの対象年月の給料情報を取得
 			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
+
 			//雇用保険税率を取得
-			//model.addAttribute("welfarePensionRate", welfarefeeInfoEntity.getPensionInsuranceRate());
-			//model.addAttribute("welfareHealthRate", welfarefeeInfoEntity.getEmploymentInsuranceRate());
 			String time = salarylistBean2.getMonth();
 			String year = time.substring(0, 4);
 			EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year);
+
 			//役職を取得
-			String employeeID = salarylistBean2.getEmployeeID();
+			String employeeID = salarylistBean2.getEmployeeIDFlg();
 			List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
 			EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
 			String postion = emp.getPosition();
-			//厚生保険税率を取得
-			String basesalary = salarylistBean2.getBase();
-			WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
-//			 if( welfarefeeInfoEntity == null) {
-//				 autoSalaryRtn.setYear(year);
-//				 autoSalaryRtn.setRtn("2");
-//				 return autoSalaryRtn;
-//			 }
 
+			//厚生保険税率を取得
+			//String basesalary = salarylistBean2.getBase();
+			//WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
 			if(emplyinsrateInfoEntity==null) {
 				model.addAttribute("laborBurdenRate", 0.001);
 				model.addAttribute("employerBurdenRate", 0.002);
@@ -136,7 +130,6 @@ public class SalaryListController {
 				model.addAttribute("industrialAccidentInsuranceRate", emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate());
 				model.addAttribute("employmentInsurance", emplyinsrateInfoEntity.getEmplyinsrate());
 			}
-
 
 			// 初期モードに設定
 			//salaryInfoBean.setGamenMode("0");
