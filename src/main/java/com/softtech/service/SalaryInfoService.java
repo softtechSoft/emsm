@@ -1,5 +1,6 @@
 package com.softtech.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,15 @@ import org.springframework.validation.FieldError;
 import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.WelfareBean;
 import com.softtech.common.SalaryInfoRecord;
+import com.softtech.entity.BaseSalaryInfoEntity;
+import com.softtech.entity.EmployeeInfoEntity;
+import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.entity.WelfareInfo;
+import com.softtech.entity.WelfarefeeInfoEntity;
+import com.softtech.mappers.EmployeeInfoMapper;
 import com.softtech.mappers.SalaryInfoMapper;
+import com.softtech.mappers.SalarylistMapper;
 import com.softtech.util.DataUtil;
 import com.softtech.util.DateUtil;
 
@@ -27,7 +34,10 @@ import com.softtech.util.DateUtil;
 public class SalaryInfoService {
 	@Autowired
 	SalaryInfoMapper salaryInfoMapper;
-
+	@Autowired
+	SalarylistMapper salarylistMapper;
+	@Autowired
+    private EmployeeInfoMapper employeeInfoMapper;
 	/*
 	 * 機能概要： 給料情報を検索
 	 *			条件：年月、社員ID
@@ -650,4 +660,196 @@ public class SalaryInfoService {
 		}
 
 	}
+	/*
+	 * 機能：画面入力された値から給料を生成する
+	 *
+	 * @param 対象年月
+	 * @return 結果
+	 */
+
+	public void calSalary(SalaryInfoBean salaryInfoBean) throws ParseException {
+			 //社員ID
+			 String employeeID=salaryInfoBean.getEmployeeID();
+			 //対象年度
+			 String year=DateUtil.getNowYear() ;
+			 //DBから基本給情報を取得する
+			 BaseSalaryInfoEntity baseSalaryInfoEntity=salarylistMapper.getBaseSalary(employeeID,year);
+
+			 //④基本給を取得
+			 String basesalary = salaryInfoBean.getBase();
+
+			 //残業時間
+			 String overTime= salaryInfoBean.getOverTime();
+			  //残業加算
+			 salaryInfoBean.setOverTimePlus(""+ Integer.parseInt(baseSalaryInfoEntity.getOvertimePay()) * Integer.parseInt(overTime));
+
+			 //不足時間
+			 String shortage= salaryInfoBean.getShortage();
+			 //稼働不足減
+			 salaryInfoBean.setShortageReduce(""+ Integer.parseInt(baseSalaryInfoEntity.getInsufficienttimePay()) * Integer.parseInt(shortage));
+
+			 //厚生マスタを取る
+			 //⑤厚生保険料を取得
+			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+
+			//厚生年金控除個人
+			float wfPensionSelf =
+					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
+			salaryInfoBean.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+			 //厚生年金控除会社
+			float wfPensionComp = wfPensionSelf;
+			salaryInfoBean.setWelfarePensionComp(Float.toString(wfPensionComp));
+
+			 //社員年齢を取る
+			String age=salarylistMapper.getAge(employeeID);
+			 //厚生健康控除個人
+			float wfHealthSelf;
+			//厚生健康控除会社
+			float wfHealthComp;
+			if ( Float.parseFloat(age) >= 40) {
+				 wfHealthSelf =
+						 ((Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(basesalary))/100)/2;
+				 salaryInfoBean.setWelfareHealthSelf( Float.toString(wfHealthSelf));
+				 wfHealthComp =wfHealthSelf;
+				 salaryInfoBean.setWelfareHealthComp(Float.toString(wfHealthComp));
+
+			}else {
+					wfHealthSelf =
+							((Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(basesalary))/100)/2;
+					salaryInfoBean.setWelfareHealthSelf(Float.toString(wfHealthSelf));
+					wfHealthComp=wfHealthSelf;
+					salaryInfoBean.setWelfareHealthComp(Float.toString(wfHealthComp));
+			}
+			//厚生控除子育(会社)
+		    //標準報酬×厚生控除子育(会社)の控除率
+			float welfareBaby =
+				 (Float.parseFloat(welfarefeeInfoEntity.getBabyCareCompanyRate()) * (Float.parseFloat(basesalary))/100);
+
+			salaryInfoBean.setWelfareBaby(Float.toString(welfareBaby));
+
+             //////////再計算/////////////
+			//最大段階の厚生年金再計算
+			if (Float.parseFloat(basesalary) >= 665000) {
+			    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
+
+				//厚生年金控除個人
+				wfPensionSelf =
+						(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(basesalary))/100)/2;
+				salaryInfoBean.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+
+
+				 //厚生年金控除会社
+				wfPensionComp = wfPensionSelf;
+				salaryInfoBean.setWelfarePensionComp(Float.toString(wfPensionComp));
+
+			}
+
+			//⑧雇用保険率をを取得
+			 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
+
+			 List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
+			 EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
+			 //役職を取得
+			 String postion = emp.getPosition();
+			//雇用保険個人負担
+			 float laborBurden = 0;
+			//雇用保険会社負担
+			 float employerBurden = 0;
+			//雇用保拠出金（会社)
+			 float employmentInsurance = 0;
+			//労災保険（会社負担のみ）
+			 float industrialAccidentInsurance = 0;
+			 //雇用保険の対象額(修正後：基本給＋交通費＋残業金額＋手当)
+			 float hoKenSalary = Float.parseFloat(basesalary)
+					             +Float.parseFloat(salaryInfoBean.getTransportExpense())
+					             +Float.parseFloat(salaryInfoBean.getOverTimePlus())
+					             +Float.parseFloat(salaryInfoBean.getAllowancePlus());
+			 if(("0").equals(postion)) {
+				 laborBurden = 0;
+				 employerBurden = 0;
+				 employmentInsurance = 0;
+				 industrialAccidentInsurance = 0;
+
+			 }else {
+
+				 laborBurden =
+						( Float.parseFloat(emplyinsrateInfoEntity.getLaborBurdenRate())*hoKenSalary)/1000 ;
+
+				 employerBurden =
+						 (Float.parseFloat(emplyinsrateInfoEntity.getEmployerBurdenRate())*hoKenSalary)/1000 ;
+
+				 employmentInsurance =
+						 (Float.parseFloat(emplyinsrateInfoEntity.getEmplyinsrate())*hoKenSalary)/1000 ;
+
+				 industrialAccidentInsurance =
+				 (Float.parseFloat(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate())*hoKenSalary)/1000 ;
+
+			 }
+			 //雇用保険個人負担
+			 salaryInfoBean.setEplyInsSelf(Float.toString(laborBurden));
+			 //雇用保険会社負担
+			 salaryInfoBean.setEplyInsComp(Float.toString(employerBurden));
+			 //雇用保拠出金（会社)
+			 salaryInfoBean.setEplyInsWithdraw(Float.toString(employmentInsurance));
+			 //労災保険（会社負担のみ）
+			 salaryInfoBean.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
+
+			 //振込総額=基本給basesalary
+			 //ー稼働不足減shortageReduce
+			 //ー手当減算allowanceReduce
+			 //ー厚生年金控除個人wfPensionSelf
+			 //ー厚生健康控除個人wfHealthSelf
+			 //ー雇用保険個人負担laborBurden
+			 //ー源泉WithholdingTax
+			 //ー住民税municipalTax
+			 //ー社宅家賃控除rental
+			 //ー社宅共益費控除rentalMgmtFee
+			 //ー特別控除specialReduce
+			 //+残業加算overTimePlus
+			 //+交通費(通勤交通+他の交通費）transportExpense
+			 //+特別加算specialAddition
+			 //+手当加算allowancePlus
+			 float sum = Float.parseFloat(basesalary)
+					 - Float.parseFloat(salaryInfoBean.getShortageReduce())
+					 - Float.parseFloat(salaryInfoBean.getAllowanceReduce())
+					 - wfPensionSelf
+					 - wfHealthSelf
+					 - laborBurden
+					 - Float.parseFloat(salaryInfoBean.getWithholdingTax())
+					 - Float.parseFloat(salaryInfoBean.getMunicipalTax())
+					 - Float.parseFloat(salaryInfoBean.getRental())
+					 - Float.parseFloat(salaryInfoBean.getRentalMgmtFee())
+					 - Float.parseFloat(salaryInfoBean.getSpecialReduce())
+					 + Float.parseFloat(salaryInfoBean.getOverTimePlus())
+					 + Float.parseFloat(salaryInfoBean.getTransportExpense())
+					 + Float.parseFloat(salaryInfoBean.getSpecialAddition())
+					 + Float.parseFloat(salaryInfoBean.getAllowancePlus())   ;
+			 salaryInfoBean.setSum(Float.toString(sum));
+
+			 //総費用＝基本給basesalary
+			 //＋厚生年金控除会社wfPensionComp
+			 //＋厚生健康控除会社wfHealthComp
+			 //＋厚生控除子育(会社)welfareBaby
+			 //＋雇用保険会社負担employerBurden
+			 //＋雇用保拠出金（会社)employmentInsurance
+			 //＋労災保険（会社負担のみ）industrialAccidentInsurance
+			 //+残業加算overTimePlus
+			 //+交通費(通勤交通+他の交通費）transportExpense
+			 //+特別加算specialAddition
+			 //+手当加算allowancePlus
+
+			 float totalFee = Float.parseFloat(basesalary)
+					 + wfPensionComp
+					 + wfHealthComp
+					 + welfareBaby
+					 + employerBurden
+					 + employmentInsurance
+					 + industrialAccidentInsurance
+					 +  Float.parseFloat(salaryInfoBean.getOverTimePlus())
+					 + Float.parseFloat(salaryInfoBean.getTransportExpense())
+					 + Float.parseFloat(salaryInfoBean.getSpecialAddition())
+					 + Float.parseFloat(salaryInfoBean.getAllowancePlus())   ;
+			 salaryInfoBean.setTotalFee(Float.toString(totalFee));
+	}
+
 }

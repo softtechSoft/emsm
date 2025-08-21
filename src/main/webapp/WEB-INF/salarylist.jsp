@@ -50,7 +50,7 @@ function tosalaryInfoJsp(salaryInfoID){
          <input type="button" name="search" value="検索" onclick="toSearchJsp();" />
          <input type="hidden" id="EmployeeIDFlg"name="EmployeeIDFlg"/>
          <input type="hidden" id="downloadFlg"name="downloadFlg"/>
-         <input type="button" name="downLoad" value="給料明細_${month}"onclick="toDownLoadDataJsp()" />
+         <input type="button" name="downLoad" value="ダウンロード"onclick="toDownLoadDataJsp()" />
 		 <input style="float:right" type="button" name="create" value="一括作成" onclick="toCreate()">
        </b>
        <p style="color: red;">

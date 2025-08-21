@@ -80,7 +80,7 @@ function doRegist(){
 	//登録処理に設定する。1:作成処理、2:登録処理
 	var make =document.getElementById('make');
 	make.value= "2";
-	setSum();
+	//setSum();　//20250821
 	document.theForm.submit();
 }
 //数値表示方を変更する。２０００→２，０００
@@ -88,18 +88,22 @@ function chageNumberDisp(textObject){
 	var num = textObject.value;
 	num=toNumberDisp(num);
 	textObject.value = String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-	
+
 }
 
 //総額、総費用を再計算
 function setSum(){
+	//サーバ側に計算する
+	make.value= "3";
+	document.theForm.submit();
+/*
 	//税率を設定
 	var laborBurden = toNumberDisp(document.getElementById('laborBurdenRate').value);  // 雇用保険個人負担
     var employerBurden = toNumberDisp(document.getElementById('employerBurdenRate').value);  // 雇用保険会社負担
     var employmentInsurance = toNumberDisp(document.getElementById('employmentInsurance').value);  // 雇用保拠出金（会社)
     var industrialAccidentInsurance = toNumberDisp(document.getElementById('industrialAccidentInsuranceRate').value);  // 労災保険（会社負担のみ）
-    
-	 
+
+
 
 	//基本給の値を取得
 	var base = document.getElementById('base').value;
@@ -283,6 +287,7 @@ function setSum(){
 
 	//document.getElementById('totalFee').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 	document.getElementById('totalFee').value=fee
+	*/
 }
 //文字列を数字に変換
 function toNumberDisp(strNumber){
@@ -315,7 +320,7 @@ function validateTimeInput(input) {
 	<input type="hidden" id="make" name="make" />
 	<!--input入力できるかどうか、判断用データ -->
 	<input type="hidden" id="gamenMode" name="gamenMode" value="${salaryInfoBean.gamenMode}"/>
-	
+
 	<!-- 其他费率也类似添加 -->
 	<input type="hidden" id="laborBurdenRate" value="${laborBurdenRate}">
 	<input type="hidden" id="employerBurdenRate" value="${employerBurdenRate}">
@@ -323,7 +328,7 @@ function validateTimeInput(input) {
 	<input type="hidden" id="employmentInsurance" value="${employmentInsurance}">
 	<!--エラーメッセージ-->
  	<p style="color: red;">
-    	<c:forEach  items="${errors}" var="error">　　　　　　　
+    	<c:forEach  items="${errors}" var="error">
 			<spring:message message="${error}" /><br/>
 		</c:forEach>
 	</p>
@@ -350,33 +355,27 @@ function validateTimeInput(input) {
 			<input type="hidden" id="employeeName" name="employeeName" value="${salaryInfoBean.employeeName}"/>
 			</td>
 			</tr>
-			<%-- <tr  style="background-color:#bfe1ff">
-			<td>住所：</td>
-			<td>${salaryInfoBean.address}
-			<!--社員住所を転送 -->
-			<input type="hidden" id="address" name="address" value="${salaryInfoBean.address}"/>
-			</td>
-			</tr> --%>
+
 			<tr style="background-color:#dcfeeb">
-			<td>対象月：</td>
+			<td>対象月(※)：</td>
 			<td><input id="month"name="month" type="text" value="${salaryInfoBean.month}" onchange="chageMonth()"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>基本給：</td>
-			<td><input id="base"name="base" type="text" value="${salaryInfoBean.base}" onchange="chageNumberDisp(this)" ></td>
+			<td>基本給(算)：</td>
+			<td><input id="base"name="base" type="text" value="${salaryInfoBean.base}" onchange="chageNumberDisp(this);setSum()" ></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>支払日：</td>
 			<td><input id="paymentDate"name="paymentDate" type="text"  value="${salaryInfoBean.paymentDate}"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>残業時間：</td>
-			<td><input id="overTime"name="overTime" type="text"  value="${salaryInfoBean.overTime}" onchange="chageNumberDisp(this)"
+			<td>残業時間(算)：</td>
+			<td><input id="overTime"name="overTime" type="text"  value="${salaryInfoBean.overTime}" onchange="chageNumberDisp(this);setSum()"
 			oninput="validateTimeInput(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
-			<td>不足時間：</td>
-			<td><input id="shortage"name="shortage" type="text"  value="${salaryInfoBean.shortage}" onchange="chageNumberDisp(this)"
+			<td>不足時間(算)：</td>
+			<td><input id="shortage"name="shortage" type="text"  value="${salaryInfoBean.shortage}" onchange="chageNumberDisp(this);setSum()"
            oninput="validateTimeInput(this)"></td>
 			</tr>
 			<tr  style="background-color:#bfe1ff">
@@ -388,22 +387,22 @@ function validateTimeInput(input) {
 			<td><input id="shortageReduce"name="shortageReduce" type="text"  value="${salaryInfoBean.shortageReduce}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>交通費：</td>
-			<td><input id="transportExpense"name="transportExpense"   type="text" value="${salaryInfoBean.transportExpense}" onchange="chageNumberDisp(this)"></td>
+			<td>交通費(算)：</td>
+			<td><input id="transportExpense"name="transportExpense"   type="text" value="${salaryInfoBean.transportExpense}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 
 			<tr style="background-color:#bfe1ff">
-			<td>特別加算：</td>
-			<td><input id="specialAddition"name="specialAddition"   type="text" value="${salaryInfoBean.specialAddition}" onchange="chageNumberDisp(this)"></td>
+			<td>特別加算(算)：</td>
+			<td><input id="specialAddition"name="specialAddition"   type="text" value="${salaryInfoBean.specialAddition}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">
-			<td>手当加算：</td>
-			<td><input id="allowancePlus"name="allowancePlus" type="text"  value="${salaryInfoBean.allowancePlus}" onchange="chageNumberDisp(this)"></td>
+			<td>手当加算(算)：</td>
+			<td><input id="allowancePlus"name="allowancePlus" type="text"  value="${salaryInfoBean.allowancePlus}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>手当減算：</td>
-			<td><input id="allowanceReduce"name="allowanceReduce" type="text"  value="${salaryInfoBean.allowanceReduce}" onchange="chageNumberDisp(this)"></td>
+			<td>手当減算(算)：</td>
+			<td><input id="allowanceReduce"name="allowanceReduce" type="text"  value="${salaryInfoBean.allowanceReduce}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
 			<td>手当理由：</td>
@@ -446,25 +445,25 @@ function validateTimeInput(input) {
 			<td><input id="wkAcccpsIns"name="wkAcccpsIns" type="text"  value="${salaryInfoBean.wkAcccpsIns}" onchange="chageNumberDisp(this)"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
-			<td>源泉控除：</td>
-			<td><input id="withholdingTax"name="withholdingTax" type="text"  value="${salaryInfoBean.withholdingTax}" onchange="chageNumberDisp(this)"></td>
+			<td>源泉控除(算)：</td>
+			<td><input id="withholdingTax"name="withholdingTax" type="text"  value="${salaryInfoBean.withholdingTax}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>住民税控除：</td>
-			<td><input id="municipalTax"name="municipalTax" type="text"  value="${salaryInfoBean.municipalTax}" onchange="chageNumberDisp(this)"></td>
+			<td>住民税控除(算)：</td>
+			<td><input id="municipalTax"name="municipalTax" type="text"  value="${salaryInfoBean.municipalTax}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 			<tr style="background-color:#dcfeeb">
-			<td>社宅家賃控除：</td>
-			<td><input id="rental"name="rental" type="text"  value="${salaryInfoBean.rental}" onchange="chageNumberDisp(this)"></td>
+			<td>社宅家賃控除(算)：</td>
+			<td><input id="rental"name="rental" type="text"  value="${salaryInfoBean.rental}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 			<tr style="background-color:#bfe1ff">
-			<td>社宅共益費控除：</td>
-			<td><input id="rentalMgmtFee"name="rentalMgmtFee" type="text"  value="${salaryInfoBean.rentalMgmtFee}" onchange="chageNumberDisp(this)"></td>
+			<td>社宅共益費控除(算)：</td>
+			<td><input id="rentalMgmtFee"name="rentalMgmtFee" type="text"  value="${salaryInfoBean.rentalMgmtFee}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 
 			<tr style="background-color:#bfe1ff">
-			<td>特別控除：</td>
-			<td><input id="specialReduce"name="specialReduce" type="text"  value="${salaryInfoBean.specialReduce}" onchange="chageNumberDisp(this)"></td>
+			<td>特別控除(算)：</td>
+			<td><input id="specialReduce"name="specialReduce" type="text"  value="${salaryInfoBean.specialReduce}" onchange="chageNumberDisp(this);setSum()"></td>
 			</tr>
 
 			<tr style="background-color:#dcfeeb">

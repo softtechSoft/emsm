@@ -153,7 +153,39 @@ public class SalaryInfoController {
 				return "updateSalarySuccess";
 				}
 			}
+		//再計算
+		else if("3".equals(salaryInfoBean.getMake())) {
+			// 数値に変更
+			salaryInfoService.deleteComma(salaryInfoBean);
+			// 必須チェック
+			if (result.hasErrors()) {
+			    // エラーチェック用リスト
+				List<FieldError> errorlst = new ArrayList<FieldError>();
 
+				//エラーメッセージ。
+				errorlst.addAll(result.getFieldErrors());
+				//エラーメッセージ
+				model.addAttribute("errors", errorlst);
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
+
+				return "salaryInfo";
+			 }
+
+			//その他チェック
+			List<FieldError> fieldErrors = salaryInfoService.checkData(salaryInfoBean);
+			// エラーがある場合
+			if(fieldErrors.size()>0) {
+				model.addAttribute("errors", fieldErrors);
+				model.addAttribute("salaryInfoBean",salaryInfoBean);
+
+				return "salaryInfo";
+			}
+
+			//再計算
+			salaryInfoService.calSalary(salaryInfoBean);
+			salaryInfoBean.setGamenMode("1");
+			model.addAttribute("salaryInfoBean",salaryInfoBean);
+		}
 		return "salaryInfo";
 	}
 }

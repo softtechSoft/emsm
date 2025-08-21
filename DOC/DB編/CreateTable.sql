@@ -845,7 +845,7 @@ ADD COLUMN babyCareCompanyRate DECIMAL(6,5) NOT NULL DEFAULT 0.36
 COMMENT '厚生控除子育(会社)の控除率（固定0.36%）';
 -- 社員情報
 ALTER TABLE employee
-MODIFY COLUMN position VARCHAR(2) NOT NULL DEFAULT '1'
+ADD COLUMN position VARCHAR(2) NOT NULL DEFAULT '1'
 COMMENT '役職（''0''取締役/''1''一般社員等）';
 -- 所得税と住民税マスター管理
 ALTER TABLE m_incometax
