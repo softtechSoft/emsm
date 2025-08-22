@@ -23,6 +23,11 @@ public class BpPayment {
     private String invoiceNumber;          // 請書番号
     private String status;                 // ステータス
     private Integer employeeCount;         // 员工数量（汇总用）
+    
+    // 添加发票文件相关字段
+    private String invoiceId;              // 发票ID
+    private String invoiceFilePath;        // 发票ファイルパス
+    private String invoiceFileName;        // 发票ファイル名
 
     public String getPaymentId() {
         return paymentId;
@@ -191,5 +196,30 @@ public class BpPayment {
 
     public void setNo(String no) {
         this.paymentId = no;
+    }
+
+    // 添加发票相关字段的getter和setter方法
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public String getInvoiceFilePath() {
+        return invoiceFilePath;
+    }
+
+    public void setInvoiceFilePath(String invoiceFilePath) {
+        this.invoiceFilePath = invoiceFilePath;
+    }
+
+    public String getInvoiceFileName() {
+        return invoiceFileName;
+    }
+
+    public void setInvoiceFileName(String invoiceFileName) {
+        this.invoiceFileName = invoiceFileName;
     }
 }

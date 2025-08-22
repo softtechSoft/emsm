@@ -47,11 +47,7 @@ public interface BpPaymentMapper {
      */
     void deleteBpPayment(String paymentId);
 
-    /**
-     * 利用可能な月リスト取得
-     * @return 月リスト
-     */
-    List<String> getAvailableMonths();
+    
 
     /**
      * 請求書リスト取得
@@ -64,4 +60,6 @@ public interface BpPaymentMapper {
      * @return 最大値ID
      */
      String getMaxPaymentId();
+
+    
 }

@@ -1,5 +1,8 @@
 package com.softtech.actionForm;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -8,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class BpPaymentFormBean {
     private String no;                 // 支払ID
+    @NotEmpty(message = "対象月を入力してください。")
     private String month;              // 対象月
     private String employeeId;         // 社員ID
     private String companyId;          // BP会社ID

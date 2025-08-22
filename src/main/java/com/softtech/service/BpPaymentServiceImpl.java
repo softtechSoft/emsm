@@ -1,7 +1,6 @@
 package com.softtech.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,33 +62,35 @@ public class BpPaymentServiceImpl implements BpPaymentService {
      * 新規登録
      */
     @Override
-    public void insertBpPayment(BpPaymentFormBean formBean) {
-        try {
-             // 查询当前最大支付ID
-        // String maxId = bpPaymentMapper.getMaxPaymentId();
-        // // 生成新ID
-        // String newId = (maxId == null) ? "PY001" : DataUtil.getNextID(maxId, 2);
-        // // 设置新ID
-        // bpPayment.setPaymentId(newId);
-        BpPayment bpPayment = transferToEntity(formBean);
-        // 插入数据库
-        bpPaymentMapper.insertBpPayment(bpPayment);
+    public boolean insertBpPayment(BpPaymentFormBean formBean) {
+        
+    	try {
+	        // transferToEntity    
+	        BpPayment bpPayment = transferToEntity(formBean);
+	        // 插入数据库
+	        bpPaymentMapper.insertBpPayment(bpPayment);
+	        return true; 
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
+        
     }
 
     /**
      * 更新
      */
     @Override
-    public void updateBpPayment(BpPaymentFormBean formBean) {
+    public boolean updateBpPayment(BpPaymentFormBean formBean) {
         try {
+        	// transferToEntity
             BpPayment bpPayment = transferToEntity(formBean);
             // 更新数据库
             bpPaymentMapper.updateBpPayment(bpPayment);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -105,19 +106,7 @@ public class BpPaymentServiceImpl implements BpPaymentService {
         }
     }
 
-    /**
-     * 利用可能な月リスト取得
-     */
-    @Override
-    public List<String> getAvailableMonths() {
-        try {
-            return bpPaymentMapper.getAvailableMonths();
-        } catch (Exception e) {
-            e.printStackTrace();
-            // 仮のデータを返す
-            return Arrays.asList("202501", "202502", "202503", "202504", "202505");
-        }
-    }
+    
 
     /**
      * 請求書リスト取得
@@ -151,6 +140,8 @@ public class BpPaymentServiceImpl implements BpPaymentService {
         return nextBpPaymentId != null ? nextBpPaymentId.toUpperCase() : null;
      
     }
+
+    
     /**
      * transferToEntity
      * @return BpPayment
@@ -166,7 +157,22 @@ public class BpPaymentServiceImpl implements BpPaymentService {
         bpPayment.setDispatchCompanyId(formBean.getDispatchCompanyId());
         bpPayment.setUnitPriceExTax(formBean.getUnitPriceExTax());
         bpPayment.setOutsourcingAmountExTax(formBean.getOutsourcingAmountExTax());
-		//
+        bpPayment.setOutsourcingAmountInTax(formBean.getOutsourcingAmountInTax());
+        bpPayment.setCommission(formBean.getCommission());
+        
+        // 处理日期字段
+        if (formBean.getTransferDate() != null && !formBean.getTransferDate().isEmpty()) {
+            bpPayment.setTransferDate(java.sql.Date.valueOf(formBean.getTransferDate()));
+        }
+        
+        if (formBean.getEntryDate() != null && !formBean.getEntryDate().isEmpty()) {
+            bpPayment.setEntryDate(java.sql.Date.valueOf(formBean.getEntryDate()));
+        }
+        
+        bpPayment.setRemarks(formBean.getRemarks());
+        bpPayment.setInvoiceNumber(formBean.getInvoiceNumber());
+        bpPayment.setStatus("1"); // 默认状态为1（有效）
+        
 		return bpPayment;
 	}
     

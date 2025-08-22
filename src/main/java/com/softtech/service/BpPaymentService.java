@@ -34,13 +34,13 @@ public interface BpPaymentService {
      * 新規登録
      * @param bpPayment 支払信息
      */
-    void insertBpPayment(BpPaymentFormBean formBean);
+    boolean insertBpPayment(BpPaymentFormBean formBean);
 
     /**
      * 更新
      * @param BpPaymentFormBean 支払信息
      */
-    void updateBpPayment(BpPaymentFormBean formBean);
+    boolean updateBpPayment(BpPaymentFormBean formBean);
 
     /**
      * 削除
@@ -48,11 +48,7 @@ public interface BpPaymentService {
      */
     void deleteBpPayment(String paymentId);
 
-    /**
-     * 利用可能な月リスト取得
-     * @return 月リスト
-     */
-    List<String> getAvailableMonths();
+    
 
     /**
      * 請求書リスト取得
@@ -72,5 +68,6 @@ public interface BpPaymentService {
       */
      BpPayment transferToEntity(BpPaymentFormBean formBean);
 
-     
+    
+
 } 

@@ -22,11 +22,15 @@
             p.entry_date AS entryDate,
             p.remarks,
             p.invoice_number AS invoiceNumber,
-            p.status
+            p.status,
+            i.invoice_id AS invoiceId,
+            i.file_path AS invoiceFilePath,
+            i.file_name AS invoiceFileName
         FROM bp_payment p
         LEFT JOIN bp_employee e ON p.employee_id = e.employee_id
         LEFT JOIN bp_company c ON p.company_id = c.company_id
         LEFT JOIN company dc ON p.dispatch_company_id = dc.companyID
+        LEFT JOIN bp_invoice i ON p.payment_id = i.payment_id
         LEFT JOIN bp_contract bc ON p.bp_contract_id = bc.contract_id
         <where>
             <if test="month != null and month != ''">
@@ -60,23 +64,28 @@
     <!-- 支払IDで1件取得 -->
     <select id="getBpPaymentById" parameterType="string" resultType="com.softtech.entity.BpPayment">
         SELECT 
-            payment_id AS paymentId,
-            month,
-            employee_id AS employeeId,
-            company_id AS companyId,
-            dispatch_company_id AS dispatchCompanyId,
-            contract_id AS contractId,
-            bp_contract_id AS bpContractId,
-            unit_price_ex_tax AS unitPriceExTax,
-            outsourcing_amount_ex_tax AS outsourcingAmountExTax,
-            outsourcing_amount_in_tax AS outsourcingAmountInTax,
-            commission,
-            transfer_date AS transferDate,
-            entry_date AS entryDate,
-            remarks,
-            invoice_number AS invoiceNumber,
-            status
-        FROM bp_payment WHERE payment_id = #{paymentId}
+            p.payment_id AS paymentId,
+            p.month,
+            p.employee_id AS employeeId,
+            p.company_id AS companyId,
+            p.dispatch_company_id AS dispatchCompanyId,
+            p.contract_id AS contractId,
+            p.bp_contract_id AS bpContractId,
+            p.unit_price_ex_tax AS unitPriceExTax,
+            p.outsourcing_amount_ex_tax AS outsourcingAmountExTax,
+            p.outsourcing_amount_in_tax AS outsourcingAmountInTax,
+            p.commission,
+            p.transfer_date AS transferDate,
+            p.entry_date AS entryDate,
+            p.remarks,
+            p.invoice_number AS invoiceNumber,
+            p.status,
+            i.invoice_id AS invoiceId,
+            i.file_path AS invoiceFilePath,
+            i.file_name AS invoiceFileName
+        FROM bp_payment p
+        LEFT JOIN bp_invoice i ON p.payment_id = i.payment_id
+        WHERE p.payment_id = #{paymentId}
     </select>
 
     <!-- 新規登録 -->
@@ -143,8 +152,9 @@
         ORDER BY p.month DESC, p.payment_id
     </select>
 
-    <!-- 查询当前最大支付ID -->
+    <!-- 最大値ID取得 -->
     <select id="getMaxPaymentId" resultType="string">
         SELECT MAX(payment_id) FROM bp_payment
     </select>
-</mapper> 
+
+</mapper>

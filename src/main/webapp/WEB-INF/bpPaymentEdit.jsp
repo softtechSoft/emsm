@@ -4,94 +4,49 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "[http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>ソフトテク株式会社 - BP支払登録・編集</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#theForm').validate({
                 rules: {
-                    month: {
-                        required: true,
-                        date: true
-                    },
-                    employeeId: {
-                        required: true
-                    },
-                    companyId: {
-                        required: true
-                    },
-                    dispatchCompanyId: {
-                        required: true
-                    },
-                    unitPriceExTax: {
-                        required: true,
-                        number: true
-                    },
-                    outsourcingAmountExTax: {
-                        required: true,
-                        number: true
-                    },
-                    transferDate: {
-                        required: true,
-                        date: true
-                    }
+                    month: { required: true },
+                    employeeId: { required: true },
+                    companyId: { required: true },
+                    dispatchCompanyId: { required: true },
+                    unitPriceExTax: { required: true, number: true },
+                    outsourcingAmountExTax: { required: true, number: true },
+                    transferDate: { required: true }
                 },
                 messages: {
-                    month: {
-                        required: '対象月を入力してください。',
-                        date: '対象月はYYYYMM形式で入力してください。'
-                    },
-                    employeeId: {
-                        required: '社員を選択してください。'
-                    },
-                    companyId: {
-                        required: '所属会社を選択してください。'
-                    },
-                    dispatchCompanyId: {
-                        required: '派遣(請負)先会社を選択してください。'
-                    },
-                    unitPriceExTax: {
-                        required: '外注単価（税抜）は有効な数値を入力してください。'
-                    },
-                    outsourcingAmountExTax: {
-                        required: '外注金額（税抜）は有効な数値を入力してください。'
-                    },
-                    transferDate: {
-                        required: '振込日を入力してください。'
-                    }
+                    month: '対象月を入力してください',
+                    employeeId: '社員を選択してください',
+                    companyId: '所属会社を選択してください',
+                    dispatchCompanyId: '派遣(請負)先会社を選択してください',
+                    unitPriceExTax: '外注単価（税抜）を入力してください',
+                    outsourcingAmountExTax: '外注金額（税抜）を入力してください',
+                    transferDate: '振込日を入力してください'
                 }
-            });
-
-            $('#transferDate').datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-
-            $('#unitPriceExTax').on('change', function() {
-                var taxRate = 1.1;
-                var amountInTax = Math.round($(this).val() * taxRate);
-                $('#outsourcingAmountInTax').val(amountInTax);
-            });
-
-            $('#outsourcingAmountExTax').on('change', function() {
-                var taxRate = 1.1;
-                var amountInTax = Math.round($(this).val() * taxRate);
-                $('#outsourcingAmountInTax').val(amountInTax);
             });
         });
 
         function doRegist() {
             if ($('#theForm').valid()) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'saveBpPayment',
-                    data: $('#theForm').serialize(),
-                    success: function(data) {
-                        // 处理成功响应
-                    }
-                });
+                // 税込金額を計算して設定
+                //var unitPriceExTax = $('#unitPriceExTax').val();
+                var outsourcingAmountExTax = $('#outsourcingAmountExTax').val();
+                if (outsourcingAmountExTax != 0 || outsourcingAmountExTax.equals("NULL")) {
+                    var taxRate = 1.1;
+                    var amountInTax = outsourcingAmountExTax * taxRate;
+                    $('#outsourcingAmountInTax').val(amountInTax);
+                }
+                // フォームを送信
+                document.theForm.submit();
             }
         }
 
@@ -115,22 +70,21 @@
         </c:forEach>
     </p>
 
-
     <!-- フォーム -->
     <h2>BP支払登録・編集</h2>
     <form:form name="theForm" id="theForm" method="post" modelAttribute="bpPaymentFormBean"
                action="saveBpPayment" enctype="multipart/form-data">
         <input type="hidden" name="insertFlg" value="${bpPaymentFormBean.insertFlg}" />
-        <input type="hidden" name="no" value="${bpPaymentFormBean.no}" />
+        <input type="hidden" name="no" value="${bpPaymentFormBean.no}" /> 
 
         <table border="1">
             <tr style="background-color:#dcfeeb">
-			    <td width="150px">支払ID <span style="color:red">*</span></td>
-			    <td width="250px">
-			        <c:out value="${bpPaymentFormBean.no}" />
-			        <form:hidden path="no" id="no" value="${bpPaymentFormBean.no}" />
-			    </td>
-			</tr>
+                <td width="150px">支払ID <span style="color:red">*</span></td>
+                <td width="250px">
+                    <c:out value="${bpPaymentFormBean.no}" />
+                    
+                </td>
+            </tr>
             
             <tr style="background-color:#dcfeeb">
                 <td width="150px">対象月 <span style="color:red">*</span></td>
@@ -195,7 +149,7 @@
             <tr style="background-color:#dcfeeb">
                 <td width="150px">外注金額（税込）</td>
                 <td width="250px">
-                    <form:input path="outsourcingAmountInTax" id="outsourcingAmountInTax" type="number" readonly="true" style="width:98%;" />
+                    <form:input path="outsourcingAmountInTax" id="outsourcingAmountInTax" type="number" readonly="true" style="width:98%;"/>
                 </td>
             </tr>
             <tr style="background-color:#dcfeeb">
@@ -223,22 +177,29 @@
                 </td>
             </tr>
             <tr style="background-color:#dcfeeb">
-                <td width="150px">インボイス番号</td>
+                <td width="150px">請求書番号</td>
                 <td width="250px">
                     <form:input path="invoiceNumber" id="invoiceNumber" style="width:98%;" />
                 </td>
             </tr>
             <tr style="background-color:#dcfeeb">
-                <td width="150px">請求書ファイル</td>
-                <td width="250px">
-                    <input type="file" name="invoiceFile" accept=".pdf,.jpg,.jpeg,.png" style="width:98%;" />
-                    <c:if test="${not empty bpPaymentFormBean.invoiceNumber}">
-                        <br><small>現在の請求書: ${bpPaymentFormBean.invoiceNumber}</small>
-                    </c:if>
+                <td width="150px">アップロード</td>
+                <td >
+                    <input id="file" type="file" name="file"/>
                 </td>
             </tr>
         </table>
-        <input type="button" id="save" name="save" value="保存" onclick="doRegist()" />
+        <br>
+        <c:choose>
+            <c:when test="${bpPaymentFormBean.insertFlg == '0'}">
+                <!-- 新規 -->
+                <input type="button" id="save-btn" class="btn-new" value="🆕 新規登録" onclick="doRegist()" />
+            </c:when>
+            <c:otherwise>
+                <!-- 更新 -->
+                <input type="button" id="save-btn" class="btn-update" value="✏️ 更新" onclick="doRegist()" />
+            </c:otherwise>
+        </c:choose>
         <input type="button" id="back" name="back" value="戻る" onclick="goBack();" />
     </form:form>
 </body>
