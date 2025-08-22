@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softtech.mappers.BpInvoiceMapper">
+    <!-- 全請求書リスト取得 -->
+    <select id="getAllInvoices" resultType="com.softtech.entity.BpInvoice" parameterType="string">
+        SELECT 
+            invoice_id AS invoiceID,
+            payment_id AS paymentID,
+            invoice_number AS invoiceNumber,
+            file_path AS filePath,
+            file_name AS fileName,
+            upload_date AS uploadDate,
+            month
+        FROM bp_invoice 
+        <where>
+            <if test="paymentId != null and paymentId != ''">
+                payment_id = #{paymentId}
+            </if>
+        </where>
+        ORDER BY invoice_id
+    </select>
+
+    <!-- 請求書情報更新 -->
+    <update id="updateInvoice" parameterType="com.softtech.entity.BpInvoice">
+        UPDATE bp_invoice SET
+            invoice_number = #{invoiceNumber},
+            file_name = #{fileName},
+            file_path = #{filePath},
+            updated_at = NOW()
+        WHERE invoice_id = #{invoiceId}
+    </update>
+    
+    <!-- 通过支付ID更新請求書情報 -->
+    <update id="updateInvoiceByPaymentId" parameterType="com.softtech.entity.BpInvoice">
+        UPDATE bp_invoice SET
+            invoice_number = #{invoiceNumber},
+            file_name = #{fileName},
+            file_path = #{filePath},
+            month = #{month},
+            updated_at = CURDATE()
+        WHERE payment_id = #{paymentId}
+    </update>
+
+    <!-- 新規登録 -->
+    <insert id="insertInvoice" parameterType="com.softtech.actionForm.BpInvoiceFormBean">
+        INSERT INTO bp_invoice (
+            invoice_id, payment_id, invoice_number, file_path, file_name, upload_date, month
+        ) VALUES (
+            #{invoiceId}, #{paymentId}, #{invoiceNumber}, #{filePath}, #{fileName}, NOW(), #{month}
+        )
+    </insert>
+    
+    <!-- IDで請求書を取得 -->
+    <select id="getInvoiceById" parameterType="string" resultType="com.softtech.entity.BpInvoice">
+        SELECT 
+            invoice_id AS invoiceID,
+            payment_id AS paymentID,
+            invoice_number AS invoiceNumber,
+            file_path AS filePath,
+            file_name AS fileName,
+            upload_date AS uploadDate,
+            month
+        FROM bp_invoice 
+        WHERE invoice_id = #{invoiceId}
+    </select>
+    
+    <!-- 請求書fileを削除 -->
+    <delete id="deleteInvoice" parameterType="string">
+        DELETE FROM bp_invoice WHERE invoice_id = #{invoiceId}
+    </delete>
+    <!-- 清空文件信息但保留记录 -->
+    <update id="clearInvoiceFileInfo" parameterType="String">
+        UPDATE bp_invoice 
+        SET 
+            file_path = NULL,
+            file_name = NULL
+        WHERE 
+            invoice_id = #{invoiceId}
+    </update>
+    <!-- 最大値ID取得 -->
+    <select id="getMaxBpInvoiceId" resultType="string">
+        SELECT MAX(invoice_id) FROM bp_invoice
+    </select>
+</mapper>
