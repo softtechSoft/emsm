@@ -681,12 +681,12 @@ public class SalaryInfoService {
 			 //残業時間
 			 String overTime= salaryInfoBean.getOverTime();
 			  //残業加算
-			 salaryInfoBean.setOverTimePlus(""+ Integer.parseInt(baseSalaryInfoEntity.getOvertimePay()) * Integer.parseInt(overTime));
+			 salaryInfoBean.setOverTimePlus(""+ Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) * Float.parseFloat(overTime));
 
 			 //不足時間
 			 String shortage= salaryInfoBean.getShortage();
 			 //稼働不足減
-			 salaryInfoBean.setShortageReduce(""+ Integer.parseInt(baseSalaryInfoEntity.getInsufficienttimePay()) * Integer.parseInt(shortage));
+			 salaryInfoBean.setShortageReduce(""+ Float.parseFloat(baseSalaryInfoEntity.getInsufficienttimePay()) * Float.parseFloat(shortage));
 
 			 //厚生マスタを取る
 			 //⑤厚生保険料を取得
