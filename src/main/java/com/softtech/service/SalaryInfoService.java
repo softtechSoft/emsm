@@ -849,7 +849,7 @@ public class SalaryInfoService {
 					 + Float.parseFloat(transportExpense)
 					 + Float.parseFloat(specialAddition)
 					 + Float.parseFloat(allowancePlus)   ;
-			 salaryInfoBean.setSum(Float.toString(sum));
+			 salaryInfoBean.setSum("" + Math.round(sum));
 
 			 //総費用＝基本給basesalary
 			 //＋厚生年金控除会社wfPensionComp
@@ -873,7 +873,7 @@ public class SalaryInfoService {
 					 + Float.parseFloat(transportExpense)
 					 + Float.parseFloat(specialAddition)
 					 + Float.parseFloat(allowancePlus)   ;
-			 salaryInfoBean.setTotalFee(Float.toString(totalFee));
+			 salaryInfoBean.setTotalFee("" + Math.round(totalFee));
 	}
 
 }
