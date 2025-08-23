@@ -677,17 +677,17 @@ public class SalaryInfoService {
 
 			 //④基本給を取得
 			 String basesalary = salaryInfoBean.getBase();
-			 if(basesalary==null) basesalary="0";
+			 if(basesalary==null || basesalary.length()==0) basesalary="0";
 
 			 //残業時間
 			 String overTime= salaryInfoBean.getOverTime();
-			 if(overTime==null) overTime="0";
+			 if(overTime==null || overTime.length()==0) overTime="0";
 			  //残業加算
 			 salaryInfoBean.setOverTimePlus(""+ Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) * Float.parseFloat(overTime));
 
 			 //不足時間
 			 String shortage= salaryInfoBean.getShortage();
-			 if(shortage==null) shortage="0";
+			 if(shortage==null  || shortage.length()==0) shortage="0";
 			 //稼働不足減
 			 salaryInfoBean.setShortageReduce(""+ Float.parseFloat(baseSalaryInfoEntity.getInsufficienttimePay()) * Float.parseFloat(shortage));
 
@@ -765,17 +765,17 @@ public class SalaryInfoService {
 			 float industrialAccidentInsurance = 0;
 			 //雇用保険の対象額(修正後：基本給＋交通費＋残業金額＋手当)
 			 String transportExpense = "0";
-			if(salaryInfoBean.getTransportExpense()!=null)
+			if(salaryInfoBean.getTransportExpense()!=null  && salaryInfoBean.getTransportExpense().length()!=0)
 			{
 				transportExpense=salaryInfoBean.getTransportExpense();
 			}
 			String overTimePlus = "0";
-			if(salaryInfoBean.getOverTimePlus()!=null)
+			if(salaryInfoBean.getOverTimePlus()!=null  && salaryInfoBean.getOverTimePlus().length()!=0)
 			{
 				overTimePlus=salaryInfoBean.getOverTimePlus();
 			}
 			String allowancePlus = "0";
-			if(salaryInfoBean.getAllowancePlus()!=null)
+			if(salaryInfoBean.getAllowancePlus()!=null && salaryInfoBean.getAllowancePlus().length()!=0)
 			{
 				allowancePlus=salaryInfoBean.getAllowancePlus();
 			}
@@ -829,46 +829,46 @@ public class SalaryInfoService {
 			 //+特別加算specialAddition
 			 //+手当加算allowancePlus
 			 String shortageReduce = "0";
-			if(salaryInfoBean.getShortageReduce()!=null)
+			if(salaryInfoBean.getShortageReduce()!=null && salaryInfoBean.getShortageReduce().length()!=0 )
 			{
 				shortageReduce=salaryInfoBean.getShortageReduce();
 			}
 
 			 String allowanceReduce = "0";
-			if(salaryInfoBean.getAllowanceReduce()!=null)
+			if(salaryInfoBean.getAllowanceReduce()!=null && salaryInfoBean.getAllowanceReduce().length()!=0)
 			{
 				allowanceReduce=salaryInfoBean.getAllowanceReduce();
 			}
 
 			String withholdingTax = "0";
-			if(salaryInfoBean.getWithholdingTax()!=null)
+			if(salaryInfoBean.getWithholdingTax()!=null && salaryInfoBean.getWithholdingTax().length()!=0)
 			{
 				withholdingTax=salaryInfoBean.getWithholdingTax();
 			}
 			String municipalTax = "0";
-			if(salaryInfoBean.getMunicipalTax()!=null)
+			if(salaryInfoBean.getMunicipalTax()!=null  && salaryInfoBean.getMunicipalTax().length()!=0)
 			{
 				municipalTax=salaryInfoBean.getMunicipalTax();
 			}
 			String rental = "0";
-			if(salaryInfoBean.getRental()!=null)
+			if(salaryInfoBean.getRental()!=null  && salaryInfoBean.getRental().length()!=0)
 			{
 				rental=salaryInfoBean.getRental();
 			}
 			String rentalMgmtFee = "0";
-			if(salaryInfoBean.getRentalMgmtFee()!=null)
+			if(salaryInfoBean.getRentalMgmtFee()!=null && salaryInfoBean.getRentalMgmtFee().length()!=0)
 			{
 				rentalMgmtFee=salaryInfoBean.getRentalMgmtFee();
 			}
 			String specialReduce = "0";
-			if(salaryInfoBean.getSpecialReduce()!=null)
+			if(salaryInfoBean.getSpecialReduce()!=null  && salaryInfoBean.getSpecialReduce().length()!=0)
 			{
 				specialReduce=salaryInfoBean.getSpecialReduce();
 			}
 
 
 			String specialAddition = "0";
-			if(salaryInfoBean.getSpecialAddition()!=null)
+			if(salaryInfoBean.getSpecialAddition()!=null && salaryInfoBean.getSpecialAddition().length()!=0)
 			{
 				specialAddition=salaryInfoBean.getSpecialAddition();
 			}
