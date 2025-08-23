@@ -300,14 +300,14 @@ function toNumberDisp(strNumber){
 }
 // 対象月変更されたら、住民税を手動入力するためクリアする
 function chageMonth(){
-	document.getElementById('municipalTax').value="0";
+	//document.getElementById('municipalTax').value="0";
 }
 //入力バリデーション修正
 function validateTimeInput(input) {
     // 小数点以下1桁までの数値かチェック
-    if (!/^\d*\.?\d{0,1}$/.test(input.value)) {
-        input.value = input.value.substring(0, input.value.length-1);
-    }
+    //if (!/^\d*\.?\d{0,1}$/.test(input.value)) {
+    //    input.value = input.value.substring(0, input.value.length-1);
+    //}
 }
 </script>
 </head >

@@ -683,13 +683,15 @@ public class SalaryInfoService {
 			 String overTime= salaryInfoBean.getOverTime();
 			 if(overTime==null || overTime.length()==0) overTime="0";
 			  //残業加算
-			 salaryInfoBean.setOverTimePlus(""+ Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) * Float.parseFloat(overTime));
+			 Float overTimePlus = Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) * Float.parseFloat(overTime);
+			 salaryInfoBean.setOverTimePlus(""+ Math.round(overTimePlus));
 
 			 //不足時間
 			 String shortage= salaryInfoBean.getShortage();
 			 if(shortage==null  || shortage.length()==0) shortage="0";
 			 //稼働不足減
-			 salaryInfoBean.setShortageReduce(""+ Float.parseFloat(baseSalaryInfoEntity.getInsufficienttimePay()) * Float.parseFloat(shortage));
+			 Float shortageReduce = Float.parseFloat(baseSalaryInfoEntity.getInsufficienttimePay()) * Float.parseFloat(shortage);
+			 salaryInfoBean.setShortageReduce(""+ Math.round(shortageReduce));
 
 			 //厚生マスタを取る
 			 //⑤厚生保険料を取得
@@ -698,10 +700,10 @@ public class SalaryInfoService {
 			//厚生年金控除個人
 			float wfPensionSelf =
 					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(shortage))/100)/2;
-			salaryInfoBean.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+			salaryInfoBean.setWelfarePensionSelf("" + Math.round(wfPensionSelf));
 			 //厚生年金控除会社
 			float wfPensionComp = wfPensionSelf;
-			salaryInfoBean.setWelfarePensionComp(Float.toString(wfPensionComp));
+			salaryInfoBean.setWelfarePensionComp("" + Math.round(wfPensionComp));
 
 			 //社員年齢を取る
 			String age=salarylistMapper.getAge(employeeID);
@@ -713,23 +715,23 @@ public class SalaryInfoService {
 			if ( Float.parseFloat(age) >= 40) {
 				 wfHealthSelf =
 						 ((Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(basesalary))/100)/2;
-				 salaryInfoBean.setWelfareHealthSelf( Float.toString(wfHealthSelf));
+				 salaryInfoBean.setWelfareHealthSelf("" + Math.round(wfHealthSelf));
 				 wfHealthComp =wfHealthSelf;
-				 salaryInfoBean.setWelfareHealthComp(Float.toString(wfHealthComp));
+				 salaryInfoBean.setWelfareHealthComp("" + Math.round(wfHealthComp));
 
 			}else {
 					wfHealthSelf =
 							((Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(basesalary))/100)/2;
-					salaryInfoBean.setWelfareHealthSelf(Float.toString(wfHealthSelf));
+					salaryInfoBean.setWelfareHealthSelf("" + Math.round(wfHealthSelf));
 					wfHealthComp=wfHealthSelf;
-					salaryInfoBean.setWelfareHealthComp(Float.toString(wfHealthComp));
+					salaryInfoBean.setWelfareHealthComp("" + Math.round(wfHealthComp));
 			}
 			//厚生控除子育(会社)
 		    //標準報酬×厚生控除子育(会社)の控除率
 			float welfareBaby =
 				 (Float.parseFloat(welfarefeeInfoEntity.getBabyCareCompanyRate()) * (Float.parseFloat(basesalary))/100);
 
-			salaryInfoBean.setWelfareBaby(Float.toString(welfareBaby));
+			salaryInfoBean.setWelfareBaby("" + Math.round(welfareBaby));
 
              //////////再計算/////////////
 			//最大段階の厚生年金再計算
@@ -739,12 +741,12 @@ public class SalaryInfoService {
 				//厚生年金控除個人
 				wfPensionSelf =
 						(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(basesalary))/100)/2;
-				salaryInfoBean.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+				salaryInfoBean.setWelfarePensionSelf("" + Math.round(wfPensionSelf));
 
 
 				 //厚生年金控除会社
 				wfPensionComp = wfPensionSelf;
-				salaryInfoBean.setWelfarePensionComp(Float.toString(wfPensionComp));
+				salaryInfoBean.setWelfarePensionComp("" + Math.round(wfPensionComp));
 
 			}
 
@@ -769,11 +771,7 @@ public class SalaryInfoService {
 			{
 				transportExpense=salaryInfoBean.getTransportExpense();
 			}
-			String overTimePlus = "0";
-			if(salaryInfoBean.getOverTimePlus()!=null  && salaryInfoBean.getOverTimePlus().length()!=0)
-			{
-				overTimePlus=salaryInfoBean.getOverTimePlus();
-			}
+
 			String allowancePlus = "0";
 			if(salaryInfoBean.getAllowancePlus()!=null && salaryInfoBean.getAllowancePlus().length()!=0)
 			{
@@ -781,7 +779,7 @@ public class SalaryInfoService {
 			}
 			 float hoKenSalary = Float.parseFloat(basesalary)
 					             +Float.parseFloat(transportExpense)
-					             +Float.parseFloat(overTimePlus)
+					             +overTimePlus
 					             +Float.parseFloat(allowancePlus);
 			 if(("0").equals(postion)) {
 				 laborBurden = 0;
@@ -805,13 +803,13 @@ public class SalaryInfoService {
 
 			 }
 			 //雇用保険個人負担
-			 salaryInfoBean.setEplyInsSelf(Float.toString(laborBurden));
+			 salaryInfoBean.setEplyInsSelf("" + Math.round(laborBurden));
 			 //雇用保険会社負担
-			 salaryInfoBean.setEplyInsComp(Float.toString(employerBurden));
+			 salaryInfoBean.setEplyInsComp("" + Math.round(employerBurden));
 			 //雇用保拠出金（会社)
-			 salaryInfoBean.setEplyInsWithdraw(Float.toString(employmentInsurance));
+			 salaryInfoBean.setEplyInsWithdraw("" + Math.round(employmentInsurance));
 			 //労災保険（会社負担のみ）
-			 salaryInfoBean.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
+			 salaryInfoBean.setWkAcccpsIns("" + Math.round(industrialAccidentInsurance));
 
 			 //振込総額=基本給basesalary
 			 //ー稼働不足減shortageReduce
@@ -828,11 +826,6 @@ public class SalaryInfoService {
 			 //+交通費(通勤交通+他の交通費）transportExpense
 			 //+特別加算specialAddition
 			 //+手当加算allowancePlus
-			 String shortageReduce = "0";
-			if(salaryInfoBean.getShortageReduce()!=null && salaryInfoBean.getShortageReduce().length()!=0 )
-			{
-				shortageReduce=salaryInfoBean.getShortageReduce();
-			}
 
 			 String allowanceReduce = "0";
 			if(salaryInfoBean.getAllowanceReduce()!=null && salaryInfoBean.getAllowanceReduce().length()!=0)
@@ -874,7 +867,7 @@ public class SalaryInfoService {
 			}
 
 			 float sum = Float.parseFloat(basesalary)
-					 - Float.parseFloat(shortageReduce)
+					 - shortageReduce
 					 - Float.parseFloat(allowanceReduce)
 					 - wfPensionSelf
 					 - wfHealthSelf
@@ -884,7 +877,7 @@ public class SalaryInfoService {
 					 - Float.parseFloat(rental)
 					 - Float.parseFloat(rentalMgmtFee)
 					 - Float.parseFloat(specialReduce)
-					 + Float.parseFloat(overTimePlus)
+					 + overTimePlus
 					 + Float.parseFloat(transportExpense)
 					 + Float.parseFloat(specialAddition)
 					 + Float.parseFloat(allowancePlus)   ;
@@ -908,7 +901,7 @@ public class SalaryInfoService {
 					 + employerBurden
 					 + employmentInsurance
 					 + industrialAccidentInsurance
-					 +  Float.parseFloat(overTimePlus)
+					 +  overTimePlus
 					 + Float.parseFloat(transportExpense)
 					 + Float.parseFloat(specialAddition)
 					 + Float.parseFloat(allowancePlus)   ;
