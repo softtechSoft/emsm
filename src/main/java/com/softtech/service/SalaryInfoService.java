@@ -677,14 +677,17 @@ public class SalaryInfoService {
 
 			 //④基本給を取得
 			 String basesalary = salaryInfoBean.getBase();
+			 if(basesalary==null) basesalary="0";
 
 			 //残業時間
 			 String overTime= salaryInfoBean.getOverTime();
+			 if(overTime==null) overTime="0";
 			  //残業加算
 			 salaryInfoBean.setOverTimePlus(""+ Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) * Float.parseFloat(overTime));
 
 			 //不足時間
 			 String shortage= salaryInfoBean.getShortage();
+			 if(shortage==null) shortage="0";
 			 //稼働不足減
 			 salaryInfoBean.setShortageReduce(""+ Float.parseFloat(baseSalaryInfoEntity.getInsufficienttimePay()) * Float.parseFloat(shortage));
 
@@ -694,7 +697,7 @@ public class SalaryInfoService {
 
 			//厚生年金控除個人
 			float wfPensionSelf =
-					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
+					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(shortage))/100)/2;
 			salaryInfoBean.setWelfarePensionSelf(Float.toString(wfPensionSelf));
 			 //厚生年金控除会社
 			float wfPensionComp = wfPensionSelf;
@@ -702,6 +705,7 @@ public class SalaryInfoService {
 
 			 //社員年齢を取る
 			String age=salarylistMapper.getAge(employeeID);
+
 			 //厚生健康控除個人
 			float wfHealthSelf;
 			//厚生健康控除会社
@@ -760,10 +764,25 @@ public class SalaryInfoService {
 			//労災保険（会社負担のみ）
 			 float industrialAccidentInsurance = 0;
 			 //雇用保険の対象額(修正後：基本給＋交通費＋残業金額＋手当)
+			 String transportExpense = "0";
+			if(salaryInfoBean.getTransportExpense()!=null)
+			{
+				transportExpense=salaryInfoBean.getTransportExpense();
+			}
+			String overTimePlus = "0";
+			if(salaryInfoBean.getOverTimePlus()!=null)
+			{
+				overTimePlus=salaryInfoBean.getOverTimePlus();
+			}
+			String allowancePlus = "0";
+			if(salaryInfoBean.getAllowancePlus()!=null)
+			{
+				allowancePlus=salaryInfoBean.getAllowancePlus();
+			}
 			 float hoKenSalary = Float.parseFloat(basesalary)
-					             +Float.parseFloat(salaryInfoBean.getTransportExpense())
-					             +Float.parseFloat(salaryInfoBean.getOverTimePlus())
-					             +Float.parseFloat(salaryInfoBean.getAllowancePlus());
+					             +Float.parseFloat(transportExpense)
+					             +Float.parseFloat(overTimePlus)
+					             +Float.parseFloat(allowancePlus);
 			 if(("0").equals(postion)) {
 				 laborBurden = 0;
 				 employerBurden = 0;
@@ -846,26 +865,14 @@ public class SalaryInfoService {
 			{
 				specialReduce=salaryInfoBean.getSpecialReduce();
 			}
-			String overTimePlus = "0";
-			if(salaryInfoBean.getOverTimePlus()!=null)
-			{
-				overTimePlus=salaryInfoBean.getOverTimePlus();
-			}
-			String transportExpense = "0";
-			if(salaryInfoBean.getTransportExpense()!=null)
-			{
-				transportExpense=salaryInfoBean.getTransportExpense();
-			}
+
+
 			String specialAddition = "0";
 			if(salaryInfoBean.getSpecialAddition()!=null)
 			{
 				specialAddition=salaryInfoBean.getSpecialAddition();
 			}
-			String allowancePlus = "0";
-			if(salaryInfoBean.getAllowancePlus()!=null)
-			{
-				specialAddition=salaryInfoBean.getAllowancePlus();
-			}
+
 			 float sum = Float.parseFloat(basesalary)
 					 - Float.parseFloat(shortageReduce)
 					 - Float.parseFloat(allowanceReduce)
