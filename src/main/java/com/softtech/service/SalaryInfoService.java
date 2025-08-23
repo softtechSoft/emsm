@@ -293,11 +293,7 @@ public class SalaryInfoService {
 		//対象月
 		salaryInfoBean.setMonth(salaryInfo.getMonth());
 		//基本給
-//		if(welfareInfoDB == null ) {
-//			salaryInfoBean.setBase("0");
-//		}else {
-//			salaryInfoBean.setBase(DateUtil.ma(Integer.toString(welfareInfoDB.getBase())));
-//		}
+
 		salaryInfoBean.setBase(salaryInfo.getBase());
 		//支払日
 		salaryInfoBean.setPaymentDate(salaryInfo.getPaymentDate());
@@ -320,35 +316,7 @@ public class SalaryInfoService {
 		salaryInfoBean.setAllowanceReduce(salaryInfo.getAllowanceReduce());
 		//手当理由
 		salaryInfoBean.setSpecialAddition(salaryInfo.getAllowanceReason());
-//		if(welfareInfoDB != null ) {
-//			//厚生年金控除個人
-//			salaryInfoBean.setWelfarePensionSelf(DateUtil.ma(Integer.toString(welfareInfoDB.getWelfarePensionSelf())));
-//			//厚生健康控除個人
-//			salaryInfoBean.setWelfareHealthSelf(DateUtil.ma(Integer.toString(welfareInfoDB.getWelfareHealthSelf())));
-//			//厚生年金控除会社
-//			salaryInfoBean.setWelfarePensionComp(DateUtil.ma(Integer.toString(welfareInfoDB.getWelfarePensionComp())));
-//			//厚生健康控除会社
-//			salaryInfoBean.setWelfareHealthComp(DateUtil.ma(Integer.toString(welfareInfoDB.getWelfareHealthComp())));
-//			//厚生控除子育(会社）
-//			salaryInfoBean.setWelfareBaby(DateUtil.ma(Integer.toString(welfareInfoDB.getWelfareBaby())));
-//			//雇用保険個人負担
-//			salaryInfoBean.setEplyInsSelf(DateUtil.ma(Integer.toString(welfareInfoDB.getEplyInsSelf())));
-//			//雇用保険会社負担
-//			salaryInfoBean.setEplyInsComp(DateUtil.ma(Integer.toString(welfareInfoDB.getEplyInsComp())));
-//			//雇用保拠出金（会社)
-//			salaryInfoBean.setEplyInsWithdraw(DateUtil.ma(Integer.toString(welfareInfoDB.getEplyInsWithdraw())));
-//			//労災保険（会社負担のみ）
-//			salaryInfoBean.setWkAcccpsIns(DateUtil.ma(Integer.toString(welfareInfoDB.getWkAcccpsIns())));
-//			//源泉控除
-//			salaryInfoBean.setWithholdingTax(DateUtil.ma(Integer.toString(welfareInfoDB.getWithholdingTax())));
-//			//住民税控除
-//			salaryInfoBean.setMunicipalTax(DateUtil.ma(Integer.toString(welfareInfoDB.getMunicipalTax1())));
-//			//社宅家賃控除
-//			salaryInfoBean.setRental(DateUtil.ma(Integer.toString(welfareInfoDB.getRental())));
-//			//社宅共益費控除
-//			salaryInfoBean.setRentalMgmtFee(DateUtil.ma(Integer.toString(welfareInfoDB.getRentalMgmtFee())));
-//
-//		}
+
 		//厚生年金控除個人
 		salaryInfoBean.setWelfarePensionSelf(salaryInfo.getWelfarePensionSelf());
 		//厚生健康控除個人
@@ -699,7 +667,7 @@ public class SalaryInfoService {
 
 			//厚生年金控除個人
 			float wfPensionSelf =
-					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(shortage))/100)/2;
+					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(basesalary))/100)/2;
 			salaryInfoBean.setWelfarePensionSelf("" + Math.round(wfPensionSelf));
 			 //厚生年金控除会社
 			float wfPensionComp = wfPensionSelf;

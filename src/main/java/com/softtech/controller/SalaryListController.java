@@ -19,8 +19,6 @@ import com.softtech.actionForm.SalaryInfoBean;
 import com.softtech.actionForm.SalarylistBean2;
 import com.softtech.common.AutoSalaryRtn;
 import com.softtech.common.SalaryInfoRecord;
-import com.softtech.entity.EmployeeInfoEntity;
-import com.softtech.entity.EmplyinsrateInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.mappers.EmployeeInfoMapper;
 import com.softtech.mappers.SalarylistMapper;
@@ -104,32 +102,32 @@ public class SalaryListController {
 			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
 
-			//雇用保険税率を取得
-			String time = salarylistBean2.getMonth();
-			String year = time.substring(0, 4);
-			EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year);
-
-			//役職を取得
-			String employeeID = salarylistBean2.getEmployeeIDFlg();
-			List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
-			EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
-			String postion = emp.getPosition();
-
-			//厚生保険税率を取得
-			//String basesalary = salarylistBean2.getBase();
-			//WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
-			if(emplyinsrateInfoEntity==null) {
-				model.addAttribute("laborBurdenRate", 0.001);
-				model.addAttribute("employerBurdenRate", 0.002);
-				model.addAttribute("industrialAccidentInsuranceRate", 0.003);
-				model.addAttribute("employmentInsurance", 0.004);
-			}else {
-
-				model.addAttribute("laborBurdenRate", emplyinsrateInfoEntity.getLaborBurdenRate());
-				model.addAttribute("employerBurdenRate", emplyinsrateInfoEntity.getEmployerBurdenRate());
-				model.addAttribute("industrialAccidentInsuranceRate", emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate());
-				model.addAttribute("employmentInsurance", emplyinsrateInfoEntity.getEmplyinsrate());
-			}
+//			//雇用保険税率を取得
+//			String time = salarylistBean2.getMonth();
+//			String year = time.substring(0, 4);
+//			EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year);
+//
+//			//役職を取得
+//			String employeeID = salarylistBean2.getEmployeeIDFlg();
+//			List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
+//			EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
+//			String postion = emp.getPosition();
+//
+//			//厚生保険税率を取得
+//			//String basesalary = salarylistBean2.getBase();
+//			//WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+//			if(emplyinsrateInfoEntity==null) {
+//				model.addAttribute("laborBurdenRate", 0.001);
+//				model.addAttribute("employerBurdenRate", 0.002);
+//				model.addAttribute("industrialAccidentInsuranceRate", 0.003);
+//				model.addAttribute("employmentInsurance", 0.004);
+//			}else {
+//
+//				model.addAttribute("laborBurdenRate", emplyinsrateInfoEntity.getLaborBurdenRate());
+//				model.addAttribute("employerBurdenRate", emplyinsrateInfoEntity.getEmployerBurdenRate());
+//				model.addAttribute("industrialAccidentInsuranceRate", emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate());
+//				model.addAttribute("employmentInsurance", emplyinsrateInfoEntity.getEmplyinsrate());
+//			}
 
 			// 初期モードに設定
 			//salaryInfoBean.setGamenMode("0");

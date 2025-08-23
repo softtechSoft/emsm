@@ -85,9 +85,9 @@ function doRegist(){
 }
 //数値表示方を変更する。２０００→２，０００
 function chageNumberDisp(textObject){
-	var num = textObject.value;
-	num=toNumberDisp(num);
-	textObject.value = String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+	//var num = textObject.value;
+	//num=toNumberDisp(num);
+	//textObject.value = String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
 }
 
@@ -285,8 +285,7 @@ function setSum(){
 				-allowanceReduce
 				-specialReduce;
 
-	//document.getElementById('totalFee').value=String(salarySum).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-	document.getElementById('totalFee').value=fee
+
 	*/
 }
 //文字列を数字に変換
@@ -321,11 +320,12 @@ function validateTimeInput(input) {
 	<!--input入力できるかどうか、判断用データ -->
 	<input type="hidden" id="gamenMode" name="gamenMode" value="${salaryInfoBean.gamenMode}"/>
 
-	<!-- 其他费率也类似添加 -->
+	<!-- 其他费率也类似添加
 	<input type="hidden" id="laborBurdenRate" value="${laborBurdenRate}">
 	<input type="hidden" id="employerBurdenRate" value="${employerBurdenRate}">
 	<input type="hidden" id="industrialAccidentInsuranceRate" value="${industrialAccidentInsuranceRate}">
 	<input type="hidden" id="employmentInsurance" value="${employmentInsurance}">
+	-->
 	<!--エラーメッセージ-->
  	<p style="color: red;">
     	<c:forEach  items="${errors}" var="error">
