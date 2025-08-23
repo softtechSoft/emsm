@@ -809,21 +809,78 @@ public class SalaryInfoService {
 			 //+交通費(通勤交通+他の交通費）transportExpense
 			 //+特別加算specialAddition
 			 //+手当加算allowancePlus
+			 String shortageReduce = "0";
+			if(salaryInfoBean.getShortageReduce()!=null)
+			{
+				shortageReduce=salaryInfoBean.getShortageReduce();
+			}
+
+			 String allowanceReduce = "0";
+			if(salaryInfoBean.getAllowanceReduce()!=null)
+			{
+				allowanceReduce=salaryInfoBean.getAllowanceReduce();
+			}
+
+			String withholdingTax = "0";
+			if(salaryInfoBean.getWithholdingTax()!=null)
+			{
+				withholdingTax=salaryInfoBean.getWithholdingTax();
+			}
+			String municipalTax = "0";
+			if(salaryInfoBean.getMunicipalTax()!=null)
+			{
+				municipalTax=salaryInfoBean.getMunicipalTax();
+			}
+			String rental = "0";
+			if(salaryInfoBean.getRental()!=null)
+			{
+				rental=salaryInfoBean.getRental();
+			}
+			String rentalMgmtFee = "0";
+			if(salaryInfoBean.getRentalMgmtFee()!=null)
+			{
+				rentalMgmtFee=salaryInfoBean.getRentalMgmtFee();
+			}
+			String specialReduce = "0";
+			if(salaryInfoBean.getSpecialReduce()!=null)
+			{
+				specialReduce=salaryInfoBean.getSpecialReduce();
+			}
+			String overTimePlus = "0";
+			if(salaryInfoBean.getOverTimePlus()!=null)
+			{
+				overTimePlus=salaryInfoBean.getOverTimePlus();
+			}
+			String transportExpense = "0";
+			if(salaryInfoBean.getTransportExpense()!=null)
+			{
+				transportExpense=salaryInfoBean.getTransportExpense();
+			}
+			String specialAddition = "0";
+			if(salaryInfoBean.getSpecialAddition()!=null)
+			{
+				specialAddition=salaryInfoBean.getSpecialAddition();
+			}
+			String allowancePlus = "0";
+			if(salaryInfoBean.getAllowancePlus()!=null)
+			{
+				specialAddition=salaryInfoBean.getAllowancePlus();
+			}
 			 float sum = Float.parseFloat(basesalary)
-					 - Float.parseFloat(salaryInfoBean.getShortageReduce())
-					 - Float.parseFloat(salaryInfoBean.getAllowanceReduce())
+					 - Float.parseFloat(shortageReduce)
+					 - Float.parseFloat(allowanceReduce)
 					 - wfPensionSelf
 					 - wfHealthSelf
 					 - laborBurden
-					 - Float.parseFloat(salaryInfoBean.getWithholdingTax())
-					 - Float.parseFloat(salaryInfoBean.getMunicipalTax())
-					 - Float.parseFloat(salaryInfoBean.getRental())
-					 - Float.parseFloat(salaryInfoBean.getRentalMgmtFee())
-					 - Float.parseFloat(salaryInfoBean.getSpecialReduce())
-					 + Float.parseFloat(salaryInfoBean.getOverTimePlus())
-					 + Float.parseFloat(salaryInfoBean.getTransportExpense())
-					 + Float.parseFloat(salaryInfoBean.getSpecialAddition())
-					 + Float.parseFloat(salaryInfoBean.getAllowancePlus())   ;
+					 - Float.parseFloat(withholdingTax)
+					 - Float.parseFloat(municipalTax)
+					 - Float.parseFloat(rental)
+					 - Float.parseFloat(rentalMgmtFee)
+					 - Float.parseFloat(specialReduce)
+					 + Float.parseFloat(overTimePlus)
+					 + Float.parseFloat(transportExpense)
+					 + Float.parseFloat(specialAddition)
+					 + Float.parseFloat(allowancePlus)   ;
 			 salaryInfoBean.setSum(Float.toString(sum));
 
 			 //総費用＝基本給basesalary
@@ -837,7 +894,6 @@ public class SalaryInfoService {
 			 //+交通費(通勤交通+他の交通費）transportExpense
 			 //+特別加算specialAddition
 			 //+手当加算allowancePlus
-
 			 float totalFee = Float.parseFloat(basesalary)
 					 + wfPensionComp
 					 + wfHealthComp
@@ -845,10 +901,10 @@ public class SalaryInfoService {
 					 + employerBurden
 					 + employmentInsurance
 					 + industrialAccidentInsurance
-					 +  Float.parseFloat(salaryInfoBean.getOverTimePlus())
-					 + Float.parseFloat(salaryInfoBean.getTransportExpense())
-					 + Float.parseFloat(salaryInfoBean.getSpecialAddition())
-					 + Float.parseFloat(salaryInfoBean.getAllowancePlus())   ;
+					 +  Float.parseFloat(overTimePlus)
+					 + Float.parseFloat(transportExpense)
+					 + Float.parseFloat(specialAddition)
+					 + Float.parseFloat(allowancePlus)   ;
 			 salaryInfoBean.setTotalFee(Float.toString(totalFee));
 	}
 
