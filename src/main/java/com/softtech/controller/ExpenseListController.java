@@ -1,5 +1,6 @@
 package com.softtech.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,9 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +37,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.softtech.entity.ExpenseListEntity;
 import com.softtech.entity.ExpenseTypeEntity;
+import com.softtech.entity.SaveFolder;
 import com.softtech.service.ExpenseListService;
 import com.softtech.service.ExpenseTypeService;
 import com.softtech.service.SaveFolderService;
@@ -46,8 +49,8 @@ import com.softtech.service.SaveFolderService;
 @Controller
 @RequestMapping("/expenseList")
 public class ExpenseListController {
-	@Value("${file.receipt.location}")
-	private String receiptFolder;
+	// @Value("${file.receipt.location}")
+	// private String receiptFolder;
 
 	@Autowired
 	private ExpenseListService expenseListService;
@@ -286,29 +289,38 @@ public class ExpenseListController {
 	            return ResponseEntity.notFound().build();
 	        }
 
-//	        // 設定された保存先ディレクトリのパスを取得
-//	        String baseDir = receiptFolder;
-////	        SaveFolder saveFolder = saveFolderService.findTypeAbbrName("経費管理");
-////	        String baseDir = saveFolder.getSaveFolder();
-//	        if (!baseDir.endsWith(File.separator)) {
-//	            baseDir += File.separator;
-//	        }
 
-	        // データベースの相対パスからファイルの完全パスを構築
-	        String dbPath = expense.getReceiptPath();
-	        // パスからファイル名部分を抽出（最後の/以降）
-	        String datefileName = dbPath.substring(dbPath.lastIndexOf('/') + 1);
-	        String fileName = datefileName.substring(datefileName.lastIndexOf('\\') + 1);
-	        // 完全なファイルパスを構築
-//	        String fullPath = baseDir + fileName;
-
-	        // ファイルの存在確認
-	        File file = new File(dbPath);
-	        if (!file.exists() || !file.isFile()) {
-	            return ResponseEntity.notFound().build();
+	        // 基準フォルダ（01: 経費管理）を解決（DB優先、なければ設定値）
+	        String baseFolder = null;
+	        try {
+	        	SaveFolder sf = saveFolderService.findFileTypeCode("01");
+	        	if (sf != null) baseFolder = sf.getSaveFolder();
+	        } catch (Exception ignore) {}
+	        if (!StringUtils.hasText(baseFolder)) {
+	        	baseFolder = System.getProperty("user.dir");
 	        }
 
-	        // ファイルの読み込みとレスポンスの設定
+	        // データベースのパス正規化（先頭スラッシュ除去、ドライブ無しは相対扱い）
+	        String dbPath = expense.getReceiptPath();
+	        String normalized = dbPath != null ? dbPath.trim() : "";
+	        boolean hasDrive = normalized.matches("^[A-Za-z]:.*");
+	        if (!hasDrive) {
+	        	while (normalized.startsWith("/") || normalized.startsWith("\\")) {
+	        		normalized = normalized.substring(1);
+	        	}
+	        }
+	        File file = new File(normalized);
+	        if (!file.isAbsolute() && StringUtils.hasText(baseFolder)) {
+	        	file = new File(baseFolder, normalized);
+	        }
+	        if (!file.exists() || !file.isFile()) {
+	        	return ResponseEntity.notFound().build();
+	        }
+
+	        // ダウンロード用ファイル名
+	        String fileName = expenseListService.getFileNameFromPath(file.getPath());
+
+	        // ストリームを返却
 	        FileInputStream fileInputStream = new FileInputStream(file);
 	        InputStreamResource resource = new InputStreamResource(fileInputStream);
 
@@ -330,6 +342,7 @@ public class ExpenseListController {
 	                .body("ファイルダウンロードエラー: " + e.getMessage());
 	    }
 	}
+
 
 	/**
 	* 領収書画像のサムネイル表示処理を実行する
@@ -400,6 +413,52 @@ public class ExpenseListController {
 	        e.printStackTrace();
 	        return ResponseEntity.badRequest().body(new ArrayList<>());
 	    }
+	}
+
+	/**
+	 * 年月単位のダウンロード処理を実行する
+	 *
+	 * @param year  年
+	 * @param month 月
+	 * @return ファイルダウンロード用のレスポンスエンティティ
+	 * @throws IOException ファイル処理で例外が発生した場合
+	 */
+	@GetMapping("/downloadZip")
+	@ResponseBody
+	public ResponseEntity<?> downloadExpensesByMonth(@RequestParam int year,
+			@RequestParam int month) {
+		try {
+
+			List<ExpenseListEntity> expenses = expenseListService.findExpensesByYearMonth(year, month);
+			if (expenses == null || expenses.isEmpty()) {
+				return ResponseEntity.notFound().build();
+			}
+
+			String zipFileName = String.format("expenses_%04d_%02d.zip", year, month);
+			String encodedZipFileName = URLEncoder.encode(zipFileName, StandardCharsets.UTF_8.name())
+					.replace("+", "%20");
+
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			try (ZipOutputStream zipOut = new ZipOutputStream(baos)) {
+				// ①CSVファイルを追加
+				expenseListService.addCsvToZip(zipOut, expenses, year, month);
+				// ②証跡ファイルを年月日サブフォルダーで追加
+				expenseListService.addEvidenceFilesToZip(zipOut, expenses);
+			}
+
+			ByteArrayResource resource = new ByteArrayResource(baos.toByteArray());
+			return ResponseEntity.ok()
+					.contentType(MediaType.parseMediaType("application/zip"))
+					.contentLength(baos.size())
+					.header(HttpHeaders.CONTENT_DISPOSITION,
+							"attachment; filename=\"" + encodedZipFileName + "\"")
+					.body(resource);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("ファイルダウンロードエラー: " + e.getMessage());
+		}
 	}
 
 }

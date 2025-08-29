@@ -102,6 +102,10 @@ tr:nth-child(even) {
 				<button type="button"
 					onclick="location.href='${pageContext.request.contextPath}/expenseInfo'">
 					新規</button>
+			<button type="button"
+				onclick="location.href='${pageContext.request.contextPath}/expenseList/downloadZip?year=${currentYear}&month=${currentMonth}'">
+				${currentYear}年${currentMonth}月分ダウンロード
+			</button>
 			</div>
 		</form>
 
@@ -609,6 +613,18 @@ tr:nth-child(even) {
 	           input.value="";  // 入力値をクリア
 	       }
 	   }
+	}
+
+	function downloadCurrentMonth() {
+		// 現在表示されている年月を取得（フォームから）
+		const year = document.querySelector('select[name="year"]').value;
+		const month = document.querySelector('select[name="month"]').value;
+		
+		// ダウンロードURLを構築
+		const downloadUrl = `${pageContext.request.contextPath}/expenseList/downloadZip?year=${year}&month=${month}`;
+		
+		// ダウンロード実行
+		location.href = downloadUrl;
 	}
     </script>
 </body>
