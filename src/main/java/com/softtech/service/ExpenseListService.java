@@ -274,8 +274,9 @@ public class ExpenseListService {
 
        // 相対パスを返却（保存ルートからの相対：yyyyMMdd/ファイル名）
        // 例: 20250807/EX0001_receipt.png
-       String relativePath = acc + File.separator + newFileName;
-       return relativePath;
+       //String relativePath = acc + File.separator + newFileName;
+       //return relativePath;
+       return fullFilePath;
     }
 
     /**
