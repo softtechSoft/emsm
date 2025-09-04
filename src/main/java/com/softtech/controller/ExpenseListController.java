@@ -37,7 +37,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.softtech.entity.ExpenseListEntity;
 import com.softtech.entity.ExpenseTypeEntity;
-import com.softtech.entity.SaveFolder;
 import com.softtech.service.ExpenseListService;
 import com.softtech.service.ExpenseTypeService;
 import com.softtech.service.SaveFolderService;
@@ -290,34 +289,36 @@ public class ExpenseListController {
 	        }
 
 
-	        // 基準フォルダ（01: 経費管理）を解決（DB優先、なければ設定値）
-	        String baseFolder = null;
-	        try {
-	        	SaveFolder sf = saveFolderService.findFileTypeCode("01");
-	        	if (sf != null) baseFolder = sf.getSaveFolder();
-	        } catch (Exception ignore) {}
-	        if (!StringUtils.hasText(baseFolder)) {
-	        	baseFolder = System.getProperty("user.dir");
-	        }
-
-	        // データベースのパス正規化（先頭スラッシュ除去、ドライブ無しは相対扱い）
-	        String dbPath = expense.getReceiptPath();
-	        String normalized = dbPath != null ? dbPath.trim() : "";
-	        boolean hasDrive = normalized.matches("^[A-Za-z]:.*");
-	        if (!hasDrive) {
-	        	while (normalized.startsWith("/") || normalized.startsWith("\\")) {
-	        		normalized = normalized.substring(1);
-	        	}
-	        }
-	        File file = new File(normalized);
-	        if (!file.isAbsolute() && StringUtils.hasText(baseFolder)) {
-	        	file = new File(baseFolder, normalized);
-	        }
-	        if (!file.exists() || !file.isFile()) {
-	        	return ResponseEntity.notFound().build();
-	        }
+//	        // 基準フォルダ（01: 経費管理）を解決（DB優先、なければ設定値）
+//	        String baseFolder = null;
+//	        try {
+//	        	SaveFolder sf = saveFolderService.findFileTypeCode("01");
+//	        	if (sf != null) baseFolder = sf.getSaveFolder();
+//	        } catch (Exception ignore) {}
+//	        if (!StringUtils.hasText(baseFolder)) {
+//	        	baseFolder = System.getProperty("user.dir");
+//	        }
+//
+//	        // データベースのパス正規化（先頭スラッシュ除去、ドライブ無しは相対扱い）
+//	        String dbPath = expense.getReceiptPath();
+//	        String normalized = dbPath != null ? dbPath.trim() : "";
+//	        boolean hasDrive = normalized.matches("^[A-Za-z]:.*");
+//	        if (!hasDrive) {
+//	        	while (normalized.startsWith("/") || normalized.startsWith("\\")) {
+//	        		normalized = normalized.substring(1);
+//	        	}
+//	        }
+//	        File file = new File(normalized);
+//	        if (!file.isAbsolute() && StringUtils.hasText(baseFolder)) {
+//	        	file = new File(baseFolder, normalized);
+//	        }
+//	        if (!file.exists() || !file.isFile()) {
+//	        	return ResponseEntity.notFound().build();
+//	        }
 
 	        // ダウンロード用ファイル名
+	        String dbPath = expense.getReceiptPath();
+	        File file = new File(dbPath);
 	        String fileName = expenseListService.getFileNameFromPath(file.getPath());
 
 	        // ストリームを返却
