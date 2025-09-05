@@ -814,7 +814,7 @@ CREATE TABLE bp_invoice (
     status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
-    FOREIGN KEY (payment_id) REFERENCES bp_payment(payment_id)
+    --FOREIGN KEY (payment_id) REFERENCES bp_payment(payment_id)
 ) COMMENT 'BP請求書情報';
 
 
