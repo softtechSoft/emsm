@@ -734,10 +734,11 @@ ADD UNIQUE idx_unique_tx (
 --SET FOREIGN_KEY_CHECKS = 1;
 
 -- BP会社情報
+DROP TABLE IF EXISTS bp_company;
 CREATE TABLE bp_company (
     company_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '会社ID',
     company_name VARCHAR(100) NOT NULL COMMENT '会社名称',
-    unit_price INT NOT NULL COMMENT '単価',
+    unit_price INT NOT NULL COMMENT '単価--削除予定',
     address VARCHAR(200) COMMENT '住所',
     phone VARCHAR(20) COMMENT '電話番号',
     contact_person VARCHAR(50) COMMENT '連絡先名',
@@ -760,61 +761,64 @@ CREATE TABLE bp_employee (
 ) COMMENT 'BP社員情報';
 
 -- BP契約情報
+DROP TABLE IF EXISTS bp_contract;
 CREATE TABLE bp_contract (
     contract_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '契約ID',
-    employee_id VARCHAR(6) NOT NULL COMMENT '社員ID',
     company_id VARCHAR(6) NOT NULL COMMENT '会社ID',
+    employee_id VARCHAR(6) NOT NULL COMMENT '社員ID',
     contract_name VARCHAR(100) COMMENT '契約名称',
     start_date DATE NOT NULL COMMENT '契約開始日',
     end_date DATE COMMENT '契約終了日',
     unit_price DECIMAL(12,2) COMMENT '単価',
+    lowerTime varchar(3) not null comment'契約下限',
+    lowerPrice int(6) not null comment'控除単価',
+    upperTime varchar(3) not null comment'契約上限',
+    upperPrice int(6) not null comment'残業単価',
     status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
-    --FOREIGN KEY (employee_id) REFERENCES bp_employee(employee_id),
-    --FOREIGN KEY (company_id) REFERENCES bp_company(company_id)
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日'
 ) COMMENT 'BP契約情報';
+
 -- BP支払情報
+DROP TABLE IF EXISTS bp_payment;
 CREATE TABLE bp_payment (
     payment_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '支払ID',
+    year VARCHAR(10) NOT NULL COMMENT '対象年',
     month VARCHAR(10) NOT NULL COMMENT '対象月',
-    employee_id VARCHAR(6) COMMENT '社員ID',
-    company_id VARCHAR(6) COMMENT '会社ID',
+    employee_id VARCHAR(6) COMMENT '社員ID--削除予定',
+    company_id VARCHAR(6) COMMENT '会社ID--削除予定',
     dispatch_company_id VARCHAR(6) COMMENT '派遣会社ID',
-    contract_id VARCHAR(10) COMMENT '契約ID',
+    contract_id VARCHAR(10) COMMENT '取引契約ID',
     bp_contract_id VARCHAR(6) COMMENT 'BP契約ID',
-    unit_price_ex_tax INT COMMENT '税抜単価',
+    unit_price_ex_tax INT COMMENT '取引単価',
     outsourcing_amount_ex_tax INT COMMENT '税抜外注金額',
     outsourcing_amount_in_tax INT COMMENT '税込外注金額',
     commission INT DEFAULT 0 COMMENT '手数料',
     transfer_date DATE NOT NULL COMMENT '振込日',
     entry_date DATE COMMENT '登録日',
     remarks TEXT COMMENT '備考',
-    invoice_number VARCHAR(50) COMMENT '請書番号',
+    invoice_number VARCHAR(50) COMMENT '請書番号---削除予定',
+    invoice_id VARCHAR(6) COMMENT '請求書ID',
     status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
-    --FOREIGN KEY (employee_id) REFERENCES bp_employee(employee_id),
-    --FOREIGN KEY (company_id) REFERENCES bp_company(company_id),
-    --FOREIGN KEY (dispatch_company_id) REFERENCES company(companyID),
-    --FOREIGN KEY (contract_id) REFERENCES contract(contractID),
-    --FOREIGN KEY (bp_contract_id) REFERENCES bp_contract(contract_id)
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日'
+
 ) COMMENT 'BP支払情報';
 
 -- BP請求書情報
 CREATE TABLE bp_invoice (
     invoice_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '請求書ID',
     invoice_number VARCHAR(50) NOT NULL UNIQUE COMMENT '請求書番号',
-    month VARCHAR(10) NOT NULL COMMENT '対象月',
-    payment_id VARCHAR(6) COMMENT '支払ID',
-    file_path VARCHAR(255) COMMENT 'ファイルパス',
-    file_name VARCHAR(100) COMMENT 'ファイル名',
-    file_size BIGINT COMMENT 'ファイルサイズ',
-    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'アップロード日',
-    status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス',
+    month VARCHAR(10) NOT NULL COMMENT '対象月---削除予定',
+    payment_id VARCHAR(6) COMMENT '支払ID---削除予定',
+    file_path VARCHAR(255) COMMENT 'ファイルパス--削除予定',
+    file_name VARCHAR(100) COMMENT 'ファイル名フルパス',
+    file_size BIGINT COMMENT 'ファイルサイズ--削除予定',
+    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'アップロード日--削除予定',
+    status VARCHAR(1) DEFAULT '1' COMMENT 'ステータス--削除予定',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日',
-    --FOREIGN KEY (payment_id) REFERENCES bp_payment(payment_id)
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日'
+
 ) COMMENT 'BP請求書情報';
 
 
