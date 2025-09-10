@@ -1,24 +1,19 @@
 package com.softtech.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.YearMonth;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,7 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.softtech.actionForm.BpInvoiceFormBean;
@@ -49,38 +43,38 @@ import com.softtech.service.DpCompanyService;
 public class BpPaymentController {
     @Autowired
     private BpPaymentService bpPaymentService;
-    
+
     @Autowired
     private BpEmployeeService bpEmployeeService;
-    
+
     @Autowired
     private BpCompanyService bpCompanyService;
-    
+
     @Autowired
     private DpCompanyService dpCompanyService;
-    
+
     @Autowired
     private BpInvoiceService bpInvoiceService;
-    
+
     @Value("${file.bpPayment.location}")
     private String bpPaymentLocation;
-    
+
     @Autowired
     private BpInvoiceController bpInvoiceController;
-    
-    
-    
+
+
+
     /**
      * 支払リスト画面
      */
     @RequestMapping(value = "/bpPaymentList", method = {RequestMethod.GET, RequestMethod.POST})
     public String bpPaymentList(@ModelAttribute BpPaymentFormBean bpPaymentFormBean, Model model) {
         String month = bpPaymentFormBean.getMonth();
-        
+
         // 支払リストを取得
         List<BpPayment> list = bpPaymentService.getBpPaymentList(month);
         model.addAttribute("list", list);
-        
+
         // 合計のデータを取得
         List<BpPayment> summaryList = bpPaymentService.getBpPaymentSummaryList(month);
         model.addAttribute("summaryList", summaryList);
@@ -90,7 +84,7 @@ public class BpPaymentController {
 
         return "bpPaymentList";
     }
-    
+
     /**
      * 新規、変更初期化画面
      */
@@ -119,9 +113,9 @@ public class BpPaymentController {
                     bpPaymentFormBean.setOutsourcingAmountExTax(bpPayment.getOutsourcingAmountExTax());
                     bpPaymentFormBean.setOutsourcingAmountInTax(bpPayment.getOutsourcingAmountInTax());
                     bpPaymentFormBean.setCommission(bpPayment.getCommission());
-                    bpPaymentFormBean.setTransferDate(bpPayment.getTransferDate() != null ? 
+                    bpPaymentFormBean.setTransferDate(bpPayment.getTransferDate() != null ?
                         bpPayment.getTransferDate().toString() : "");
-                    bpPaymentFormBean.setEntryDate(bpPayment.getEntryDate() != null ? 
+                    bpPaymentFormBean.setEntryDate(bpPayment.getEntryDate() != null ?
                         bpPayment.getEntryDate().toString() : "");
                     bpPaymentFormBean.setRemarks(bpPayment.getRemarks());
                     bpPaymentFormBean.setInvoiceNumber(bpPayment.getInvoiceNumber());
@@ -172,12 +166,12 @@ public class BpPaymentController {
     	try {
             String insertFlg = bpPaymentFormBean.getInsertFlg();
             boolean rnt = false;
-            
+            String bpPaymentId="";
             // BP支払情報の保存
             if ("0".equals(insertFlg)) {
                 // 新規登録
-                rnt = bpPaymentService.insertBpPayment(bpPaymentFormBean);
-                if (rnt) {
+            	bpPaymentId = bpPaymentService.insertBpPayment(bpPaymentFormBean);
+                if (bpPaymentId.length()>0) {
                     model.addAttribute("successMessage", "新規登録が成功しました");
                 } else {
                     model.addAttribute("error", "新規登録が失敗しました");
@@ -195,14 +189,14 @@ public class BpPaymentController {
                     return "bpPaymentEdit";
                 }
             }
-            
+
          // 支払情報保存成功後、ファイルがある場合は請求書をアップロード
             if (file != null && !file.isEmpty()) {
-                String paymentId = bpPaymentFormBean.getNo();
+                //String paymentId = bpPaymentFormBean.getNo();
                 try {
                     // 使用サービス層方法処理ファイルアップロード而不是コントローラー方法を呼び出す
-                    Map<String, String> response = this.handleInvoiceUpload(paymentId, file);
-                    
+                    Map<String, String> response = this.handleInvoiceUpload(bpPaymentId, file);
+
                     if (response.containsKey("message")) {
                         model.addAttribute("invoiceSuccess", response.get("message"));
                     } else if (response.containsKey("error")) {
@@ -214,7 +208,7 @@ public class BpPaymentController {
             }
             loadDropdownData(model);
             return "bpPaymentEdit";
-            
+
         } catch (Exception e) {
             model.addAttribute("error", "処理中にエラーが発生しました: " + e.getMessage());
             loadDropdownData(model);
@@ -222,7 +216,7 @@ public class BpPaymentController {
         }
     }
 
-    
+
 
     /**
      * 選択用のデータ
@@ -262,7 +256,7 @@ public class BpPaymentController {
 
         return "bpMasterManagement";
     }
-    
+
     /**
      * 处理发票上传的内部方法
      * @param paymentId 支付ID
@@ -277,7 +271,7 @@ public class BpPaymentController {
                 response.put("error", "支払IDを選択してください");
                 return response;
             }
-            
+
             if (file == null || file.isEmpty()) {
                 response.put("error", "アップロードするファイルを選択してください");
                 return response;
@@ -293,16 +287,16 @@ public class BpPaymentController {
                 response.put("error", "ファイル名が無効です");
                 return response;
             }
-            
+
             Path destinationFile = uploadPath.resolve(fileName).normalize();
             Files.copy(file.getInputStream(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
 
             // データベース保存用の相対パスを構築
             String relativeFilePath = "ems_files/bp_invoice/" + fileName;
-            
+
             // 既にこのpaymentIdの請求書記録が存在するか確認
             List<BpInvoice> existingInvoices = bpInvoiceService.getAllInvoices(paymentId);
-            
+
             if (existingInvoices != null && !existingInvoices.isEmpty()) {
                 // 既存の記録を更新
                 BpInvoice existingInvoice = existingInvoices.get(0);
@@ -330,7 +324,7 @@ public class BpPaymentController {
                 formBean.setInvoiceNumber(invoiceNumber);
                 bpInvoiceService.insertInvoice(formBean);
             }
-            
+
             response.put("message", "ファイルのアップロードが成功しました！");
             return response;
         } catch (Exception e) {
@@ -338,8 +332,8 @@ public class BpPaymentController {
             return response;
         }
     }
-    
-    
-    
+
+
+
 
 }

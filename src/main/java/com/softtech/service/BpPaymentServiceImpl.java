@@ -62,19 +62,31 @@ public class BpPaymentServiceImpl implements BpPaymentService {
      * 新規登録
      */
     @Override
-    public boolean insertBpPayment(BpPaymentFormBean formBean) {
-        
+    public String insertBpPayment(BpPaymentFormBean formBean) {
+
     	try {
-	        // transferToEntity    
+	        // Entityに変換
 	        BpPayment bpPayment = transferToEntity(formBean);
-	        // 插入数据库
+	        //採番
+	      //契約情報の最大IDを取得する
+			String bpPaymentID = bpPaymentMapper.getMaxPaymentId();
+			String nextContractID;
+			if(bpPaymentID==null || bpPaymentID.length()==0) {
+				nextContractID="BP0001";
+			} else {
+				// 採番する
+				nextContractID = DataUtil.getNextID(bpPaymentID,2);
+			}
+			bpPayment.setPaymentId(nextContractID);
+
+	        // DB登録
 	        bpPaymentMapper.insertBpPayment(bpPayment);
-	        return true; 
+	        return nextContractID;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "";
         }
-        
+
     }
 
     /**
@@ -106,7 +118,7 @@ public class BpPaymentServiceImpl implements BpPaymentService {
         }
     }
 
-    
+
 
     /**
      * 請求書リスト取得
@@ -115,7 +127,7 @@ public class BpPaymentServiceImpl implements BpPaymentService {
     public List<BpPayment> getInvoiceList() {
         try {
             return bpPaymentMapper.getInvoiceList();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             // 仮のデータを返す
@@ -129,19 +141,19 @@ public class BpPaymentServiceImpl implements BpPaymentService {
      */
     @Override
     public String getMaxPaymentId() {
-    	
+
 		String maxBpPaymentId = bpPaymentMapper.getMaxPaymentId();
-        
+
         if (maxBpPaymentId != null) {
         	maxBpPaymentId = maxBpPaymentId.toUpperCase();
         }
         String nextBpPaymentId = DataUtil.getNextID(maxBpPaymentId, 2);
 //          return nextEmployeeID;
         return nextBpPaymentId != null ? nextBpPaymentId.toUpperCase() : null;
-     
+
     }
 
-    
+
     /**
      * transferToEntity
      * @return BpPayment
@@ -159,23 +171,23 @@ public class BpPaymentServiceImpl implements BpPaymentService {
         bpPayment.setOutsourcingAmountExTax(formBean.getOutsourcingAmountExTax());
         bpPayment.setOutsourcingAmountInTax(formBean.getOutsourcingAmountInTax());
         bpPayment.setCommission(formBean.getCommission());
-        
+
         // 处理日期字段
         if (formBean.getTransferDate() != null && !formBean.getTransferDate().isEmpty()) {
             bpPayment.setTransferDate(java.sql.Date.valueOf(formBean.getTransferDate()));
         }
-        
+
         if (formBean.getEntryDate() != null && !formBean.getEntryDate().isEmpty()) {
             bpPayment.setEntryDate(java.sql.Date.valueOf(formBean.getEntryDate()));
         }
-        
+
         bpPayment.setRemarks(formBean.getRemarks());
         bpPayment.setInvoiceNumber(formBean.getInvoiceNumber());
         bpPayment.setStatus("1"); // 默认状态为1（有效）
-        
+
 		return bpPayment;
 	}
-    
+
 
 
 }

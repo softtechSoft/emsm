@@ -35,20 +35,23 @@
             });
         });
 
-        function doRegist() {
-            if ($('#theForm').valid()) {
-                // 税込金額を計算して設定
-                //var unitPriceExTax = $('#unitPriceExTax').val();
-                var outsourcingAmountExTax = $('#outsourcingAmountExTax').val();
-                if (outsourcingAmountExTax != 0 || outsourcingAmountExTax.equals("NULL")) {
-                    var taxRate = 1.1;
-                    var amountInTax = outsourcingAmountExTax * taxRate;
-                    $('#outsourcingAmountInTax').val(amountInTax);
-                }
-                // フォームを送信
-                document.theForm.submit();
-            }
-        }
+ function doRegist() {
+	 /*
+     if ($('#theForm').valid()) {
+         // 税込金額を計算して設定
+         //var unitPriceExTax = $('#unitPriceExTax').val();
+         var outsourcingAmountExTax = $('#outsourcingAmountExTax').val();
+         if (outsourcingAmountExTax != 0 || outsourcingAmountExTax.equals("NULL")) {
+             var taxRate = 1.1;
+             var amountInTax = outsourcingAmountExTax * taxRate;
+             $('#outsourcingAmountInTax').val(amountInTax);
+         }
+         // フォームを送信
+         document.theForm.submit();
+     }
+	 */
+     document.theForm.submit();
+ }
 
         function goBack() {
             document.theForm.action = "bpPaymentList";
@@ -57,7 +60,7 @@
     </script>
 </head>
 <body>
-    <!-- 成功メッセージ -->
+<!-- 成功メッセージ -->
     <c:if test="${not empty successMessage}">
         <p style="color: green;">
             <c:out value="${successMessage}" />
@@ -65,27 +68,27 @@
     </c:if>
     <!-- エラーメッセージ -->
     <p style="color: red;">
-        <c:forEach items="${errors}" var="error">
+        <c:forEach items="${error}" var="error">
             <spring:message message="${error}"/><br>
         </c:forEach>
     </p>
+
 
     <!-- フォーム -->
     <h2>BP支払登録・編集</h2>
     <form:form name="theForm" id="theForm" method="post" modelAttribute="bpPaymentFormBean"
                action="saveBpPayment" enctype="multipart/form-data">
         <input type="hidden" name="insertFlg" value="${bpPaymentFormBean.insertFlg}" />
-        <input type="hidden" name="no" value="${bpPaymentFormBean.no}" /> 
-
+        <input type="hidden" name="no" value="${bpPaymentFormBean.no}" />
         <table border="1">
             <tr style="background-color:#dcfeeb">
                 <td width="150px">支払ID <span style="color:red">*</span></td>
                 <td width="250px">
                     <c:out value="${bpPaymentFormBean.no}" />
-                    
+
                 </td>
             </tr>
-            
+
             <tr style="background-color:#dcfeeb">
                 <td width="150px">対象月 <span style="color:red">*</span></td>
                 <td width="250px">
@@ -176,12 +179,7 @@
                     <form:textarea path="remarks" id="remarks" style="width:98%;height:80px;" />
                 </td>
             </tr>
-            <tr style="background-color:#dcfeeb">
-                <td width="150px">請求書番号</td>
-                <td width="250px">
-                    <form:input path="invoiceNumber" id="invoiceNumber" style="width:98%;" />
-                </td>
-            </tr>
+
             <tr style="background-color:#dcfeeb">
                 <td width="150px">アップロード</td>
                 <td >

@@ -3,13 +3,13 @@
 <mapper namespace="com.softtech.mappers.BpPaymentMapper">
     <!-- 指定月の支払リスト取得 -->
     <select id="getBpPaymentList" parameterType="string" resultType="com.softtech.entity.BpPayment">
-        SELECT 
+        SELECT
             p.payment_id AS paymentId,
             p.month,
             p.employee_id AS employeeId,
-            e.name AS employeeName, 
+            e.name AS employeeName,
             p.company_id AS companyId,
-            c.company_name AS companyName, 
+            c.company_name AS companyName,
             p.dispatch_company_id AS dispatchCompanyId,
             dc.companyName AS dispatchCompanyName,
             p.contract_id AS contractId,
@@ -42,7 +42,7 @@
 
     <!-- 指定月の支払汇总リスト取得 -->
     <select id="getBpPaymentSummaryList" parameterType="string" resultType="com.softtech.entity.BpPayment">
-        SELECT 
+        SELECT
             p.month,
             dc.companyName AS dispatchCompanyName,
             COUNT(p.employee_id) AS employeeCount,
@@ -63,7 +63,7 @@
 
     <!-- 支払IDで1件取得 -->
     <select id="getBpPaymentById" parameterType="string" resultType="com.softtech.entity.BpPayment">
-        SELECT 
+        SELECT
             p.payment_id AS paymentId,
             p.month,
             p.employee_id AS employeeId,
@@ -93,11 +93,11 @@
         INSERT INTO bp_payment (
             payment_id, month, employee_id, company_id, dispatch_company_id, contract_id, bp_contract_id,
             unit_price_ex_tax, outsourcing_amount_ex_tax, outsourcing_amount_in_tax, commission,
-            transfer_date, entry_date, remarks, invoice_number, status
+            transfer_date, entry_date, remarks, status
         ) VALUES (
             #{paymentId}, #{month}, #{employeeId}, #{companyId}, #{dispatchCompanyId}, #{contractId}, #{bpContractId},
             #{unitPriceExTax}, #{outsourcingAmountExTax}, #{outsourcingAmountInTax}, #{commission},
-            #{transferDate}, #{entryDate}, #{remarks}, #{invoiceNumber}, #{status}
+            #{transferDate}, #{entryDate}, #{remarks}, #{status}
         )
     </insert>
 
@@ -126,21 +126,21 @@
     <delete id="deleteBpPayment" parameterType="string">
         DELETE FROM bp_payment WHERE payment_id = #{paymentId}
     </delete>
-    
+
     <!-- 利用可能な月リスト取得 -->
     <select id="getAvailableMonths" resultType="string">
         SELECT DISTINCT month FROM bp_payment ORDER BY month DESC
     </select>
-    
+
     <!-- 請求書リスト取得 -->
     <select id="getInvoiceList" resultType="com.softtech.entity.BpPayment">
-        SELECT 
+        SELECT
             p.payment_id AS paymentId,
             p.month,
             p.employee_id AS employeeId,
-            e.name AS employeeName, 
+            e.name AS employeeName,
             p.company_id AS companyId,
-            c.company_name AS companyName, 
+            c.company_name AS companyName,
             p.dispatch_company_id AS dispatchCompanyId,
             dc.companyName AS dispatchCompanyName,
             p.invoice_number AS invoiceNumber

@@ -34,7 +34,7 @@ public interface BpPaymentService {
      * 新規登録
      * @param bpPayment 支払信息
      */
-    boolean insertBpPayment(BpPaymentFormBean formBean);
+    String insertBpPayment(BpPaymentFormBean formBean);
 
     /**
      * 更新
@@ -48,26 +48,26 @@ public interface BpPaymentService {
      */
     void deleteBpPayment(String paymentId);
 
-    
+
 
     /**
      * 請求書リスト取得
      * @return 請求書リスト
      */
     List<BpPayment> getInvoiceList();
-    
+
     /**
      * 最大値ID取得
      * @return 最大値ID
      */
      String getMaxPaymentId();
-     
+
      /**
       * frombean to entity
       * @param frombean 画面データ
       */
      BpPayment transferToEntity(BpPaymentFormBean formBean);
 
-    
 
-} 
+
+}

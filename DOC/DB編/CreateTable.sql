@@ -783,8 +783,7 @@ CREATE TABLE bp_contract (
 DROP TABLE IF EXISTS bp_payment;
 CREATE TABLE bp_payment (
     payment_id VARCHAR(6) NOT NULL PRIMARY KEY COMMENT '支払ID',
-    year VARCHAR(4) NOT NULL COMMENT '対象年',
-    month VARCHAR(10) NOT NULL COMMENT '対象月',
+    month VARCHAR(10) NOT NULL COMMENT '対象年月',
     employee_id VARCHAR(6) COMMENT '社員ID--削除予定',
     company_id VARCHAR(6) COMMENT '会社ID--削除予定',
     dispatch_company_id VARCHAR(6) COMMENT '派遣会社ID--削除予定',
