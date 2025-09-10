@@ -306,7 +306,7 @@ public class SalaryListService {
 						 (Float.parseFloat(emplyinsrateInfoEntity.getEmployerBurdenRate())*hoKenSalary)/1000 ;
 
 				 employmentInsurance =
-						 (Float.parseFloat(emplyinsrateInfoEntity.getEmplyinsrate())*hoKenSalary)/1000 ;
+						 (Float.parseFloat(emplyinsrateInfoEntity.getContributionRate())*hoKenSalary)/1000 ;
 
 				 industrialAccidentInsurance =
 				 (Float.parseFloat(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate())*hoKenSalary)/1000 ;
