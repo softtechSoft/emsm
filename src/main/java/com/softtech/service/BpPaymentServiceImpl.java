@@ -63,24 +63,24 @@ public class BpPaymentServiceImpl implements BpPaymentService {
      */
     @Override
     public String insertBpPayment(BpPaymentFormBean formBean) {
-
+    	String nextContractID="";
     	try {
-	        // Entityに変換
-	        BpPayment bpPayment = transferToEntity(formBean);
-	        //採番
-	      //契約情報の最大IDを取得する
-			String bpPaymentID = bpPaymentMapper.getMaxPaymentId();
-			String nextContractID;
-			if(bpPaymentID==null || bpPaymentID.length()==0) {
-				nextContractID="BP0001";
-			} else {
-				// 採番する
-				nextContractID = DataUtil.getNextID(bpPaymentID,2);
-			}
-			bpPayment.setPaymentId(nextContractID);
-
-	        // DB登録
-	        bpPaymentMapper.insertBpPayment(bpPayment);
+//	        // Entityに変換
+//	        BpPayment bpPayment = transferToEntity(formBean);
+//	        //採番
+//	      //契約情報の最大IDを取得する
+//			String bpPaymentID = bpPaymentMapper.getMaxPaymentId();
+//
+//			if(bpPaymentID==null || bpPaymentID.length()==0) {
+//				nextContractID="BP0001";
+//			} else {
+//				// 採番する
+//				nextContractID = DataUtil.getNextID(bpPaymentID,2);
+//			}
+//			bpPayment.setPaymentId(nextContractID);
+//
+//	        // DB登録
+//	        bpPaymentMapper.insertBpPayment(bpPayment);
 	        return nextContractID;
         } catch (Exception e) {
             e.printStackTrace();
