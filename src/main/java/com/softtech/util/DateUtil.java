@@ -142,7 +142,20 @@ public class DateUtil {
 		}
 		return false;
 	}
-
+	/**
+	 * 機能：数字チェック。
+	 * @return tureとfalse
+	 * @exception なし
+	 * @author @ソフトテク
+	 */
+	public static boolean checkNumeric(String str) {
+		for (int i = str.length(); --i >= 0;) {
+			if (!(Character.isDigit(str.charAt(i)) || String.valueOf(str.charAt(i)).equals("."))) {
+				return false;
+			}
+		}
+		return true;
+	}
 	/**
 	* 過去日チェック。
 	* @param
@@ -226,6 +239,18 @@ public class DateUtil {
 	        return "";
 	    }
 		String month1 = month.substring(0, 4) + "-" + month.substring(4, 6) + "-" + month.substring(6, 8);
+		return month1;
+	}
+	/**
+	 * 対象年月日"-"を追加
+	 * @param
+	 * @author 馬@ソフトテク
+	 * */
+	public static String YMDAddSlash(String month) {
+		if (month == null || month.trim().isEmpty()) {
+	        return "";
+	    }
+		String month1 = month.substring(0, 4) + "/" + month.substring(4, 6) + "/" + month.substring(6, 8);
 		return month1;
 	}
 

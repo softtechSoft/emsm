@@ -100,7 +100,6 @@ public class SalaryListService {
 		//成功
 		autoSalaryRtn.setRtn("0");
 
-
 		//年月採番
 		//対象年度
 		 String year=DateUtil.getNowYear() ;

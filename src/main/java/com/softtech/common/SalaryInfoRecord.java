@@ -22,6 +22,9 @@ public class SalaryInfoRecord {
 	private String allowanceReason;
 	private int welfarePensionSelf ;
 	private int welfareHealthSelf ;
+	private int welfarePensionComp ;
+	private int welfareHealthComp ;
+	private int welfareBaby ;
 	private int eplyInsSelf ;
 	private int withholdingTax ;
 	private int municipalTax ;
@@ -34,11 +37,9 @@ public class SalaryInfoRecord {
 	private int wkAcccpsIns ;
 	private int eplyInsWithdraw ;
 	private int eplyInsComp ;
-	private int welfareBaby ;
-	private int welfarePensionComp ;
-	private int welfareHealthComp ;
-	private int overTime ;
-	private int shortage ;
+
+	private float overTime ;
+	private float shortage ;
 	private String address ;
 	private int welfareSelf ;
 	private int welfareComp ;
@@ -370,30 +371,7 @@ public class SalaryInfoRecord {
 	public void setWelfareHealthComp(int welfareHealthComp) {
 		this.welfareHealthComp = welfareHealthComp;
 	}
-	/**
-	 * @return overTime
-	 */
-	public int getOverTime() {
-		return overTime;
-	}
-	/**
-	 * @param overTime セットする overTime
-	 */
-	public void setOverTime(int overTime) {
-		this.overTime = overTime;
-	}
-	/**
-	 * @return shortage
-	 */
-	public int getShortage() {
-		return shortage;
-	}
-	/**
-	 * @param shortage セットする shortage
-	 */
-	public void setShortage(int shortage) {
-		this.shortage = shortage;
-	}
+
 	/**
 	 * @return address
 	 */
@@ -459,6 +437,30 @@ public class SalaryInfoRecord {
 	}
 	public void setDeleteFlg(String deleteFlg) {
 		this.deleteFlg = deleteFlg;
+	}
+	/**
+	 * @return shortage
+	 */
+	public float getShortage() {
+		return shortage;
+	}
+	/**
+	 * @param shortage セットする shortage
+	 */
+	public void setShortage(float shortage) {
+		this.shortage = shortage;
+	}
+	/**
+	 * @return overTime
+	 */
+	public float getOverTime() {
+		return overTime;
+	}
+	/**
+	 * @param overTime セットする overTime
+	 */
+	public void setOverTime(float overTime) {
+		this.overTime = overTime;
 	}
 
 

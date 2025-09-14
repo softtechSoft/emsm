@@ -91,47 +91,22 @@ public class SalaryListController {
 		 } else if(salarylistBean2.getDownloadFlg()==1){
 			     model.addAttribute("list", sl);
 		 // 画面の給料リスト中の社員IDを押す時。
+
 		 //  給料変更画面へ遷移
 		 }else if(salarylistBean2.getDownloadFlg()==3) {
 			 SalaryInfoRecord em = new SalaryInfoRecord();
-			//社員ID
+
+			 //社員ID
 			em.setEmployeeID(salarylistBean2.getEmployeeIDFlg());
 			//対象年月と対象年月YYYY/MM→yyyymmに変換
 			em.setMonth(DateUtil.chgMonthToYM(salarylistBean2.getMonth()));
+
 			// DBから社員IDの対象年月の給料情報を取得
 			SalaryInfoEntity salaryInfoDB= salaryInfoService.querySalaryInfo(em);
 			SalaryInfoBean salaryInfoBean=salaryInfoService.transferToGamen(salaryInfoDB);
 
-//			//雇用保険税率を取得
-//			String time = salarylistBean2.getMonth();
-//			String year = time.substring(0, 4);
-//			EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year);
-//
-//			//役職を取得
-//			String employeeID = salarylistBean2.getEmployeeIDFlg();
-//			List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
-//			EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
-//			String postion = emp.getPosition();
-//
-//			//厚生保険税率を取得
-//			//String basesalary = salarylistBean2.getBase();
-//			//WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
-//			if(emplyinsrateInfoEntity==null) {
-//				model.addAttribute("laborBurdenRate", 0.001);
-//				model.addAttribute("employerBurdenRate", 0.002);
-//				model.addAttribute("industrialAccidentInsuranceRate", 0.003);
-//				model.addAttribute("employmentInsurance", 0.004);
-//			}else {
-//
-//				model.addAttribute("laborBurdenRate", emplyinsrateInfoEntity.getLaborBurdenRate());
-//				model.addAttribute("employerBurdenRate", emplyinsrateInfoEntity.getEmployerBurdenRate());
-//				model.addAttribute("industrialAccidentInsuranceRate", emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate());
-//				model.addAttribute("employmentInsurance", emplyinsrateInfoEntity.getEmplyinsrate());
-//			}
-
 			// 初期モードに設定
-			//salaryInfoBean.setGamenMode("0");
-			salaryInfoBean.setGamenMode("1");
+			//salaryInfoBean.setGamenMode("1");
 			model.addAttribute("salaryInfoBean",salaryInfoBean);
 
 		    return "salaryInfo";
