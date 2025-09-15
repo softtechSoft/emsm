@@ -1,0 +1,29 @@
+改修内容：
+①EMS
+　勤怠管理、タイムレポートファイルを指定の所にアップロード
+　workinfomanage.html
+　WorkInfoManageController.java
+　DB
+　 m_file
+　  
+②EMSM
+　上のメニュー部、管理機能とマスタ管理と分ける。
+　　上行管理機能、下の行マスタ管理。
+　　ofcfunctionにフラグを追加
+　　　2点セット：定義書、SQL。
+③EMSM
+　経費管理
+　　精算ステータスで検索する。
+　　　未精算
+　　　精算済
+④EMS/EMSM
+　年末調整改修、テスト
+　ファイルをm_fileで管理
+⑤EMSM
+　m_incometax所得税と住民税TBLを三つに分割する,タイミングが違うため、
+　１）m_incometax所得税
+　２）m_residenttax 住民税
+　３）m_rental　社宅
+
+
+
