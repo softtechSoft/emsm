@@ -587,10 +587,7 @@ CREATE TABLE ems.adjustmentDetail (
     `uploadStatus` VARCHAR(50) COMMENT 'アップロードステータス',
     `adjustmentStatus` VARCHAR(50) DEFAULT '0' COMMENT '調整ステータス',
     `insertDate` DATETIME COMMENT '作成日時',
-    `updateDate` DATETIME COMMENT '更新日時',
-    FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE,
-    INDEX idx_year_employee (`year`, `employeeID`),
-    INDEX idx_email (`employeeEmail`)
+    `updateDate` DATETIME COMMENT '更新日時'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整詳細テーブル';
 
 DROP TABLE IF EXISTS ems.adjustmentFile;
@@ -603,10 +600,7 @@ CREATE TABLE ems.adjustmentFile (
     `filePath` VARCHAR(255) NOT NULL COMMENT 'ファイルパス',
     `insertDate` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
     `updateDate` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
-    PRIMARY KEY (employeeID, fileType, fileYear, fileName),
-    FOREIGN KEY (`employeeID`) REFERENCES `employee`(`employeeID`) ON DELETE CASCADE,
-    INDEX idx_employee_year (`employeeID`, `fileYear`),
-    INDEX idx_file_type (`fileType`)
+    PRIMARY KEY (employeeID, fileType, fileYear, fileName)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整ファイルテーブル';
 
 DROP TABLE IF EXISTS ems.adjustmentRequestFiles;
