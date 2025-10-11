@@ -11,5 +11,11 @@
 		WHERE fileTypeCode =#{fileTypeCode}
 	</select>
 
+	<select id="findFileTypeName" parameterType="String"
+		resultType="com.softtech.entity.SaveFolder">
+		SELECT *
+		FROM m_file
+		WHERE fileTypeName =#{fileTypeName}
+	</select>
 
 </mapper>

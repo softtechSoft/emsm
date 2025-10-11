@@ -10,7 +10,7 @@ public interface SaveFolderMapper {
 	//List<SaveFolder> getAllSaveFolder();
 
 	SaveFolder findFileTypeCode(String findFileTypeCode);
-
+	SaveFolder findFileTypeName(String findFileTypeName);
 
 
 	//void update(SaveFolder SaveFolder);

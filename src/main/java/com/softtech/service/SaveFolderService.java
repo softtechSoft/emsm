@@ -15,10 +15,17 @@ public class SaveFolderService {
 	public SaveFolder findFileTypeCode(String findFileTypeCode) {
 		SaveFolder saveFolder = saveFolderMapper.findFileTypeCode(findFileTypeCode);
 		if (saveFolder == null) {
-            throw new RuntimeException("保存路径配置未找到: " + findFileTypeCode);
+            throw new RuntimeException("m_fileから取得されません: " + findFileTypeCode);
         }
 		return saveFolder;
 	}
 
+	public SaveFolder findFileTypeName(String findFileTypeName) {
+		SaveFolder saveFolder = saveFolderMapper.findFileTypeName(findFileTypeName);
+		if (saveFolder == null) {
+            throw new RuntimeException("m_fileから取得されません: " + findFileTypeName);
+        }
+		return saveFolder;
+	}
 
 }
