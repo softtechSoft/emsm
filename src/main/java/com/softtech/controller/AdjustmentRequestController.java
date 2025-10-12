@@ -30,15 +30,17 @@ import com.softtech.service.AdjustmentRequestService;
 public class AdjustmentRequestController {
 
     @Autowired
-    private AdjustmentRequestService adjustmentRequestService; 
+    private AdjustmentRequestService adjustmentRequestService;
 
     /**
      * 年末調整リストを表示するメソッド
      */
     @GetMapping("/adjustmentList")
     public String loadAdjustmentList(Model model) {
-        int currentYear = java.time.LocalDate.now().getYear(); 
+        int currentYear = java.time.LocalDate.now().getYear();
         model.addAttribute("currentYear", currentYear);
+
+        adjustmentRequestService.initFolder();
 
         // 全社員と年末調整状態を取得
         List<Map<String, Object>> employees = adjustmentRequestService.getAllEmployeesWithAdjustmentStatuses(currentYear);
@@ -47,12 +49,12 @@ public class AdjustmentRequestController {
         // 現在の年度のファイルを取得
         List<AdjustmentRequestFiles> files = adjustmentRequestService.getCurrentYearFilesAll(currentYear);
         model.addAttribute("files", files);
-        
+
         //fileULStatusを取得
         boolean isFinalized = adjustmentRequestService.checkIfAnyFileIsFinalized(currentYear);
         model.addAttribute("isFinalized", isFinalized);
 
-        return "adjustmentList"; 
+        return "adjustmentList";
     }
 
     /**
@@ -61,9 +63,10 @@ public class AdjustmentRequestController {
     @PostMapping("/uploadFile")
     @ResponseBody
     public ResponseEntity<?> uploadFile(@RequestParam("files") MultipartFile[] files) {
+    	adjustmentRequestService.initFolder();
         try {
             int currentYear = java.time.LocalDate.now().getYear();
-            adjustmentRequestService.uploadFiles(files, currentYear); 
+            adjustmentRequestService.uploadFiles(files, currentYear);
             return ResponseEntity.ok(createResponse("ファイルのアップロードに成功しました！"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(createResponse("ファイルのアップロードに失敗しました: " + e.getMessage()));
@@ -76,6 +79,7 @@ public class AdjustmentRequestController {
     @GetMapping("/download/{fileName:.+}")
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+    	adjustmentRequestService.initFolder();
         try {
             Resource resource = adjustmentRequestService.loadFileAsResource(fileName);
             ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
@@ -89,13 +93,15 @@ public class AdjustmentRequestController {
             return ResponseEntity.notFound().build();
         }
     }
-    
+
     /**
      * 年末調整ファイルを削除するメソッド
      */
     @PostMapping("/deleteFile")
     @ResponseBody
     public ResponseEntity<?> deleteFile(@RequestBody Map<String, String> payload) {
+    	adjustmentRequestService.initFolder();
+
         String fileName = payload.get("fileName");
         if (fileName == null || fileName.trim().isEmpty()) {
             return ResponseEntity.badRequest().body(createResponse("ファイル名が無効です。"));
@@ -107,14 +113,17 @@ public class AdjustmentRequestController {
             return ResponseEntity.badRequest().body(createResponse("ファイルの削除に失敗しました: " + e.getMessage()));
         }
     }
-    
+
     /**
      * 確定処理を行うメソッド
      */
     @PostMapping("/finalizeAdjustment")
     @ResponseBody
     public ResponseEntity<?> finalizeAdjustment(@RequestBody Map<String, Object> payload) {
-        try {
+
+    	adjustmentRequestService.initFolder();
+
+    	try {
             Object yearObj = payload.get("fileYear");
             int fileYear;
             if (yearObj instanceof Number) {

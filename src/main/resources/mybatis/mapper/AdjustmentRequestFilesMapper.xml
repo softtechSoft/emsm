@@ -14,12 +14,12 @@
 
 	<select id="selectAll"
 		resultMap="AdjustmentRequestFilesResultMap">
-		SELECT * FROM ems.adjustmentRequestFiles
+		SELECT * FROM ems.adjustmentrequestfiles
 	</select>
 
 	<select id="selectByStatus" parameterType="String"
 		resultMap="AdjustmentRequestFilesResultMap">
-		SELECT * FROM ems.adjustmentRequestFiles WHERE fileULStatus
+		SELECT * FROM ems.adjustmentrequestfiles WHERE fileULStatus
 		= #{status}
 	</select>
 
@@ -28,28 +28,28 @@
 		SELECT fileName as "fileName", fileYear as "fileYear",
 		fileULStatus as
 		"fileULStatus"
-		FROM ems.adjustmentRequestFiles
+		FROM ems.adjustmentrequestfiles
 		WHERE
 		fileULStatus = #{status}
 	</select>
 
 	<select id="findByYearAndStatus"
 		resultMap="AdjustmentRequestFilesResultMap">
-		SELECT * FROM ems.adjustmentRequestFiles
+		SELECT * FROM ems.adjustmentrequestfiles
 		WHERE fileYear =
 		#{year} AND fileULStatus = #{status}
 	</select>
 
 	<select id="selectByFileNameAndYear" parameterType="map"
 		resultMap="AdjustmentRequestFilesResultMap">
-		SELECT * FROM ems.adjustmentRequestFiles
+		SELECT * FROM ems.adjustmentrequestfiles
 		WHERE fileName =
 		#{fileName} AND fileYear = #{fileYear}
 	</select>
 
 	<select id="findByFileName" parameterType="string"
 		resultMap="AdjustmentRequestFilesResultMap">
-		SELECT * FROM ems.adjustmentRequestFiles
+		SELECT * FROM ems.adjustmentrequestfiles
 		WHERE fileName =
 		#{fileName}
 	</select>
@@ -57,14 +57,14 @@
 	<select id="findByYearAllStatus" parameterType="int"
 		resultMap="AdjustmentRequestFilesResultMap">
 		SELECT *
-		FROM ems.adjustmentRequestFiles
+		FROM ems.adjustmentrequestfiles
 		WHERE fileYear = #{year}
 	</select>
 
 
 	<insert id="insert"
 		parameterType="com.softtech.entity.AdjustmentRequestFiles">
-		INSERT INTO ems.adjustmentRequestFiles (fileName,
+		INSERT INTO ems.adjustmentrequestfiles (fileName,
 		fileYear, fileULStatus,
 		filePath)
 		VALUES (#{fileName}, #{fileYear},
@@ -73,7 +73,7 @@
 
 	<update id="updateFileYearAndFileName"
 		parameterType="com.softtech.entity.AdjustmentRequestFiles">
-		UPDATE ems.adjustmentRequestFiles SET
+		UPDATE ems.adjustmentrequestfiles SET
 		fileULStatus =
 		#{fileULStatus},
 		filePath = #{filePath}
@@ -83,7 +83,7 @@
 
 	<update id="updateStatusByYear" parameterType="map">
 		UPDATE
-		adjustmentRequestFiles
+		adjustmentrequestfiles
 		SET fileULStatus = #{status}
 		WHERE fileYear =
 		#{year}
@@ -92,6 +92,6 @@
 
 	<delete id="deleteByFileName" parameterType="String">
 		DELETE FROM
-		ems.adjustmentRequestFiles WHERE fileName = #{fileName}
+		ems.adjustmentrequestfiles WHERE fileName = #{fileName}
 	</delete>
 </mapper>

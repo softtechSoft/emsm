@@ -15,25 +15,25 @@
     </resultMap>
 
     <select id="selectAll" resultMap="AdjustmentDetailResultMap">
-        SELECT * FROM adjustmentDetail
+        SELECT * FROM adjustmentdetail
     </select>
 
     <select id="selectById" parameterType="Integer" resultMap="AdjustmentDetailResultMap">
-        SELECT * FROM adjustmentDetail WHERE id = #{id}
+        SELECT * FROM adjustmentdetail WHERE id = #{id}
     </select>
 
     <select id="findByEmployeeIdAndYear" parameterType="map" resultMap="AdjustmentDetailResultMap">
-        SELECT * FROM adjustmentDetail 
+        SELECT * FROM adjustmentdetail
         WHERE employeeID = #{employeeID} AND year = #{year}
     </select>
 
     <insert id="insert" parameterType="com.softtech.entity.AdjustmentDetail">
-        INSERT INTO adjustmentDetail (employeeID, employeeEmail, year, uploadStatus, adjustmentStatus, insertDate, updateDate)
+        INSERT INTO adjustmentdetail (employeeID, employeeEmail, year, uploadStatus, adjustmentStatus, insertDate, updateDate)
         VALUES (#{employeeID}, #{employeeEmail}, #{year}, #{uploadStatus}, #{adjustmentStatus}, #{insertDate}, #{updateDate})
     </insert>
 
     <update id="update" parameterType="com.softtech.entity.AdjustmentDetail">
-        UPDATE adjustmentDetail SET
+        UPDATE adjustmentdetail SET
             uploadStatus = #{uploadStatus},
             adjustmentStatus = #{adjustmentStatus},
             updateDate = #{updateDate},
@@ -42,6 +42,6 @@
     </update>
 
     <delete id="deleteById" parameterType="Integer">
-        DELETE FROM adjustmentDetail WHERE id=#{id}
+        DELETE FROM adjustmentdetail WHERE id=#{id}
     </delete>
 </mapper>

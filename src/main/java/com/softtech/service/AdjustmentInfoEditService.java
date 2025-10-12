@@ -15,7 +15,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -24,13 +23,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.softtech.entity.AdjustmentDetail;
 import com.softtech.entity.AdjustmentFile;
 import com.softtech.entity.Employee;
+import com.softtech.entity.SaveFolder;
 import com.softtech.mappers.AdjustmentDetailMapper;
 import com.softtech.mappers.AdjustmentFileMapper;
 import com.softtech.mappers.EmployeeMapper;
 
 /**
  * 年末調整情報編集サービス
- * 
+ *
  * このサービスクラスは、従業員の年末調整情報の取得、ファイルのアップロード・保存、
  * ファイルのダウンロード、および年末調整の確定処理を担当します。
  */
@@ -46,19 +46,27 @@ public class AdjustmentInfoEditService {
     @Autowired
     private AdjustmentDetailMapper adjustmentDetailMapper; // 年末調整詳細情報を操作するマッパー
 
-    @Value("${file.storage.location}")
+    //@Value("${file.storage.location}")
     private String rootLocation; // ファイル保存のルートディレクトリパス
-    
-    @Value("${file.request.location}")
+
+    //@Value("${file.request.location}")
     private String requestFilesLocation; // リクエストファイル保存のディレクトリパス
+
+    @Autowired
+    private SaveFolderService saveFolderService;
 
     /**
      * 初期化メソッド
-     * 
+     *
      * アプリケーション起動時に呼び出され、必要なディレクトリを作成します。
      */
     @PostConstruct
     public void init() {
+    	// 年度更新ルートフォルダーを取得
+    	SaveFolder saveFolder=saveFolderService.findFileTypeName("年度更新");
+    	rootLocation=saveFolder.getSaveFolder();
+    	int currentYear = java.time.LocalDate.now().getYear();
+    	requestFilesLocation=""+currentYear;
         try {
             Files.createDirectories(getRootLocation().resolve(requestFilesLocation)); // リクエストファイル保存ディレクトリの作成
         } catch (IOException e) {
@@ -66,9 +74,19 @@ public class AdjustmentInfoEditService {
         }
     }
 
+    // 年度更新申請フォルダの初期化
+    //最初期実施してください。
+//    public void initFolder() {
+//    	// 年度更新ルートフォルダーを取得
+//    	SaveFolder saveFolder=saveFolderService.findFileTypeName("年度更新");
+//    	rootLocation=saveFolder.getSaveFolder();
+//    	int currentYear = java.time.LocalDate.now().getYear();
+//    	requestFilesLocation=""+currentYear;
+//    }
+
     /**
      * ルートディレクトリのパスを取得するメソッド
-     * 
+     *
      * @return ルートディレクトリのPathオブジェクト
      */
     private Path getRootLocation() {
@@ -77,7 +95,7 @@ public class AdjustmentInfoEditService {
 
     /**
      * 指定した従業員IDで従業員情報を取得するメソッド
-     * 
+     *
      * @param employeeId 取得対象の従業員ID
      * @return 指定された従業員IDに対応する従業員情報
      */
@@ -87,7 +105,7 @@ public class AdjustmentInfoEditService {
 
     /**
      * 指定したタイプ、従業員、年度のファイルを取得するメソッド
-     * 
+     *
      * @param fileType   ファイルの種類（例: "resultType", "detailType"）
      * @param employeeID 従業員のID
      * @param year       ファイルの年度
@@ -99,7 +117,7 @@ public class AdjustmentInfoEditService {
 
     /**
      * 結果ファイルをアップロードするメソッド
-     * 
+     *
      * @param files      アップロードされたファイルの配列
      * @param employeeId アップロード対象の従業員ID
      * @throws IOException ファイルの保存中に発生する例外
@@ -117,7 +135,7 @@ public class AdjustmentInfoEditService {
 
     /**
      * ファイルと詳細情報を保存するメソッド
-     * 
+     *
      * @param files         保存するファイルの配列
      * @param employeeEmail 従業員のメールアドレス
      * @param employeeID    従業員のID
@@ -163,7 +181,7 @@ public class AdjustmentInfoEditService {
 
     /**
      * ファイルを保存するメソッド
-     * 
+     *
      * @param file       保存するファイル
      * @param employeeID 従業員のID
      * @param year       ファイルの年度
@@ -199,7 +217,7 @@ public class AdjustmentInfoEditService {
 
     /**
      * ファイルをディスクに保存するメソッド
-     * 
+     *
      * @param file       保存するファイル
      * @param year       ファイルの年度
      * @param employeeID 従業員のID
@@ -218,7 +236,7 @@ public class AdjustmentInfoEditService {
 
     /**
      * ファイルをリソースとしてロードするメソッド
-     * 
+     *
      * @param fileType   ファイルの種類（例: "resultType", "detailType"）
      * @param fileYear   ファイルの年度
      * @param employeeId 従業員のID
@@ -246,10 +264,10 @@ public class AdjustmentInfoEditService {
             throw new RuntimeException("ファイルのロードに失敗しました: " + filename, e);
         }
     }
-    
+
     /**
      * AdjustmentDetailを取得するメソッド
-     * 
+     *
      * @param employeeId 従業員ID
      * @param year       年度
      * @return AdjustmentDetailオブジェクト

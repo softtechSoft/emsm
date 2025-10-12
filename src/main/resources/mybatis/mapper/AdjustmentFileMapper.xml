@@ -18,7 +18,7 @@
 
 	<select id="findByEmployeeIDAndYearAndFileName"
 		parameterType="map" resultMap="AdjustmentFileResultMap">
-		SELECT * FROM adjustmentFile
+		SELECT * FROM adjustmentfile
 		WHERE employeeID = #{employeeID}
 		AND fileYear = #{fileYear}
 		AND fileName = #{fileName}
@@ -27,7 +27,7 @@
 
 	<insert id="insert"
 		parameterType="com.softtech.entity.AdjustmentFile">
-		INSERT INTO adjustmentFile (employeeID, fileType, fileYear, fileName,
+		INSERT INTO adjustmentfile (employeeID, fileType, fileYear, fileName,
 		fileStatus, filePath)
 		VALUES (#{employeeID}, #{fileType}, #{fileYear}, #{fileName}, #{fileStatus},
 		#{filePath})
@@ -35,7 +35,7 @@
 
 	<update id="update"
 		parameterType="com.softtech.entity.AdjustmentFile">
-		UPDATE adjustmentFile SET fileStatus = #{fileStatus}, filePath=#{filePath},
+		UPDATE adjustmentfile SET fileStatus = #{fileStatus}, filePath=#{filePath},
 		fileType=#{fileType}
 		WHERE employeeID = #{employeeID} AND fileYear=#{fileYear} AND
 		fileName=#{fileName} AND fileType=#{fileType}
@@ -43,7 +43,7 @@
 
 	<update id="updateByEmployeeIDAndYearAndFileName"
 		parameterType="com.softtech.entity.AdjustmentFile">
-		UPDATE adjustmentFile
+		UPDATE adjustmentfile
 		SET filePath = #{filePath}, fileType = #{fileType},
 		fileStatus=#{fileStatus}
 		WHERE employeeID = #{employeeID} AND fileYear = #{fileYear} AND fileName =
@@ -52,26 +52,26 @@
 
 	<select id="findFilesByEmployeeID" parameterType="String"
 		resultMap="AdjustmentFileResultMap">
-		SELECT * FROM adjustmentFile WHERE employeeID = #{employeeID}
+		SELECT * FROM adjustmentfile WHERE employeeID = #{employeeID}
 	</select>
 
 	<select id="findFilesByTypeAndEmployee" parameterType="map"
 		resultMap="AdjustmentFileResultMap">
-		SELECT * FROM adjustmentFile
+		SELECT * FROM adjustmentfile
 		WHERE fileType = #{fileType} AND employeeID = #{employeeID} AND fileYear =
 		#{fileYear}
 	</select>
 
 	<update id="updateFileStatusByEmployeeIDAndYear"
 		parameterType="map">
-		UPDATE adjustmentFile
+		UPDATE adjustmentfile
 		SET fileStatus = #{newStatus}
 		WHERE employeeID = #{employeeID} AND fileYear = #{fileYear} AND fileType =
 		#{fileType}
 	</update>
 
 	<delete id="deleteFile" parameterType="map">
-		DELETE FROM adjustmentFile
+		DELETE FROM adjustmentfile
 		WHERE employeeID = #{employeeID}
 		AND fileYear = #{fileYear}
 		AND fileName = #{fileName}

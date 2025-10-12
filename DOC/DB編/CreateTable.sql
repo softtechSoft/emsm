@@ -590,8 +590,8 @@ CREATE TABLE ems.adjustmentDetail (
     `updateDate` DATETIME COMMENT '更新日時'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整詳細テーブル';
 
-DROP TABLE IF EXISTS ems.adjustmentFile;
-CREATE TABLE ems.adjustmentFile (
+DROP TABLE IF EXISTS ems.adjustmentfile;
+CREATE TABLE ems.adjustmentfile (
     `employeeID` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '社員ID',
     `fileType` VARCHAR(255) NOT NULL COMMENT 'ファイルタイプ',
     `fileYear` INT NOT NULL COMMENT 'ファイル年度',
@@ -603,12 +603,12 @@ CREATE TABLE ems.adjustmentFile (
     PRIMARY KEY (employeeID, fileType, fileYear, fileName)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整ファイルテーブル';
 
-DROP TABLE IF EXISTS ems.adjustmentRequestFiles;
+DROP TABLE IF EXISTS ems.adjustmentrequestfiles;
 CREATE TABLE ems.adjustmentRequestFiles (
     `id` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
     `fileName` VARCHAR(255) NOT NULL COMMENT 'ファイル名',
     `fileYear` INT NOT NULL COMMENT 'ファイル年度',
-    `fileULStatus` VARCHAR(50) NOT NULL DEFAULT '0' COMMENT 'アップロードステータス',
+    `fileULStatus` VARCHAR(2) NOT NULL DEFAULT '0' COMMENT 'アップロードステータス',
     `filePath` VARCHAR(255) NOT NULL COMMENT 'ファイルパス',
     `insertDate` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
     `updateDate` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',

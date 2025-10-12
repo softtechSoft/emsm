@@ -33,68 +33,68 @@
     <select id="queryEmployee" resultMap="EmployeeResultMap">
         SELECT * FROM employee
     </select>
-    
+
     <select id="findEmployeeIdByEmail" parameterType="String" resultType="String">
     SELECT employeeID FROM employee WHERE mailAdress = #{email}
 	</select>
-	
+
 	<select id="queryEmployeeAndFileStatus" resultType="map">
-    SELECT 
-        e.employeeName, 
+    SELECT
+        e.employeeName,
         arf.fileULStatus
-    FROM 
+    FROM
         employee e
-        LEFT JOIN adjustmentRequestFiles arf ON e.employeeID = arf.employeeID
-    WHERE 
-        arf.fileYear = #{currentYear} 
+        LEFT JOIN adjustmentrequestfiles arf ON e.employeeID = arf.employeeID
+    WHERE
+        arf.fileYear = #{currentYear}
         AND arf.fileULStatus = '1'
 	</select>
-	
+
 	<select id="queryEmployeeAndAdjustmentStatuses" resultType="map">
-    SELECT 
+    SELECT
         e.employeeID,
-        e.employeeName, 
+        e.employeeName,
         ad.uploadStatus,
         ad.adjustmentStatus
-    FROM 
+    FROM
         employee e
-        LEFT JOIN adjustmentDetail ad ON e.employeeID = ad.employeeID
-    WHERE 
+        LEFT JOIN adjustmentdetail ad ON e.employeeID = ad.employeeID
+    WHERE
         ad.year = #{currentYear}
 	</select>
-	
+
 	<select id="queryAllEmployeesWithAdjustmentDetail" parameterType="int" resultType="map">
-    SELECT 
+    SELECT
         e.employeeID,
         e.employeeName,
         ad.uploadStatus,
         ad.adjustmentStatus,
         ad.otherColumns
-    FROM 
+    FROM
         employee e
-    LEFT JOIN 
-        adjustmentDetail ad 
-    ON 
+    LEFT JOIN
+        adjustmentdetail ad
+    ON
         e.employeeID = ad.employeeID AND ad.year = #{currentYear}
 	</select>
-	
-	
+
+
 	<select id="queryAllEmployeesWithAdjustmentStatuses" resultType="map">
-    SELECT 
+    SELECT
         e.employeeID,
         e.employeeName,
         COALESCE(ad.uploadStatus, '0:アップロード中') AS uploadStatus,
         COALESCE(ad.adjustmentStatus, '0:調整中') AS adjustmentStatus
-    FROM 
+    FROM
         employee e
-    LEFT JOIN 
-        adjustmentDetail ad 
-    ON 
+    LEFT JOIN
+        adjustmentdetail ad
+    ON
         e.employeeID = ad.employeeID AND ad.year = #{currentYear}
 	</select>
-	
 
-	
+
+
 
     <insert id="insert" parameterType="com.softtech.entity.Employee">
         INSERT INTO employee (employeeID, employeeName, password, status, sex, epType, birthday, age, joinedDate, joinedTime, postCode, address, phoneNumber, authority, mailAdress, insertDate, updateDate)
