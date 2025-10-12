@@ -40,7 +40,7 @@ CREATE TABLE ems.adjustmentRequestFiles (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='年末調整要求ファイルテーブル';
 
 INSERT INTO `m_file` (`fileTypeCode`, `fileTypeName`, `fileTypeAbbrName`, `saveFolder`, `delFlg`, `insertDate`, `updateDate`) VALUES
-('02', '年末調整', '年末調整', '/opt/emsm/adjust', 0, '2025-08-15 09:51:07', '2025-08-15 09:51:07');
+('02', '年度更新', '年度更新', '/opt/emsm/adjust', 0, '2025-08-15 09:51:07', '2025-08-15 09:51:07');
 
 #社内システムファイル保存場所m_file
 #01  経費管理  opt/emsm/file　
