@@ -1,0 +1,58 @@
+①ソース
+　EMS
+　EMSM
+②DB
+DROP TABLE IF EXISTS ems.adjustmentDetail;
+CREATE TABLE ems.adjustmentDetail (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `employeeID` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '社員ID',
+    `employeeEmail` VARCHAR(255) NOT NULL COMMENT '社員メール',
+    `year` VARCHAR(4) NOT NULL COMMENT '年度',
+    `uploadStatus` VARCHAR(50) COMMENT 'アップロードステータス',
+    `adjustmentStatus` VARCHAR(50) DEFAULT '0' COMMENT '調整ステータス',
+    `insertDate` DATETIME COMMENT '作成日時',
+    `updateDate` DATETIME COMMENT '更新日時'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整詳細テーブル';
+
+DROP TABLE IF EXISTS ems.adjustmentfile;
+CREATE TABLE ems.adjustmentfile (
+    `employeeID` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '社員ID',
+    `fileType` VARCHAR(255) NOT NULL COMMENT 'ファイルタイプ',
+    `fileYear` INT NOT NULL COMMENT 'ファイル年度',
+    `fileName` VARCHAR(255) NOT NULL COMMENT 'ファイル名',
+    `fileStatus` VARCHAR(50) NOT NULL COMMENT 'ファイルステータス',
+    `filePath` VARCHAR(255) NOT NULL COMMENT 'ファイルパス',
+    `insertDate` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    `updateDate` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    PRIMARY KEY (employeeID, fileType, fileYear, fileName)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='年末調整ファイルテーブル';
+
+DROP TABLE IF EXISTS ems.adjustmentrequestfiles;
+CREATE TABLE ems.adjustmentRequestFiles (
+    `id` INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    `fileName` VARCHAR(255) NOT NULL COMMENT 'ファイル名',
+    `fileYear` INT NOT NULL COMMENT 'ファイル年度',
+    `fileULStatus` VARCHAR(2) NOT NULL DEFAULT '0' COMMENT 'アップロードステータス',
+    `filePath` VARCHAR(255) NOT NULL COMMENT 'ファイルパス',
+    `insertDate` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    `updateDate` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    UNIQUE KEY uk_filename_year (`fileName`, `fileYear`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='年末調整要求ファイルテーブル';
+
+INSERT INTO `m_file` (`fileTypeCode`, `fileTypeName`, `fileTypeAbbrName`, `saveFolder`, `delFlg`, `insertDate`, `updateDate`) VALUES
+('02', '年末調整', '年末調整', '/opt/emsm/adjust', 0, '2025-08-15 09:51:07', '2025-08-15 09:51:07');
+
+#社内システムファイル保存場所m_file
+#01  経費管理  opt/emsm/file　
+#02  年末調整  opt/emsm/adjust
+#    （システム-宮野さん）     /YYYY    #年度
+#                                  /調整票１
+#                                  /調整票2
+#                                  /調整票3
+#     (ems-社員）                  /社員１
+#                                        /記載済み調整票１
+#                                        /記載済み調整票２
+#                                        /証跡ファイル１
+#                                        /証跡ファイル１
+#     （emsmー宮野さん）                 /源泉帳票票
+#                                 /社員2
