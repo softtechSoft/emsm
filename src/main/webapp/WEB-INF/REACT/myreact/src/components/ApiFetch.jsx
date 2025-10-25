@@ -5,7 +5,7 @@ export const ApiFetch = () => {
 
 	useEffect(() => {
 		// APIをfetchする(呼び出す)
-		fetch("http://it-softtech.com/emsm/apiTest", { method: "GET" })
+		fetch("https://it-softtech.com/emsm/apiTest", { method: "GET" })
 			// レスポンスのデータ形式をjsonに設定
 			.then((res) => res.json())
 			// APIから渡されるレスポンスデータ(data)をstateにセットする

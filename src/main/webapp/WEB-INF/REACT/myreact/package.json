@@ -19,7 +19,7 @@
     "eject": "react-scripts eject",
     "homepage":"."
   },
-  "proxy": "http://it-softtech.com/emsm/",
+  "proxy": "https://it-softtech.com/emsm/",
   "eslintConfig": {
     "extends": [
       "react-app",
