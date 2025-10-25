@@ -9,10 +9,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="theme-color" content="#000000"/>
 <meta name="description" content="Web site created using create-react-app"/>
-<link rel="apple-touch-icon" href="/logo192.png"/>
-<link rel="manifest" href="/manifest.json"/>
+<link rel="apple-touch-icon" href="logo192.png"/>
+<link rel="manifest" href="manifest.json"/>
 <title>React App</title>
-<script defer="defer" src="static/js/main.8a3ac337.js"></script>
+<script defer="defer" src="static/js/main.785a61a0.js"></script>
 <link href="static/css/main.f855e6bc.css" rel="stylesheet">
 </head>
 <body>
