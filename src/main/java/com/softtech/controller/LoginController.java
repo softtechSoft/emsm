@@ -34,11 +34,19 @@ public class LoginController {
 	 *       ログイン画面へ遷移する。
 	 * @param  モデル
 	 */
-	@RequestMapping(value = {"/","/login"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/toLogin"}, method = RequestMethod.GET)
 	public String home(Model model) {
 		LoginBean loginbean = new LoginBean();
 		model.addAttribute("loginBean", loginbean);
 		return "login";
+		//return "hello";
+	}
+	@RequestMapping(value = {"/"}, method = RequestMethod.GET)
+	public String toReact(Model model) {
+		LoginBean loginbean = new LoginBean();
+		model.addAttribute("loginBean", loginbean);
+		return "index";
+		//return "hello";
 	}
 	/**
 	 * ログイン処理
@@ -56,9 +64,9 @@ public class LoginController {
 			model.addAttribute("errors", result.getFieldErrors());
 			return "login";
 		}
-		
+
 		LoginEntity userEmployee = loginService.getEmployeeByMailAddress(loginBean);
-	    
+
 	    if (userEmployee == null) {
 	        // ユーザがない
 	        List<FieldError> lst = new ArrayList<FieldError>();
@@ -67,7 +75,7 @@ public class LoginController {
 	        model.addAttribute("errors", lst);
 	        return "login";
 	    }
-	    
+
 		//Login処理
 		boolean rtnbl = loginService.doLogin(loginBean);
 
