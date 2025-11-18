@@ -49,6 +49,8 @@ public class FileUtil {/**
 									+"残業加算(円),"
 									+"稼働不足減(円),"
 									+"交通費(円),"
+									+"特別加算(円),"
+									+"特別控除(円),"
 									+"手当加算(円),"
 									+"手当減算(円),"
 									+"手当理由,"
@@ -85,6 +87,10 @@ public class FileUtil {/**
 		        String shortageReduce1 = shortageReduce.replace(",", "");
 		        String transportExpense = wl.getTransportExpense();
 		        String transportExpense1 = transportExpense.replace(",", "");
+		        String specialAddition = wl.getSpecialAddition();
+		        String specialAddition1 = specialAddition.replace(",", "");
+		        String specialReduce = wl.getSpecialReduce();
+		        String specialReduce1 = specialReduce.replace(",", "");
 		        String allowancePlus = wl.getAllowancePlus();
 		        String allowancePlus1 = allowancePlus.replace(",", "");
 		        String allowanceReduce = wl.getAllowanceReduce();
@@ -131,6 +137,8 @@ public class FileUtil {/**
 		        					+overTimePlus1+ ","
 		        					+shortageReduce1+ ","
 		        					+transportExpense1+ ","
+		        					+specialAddition1+ ","
+		        					+specialReduce1+ ","
 		        					+allowancePlus1+ ","
 		        					+allowanceReduce1+ ","
 		        					+allowanceReason+ ","

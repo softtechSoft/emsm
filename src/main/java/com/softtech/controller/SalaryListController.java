@@ -150,11 +150,13 @@ public class SalaryListController {
 	                    lst.add(new FieldError("", "", rtn.getYear() + "の【対象年度】年度の雇用保険率データがありません。"));
 	                    break;
 	                case "6":
-	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年月】所得税と住民税のデータがありません。"));
+	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年月】住民税住宅のデータがありません。"));
 	                    break;
 	                case "7":
 	                    lst.add(new FieldError("", "", rtn.getYear() + "のマスタ_厚生子育徴収率データが存在していません。"));
 	                    break;
+	                case "8":
+	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年月】所得税のデータがありません。"));
 	                case "99":
 	                    lst.add(new FieldError("", "", "給料テーブルに新規追加エラー。"));
 	                    break;

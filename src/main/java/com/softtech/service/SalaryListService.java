@@ -13,6 +13,7 @@ import com.softtech.common.EmployeeIDName;
 import com.softtech.entity.BaseSalaryInfoEntity;
 import com.softtech.entity.EmployeeInfoEntity;
 import com.softtech.entity.EmplyinsrateInfoEntity;
+import com.softtech.entity.HoldingTaxInfoEntity;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.entity.TransportEntity;
@@ -320,7 +321,6 @@ public class SalaryListService {
 			//労災保険（会社負担のみ）
 			 salaryInfoEntity.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
 
-			 //源泉控除
 			 //所得税と住民税を取得
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
 			 if( incomeTaxInfoEntity == null) {
@@ -330,44 +330,53 @@ public class SalaryListService {
 				 return autoSalaryRtn;
 			 }
 
+			 //源泉控除
+			 HoldingTaxInfoEntity holdingTaxInfoEntity = salarylistMapper.getHoldingTax(employeeID, year);
+			 if( holdingTaxInfoEntity == null) {
+				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+				 autoSalaryRtn.setYearMonth(nextMonth);
+				 autoSalaryRtn.setRtn("8");
+				 return autoSalaryRtn;
+			 }
+
 			 String month = nextMonth.substring(4, 6);
 			 //源泉
 			 float incomeTax = 0;
 			 if (month .equals ("01")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax1());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax1());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "02")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax2());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax2());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "03")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax3());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax3());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "04")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax4());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax4());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "05")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax5());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax5());
 				 salaryInfoEntity.setWithholdingTax( Float.toString(incomeTax));
 			 }else if (month.equals ( "06")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax6());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax6());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "07")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax7());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax7());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "08")) {
-				 incomeTax = Float.parseFloat( incomeTaxInfoEntity.getIncomeTax8());
+				 incomeTax = Float.parseFloat( holdingTaxInfoEntity.getIncomeTax8());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "09")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax9());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax9());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "10")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax10());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax10());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "11")) {
-				 incomeTax =  Float.parseFloat(incomeTaxInfoEntity.getIncomeTax11());
+				 incomeTax =  Float.parseFloat(holdingTaxInfoEntity.getIncomeTax11());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }else if (month.equals ( "12")) {
-				 incomeTax = Float.parseFloat( incomeTaxInfoEntity.getIncomeTax12());
+				 incomeTax = Float.parseFloat( holdingTaxInfoEntity.getIncomeTax12());
 				 salaryInfoEntity.setWithholdingTax(Float.toString(incomeTax));
 			 }
 			//住民税

@@ -10,18 +10,6 @@
         (incomeTaxID,
          employeeID,
          year,
-         incomeTax1,
-         incomeTax2,
-         incomeTax3,
-         incomeTax4,
-         incomeTax5,
-         incomeTax6,
-         incomeTax7,
-         incomeTax8,
-         incomeTax9,
-         incomeTax10,
-         incomeTax11,
-         incomeTax12,
          residentTax1,
          residentTax2,
          residentTax3,
@@ -58,7 +46,7 @@
 		 rentalMgmtFee10,
 		 rentalMgmtFee11,
 		 rentalMgmtFee12,
-         
+
          status,
          insertDate,
          updateDate)
@@ -66,18 +54,6 @@
             (#{incomeTaxID},
              #{employeeID},
              #{year},
-             #{incomeTax1},
-             #{incomeTax2},
-             #{incomeTax3},
-             #{incomeTax4},
-             #{incomeTax5},
-             #{incomeTax6},
-             #{incomeTax7},
-             #{incomeTax8},
-             #{incomeTax9},
-             #{incomeTax10},
-             #{incomeTax11},
-             #{incomeTax12},
              #{residentTax1},
              #{residentTax2},
              #{residentTax3},
@@ -114,7 +90,7 @@
 			 #{rentalMgmtFee10},
 			 #{rentalMgmtFee11},
 			 #{rentalMgmtFee12},
-             
+
              #{status},
              date_format(now(), '%Y%m%d'),
              date_format(now(), '%Y%m%d')
@@ -158,18 +134,6 @@
         update m_incometax
         set employeeID    = #{employeeID},
             year          = #{year},
-            incomeTax1    = #{incomeTax1},
-            incomeTax2    = #{incomeTax2},
-            incomeTax3    = #{incomeTax3},
-            incomeTax4    = #{incomeTax4},
-            incomeTax5    = #{incomeTax5},
-            incomeTax6    = #{incomeTax6},
-            incomeTax7    = #{incomeTax7},
-            incomeTax8    = #{incomeTax8},
-            incomeTax9    = #{incomeTax9},
-            incomeTax10   = #{incomeTax10},
-            incomeTax11   = #{incomeTax11},
-            incomeTax12   = #{incomeTax12},
             residentTax1  = #{residentTax1},
             residentTax2  = #{residentTax2},
             residentTax3  = #{residentTax3},
@@ -206,7 +170,7 @@
 			rentalMgmtFee10	= #{rentalMgmtFee10},
 			rentalMgmtFee11	= #{rentalMgmtFee11},
 			rentalMgmtFee12	= #{rentalMgmtFee12},
-            
+
             status        = #{status},
             updateDate    = date_format(now(), '%Y%m%d')
         where incomeTaxID = #{incomeTaxID}
@@ -217,7 +181,7 @@
         FROM employee
         where employee.status = "0"
     </select>
-    
+
 	<select id="getIncomeTaxByCondition" resultType="com.softtech.entity.IncomeTaxInfoEntity">
 	    SELECT m_incometax.*,
 	           employee.employeeName
@@ -232,7 +196,7 @@
 	    </if>
 	    ORDER BY m_incometax.employeeID, m_incometax.year DESC
 	</select>
-	
+
 	<!-- 获取所有年度 -->
 	<select id="getDistinctYears" resultType="string">
 	    SELECT DISTINCT year

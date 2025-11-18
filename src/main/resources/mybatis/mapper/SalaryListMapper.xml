@@ -116,5 +116,8 @@
     LIMIT 1
 </select>
 
+<select id="getHoldingTax" parameterType="String" resultType="com.softtech.entity.HoldingTaxInfoEntity">
+	SELECT * From m_holdingtax where employeeID=#{employeeID} AND year=#{year}
+</select>
 
 </mapper>

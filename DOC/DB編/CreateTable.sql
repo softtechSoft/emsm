@@ -888,3 +888,64 @@ INSERT INTO ems.m_file (
 ) VALUES (
     '01', '経費管理', '経費管理', '/opt/emsm/file/',0
 );
+
+/*所得税の関連項*/
+
+drop table if exists m_holdingtax;
+create table m_holdingtax(
+holdingTaxID varchar(10) NOT NULL PRIMARY KEY COMMENT '所得税ID',
+employeeID varchar(8) NOT NULL COMMENT '社員ID',
+year varchar(8) NOT NULL COMMENT '対象年度',
+incomeTax1 int NOT NULL COMMENT '一月所得税',
+incomeTax2 int NOT NULL COMMENT '二月所得税',
+incomeTax3 int NOT NULL COMMENT '三月所得税',
+incomeTax4 int NOT NULL COMMENT '四月所得税',
+incomeTax5 int NOT NULL COMMENT '五月所得税',
+incomeTax6 int NOT NULL COMMENT '六月所得税',
+incomeTax7 int NOT NULL COMMENT '七月所得税',
+incomeTax8 int NOT NULL COMMENT '八月所得税',
+incomeTax9 int NOT NULL COMMENT '九月所得税',
+incomeTax10 int NOT NULL COMMENT '十月所得税',
+incomeTax11 int NOT NULL COMMENT '十一月所得税',
+incomeTax12 int NOT NULL COMMENT '十二月所得税',
+status int NOT NULL COMMENT '利用ステータス',
+insertDate varchar(8) NOT NULL COMMENT '作成日',
+updateDate varchar(8) NOT NULL COMMENT '更新日'
+) comment '所得税マスター管理';
+
+
+
+/*20251118 住民税住宅マスター管理から所得税の関連項目をｉｎｓｅｒｔ*/
+INSERT INTO m_holdingtax
+ SELECT incomeTaxID,employeeID,year,incomeTax1,incomeTax2,incomeTax3,incomeTax4,
+        incomeTax5,incomeTax6,incomeTax7,incomeTax8,incomeTax9,incomeTax10,incomeTax11,incomeTax12,
+        status,insertDate,updateDate FROM m_incometax;
+        
+
+UPDATE m_holdingtax
+SET holdingTaxID = CONCAT('H', SUBSTR(holdingTaxID, 2))
+WHERE holdingTaxID NOT LIKE 'H%' AND LENGTH(holdingTaxID) >= 2;
+
+
+/*住民税住宅管理マスターから所得税の関連項目を削除*/
+ALTER TABLE m_incometax DROP COLUMN incomeTax1;
+ALTER TABLE m_incometax DROP COLUMN incomeTax2;
+ALTER TABLE m_incometax DROP COLUMN incomeTax3;
+ALTER TABLE m_incometax DROP COLUMN incomeTax4;
+ALTER TABLE m_incometax DROP COLUMN incomeTax5;
+ALTER TABLE m_incometax DROP COLUMN incomeTax6;
+ALTER TABLE m_incometax DROP COLUMN incomeTax7;
+ALTER TABLE m_incometax DROP COLUMN incomeTax8;
+ALTER TABLE m_incometax DROP COLUMN incomeTax9;
+ALTER TABLE m_incometax DROP COLUMN incomeTax10;
+ALTER TABLE m_incometax DROP COLUMN incomeTax11;
+ALTER TABLE m_incometax DROP COLUMN incomeTax12;
+
+--新取引先画面をofcfunction表に挿入する
+INSERT INTO ofcfunction (
+    functionID, functionName, functionText, authority, functionLink,
+    displayNo, deleteFlg, insertDate, updateDate, sysType
+) VALUES (
+    'M2', 'holdingtax', '&#xe60c;&emsp;マスタ_所得税', 1, '/emsm/initHoldingTaxInfoList',
+    10, 0, '20251118', '', 2
+);

@@ -106,7 +106,14 @@ public class DataUtil {
 		return nextID;
 	}
 
-
+	/***
+	 * 文字列の非空チェック
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNotEmpty(String str) {
+	    return str != null && !str.trim().isEmpty();
+	}
 
 
 

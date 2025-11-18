@@ -110,18 +110,6 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
             incomeTaxInfoFormBean.setEmployeeName(incomeTaxInfoEntity.getEmployeeName());
             incomeTaxInfoFormBean.setYear(incomeTaxInfoEntity.getYear());
             incomeTaxInfoFormBean.setEmployeeID(incomeTaxInfoEntity.getEmployeeID());
-            incomeTaxInfoFormBean.setIncomeTax1(incomeTaxInfoEntity.getIncomeTax1());
-            incomeTaxInfoFormBean.setIncomeTax2(incomeTaxInfoEntity.getIncomeTax2());
-            incomeTaxInfoFormBean.setIncomeTax3(incomeTaxInfoEntity.getIncomeTax3());
-            incomeTaxInfoFormBean.setIncomeTax4(incomeTaxInfoEntity.getIncomeTax4());
-            incomeTaxInfoFormBean.setIncomeTax5(incomeTaxInfoEntity.getIncomeTax5());
-            incomeTaxInfoFormBean.setIncomeTax6(incomeTaxInfoEntity.getIncomeTax6());
-            incomeTaxInfoFormBean.setIncomeTax7(incomeTaxInfoEntity.getIncomeTax7());
-            incomeTaxInfoFormBean.setIncomeTax8(incomeTaxInfoEntity.getIncomeTax8());
-            incomeTaxInfoFormBean.setIncomeTax9(incomeTaxInfoEntity.getIncomeTax9());
-            incomeTaxInfoFormBean.setIncomeTax10(incomeTaxInfoEntity.getIncomeTax10());
-            incomeTaxInfoFormBean.setIncomeTax11(incomeTaxInfoEntity.getIncomeTax11());
-            incomeTaxInfoFormBean.setIncomeTax12(incomeTaxInfoEntity.getIncomeTax12());
             incomeTaxInfoFormBean.setResidentTax1(incomeTaxInfoEntity.getResidentTax1());
             incomeTaxInfoFormBean.setResidentTax2(incomeTaxInfoEntity.getResidentTax2());
             incomeTaxInfoFormBean.setResidentTax3(incomeTaxInfoEntity.getResidentTax3());
@@ -134,6 +122,30 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
             incomeTaxInfoFormBean.setResidentTax10(incomeTaxInfoEntity.getResidentTax10());
             incomeTaxInfoFormBean.setResidentTax11(incomeTaxInfoEntity.getResidentTax11());
             incomeTaxInfoFormBean.setResidentTax12(incomeTaxInfoEntity.getResidentTax12());
+            incomeTaxInfoFormBean.setRental01(incomeTaxInfoEntity.getRental01());
+            incomeTaxInfoFormBean.setRental02(incomeTaxInfoEntity.getRental02());
+            incomeTaxInfoFormBean.setRental03(incomeTaxInfoEntity.getRental03());
+            incomeTaxInfoFormBean.setRental04(incomeTaxInfoEntity.getRental04());
+            incomeTaxInfoFormBean.setRental05(incomeTaxInfoEntity.getRental05());
+            incomeTaxInfoFormBean.setRental06(incomeTaxInfoEntity.getRental06());
+            incomeTaxInfoFormBean.setRental07(incomeTaxInfoEntity.getRental07());
+            incomeTaxInfoFormBean.setRental08(incomeTaxInfoEntity.getRental08());
+            incomeTaxInfoFormBean.setRental09(incomeTaxInfoEntity.getRental09());
+            incomeTaxInfoFormBean.setRental10(incomeTaxInfoEntity.getRental10());
+            incomeTaxInfoFormBean.setRental11(incomeTaxInfoEntity.getRental11());
+            incomeTaxInfoFormBean.setRental12(incomeTaxInfoEntity.getRental12());
+            incomeTaxInfoFormBean.setRentalMgmtFee01(incomeTaxInfoEntity.getRentalMgmtFee01());
+            incomeTaxInfoFormBean.setRentalMgmtFee02(incomeTaxInfoEntity.getRentalMgmtFee02());
+            incomeTaxInfoFormBean.setRentalMgmtFee03(incomeTaxInfoEntity.getRentalMgmtFee03());
+            incomeTaxInfoFormBean.setRentalMgmtFee04(incomeTaxInfoEntity.getRentalMgmtFee04());
+            incomeTaxInfoFormBean.setRentalMgmtFee05(incomeTaxInfoEntity.getRentalMgmtFee05());
+            incomeTaxInfoFormBean.setRentalMgmtFee06(incomeTaxInfoEntity.getRentalMgmtFee06());
+            incomeTaxInfoFormBean.setRentalMgmtFee07(incomeTaxInfoEntity.getRentalMgmtFee07());
+            incomeTaxInfoFormBean.setRentalMgmtFee08(incomeTaxInfoEntity.getRentalMgmtFee08());
+            incomeTaxInfoFormBean.setRentalMgmtFee09(incomeTaxInfoEntity.getRentalMgmtFee09());
+            incomeTaxInfoFormBean.setRentalMgmtFee10(incomeTaxInfoEntity.getRentalMgmtFee10());
+            incomeTaxInfoFormBean.setRentalMgmtFee11(incomeTaxInfoEntity.getRentalMgmtFee11());
+            incomeTaxInfoFormBean.setRentalMgmtFee12(incomeTaxInfoEntity.getRentalMgmtFee12());
             incomeTaxInfoFormBean.setStatus(incomeTaxInfoEntity.getStatus());
             incomeTaxInfoFormBean.setUpdateDate(incomeTaxInfoEntity.getUpdateDate());
             incomeTaxInfoFormBean.setInsertDate(incomeTaxInfoEntity.getInsertDate());
@@ -155,18 +167,6 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
         incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
         incomeTaxInfoEntity.setYear(incomeTaxInfoFormBean.getYear());
         incomeTaxInfoEntity.setEmployeeID(incomeTaxInfoFormBean.getEmployeeID());
-        incomeTaxInfoEntity.setIncomeTax1(incomeTaxInfoFormBean.getIncomeTax1());
-        incomeTaxInfoEntity.setIncomeTax2(incomeTaxInfoFormBean.getIncomeTax2());
-        incomeTaxInfoEntity.setIncomeTax3(incomeTaxInfoFormBean.getIncomeTax3());
-        incomeTaxInfoEntity.setIncomeTax4(incomeTaxInfoFormBean.getIncomeTax4());
-        incomeTaxInfoEntity.setIncomeTax5(incomeTaxInfoFormBean.getIncomeTax5());
-        incomeTaxInfoEntity.setIncomeTax6(incomeTaxInfoFormBean.getIncomeTax6());
-        incomeTaxInfoEntity.setIncomeTax7(incomeTaxInfoFormBean.getIncomeTax7());
-        incomeTaxInfoEntity.setIncomeTax8(incomeTaxInfoFormBean.getIncomeTax8());
-        incomeTaxInfoEntity.setIncomeTax9(incomeTaxInfoFormBean.getIncomeTax9());
-        incomeTaxInfoEntity.setIncomeTax10(incomeTaxInfoFormBean.getIncomeTax10());
-        incomeTaxInfoEntity.setIncomeTax11(incomeTaxInfoFormBean.getIncomeTax11());
-        incomeTaxInfoEntity.setIncomeTax12(incomeTaxInfoFormBean.getIncomeTax12());
         incomeTaxInfoEntity.setResidentTax1(incomeTaxInfoFormBean.getResidentTax1());
         incomeTaxInfoEntity.setResidentTax2(incomeTaxInfoFormBean.getResidentTax2());
         incomeTaxInfoEntity.setResidentTax3(incomeTaxInfoFormBean.getResidentTax3());
@@ -230,18 +230,6 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
         incomeTaxInfoEntity.setIncomeTaxID(incomeTaxInfoFormBean.getIncomeTaxID());
         incomeTaxInfoEntity.setYear(incomeTaxInfoFormBean.getYear());
         incomeTaxInfoEntity.setEmployeeID(incomeTaxInfoFormBean.getEmployeeID());
-        incomeTaxInfoEntity.setIncomeTax1(incomeTaxInfoFormBean.getIncomeTax1());
-        incomeTaxInfoEntity.setIncomeTax2(incomeTaxInfoFormBean.getIncomeTax2());
-        incomeTaxInfoEntity.setIncomeTax3(incomeTaxInfoFormBean.getIncomeTax3());
-        incomeTaxInfoEntity.setIncomeTax4(incomeTaxInfoFormBean.getIncomeTax4());
-        incomeTaxInfoEntity.setIncomeTax5(incomeTaxInfoFormBean.getIncomeTax5());
-        incomeTaxInfoEntity.setIncomeTax6(incomeTaxInfoFormBean.getIncomeTax6());
-        incomeTaxInfoEntity.setIncomeTax7(incomeTaxInfoFormBean.getIncomeTax7());
-        incomeTaxInfoEntity.setIncomeTax8(incomeTaxInfoFormBean.getIncomeTax8());
-        incomeTaxInfoEntity.setIncomeTax9(incomeTaxInfoFormBean.getIncomeTax9());
-        incomeTaxInfoEntity.setIncomeTax10(incomeTaxInfoFormBean.getIncomeTax10());
-        incomeTaxInfoEntity.setIncomeTax11(incomeTaxInfoFormBean.getIncomeTax11());
-        incomeTaxInfoEntity.setIncomeTax12(incomeTaxInfoFormBean.getIncomeTax12());
         incomeTaxInfoEntity.setResidentTax1(incomeTaxInfoFormBean.getResidentTax1());
         incomeTaxInfoEntity.setResidentTax2(incomeTaxInfoFormBean.getResidentTax2());
         incomeTaxInfoEntity.setResidentTax3(incomeTaxInfoFormBean.getResidentTax3());
@@ -278,7 +266,7 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
         incomeTaxInfoEntity.setRentalMgmtFee10(incomeTaxInfoFormBean.getRentalMgmtFee10());
         incomeTaxInfoEntity.setRentalMgmtFee11(incomeTaxInfoFormBean.getRentalMgmtFee11());
         incomeTaxInfoEntity.setRentalMgmtFee12(incomeTaxInfoFormBean.getRentalMgmtFee12());
-        
+
         incomeTaxInfoEntity.setStatus(incomeTaxInfoFormBean.getStatus());
         incomeTaxInfoEntity.setUpdateDate(incomeTaxInfoFormBean.getUpdateDate());
         incomeTaxInfoEntity.setInsertDate(incomeTaxInfoFormBean.getInsertDate());
@@ -333,8 +321,8 @@ public class IncomTaxInfoServiceImpl implements IncomTaxInfoService {
         List<EmployeeActionForm> rtn = transferDBTOUI(employee);
         return rtn;
     }
-    
-    
+
+
     @Override
     public List<IncomeTaxInfoEntity> getIncomeTaxByCondition(String employeeID, String year) {
         return incomeTaxInfoMapper.getIncomeTaxByCondition(employeeID, year);

@@ -2,6 +2,7 @@ package com.softtech.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +53,7 @@ public class IncomeTaxInfoController {
         //DBから社員情報を取得する,画面の社員ID選択,枠に表示する
         List<EmployeeActionForm> employeeList = incomTaxInfoService.queryEmployeeInfo();
         model.addAttribute("employeeList", employeeList);
-        
+
         List<String> yearList = incomTaxInfoService.getDistinctYears();
         model.addAttribute("yearList", yearList);
 
@@ -59,7 +61,7 @@ public class IncomeTaxInfoController {
         IncomeTaxInfoFormBean incomeTaxInfoFormBean = new IncomeTaxInfoFormBean();
         incomeTaxInfoFormBean.setEmployeeID("");
         incomeTaxInfoFormBean.setSearchYear("");
-        
+
         model.addAttribute("incomeTaxInfoFormBean", incomeTaxInfoFormBean);
         return "incomeTaxInfoList";
     }
@@ -85,11 +87,11 @@ public class IncomeTaxInfoController {
         //社員IDにより、検索する
 //        List<IncomeTaxInfoEntity> bList =
 //                incomTaxInfoService.getIncomeTaxByEmployeeID(employeeID);
-        List<IncomeTaxInfoEntity> bList = 
+        List<IncomeTaxInfoEntity> bList =
                 incomTaxInfoService.getIncomeTaxByCondition(employeeID, searchYear);
         //社員ID候補を取得する
         List<EmployeeActionForm> employeeList = incomTaxInfoService.queryEmployeeInfo();
-        
+
         List<String> yearList = incomTaxInfoService.getDistinctYears();
 
         model.addAttribute("employeeList", employeeList);
@@ -170,10 +172,18 @@ public class IncomeTaxInfoController {
 
         //必須チェック
         if (result.hasErrors()) {
+		    // エラーチェック用リスト
+			List<FieldError> errorlst = new ArrayList<FieldError>();
+
+			//エラーメッセージ。
+			errorlst.addAll(result.getFieldErrors());
+			//エラーメッセージ
+			model.addAttribute("errors", errorlst);
+
             //DBから年度リスト生成
             List<IncomeTaxIDName> year = incomTaxInfoService.getYear();
             model.addAttribute("year", year);
-            
+
             List<EmployeeActionForm> employeeList = incomTaxInfoService.queryEmployeeInfo();
             model.addAttribute("employeeList", employeeList);
 

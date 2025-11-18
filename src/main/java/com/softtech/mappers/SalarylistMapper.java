@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.softtech.entity.BaseSalaryInfoEntity;
 import com.softtech.entity.EmplyinsrateInfoEntity;
+import com.softtech.entity.HoldingTaxInfoEntity;
 import com.softtech.entity.IncomeTaxInfoEntity;
 import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.entity.TransportEntity;
@@ -46,9 +47,12 @@ public interface SalarylistMapper {
 	SalaryInfoEntity getDate() ;
 
 	int insertSalaryList(SalaryInfoEntity salaryInfoEntity);
-	
+
 	WelfarefeeInfoEntity getWfPensionByStandSalary(String standSalary);
-	
+
+	//
+	HoldingTaxInfoEntity getHoldingTax(@Param("employeeID") String employeeID , @Param("year")String Year ) ;
+
 //	WelfarefeeInfoEntity getStandSalary(String basesalary);
 
 }

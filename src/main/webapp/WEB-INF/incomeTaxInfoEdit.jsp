@@ -23,7 +23,7 @@
 </head>
 <form:form name="theForm" id="theForm" method="post" modelAttribute="incomeTaxInfoFormBean"
            action="incomeTaxInfoEdit">
-    <h1>所得税と住民税マスター</h1>
+    <h1>住民税社宅マスター</h1>
     <!--エラーメッセージ-->
     <p style="color: red;">
         <c:forEach items="${errors}" var="error">
@@ -49,14 +49,14 @@
                 <c:choose>
             		<c:when test="${incomeTaxInfoFormBean.insertFlg == '0'}">
                 		<form:select path="employeeID">
-	                    <form:options items="${employeeList}" 
-	                                 itemLabel="employeeName" 
+	                    <form:options items="${employeeList}"
+	                                 itemLabel="employeeName"
 	                                 itemValue="employeeID"/>
                 		</form:select>
             		</c:when>
 		            <c:otherwise>
 		                <c:out value="${incomeTaxInfoFormBean.employeeName}"/>
-		                <input type="hidden" id="employeeID" name="employeeID" 
+		                <input type="hidden" id="employeeID" name="employeeID"
 		                       value="${incomeTaxInfoFormBean.employeeID}"/>
 		            </c:otherwise>
 		        </c:choose>
@@ -67,69 +67,6 @@
             <td width="200px">対象年度</td>
             <td width="200px"><input type="text" id="year" name="year"
                                      value="${incomeTaxInfoFormBean.year}"/></td>
-        </tr>
-
-        <tr style="background-color:#dcfeeb">
-
-            <td width="200px">一月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax1" name="incomeTax1"
-                                     value="${incomeTaxInfoFormBean.incomeTax1}"/></td>
-        </tr>
-
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">二月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax2" name="incomeTax2"
-                                     value="${incomeTaxInfoFormBean.incomeTax2}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">三月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax3" name="incomeTax3"
-                                     value="${incomeTaxInfoFormBean.incomeTax3}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">四月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax4" name="incomeTax4"
-                                     value="${incomeTaxInfoFormBean.incomeTax4}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">五月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax5" name="incomeTax5"
-                                     value="${incomeTaxInfoFormBean.incomeTax5}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">六月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax6" name="incomeTax6"
-                                     value="${incomeTaxInfoFormBean.incomeTax6}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">七月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax7" name="incomeTax7"
-                                     value="${incomeTaxInfoFormBean.incomeTax7}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">八月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax8" name="incomeTax8"
-                                     value="${incomeTaxInfoFormBean.incomeTax8}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">九月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax9" name="incomeTax9"
-                                     value="${incomeTaxInfoFormBean.incomeTax9}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">十月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax10" name="incomeTax10"
-                                     value="${incomeTaxInfoFormBean.incomeTax10}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">十一月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax11" name="incomeTax11"
-                                     value="${incomeTaxInfoFormBean.incomeTax11}"/></td>
-        </tr>
-        <tr style="background-color:#dcfeeb">
-            <td width="200px">十二月所得税</td>
-            <td width="200px"><input type="text" id="incomeTax12" name="incomeTax12"
-                                     value="${incomeTaxInfoFormBean.incomeTax12}"/></td>
         </tr>
 
         <tr style="background-color:#dcfeeb">
@@ -192,7 +129,7 @@
             <td width="200px"><input type="text" id="residentTax12" name="residentTax12"
                                      value="${incomeTaxInfoFormBean.residentTax12}"/></td>
         </tr>
-        
+
         <tr style="background-color:#dcfeeb">
             <td width="200px">一月社宅家賃</td>
             <td width="200px"><input type="text" id="rental01" name="rental01"
@@ -253,7 +190,7 @@
             <td width="200px"><input type="text" id="rental12" name="rental12"
                                      value="${incomeTaxInfoFormBean.rental12}"/></td>
         </tr>
-        
+
         <tr style="background-color:#dcfeeb">
             <td width="200px">一月共益費</td>
             <td width="200px"><input type="text" id="rentalMgmtFee01" name="rentalMgmtFee01"
@@ -315,7 +252,6 @@
                                      value="${incomeTaxInfoFormBean.rentalMgmtFee12}"/></td>
         </tr>
 
->
         <tr style="background-color:#dcfeeb">
             <td width="200px">利用ステータス</td>
             <td width="200px"><input type="radio" name="status" <c:if
