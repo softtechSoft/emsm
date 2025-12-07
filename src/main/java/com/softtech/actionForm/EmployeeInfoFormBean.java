@@ -57,9 +57,10 @@ public class EmployeeInfoFormBean {
 	//権限
 //	@NotEmpty(message = "権限を入力してください。")
 	private String authority;
+
 	//メール
+	//@Pattern(regexp = ".+@it-softtech\\.com", message = "メールは'@it-softtech.com'で終わる必要があります。")
 	@NotEmpty(message = "メールを入力してください。")
-	@Pattern(regexp = ".+@it-softtech\\.com", message = "メールは'@it-softtech.com'で終わる必要があります。")
 	private String mailAdress;
 	//作成日
 	//個人番号
@@ -75,6 +76,16 @@ public class EmployeeInfoFormBean {
 	private String department;
 	//検索区別用のFlg
 	private String selectFlg;
+
+	//給料対象フラグ　0：非対象　１:対象
+	private String salaryFlg;
+	//雇用対象フラグ　0：非対象　１:対象
+	private String koyoFlg;
+	//厚生対象フラグ　0：非対象　１:対象
+	private String koseiFlg;
+	//年末調整対象フラグ　0：非対象　１:対象
+	private String nenmatsuFlg;
+
 
 	public String getEmployeeID() {
 		return employeeID;
@@ -249,6 +260,62 @@ public class EmployeeInfoFormBean {
 
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+
+	/**
+	 * @return salaryFlg
+	 */
+	public String getSalaryFlg() {
+		return salaryFlg;
+	}
+
+	/**
+	 * @param salaryFlg セットする salaryFlg
+	 */
+	public void setSalaryFlg(String salaryFlg) {
+		this.salaryFlg = salaryFlg;
+	}
+
+	/**
+	 * @return koyoFlg
+	 */
+	public String getKoyoFlg() {
+		return koyoFlg;
+	}
+
+	/**
+	 * @param koyoFlg セットする koyoFlg
+	 */
+	public void setKoyoFlg(String koyoFlg) {
+		this.koyoFlg = koyoFlg;
+	}
+
+	/**
+	 * @return koseiFlg
+	 */
+	public String getKoseiFlg() {
+		return koseiFlg;
+	}
+
+	/**
+	 * @param koseiFlg セットする koseiFlg
+	 */
+	public void setKoseiFlg(String koseiFlg) {
+		this.koseiFlg = koseiFlg;
+	}
+
+	/**
+	 * @return nenmatsuFlg
+	 */
+	public String getNenmatsuFlg() {
+		return nenmatsuFlg;
+	}
+
+	/**
+	 * @param nenmatsuFlg セットする nenmatsuFlg
+	 */
+	public void setNenmatsuFlg(String nenmatsuFlg) {
+		this.nenmatsuFlg = nenmatsuFlg;
 	}
 
 }

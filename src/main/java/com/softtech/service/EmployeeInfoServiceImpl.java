@@ -179,6 +179,9 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setDepartment(employeeInfoFormBean.getDepartment());
          return employeeInfoEntity;
     }
+	 /*
+	  * 社員情報更新
+	  */
 	 public void update(EmployeeInfoFormBean employeeInfoFormBean) {
 	    	//画面データをEntityに設定する
 	        EmployeeInfoEntity employeeInfoEntity = transforBeanToEntityByUpDate(employeeInfoFormBean);

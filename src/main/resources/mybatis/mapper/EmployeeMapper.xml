@@ -103,7 +103,7 @@
 
     <update id="update" parameterType="com.softtech.entity.Employee">
         UPDATE employee
-        SET employeeName=#{employeeName}, password=#{password}, status=#{status}, sex=#{sex}, epType=#{epType}, birthday=#{birthday}, age=#{age}, joinedDate=#{joinedDate}, joinedTime=#{joinedTime}, postCode=#{postCode}, address=#{address}, phoneNumber=#{phoneNumber}, authority=#{authority}, mailAdress=#{mailAdress}, insertDate=#{insertDate}, updateDate=#{updateDate}
+        SET employeeName=#{employeeName}, password=#{password}, status=#{status}, sex=#{sex}, epType=#{epType}, birthday=#{birthday}, age=#{age}, joinedDate=#{joinedDate}, joinedTime=#{joinedTime}, postCode=#{postCode}, address=#{address}, phoneNumber=#{phoneNumber}, authority=#{authority}, mailAdress=#{mailAdress},salaryFlg=#{salaryFlg},koyoFlg=#{koyoFlg},koseiFlg=#{koseiFlg},nenmatsuFlg=#{nenmatsuFlg}, insertDate=#{insertDate}, updateDate=#{updateDate}
         WHERE employeeID=#{employeeID}
     </update>
 
