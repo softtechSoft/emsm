@@ -920,7 +920,7 @@ INSERT INTO m_holdingtax
  SELECT incomeTaxID,employeeID,year,incomeTax1,incomeTax2,incomeTax3,incomeTax4,
         incomeTax5,incomeTax6,incomeTax7,incomeTax8,incomeTax9,incomeTax10,incomeTax11,incomeTax12,
         status,insertDate,updateDate FROM m_incometax;
-        
+
 
 UPDATE m_holdingtax
 SET holdingTaxID = CONCAT('H', SUBSTR(holdingTaxID, 2))
@@ -949,3 +949,11 @@ INSERT INTO ofcfunction (
     'M2', 'holdingtax', '&#xe60c;&emsp;マスタ_所得税', 1, '/emsm/initHoldingTaxInfoList',
     10, 0, '20251118', '', 2
 );
+
+--2025/12/07 機能追加-----
+ALTER TABLE ems.employee ADD COLUMN salaryFlg VARCHAR(1) NOT NULL DEFAULT '1' COMMENT '給料対象フラグ';
+ALTER TABLE ems.employee ADD COLUMN koyoFlg VARCHAR(1) NOT NULL DEFAULT '1' COMMENT '雇用対象フラグ';
+ALTER TABLE ems.employee ADD COLUMN koseiFlg VARCHAR(1) NOT NULL DEFAULT '1' COMMENT '厚生対象フラグ';
+ALTER TABLE ems.employee ADD COLUMN nenmatsuFlg VARCHAR(1) NOT NULL DEFAULT '1' COMMENT '年末調整対象フラグ';
+
+
