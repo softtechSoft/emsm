@@ -26,20 +26,27 @@
 	</select>
 	<!--勤怠情報を取得する。inner join-->
 	<select id="getWorkTransport" parameterType="string" resultType="com.softtech.entity.TransportEntity">
-		select ee.employeeID,
-		       ee.employeeName,
-		       wk.workMonth,
-		       wk.workTime,
+	select ee.employeeID,
+               ee.employeeName,
+               wkinfo.workMonth,
+               wkinfo.workTime,
+               wkinfo.transportExpense1,
+               wkinfo.transport,
+               wkinfo.businessTrip
+    from employee ee left join
+        (select ct.employeeID,
+               wk.workMonth,
+               wk.workTime,
                tt.transportExpense1,
-		       tt.transport,
-		       tt.businessTrip
-		from workinfo wk,contract ct,transport tt,employee ee
-		where wk.contractID=ct.contractID
-		AND   ct.status='1'
-		AND   ct.employeeID=tt.employeeID
-		AND   tt.employeeID=ee.employeeID
-		AND   wk.workMonth=#{month}
-		AND   tt.workMonth=#{month}
-
+               tt.transport,
+               tt.businessTrip
+        from workinfo wk,
+            contract ct,
+            transport tt
+        where wk.contractID=ct.contractID
+        AND   ct.status='1'
+        AND   ct.employeeID=tt.employeeID
+        AND   wk.workMonth=#{month}
+        AND   tt.workMonth=#{month} )  as wkinfo on ee.employeeID=wkinfo.employeeID
 	</select>
 </mapper>

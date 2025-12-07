@@ -43,6 +43,7 @@ function toDownLoadDataJsp(){
 	<table border="1"class="workdetaillist-table">
 
 		<tr>
+			<th >No.</th>
 		    <th >社員ID</th>
             <th >社員氏名</th>
             <th >対象月</th>
@@ -54,6 +55,7 @@ function toDownLoadDataJsp(){
 		<c:forEach items="${list}" var="workdetail" varStatus="status">
 			<tr <c:if test="${status.count%2==0}"> style="background-color:#80ffff"</c:if>
             	<c:if test="${status.count%2!=0}"> style="background-color:#ffff00"</c:if>>
+            	<td><c:out value="${status.count}"/></td>
 				<td><c:out value="${workdetail.getEmployeeID()}"/></td>
 				<td><c:out value="${workdetail.getEmployeeName()}"/></td>
 				<td><c:out value="${workdetail.getWorkMonth()}"/></td>
