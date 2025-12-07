@@ -311,34 +311,34 @@
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">給料対象フラグ</td>
 		<td width="250px">
-			<input type="radio" name="salaryFlg" <c:if test="${employeeInfoFormBean.authority == '0'}">
+			<input type="radio" name="salaryFlg" <c:if test="${employeeInfoFormBean.salaryFlg == '1'}">
                 checked</c:if> value="1" /> 対象
-                <input type="radio" name="salaryFlg" <c:if test="${employeeInfoFormBean.authority== '1'}">
-                    checked</c:if> value="0" /> 対象</td>
+                <input type="radio" name="salaryFlg" <c:if test="${employeeInfoFormBean.salaryFlg== '0'}">
+                    checked</c:if> value="0" /> 非対象</td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">雇用対象フラグ</td>
 		<td width="250px">
-			<input type="radio" name="koyoFlg" <c:if test="${employeeInfoFormBean.authority == '0'}">
+			<input type="radio" name="koyoFlg" <c:if test="${employeeInfoFormBean.koyoFlg == '1'}">
                 checked</c:if> value="1" /> 対象
-                <input type="radio" name="koyoFlg" <c:if test="${employeeInfoFormBean.authority== '1'}">
-                    checked</c:if> value="0" /> 対象</td>
+                <input type="radio" name="koyoFlg" <c:if test="${employeeInfoFormBean.koyoFlg== '0'}">
+                    checked</c:if> value="0" /> 非対象</td>
 	</tr>
 	<tr style = "background-color:#dcfeeb">
 		<td width ="150px">厚生対象フラグ</td>
 		<td width="250px">
-			<input type="radio" name="koseiFlg" <c:if test="${employeeInfoFormBean.authority == '0'}">
+			<input type="radio" name="koseiFlg" <c:if test="${employeeInfoFormBean.koseiFlg == '1'}">
                 checked</c:if> value="1" /> 対象
-                <input type="radio" name="koseiFlg" <c:if test="${employeeInfoFormBean.authority== '1'}">
-                    checked</c:if> value="0" /> 対象</td>
+                <input type="radio" name="koseiFlg" <c:if test="${employeeInfoFormBean.koseiFlg== '0'}">
+                    checked</c:if> value="0" /> 非対象</td>
 	</tr>
 		<tr style = "background-color:#dcfeeb">
 		<td width ="150px">年末調整対象フラグ</td>
 		<td width="250px">
-			<input type="radio" name="nenmatsuFlg" <c:if test="${employeeInfoFormBean.authority == '0'}">
+			<input type="radio" name="nenmatsuFlg" <c:if test="${employeeInfoFormBean.nenmatsuFlg == '1'}">
                 checked</c:if> value="1" /> 対象
-                <input type="radio" name="nenmatsuFlg" <c:if test="${employeeInfoFormBean.authority== '1'}">
-                    checked</c:if> value="0" /> 対象</td>
+                <input type="radio" name="nenmatsuFlg" <c:if test="${employeeInfoFormBean.nenmatsuFlg== '0'}">
+                    checked</c:if> value="0" /> 非対象</td>
 	</tr>
 	</table>
 	<input type="button" id="update" name="update" value="更新" onclick="doRegist()" />

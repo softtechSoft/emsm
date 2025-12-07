@@ -74,6 +74,10 @@
 
     	    department = #{department},
     	    personNumber=#{personNumber},
+    	    salaryFlg=#{salaryFlg},
+    	    koyoFlg=#{koyoFlg},
+    	    koseiFlg=#{koseiFlg},
+    	    nenmatsuFlg=#{nenmatsuFlg},
 			updateDate = date_format(now(),'%Y%m%d')
     	    where employeeID = #{employeeID}
 	</update>
@@ -81,8 +85,8 @@
 	<select id="getMaxEmployeeID" resultType="string">
 		<!-- select MAX(employeeID) from ems.employee
 		WHERE UPPER(employeeID) LIKE 'E%' ; -->
-		SELECT CONCAT('E', LPAD(MAX(CAST(SUBSTRING(employeeID, 2) AS UNSIGNED)), 5, '0')) 
-	    FROM ems.employee 
+		SELECT CONCAT('E', LPAD(MAX(CAST(SUBSTRING(employeeID, 2) AS UNSIGNED)), 5, '0'))
+	    FROM ems.employee
 	    WHERE UPPER(employeeID) LIKE 'E%';
 	</select>
 </mapper>

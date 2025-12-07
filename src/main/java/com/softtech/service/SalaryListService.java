@@ -112,11 +112,22 @@ public class SalaryListService {
 		List<EmployeeIDName> employeeList = loginService.getEmployeeList();
 
 		for(EmployeeIDName employeeIDName:employeeList){
+			//社員ID
+			 String employeeID=employeeIDName.getEmployeeID();
+
+			//社員状況を取得
+			List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
+			EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
+
+			//給料対象外の場合、作成しない。
+			if("0".equals( emp.getSalaryFlg())) {
+				continue;
+			}
+
 			//給料明細新規
 			SalaryInfoEntity salaryInfoEntity= new SalaryInfoEntity();
 
-			 //社員ID
-			 String employeeID=employeeIDName.getEmployeeID();
+
 			 salaryInfoEntity.setEmployeeID(employeeID);
 
 			//対象月
@@ -164,7 +175,6 @@ public class SalaryListService {
 			 salaryInfoEntity.setShortage(Float.toString(shortage));
 
 			 //残業加算
-
 			 float overTimePlus= Float.parseFloat(baseSalaryInfoEntity.getOvertimePay()) *  overTime;
 
 			 salaryInfoEntity.setOverTimePlus (Float.toString(overTimePlus));
@@ -200,58 +210,30 @@ public class SalaryListService {
 			 String allowanceReason = "" ;
 			 salaryInfoEntity.setAllowanceReason(allowanceReason);
 
-			 //厚生マスタを取る
-			 //⑤厚生保険料を取得
-			 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
-			 if( welfarefeeInfoEntity == null) {
-				 autoSalaryRtn.setYear(year);
-				 autoSalaryRtn.setRtn("2");
-				 return autoSalaryRtn;
-			 }
-
+			//////////ここから厚生計算//////////
 			//厚生年金控除個人
-			float wfPensionSelf =
-					(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
-			salaryInfoEntity.setWelfarePensionSelf(Float.toString(wfPensionSelf));
-
-
-			 //厚生年金控除会社
-			float wfPensionComp = wfPensionSelf;
-			salaryInfoEntity.setWelfarePensionComp(Float.toString(wfPensionComp));
-
-			 //社員年齢を取る
-			String age=salarylistMapper.getAge(employeeID);
-			 //厚生健康控除個人
-			float wfHealthSelf;
+			float wfPensionSelf=0;
+			//厚生年金控除会社
+			float wfPensionComp=0;
+			//厚生健康控除個人
+			float wfHealthSelf=0;
 			//厚生健康控除会社
-			float wfHealthComp;
-			if ( Float.parseFloat(age) >= 40) {
-				 wfHealthSelf =
-						 ((Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
-				 salaryInfoEntity.setWelfareHealthSelf( Float.toString(wfHealthSelf));
-				 wfHealthComp =wfHealthSelf;
-				 salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
-
-			}else {
-					wfHealthSelf =
-							((Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
-					salaryInfoEntity.setWelfareHealthSelf(Float.toString(wfHealthSelf));
-					wfHealthComp=wfHealthSelf;
-					salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
-			}
+			float wfHealthComp=0;
 			//厚生控除子育(会社)
-		    //標準報酬×厚生控除子育(会社)の控除率
-			float welfareBaby =
-				 (Float.parseFloat(welfarefeeInfoEntity.getBabyCareCompanyRate()) * (Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100);
+			float welfareBaby=0;
+			//厚生対象外の場合、0を設定する
+			 if ("0".equals(emp.getKoseiFlg())) {
+				 salaryInfoEntity.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+				 salaryInfoEntity.setWelfarePensionComp(Float.toString(wfPensionComp));
+				 salaryInfoEntity.setWelfareHealthSelf( Float.toString(wfHealthSelf));
+				 salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
+				 salaryInfoEntity.setWelfareBaby(Float.toString(welfareBaby));
+			 }else {
 
-			salaryInfoEntity.setWelfareBaby(Float.toString(welfareBaby));
-
-             //////////再計算/////////////
-			//最大段階の厚生年金再計算
-			if (Float.parseFloat(basesalary) >= 665000) {
-			    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
-			    if( welfarefeeInfoEntity == null) {
-					 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+				 //厚生マスタを取る
+				 //⑤厚生保険料を取得
+				 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+				 if( welfarefeeInfoEntity == null) {
 					 autoSalaryRtn.setYear(year);
 					 autoSalaryRtn.setRtn("2");
 					 return autoSalaryRtn;
@@ -262,25 +244,66 @@ public class SalaryListService {
 						(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
 				salaryInfoEntity.setWelfarePensionSelf(Float.toString(wfPensionSelf));
 
-
 				 //厚生年金控除会社
 				wfPensionComp = wfPensionSelf;
 				salaryInfoEntity.setWelfarePensionComp(Float.toString(wfPensionComp));
 
-			}
+				 //社員年齢を取る
+				String age=salarylistMapper.getAge(employeeID);
 
-			//⑧雇用保険率をを取得
-			 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
-			 if( emplyinsrateInfoEntity == null ) {
-				 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-				 autoSalaryRtn.setYear(nextMonth);
-				 autoSalaryRtn.setRtn("5");
-				 return autoSalaryRtn;
+				if ( Float.parseFloat(age) >= 40) {
+					//介護率取得
+					 wfHealthSelf =
+							 ((Float.parseFloat(welfarefeeInfoEntity.getCareRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
+					 //厚生健康控除個人
+					 salaryInfoEntity.setWelfareHealthSelf( Float.toString(wfHealthSelf));
+					//厚生健康控除会社
+					 wfHealthComp =wfHealthSelf;
+					 salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
+
+				}else {
+						//厚生健康率取得
+						wfHealthSelf =
+								((Float.parseFloat(welfarefeeInfoEntity.getNotCareRatio())* Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
+						//厚生健康控除個人
+						salaryInfoEntity.setWelfareHealthSelf(Float.toString(wfHealthSelf));
+						//厚生健康控除会社
+						wfHealthComp=wfHealthSelf;
+						salaryInfoEntity.setWelfareHealthComp(Float.toString(wfHealthComp));
+				}
+				//厚生控除子育(会社)
+			    //標準報酬×厚生控除子育(会社)の控除率
+				welfareBaby =
+					 (Float.parseFloat(welfarefeeInfoEntity.getBabyCareCompanyRate()) * (Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100);
+
+				salaryInfoEntity.setWelfareBaby(Float.toString(welfareBaby));
+
+	             //////////再計算/////////////
+				//最大段階の厚生年金再計算
+				if (Float.parseFloat(basesalary) >= 665000) {
+				    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
+				    if( welfarefeeInfoEntity == null) {
+						 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+						 autoSalaryRtn.setYear(year);
+						 autoSalaryRtn.setRtn("2");
+						 return autoSalaryRtn;
+					 }
+
+					//厚生年金控除個人
+					wfPensionSelf =
+							(( Float.parseFloat(welfarefeeInfoEntity.getAnnuityRatio()) * Float.parseFloat(welfarefeeInfoEntity.getStandSalary()))/100)/2;
+					salaryInfoEntity.setWelfarePensionSelf(Float.toString(wfPensionSelf));
+
+
+					 //厚生年金控除会社
+					wfPensionComp = wfPensionSelf;
+					salaryInfoEntity.setWelfarePensionComp(Float.toString(wfPensionComp));
+
+				}
 			 }
-			 List<EmployeeInfoEntity> epInfo = employeeInfoMapper.getEmployeeID(employeeID);
-			 EmployeeInfoEntity emp = epInfo.isEmpty() ? null : epInfo.get(0);
-			 //役職を取得
-			 String postion = emp.getPosition();
+            //////////ここまで厚生計算//////////
+
+			 /***********ここから雇用算出************/
 			//雇用保険個人負担
 			 float laborBurden = 0;
 			//雇用保険会社負担
@@ -289,37 +312,64 @@ public class SalaryListService {
 			 float employmentInsurance = 0;
 			//労災保険（会社負担のみ）
 			 float industrialAccidentInsurance = 0;
-			 //雇用保険の対象額(修正後：基本給＋交通費＋残業金額＋手当)
-			 float hoKenSalary = Float.parseFloat(basesalary)+transportExpense+overTimePlus+allowancePlus;
-			 if(("0").equals(postion)) {
-				 laborBurden = 0;
-				 employerBurden = 0;
-				 employmentInsurance = 0;
-				 industrialAccidentInsurance = 0;
 
+			 // 雇用対象ではない場合、0を設定する
+			 if ("0".equals(emp.getKoyoFlg())) {
+				//雇用保険個人負担
+				 salaryInfoEntity.setEplyInsSelf(Float.toString(laborBurden));
+				//雇用保険会社負担
+				 salaryInfoEntity.setEplyInsComp(Float.toString(employerBurden));
+				//雇用保拠出金（会社)
+				 salaryInfoEntity.setEplyInsWithdraw(Float.toString(employmentInsurance));
+				//労災保険（会社負担のみ）
+				 salaryInfoEntity.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
 			 }else {
 
-				 laborBurden =
-						( Float.parseFloat(emplyinsrateInfoEntity.getLaborBurdenRate())*hoKenSalary)/1000 ;
+				//⑧雇用保険率をを取得
+				 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
+				 if( emplyinsrateInfoEntity == null ) {
+					 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+					 autoSalaryRtn.setYear(nextMonth);
+					 autoSalaryRtn.setRtn("5");
+					 return autoSalaryRtn;
+				 }
+				 //役職を取得
+				 String postion = emp.getPosition();
 
-				 employerBurden =
-						 (Float.parseFloat(emplyinsrateInfoEntity.getEmployerBurdenRate())*hoKenSalary)/1000 ;
+				 //雇用保険の対象額(修正後：基本給＋交通費＋残業金額＋手当)
+				 float hoKenSalary = Float.parseFloat(basesalary)+transportExpense+overTimePlus+allowancePlus;
+				 //役員の場合、０設定。
+				 if(("0").equals(postion)) {
+					 laborBurden = 0;
+					 employerBurden = 0;
+					 employmentInsurance = 0;
+					 industrialAccidentInsurance = 0;
 
-				 employmentInsurance =
-						 (Float.parseFloat(emplyinsrateInfoEntity.getContributionRate())*hoKenSalary)/1000 ;
+				 }else {
 
-				 industrialAccidentInsurance =
-				 (Float.parseFloat(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate())*hoKenSalary)/1000 ;
+					 laborBurden =
+							( Float.parseFloat(emplyinsrateInfoEntity.getLaborBurdenRate())*hoKenSalary)/1000 ;
 
+					 employerBurden =
+							 (Float.parseFloat(emplyinsrateInfoEntity.getEmployerBurdenRate())*hoKenSalary)/1000 ;
+
+					 employmentInsurance =
+							 (Float.parseFloat(emplyinsrateInfoEntity.getContributionRate())*hoKenSalary)/1000 ;
+
+					 industrialAccidentInsurance =
+					 (Float.parseFloat(emplyinsrateInfoEntity.getIndustrialAccidentInsuranceRate())*hoKenSalary)/1000 ;
+
+				 }
+				//雇用保険個人負担
+				 salaryInfoEntity.setEplyInsSelf(Float.toString(laborBurden));
+				//雇用保険会社負担
+				 salaryInfoEntity.setEplyInsComp(Float.toString(employerBurden));
+				//雇用保拠出金（会社)
+				 salaryInfoEntity.setEplyInsWithdraw(Float.toString(employmentInsurance));
+				//労災保険（会社負担のみ）
+				 salaryInfoEntity.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
 			 }
-			//雇用保険個人負担
-			 salaryInfoEntity.setEplyInsSelf(Float.toString(laborBurden));
-			//雇用保険会社負担
-			 salaryInfoEntity.setEplyInsComp(Float.toString(employerBurden));
-			//雇用保拠出金（会社)
-			 salaryInfoEntity.setEplyInsWithdraw(Float.toString(employmentInsurance));
-			//労災保険（会社負担のみ）
-			 salaryInfoEntity.setWkAcccpsIns(Float.toString(industrialAccidentInsurance));
+			 /***********ここまで雇用算出************/
 
 			 //所得税と住民税を取得
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
@@ -583,30 +633,5 @@ public class SalaryListService {
 		//料テーブルに新規追加
 		return autoSalaryRtn;
 	}
-
-
-
-	/*public List<MenuBean> queryOfcfunction(String string) {
-		// 機能リストを取得する
-		List<Ofcfunction> Ofcfunction = salarylistMapper.getSalaryinfolist(month);
-		// 機能リストへ変更する。
-		List<MenuBean> rtn  = menu(Ofcfunction);
-		return  rtn;
-	}
-	//DBから取得したデータを機能リストへ変換する。
-	private List<MenuBean>menu(List<Ofcfunction> lst){
-		if(lst == null ) return new ArrayList<MenuBean>();
-
-		List<MenuBean> rtn  =new ArrayList<MenuBean>();
-		for(Ofcfunction tt : lst) {
-			MenuBean menuBean = new MenuBean();
-			menuBean.setFunctionText(tt.getFunctionText());
-			menuBean.setFunctionLink(tt.getFunctionLink());
-			menuBean.setDisplayNo(tt.getDisplayNo());
-			rtn.add(menuBean);
-		}
-
-		return rtn;
-	}*/
 
 }

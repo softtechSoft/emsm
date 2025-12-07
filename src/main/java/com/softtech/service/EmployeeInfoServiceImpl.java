@@ -107,6 +107,11 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
             employeeInfoFormBean.setInsertDate(employeeInfoEntity.getInsertDate());
             employeeInfoFormBean.setUpdateDate(employeeInfoEntity.getUpdateDate());
             employeeInfoFormBean.setDepartment(employeeInfoEntity.getDepartment());
+            employeeInfoFormBean.setSalaryFlg(employeeInfoEntity.getSalaryFlg());
+            employeeInfoFormBean.setKoyoFlg(employeeInfoEntity.getKoyoFlg());
+            employeeInfoFormBean.setKoseiFlg(employeeInfoEntity.getKoseiFlg());
+            employeeInfoFormBean.setNenmatsuFlg(employeeInfoEntity.getNenmatsuFlg());
+
         }
         return employeeInfoFormBean;
     }
@@ -177,6 +182,10 @@ public class EmployeeInfoServiceImpl implements EmployeeInfoService {
          employeeInfoEntity.setInsertDate(employeeInfoFormBean.getInsertDate());
          employeeInfoEntity.setUpdateDate(employeeInfoFormBean.getUpdateDate());
          employeeInfoEntity.setDepartment(employeeInfoFormBean.getDepartment());
+         employeeInfoEntity.setSalaryFlg(employeeInfoFormBean.getSalaryFlg());
+         employeeInfoEntity.setKoyoFlg(employeeInfoFormBean.getKoyoFlg());
+         employeeInfoEntity.setKoseiFlg(employeeInfoFormBean.getKoseiFlg());
+         employeeInfoEntity.setNenmatsuFlg(employeeInfoFormBean.getNenmatsuFlg());
          return employeeInfoEntity;
     }
 	 /*

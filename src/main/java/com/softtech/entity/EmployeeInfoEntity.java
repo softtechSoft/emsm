@@ -46,6 +46,15 @@ public class EmployeeInfoEntity {
 	private String EmployeeIDAll;
 	private String department;
 
+	//給料対象フラグ
+	private String salaryFlg;
+	//雇用対象フラグ
+	private String koyoFlg;
+	//厚生対象フラグ
+	private String koseiFlg;
+	//年末調整対象フラグ
+	private String nenmatsuFlg;
+
 
 	public String getEmployeeID() {
 		return employeeID;
@@ -244,6 +253,62 @@ public class EmployeeInfoEntity {
 	 */
 	public void setPosition(String position) {
 		this.position = position;
+	}
+
+	/**
+	 * @return salaryFlg
+	 */
+	public String getSalaryFlg() {
+		return salaryFlg;
+	}
+
+	/**
+	 * @param salaryFlg セットする salaryFlg
+	 */
+	public void setSalaryFlg(String salaryFlg) {
+		this.salaryFlg = salaryFlg;
+	}
+
+	/**
+	 * @return koyoFlg
+	 */
+	public String getKoyoFlg() {
+		return koyoFlg;
+	}
+
+	/**
+	 * @param koyoFlg セットする koyoFlg
+	 */
+	public void setKoyoFlg(String koyoFlg) {
+		this.koyoFlg = koyoFlg;
+	}
+
+	/**
+	 * @return koseiFlg
+	 */
+	public String getKoseiFlg() {
+		return koseiFlg;
+	}
+
+	/**
+	 * @param koseiFlg セットする koseiFlg
+	 */
+	public void setKoseiFlg(String koseiFlg) {
+		this.koseiFlg = koseiFlg;
+	}
+
+	/**
+	 * @return nenmatsuFlg
+	 */
+	public String getNenmatsuFlg() {
+		return nenmatsuFlg;
+	}
+
+	/**
+	 * @param nenmatsuFlg セットする nenmatsuFlg
+	 */
+	public void setNenmatsuFlg(String nenmatsuFlg) {
+		this.nenmatsuFlg = nenmatsuFlg;
 	}
 
 
