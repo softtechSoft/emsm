@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.softtech.mappers.HoldingTaxInfoMapper">
+
+    <insert id="insertHoldingTaxInfo" parameterType="com.softtech.entity.HoldingTaxInfoEntity">
+        insert into m_holdingtax(
+                 holdingTaxID,
+                 employeeID,
+                 year,
+                 incomeTax1,
+                 incomeTax2,
+                 incomeTax3,
+                 incomeTax4,
+                 incomeTax5,
+                 incomeTax6,
+                 incomeTax7,
+                 incomeTax8,
+                 incomeTax9,
+                 incomeTax10,
+                 incomeTax11,
+                 incomeTax12,
+                 status,
+                 insertDate,
+                 updateDate)
+            VALUES(
+                 #{holdingTaxID},
+                 #{employeeID},
+                 #{year},
+                 #{incomeTax1},
+                 #{incomeTax2},
+                 #{incomeTax3},
+                 #{incomeTax4},
+                 #{incomeTax5},
+                 #{incomeTax6},
+                 #{incomeTax7},
+                 #{incomeTax8},
+                 #{incomeTax9},
+                 #{incomeTax10},
+                 #{incomeTax11},
+                 #{incomeTax12},
+                 #{status},
+                 date_format(now(), '%Y%m%d'),
+                 date_format(now(), '%Y%m%d')
+                )
+    </insert>
+    <!--画面表示getIncomeTax用のquery,入力の社員IDにより、検索する-->
+    <select id="getHoldingTaxByEmployeeID" resultType="com.softtech.entity.HoldingTaxInfoEntity">
+        select m_holdingtax.*,
+           employee.employeeName
+        from m_holdingtax
+        LEFT JOIN employee
+          on m_holdingtax.employeeID = employee.employeeID
+        where employee.employeeID = #{employeeID}
+    </select>
+
+    <!--更新画面への検索,表示される画面の所得税IDにより、検索する-->
+    <select id="getUpdateHoldingTaxByHoldingTaxID" resultType="com.softtech.entity.HoldingTaxInfoEntity">
+        select m_holdingtax.*,
+           employee.employeeName
+        from m_holdingtax
+	    LEFT JOIN employee
+	    on m_holdingtax.employeeID = employee.employeeID
+	    where holdingTaxID = #{holdingTaxID}
+    </select>
+
+    <!--最大のIncomeTaxIDを取得、+1用-->
+	<select id="getMaxHoldingTaxID" resultType="String">
+        select IFNULL(MAX(holdingTaxID), 'H000000000')
+        from m_holdingtax
+    </select>
+
+    <update id="updateHoldingTax" parameterType="com.softtech.entity.HoldingTaxInfoEntity">
+        update m_holdingtax
+        set employeeID    = #{employeeID},
+            year          = #{year},
+            incomeTax1    = #{incomeTax1},
+            incomeTax2    = #{incomeTax2},
+            incomeTax3    = #{incomeTax3},
+            incomeTax4    = #{incomeTax4},
+            incomeTax5    = #{incomeTax5},
+            incomeTax6    = #{incomeTax6},
+            incomeTax7    = #{incomeTax7},
+            incomeTax8    = #{incomeTax8},
+            incomeTax9    = #{incomeTax9},
+            incomeTax10   = #{incomeTax10},
+            incomeTax11   = #{incomeTax11},
+            incomeTax12   = #{incomeTax12},
+
+            status        = #{status},
+            updateDate    = date_format(now(), '%Y%m%d')
+        where holdingTaxID = #{holdingTaxID}
+    </update>
+    <!--画面の社員ID選択-->
+    <select id="getEmployee" resultType="com.softtech.entity.Employee">
+        select employeeName, employeeID
+        FROM employee
+        where employee.status = "0"
+    </select>
+
+	<select id="getHoldingTaxByCondition" resultType="com.softtech.entity.HoldingTaxInfoEntity">
+	    SELECT m_holdingtax.*,
+	           employee.employeeName
+	    FROM m_holdingtax
+	    LEFT JOIN employee ON m_holdingtax.employeeID = employee.employeeID
+	    WHERE 1=1
+	    <if test="employeeID != null and employeeID != ''">
+	        AND m_holdingtax.employeeID = #{employeeID}
+	    </if>
+	    <if test="year != null and year != ''">
+	        AND m_holdingtax.year = #{year}
+	    </if>
+	    ORDER BY m_holdingtax.employeeID, m_holdingtax.year DESC
+	</select>
+
+	<!-- 获取所有年度 -->
+	<select id="getDistinctYears" resultType="string">
+	    SELECT DISTINCT year
+	    FROM m_holdingtax
+	    WHERE year IS NOT NULL
+	    ORDER BY year DESC
+	</select>
+</mapper>
