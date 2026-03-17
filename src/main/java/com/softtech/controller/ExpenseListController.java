@@ -69,6 +69,9 @@ public class ExpenseListController {
 	    LocalDate now = LocalDate.now();
 	    int currentYear = now.getYear();
 	    int currentMonth = now.getMonthValue();
+	    String currentTantouName = null;
+	    String currentExpensesType = null;
+	    String currentSettlementStatus = null;
 
 	    // 年リストを作成（現在の年から過去10年）
 	    List<Integer> yearList = new ArrayList<>();
@@ -82,8 +85,14 @@ public class ExpenseListController {
 	        monthList.add(m);
 	    }
 
+	    // 担当者候補取得
+	    List<String> tantouList = expenseListService.findTantouCandidates();
+
+	    // 経費種別候補取得
+	    List<ExpenseListEntity> expenseTypeOptionList = expenseListService.findExpenseTypeOptions();
+
 	    // 指定された年と月の経費データを取得
-	    List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(currentYear, currentMonth);
+	    List<ExpenseListEntity> expenseList = expenseListService.searchExpenses(currentYear, currentMonth, currentTantouName, currentExpensesType, currentSettlementStatus);
 
 	    // 合計金額を計算
 	    //double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
@@ -95,8 +104,13 @@ public class ExpenseListController {
 	    // モデルにデータを追加
 	    model.addAttribute("yearList", yearList);
 	    model.addAttribute("monthList", monthList);
+	    model.addAttribute("tantouList", tantouList);
+	    model.addAttribute("expenseTypeOptionList", expenseTypeOptionList);
 	    model.addAttribute("currentYear", currentYear);
 	    model.addAttribute("currentMonth", currentMonth);
+	    model.addAttribute("currentTantouName", currentTantouName);
+	    model.addAttribute("currentExpensesType", currentExpensesType);
+	    model.addAttribute("currentSettlementStatus", currentSettlementStatus);
 	    model.addAttribute("expenseList", expenseList);
 	    model.addAttribute("totalCost", totalCost);
 	    model.addAttribute("expenseTypeGroups", expenseTypeGroups);
@@ -114,7 +128,10 @@ public class ExpenseListController {
 	 */
 	@GetMapping("/search")
 	public String search(@RequestParam("year") int year,
-	        @RequestParam("month") int month,
+	        @RequestParam(value = "month", required = false) Integer month,
+	        @RequestParam(value = "tantouName", required = false) String tantouName,
+	        @RequestParam(value = "expensesType", required = false) String expensesType,
+	        @RequestParam(value = "settlementStatus", required = false) String settlementStatus,
 	        Model model) {
 	    // 年リストを作成（現在の年から過去10年）
 	    int currentYear = LocalDate.now().getYear();
@@ -129,8 +146,24 @@ public class ExpenseListController {
 	        monthList.add(m);
 	    }
 
+	    // 担当者候補取得
+	    if (tantouName != null && tantouName.trim().isEmpty()) {
+	        tantouName = null;
+	    }
+	    List<String> tantouList = expenseListService.findTantouCandidates();
+
+	    // 経費種別候補取得
+	    if (expensesType != null && expensesType.trim().isEmpty()) {
+	        expensesType = null;
+	    }
+	    List<ExpenseListEntity> expenseTypeOptionList = expenseListService.findExpenseTypeOptions();
+
+	    if (settlementStatus != null && settlementStatus.trim().isEmpty()) {
+	        settlementStatus = null;
+	    }
+
 	    // 指定された年と月の経費データを取得
-	    List<ExpenseListEntity> expenseList = expenseListService.findExpensesByYearMonth(year, month);
+	    List<ExpenseListEntity> expenseList = expenseListService.searchExpenses(year, month, tantouName, expensesType, settlementStatus);
 
 	    // 合計金額を計算
 	    double totalCost = expenseList.stream().mapToDouble(e -> e.getCost().doubleValue()).sum();
@@ -141,8 +174,13 @@ public class ExpenseListController {
 	    // モデルにデータを追加
 	    model.addAttribute("yearList", yearList);
 	    model.addAttribute("monthList", monthList);
+	    model.addAttribute("tantouList", tantouList);
+	    model.addAttribute("expenseTypeOptionList", expenseTypeOptionList);
 	    model.addAttribute("currentYear", year);
 	    model.addAttribute("currentMonth", month);
+	    model.addAttribute("currentTantouName", tantouName);
+	    model.addAttribute("currentExpensesType", expensesType);
+	    model.addAttribute("currentSettlementStatus", settlementStatus);
 	    model.addAttribute("expenseList", expenseList);
 	    model.addAttribute("totalCost", totalCost);
 	    model.addAttribute("expenseTypeGroups", expenseTypeGroups);
@@ -426,16 +464,37 @@ public class ExpenseListController {
 	 */
 	@GetMapping("/downloadZip")
 	@ResponseBody
-	public ResponseEntity<?> downloadExpensesByMonth(@RequestParam int year,
-			@RequestParam int month) {
+	public ResponseEntity<?> downloadExpensesByMonth(
+			@RequestParam int year,
+			@RequestParam(required = false) Integer month,
+			@RequestParam(required = false) String tantouName,
+	        @RequestParam(required = false) String expensesType,
+	        @RequestParam(required = false) String settlementStatus) {
 		try {
+			if (tantouName != null && tantouName.trim().isEmpty()) {
+	            tantouName = null;
+	        }
+	        if (expensesType != null && expensesType.trim().isEmpty()) {
+	            expensesType = null;
+	        }
+	        if (settlementStatus != null && settlementStatus.trim().isEmpty()) {
+	            settlementStatus = null;
+	        }
 
-			List<ExpenseListEntity> expenses = expenseListService.findExpensesByYearMonth(year, month);
+	        List<ExpenseListEntity> expenses = expenseListService.searchExpenses(
+	                year, month, tantouName, expensesType, settlementStatus);
+
 			if (expenses == null || expenses.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			}
 
-			String zipFileName = String.format("expenses_%04d_%02d.zip", year, month);
+			String zipFileName;
+			if (month != null) {
+			    zipFileName = String.format("expenses_%04d_%02d.zip", year, month);
+			} else {
+			    zipFileName = String.format("expenses_%04d.zip", year);
+			}
+
 			String encodedZipFileName = URLEncoder.encode(zipFileName, StandardCharsets.UTF_8.name())
 					.replace("+", "%20");
 

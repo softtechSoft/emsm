@@ -50,6 +50,10 @@ public class ExpenseInfoController {
 		Map<String, List<ExpenseTypeEntity>> expenseTypeGroups = expenseTypeService.getAllExpenseTypesByGroup();
 	    model.addAttribute("expenseTypeGroups", expenseTypeGroups);
 
+	    // 担当者候補取得
+	    List<String> tantouList = expenseListService.findTantouCandidates();
+	    model.addAttribute("tantouList", tantouList);
+
 	    return "expenseInfo";
 	}
 

@@ -88,15 +88,29 @@ public class ExpenseListService {
     }
 
     /**
-     * 指定された年と月に基づいて経費リストを取得する。
+     * 指定された年月に基づいて経費リストを取得する。
      *
      * @param year  年度
      * @param month 月度
      * @return 経費リスト
      */
-    public List<ExpenseListEntity> findExpensesByYearMonth(int year, int month) {
+    public List<ExpenseListEntity> findExpensesByYearMonth(int year, Integer month) {
+        return searchExpenses(year, month, null, null, null);
+    }
+
+    /**
+     * 指定された条件に基づいて経費リストを取得する。
+     *
+     * @param year  年度
+     * @param month 月度
+     * @param tantouName 担当者
+     * @param expensesType 経費種別
+     * @param settlementStatus 精算ステータス
+     * @return 経費リスト
+     */
+    public List<ExpenseListEntity> searchExpenses(int year, Integer month, String tantouName, String expensesType, String settlementStatus) {
 //        return expenseListMapper.findByYearMonth(year, month);
-    	List<ExpenseListEntity> expList = expenseListMapper.findByYearMonth(year, month);;
+    	List<ExpenseListEntity> expList = expenseListMapper.searchExpenses(year, month, tantouName, expensesType,settlementStatus);
     	for(ExpenseListEntity exp : expList) {
             // 如果需要提取文件名，处理 receiptPath
             if(exp.getReceiptPath() != null && !exp.getReceiptPath().isEmpty()) {
@@ -107,6 +121,24 @@ public class ExpenseListService {
 
         return expList;
     }
+    /**
+     * 担当者プルダウン候補取得
+     *
+     * @return 担当者一覧
+     */
+    public List<String> findTantouCandidates() {
+        return expenseListMapper.findTantouCandidates();
+    }
+
+    /**
+     * 経費種別プルダウン候補取得
+     *
+     * @return 経費種別一覧
+     */
+    public List<ExpenseListEntity> findExpenseTypeOptions() {
+        return expenseListMapper.findExpenseTypeOptions();
+    }
+
     /**
      * 从完整路径中提取文件名
      */
@@ -304,7 +336,7 @@ public class ExpenseListService {
 	 * CSVファイルをZIPに追加する
 	 */
 	public void addCsvToZip(ZipOutputStream zipOut, List<ExpenseListEntity> expenses,
-	                        int year, int month) throws IOException {
+	                        int year, Integer month) throws IOException {
 		String csvFileName = String.format("expenses_%04d%02d.csv", year, month);
 		StringBuilder csv = new StringBuilder();
 		csv.append("経費種別,経費名称,発生日付,金額(円),用途,担当者,精算日付,精算種別,証跡\n");

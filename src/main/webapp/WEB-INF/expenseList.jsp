@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -92,19 +93,47 @@ tr:nth-child(even) {
 							${yearItem}年</option>
 					</c:forEach>
 				</select> <label for="month">月度:</label> <select name="month" id="month">
+					<option value="" <c:if test="${empty currentMonth}">selected</c:if>>-</option>
 					<c:forEach var="monthItem" items="${monthList}">
 						<option value="${monthItem}"
 							<c:if test="${monthItem eq currentMonth}">selected</c:if>>
 							${monthItem}月</option>
 					</c:forEach>
 				</select>
+				<label for="tantouName">担当者:</label>
+					<select name="tantouName" id="tantouName">
+					  <option value="" <c:if test="${empty currentTantouName}">selected</c:if>>-</option>
+					  <c:forEach var="t" items="${tantouList}">
+					    <option value="${t}" <c:if test="${t eq currentTantouName}">selected</c:if>>
+					      ${t}
+					    </option>
+					  </c:forEach>
+					</select>
+				<label for="expensesType">経費タイプ:</label>
+					<select name="expensesType" id="expensesType">
+					  <option value=""
+					    <c:if test="${empty currentExpensesType}">selected</c:if>>
+					    -
+					  </option>
+					  <c:forEach var="type" items="${expenseTypeOptionList}">
+					    <option value="${type.expensesType}"
+					      <c:if test="${type.expensesType eq currentExpensesType}">selected</c:if>>
+					      ${type.expensesTypeName}
+					    </option>
+					  </c:forEach>
+					</select>
+				<label for="settlementStatus">精算ステータス:</label>
+					<select name="settlementStatus" id="settlementStatus">
+					    <option value="" <c:if test="${empty currentSettlementStatus}">selected</c:if>>-</option>
+					    <option value="1" <c:if test="${currentSettlementStatus eq '1'}">selected</c:if>>精算済</option>
+					    <option value="0" <c:if test="${currentSettlementStatus eq '0'}">selected</c:if>>未精算</option>
+					</select>
 				<button type="submit">検索</button>
 				<button type="button"
 					onclick="location.href='${pageContext.request.contextPath}/expenseInfo'">
 					新規</button>
-			<button type="button"
-				onclick="location.href='${pageContext.request.contextPath}/expenseList/downloadZip?year=${currentYear}&month=${currentMonth}'">
-				${currentYear}年${currentMonth}月分ダウンロード
+			<button type="button" onclick="downloadCurrentFilter()">
+			    検索結果をダウンロード
 			</button>
 			</div>
 		</form>
@@ -143,7 +172,9 @@ tr:nth-child(even) {
 								<td class="col-accrualDate"><c:out
 										value="${expense.accrualDate}" /></td>
 								<!-- 金額 -->
-								<td class="col-cost"><c:out value="${expense.cost}" /></td>
+								<td class="col-cost">
+									<fmt:formatNumber value="${expense.cost}" pattern="#,###" />
+								</td>
 								<!-- 用途 -->
 								<td class="col-happenAddress"><c:out
 										value="${expense.happenAddress}" /></td>
@@ -202,7 +233,11 @@ tr:nth-child(even) {
 						<!-- 合计行 -->
 						<tr>
 							<td colspan="3"></td>
-							<td><strong>合計: ${totalCost}円</strong></td>
+							<td>
+								<strong>
+									合計: <fmt:formatNumber value="${totalCost}" pattern="#,###"/> 円
+								</strong>
+							</td>
 							<td colspan="7"></td>
 						</tr>
 					</c:when>
@@ -339,8 +374,14 @@ tr:nth-child(even) {
 
 	   // 担当者の編集フォーム生成
 	   colTantouName.innerHTML =
-	       '<input type="text" id="editTantouName_'+expensesID+'" value="'+originalTantouTxt+'">';
-
+	       '<select id="editTantouName_'+expensesID+'">' +
+	       '<option value="">-</option>' +
+	       '<c:forEach var="t" items="${tantouList}">' +
+	           '<option value="${t}" ' + ('${t}' === originalTantouTxt ? 'selected' : '') + '>' +
+	               '${t}' +
+	           '</option>' +
+	       '</c:forEach>' +
+	       '</select>';
 	   // 精算日付の編集フォーム生成
 	   colSettlementDate.innerHTML =
 	       '<input type="date" id="editSettlementDate_'+expensesID+'" value="'+formatDateForInput(originalSettlDate)+'" style="width:90%;">';
@@ -361,13 +402,13 @@ tr:nth-child(even) {
    let thumbHTML = "";
    let oldThumbSrc = "";
    let currentFileName = "なし";
-   
+
    // 既存のファイル名を取得
    const receiptText = colReceipt.textContent.trim();
    if (receiptText && receiptText !== "なし") {
        currentFileName = receiptText.replace("ダウンロード", "").trim();
    }
-   
+
 //    const imgTag = colReceipt.querySelector("img.thumb-img");
 //    if (imgTag) {
 //        oldThumbSrc = imgTag.getAttribute("src");
@@ -444,12 +485,12 @@ tr:nth-child(even) {
 
    const file = fileInput.files[0];
    const mime = file.type.toLowerCase();
-   
+
    // ファイル名を表示
    if (fileNameDiv) {
        fileNameDiv.textContent = file.name;
    }
-   
+
    if (mime.includes("image/")) {
        // 画像ファイルのプレビュー表示
        const reader = new FileReader();
@@ -490,7 +531,7 @@ tr:nth-child(even) {
 	   const expensesType = document.getElementById("editExpensesType_"+expensesID).value;
 	   const mexpensesId = document.getElementById("editExpenseName_"+expensesID).value;
 	   const accrualDate = document.getElementById("editAccrualDate_"+expensesID).value;
-	   const cost = document.getElementById("editCost_"+expensesID).value;
+	   const cost = document.getElementById("editCost_"+expensesID).value.replace(/,/g, "").trim();
 	   const happenAddress= document.getElementById("editHappenAddress_"+expensesID).value;
 	   const tantouName = document.getElementById("editTantouName_"+expensesID).value;
 	   const settlementDate= document.getElementById("editSettlementDate_"+expensesID).value;
@@ -615,16 +656,18 @@ tr:nth-child(even) {
 	   }
 	}
 
-	function downloadCurrentMonth() {
+	function downloadCurrentFilter() {
 		// 現在表示されている年月を取得（フォームから）
-		const year = document.querySelector('select[name="year"]').value;
-		const month = document.querySelector('select[name="month"]').value;
-		
-		// ダウンロードURLを構築
-		const downloadUrl = `${pageContext.request.contextPath}/expenseList/downloadZip?year=${year}&month=${month}`;
-		
-		// ダウンロード実行
-		location.href = downloadUrl;
+	    const params = new URLSearchParams({
+	        year: '${currentYear}',
+	        month: '${currentMonth}',
+	        tantouName: '${currentTantouName != null ? currentTantouName : ""}',
+	        expensesType: '${currentExpensesType != null ? currentExpensesType : ""}',
+	        settlementStatus: '${currentSettlementStatus != null ? currentSettlementStatus : ""}'
+	    });
+
+	 	// ダウンロード実行
+	    location.href = `${pageContext.request.contextPath}/expenseList/downloadZip?` + params.toString();
 	}
     </script>
 </body>

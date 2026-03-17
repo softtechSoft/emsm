@@ -6,7 +6,7 @@
 <mapper namespace="com.softtech.mappers.ExpenseListMapper">
 
     <!-- 年/月で経費を検索: deleteFlg = '0' のデータのみ取得 -->
-    <select id="findByYearMonth"
+    <select id="searchExpenses"
         resultType="com.softtech.entity.ExpenseListEntity">
         SELECT
             e.expensesID,
@@ -26,9 +26,42 @@
         LEFT JOIN ems.m_expenses m ON e.m_expenses_id = m.id
         WHERE e.deleteFlg = '0'
           AND YEAR(e.accrualDate) = #{year}
-          AND MONTH(e.accrualDate) = #{month}
+          <if test="month != null">
+		    AND MONTH(e.accrualDate) = #{month}
+		  </if>
+		  <if test="tantouName != null and tantouName != ''">
+			AND e.tantouName = #{tantouName}
+		  </if>
+		  <if test="expensesType != null and expensesType != ''">
+	        AND e.expensesType = #{expensesType}
+	      </if>
+	      <if test='settlementStatus == "1"'>
+	        AND e.settlementDate IS NOT NULL
+	      </if>
+	      <if test='settlementStatus == "0"'>
+	        AND e.settlementDate IS NULL
+	      </if>
         ORDER BY e.accrualDate ASC
     </select>
+
+	<!-- 担当者プルダウン候補を取得 -->
+    <select id="findTantouCandidates" resultType="string">
+	    SELECT emp.employeeName
+	    FROM ems.employee emp
+	    WHERE emp.position = 0
+	    ORDER BY emp.employeeName
+	</select>
+
+	<!-- 経費種別プルダウン候補を取得 -->
+	<select id="findExpenseTypeOptions"
+	    resultType="com.softtech.entity.ExpenseListEntity">
+	    SELECT DISTINCT
+	        expensesType,
+	        expensesTypeName
+	    FROM ems.m_expenses
+	    WHERE deleteFlg = '0'
+	    ORDER BY expensesType
+	</select>
 
     <!-- 経費IDで単一経費を検索 (deleteFlg = '0') -->
     <select id="findById"

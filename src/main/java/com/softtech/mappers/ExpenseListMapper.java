@@ -21,8 +21,25 @@ public interface ExpenseListMapper {
 	 * @param month 検索対象の月度
 	 * @return 指定された年と月に該当する経費リスト
 	 */
-	List<ExpenseListEntity> findByYearMonth(@Param("year") int year,
-			@Param("month") int month);
+	List<ExpenseListEntity> searchExpenses(@Param("year") int year,
+			@Param("month") Integer month,
+			@Param("tantouName") String tantouName,
+			@Param("expensesType") String expensesType,
+			@Param("settlementStatus") String settlementStatus);
+
+	/**
+	 * 担当者プルダウン候補を取得する
+	 *
+	 * @return 担当者一覧
+	 */
+	List<String> findTantouCandidates();
+
+	/**
+	 * 経費種別プルダウン候補を取得する
+	 *
+	 * @return 経費種別一覧
+	 */
+	List<ExpenseListEntity> findExpenseTypeOptions();
 
 	/**
 	 * 指定された経費IDに基づいて単一の経費エンティティを取得する。

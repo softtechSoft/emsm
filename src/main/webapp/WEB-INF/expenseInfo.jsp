@@ -326,7 +326,14 @@ button {
 
 	   // 担当者セルの生成
 	   const cell6 = document.createElement("td");
-	   cell6.innerHTML = '<input type="text" class="tantouName" required />';
+	   cell6.innerHTML = `
+		    <select class="tantouName" required>
+		        <option value="">選択</option>
+		        <c:forEach var="t" items="${tantouList}">
+		            <option value="${t}"><c:out value="${t}" /></option>
+		        </c:forEach>
+		    </select>
+		`;
 	   newRow.appendChild(cell6);
 
 	   // 精算日付セルの生成
