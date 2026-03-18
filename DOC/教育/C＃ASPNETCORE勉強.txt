@@ -1,0 +1,6 @@
+c#勉強資料：
+https://ufcpp.net/study/csharp/#google_vignette
+
+ASP.NET core 勉強資料：
+https://zenn.dev/hiromichinomata/books/fa683c7fa2d111/viewer/d9f3a7
+
