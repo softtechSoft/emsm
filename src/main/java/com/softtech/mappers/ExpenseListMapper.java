@@ -1,5 +1,6 @@
 package com.softtech.mappers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -21,8 +22,11 @@ public interface ExpenseListMapper {
 	 * @param month 検索対象の月度
 	 * @return 指定された年と月に該当する経費リスト
 	 */
-	List<ExpenseListEntity> searchExpenses(@Param("year") int year,
-			@Param("month") Integer month,
+	List<ExpenseListEntity> searchExpenses(
+//			@Param("year") int year,
+//			@Param("month") Integer month,
+			@Param("fromDate") LocalDate fromDate,
+		    @Param("toDate") LocalDate toDate,
 			@Param("tantouName") String tantouName,
 			@Param("expensesType") String expensesType,
 			@Param("settlementStatus") String settlementStatus);

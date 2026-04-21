@@ -94,9 +94,9 @@ public class ExpenseListService {
      * @param month 月度
      * @return 経費リスト
      */
-    public List<ExpenseListEntity> findExpensesByYearMonth(int year, Integer month) {
-        return searchExpenses(year, month, null, null, null);
-    }
+//    public List<ExpenseListEntity> findExpensesByYearMonth(int year, Integer month) {
+//        return searchExpenses(year, month, null, null, null);
+//    }
 
     /**
      * 指定された条件に基づいて経費リストを取得する。
@@ -108,9 +108,9 @@ public class ExpenseListService {
      * @param settlementStatus 精算ステータス
      * @return 経費リスト
      */
-    public List<ExpenseListEntity> searchExpenses(int year, Integer month, String tantouName, String expensesType, String settlementStatus) {
+    public List<ExpenseListEntity> searchExpenses(LocalDate fromDate,LocalDate toDate, String tantouName, String expensesType, String settlementStatus) {
 //        return expenseListMapper.findByYearMonth(year, month);
-    	List<ExpenseListEntity> expList = expenseListMapper.searchExpenses(year, month, tantouName, expensesType,settlementStatus);
+    	List<ExpenseListEntity> expList = expenseListMapper.searchExpenses(fromDate, toDate, tantouName, expensesType,settlementStatus);
     	for(ExpenseListEntity exp : expList) {
             // 如果需要提取文件名，处理 receiptPath
             if(exp.getReceiptPath() != null && !exp.getReceiptPath().isEmpty()) {
@@ -336,8 +336,17 @@ public class ExpenseListService {
 	 * CSVファイルをZIPに追加する
 	 */
 	public void addCsvToZip(ZipOutputStream zipOut, List<ExpenseListEntity> expenses,
-	                        int year, Integer month) throws IOException {
-		String csvFileName = String.format("expenses_%04d%02d.csv", year, month);
+			LocalDate fromDate,
+            LocalDate toDate) throws IOException {
+		//String csvFileName = String.format("expenses_%04d%02d.csv", year, month);
+		String csvFileName;
+
+		if (fromDate != null && toDate != null) {
+		    csvFileName = String.format("expenses_%s_%s.csv",
+		            fromDate.toString(), toDate.toString());
+		} else {
+		    csvFileName = "expenses.csv";
+		}
 		StringBuilder csv = new StringBuilder();
 		csv.append("経費種別,経費名称,発生日付,金額(円),用途,担当者,精算日付,精算種別,証跡\n");
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -382,35 +391,46 @@ public class ExpenseListService {
 			baseFolder = System.getProperty("user.dir");
 		}
 		System.out.println("[ZIP] Base folder resolved: " + baseFolder);
-		String yearMonthFolder = expenses.stream()
-			.filter(e -> e.getAccrualDate() != null)
-			.findFirst()
-			.map(e -> e.getAccrualDate().format(DateTimeFormatter.ofPattern("yyyyMM")))
-			.orElse("");
-		if (StringUtils.hasText(yearMonthFolder)) {
-			ZipEntry ymEntry = new ZipEntry(String.format("evidence_files/%s/", yearMonthFolder));
-			zipOut.putNextEntry(ymEntry);
-			zipOut.closeEntry();
-		} else {
-			ZipEntry root = new ZipEntry("evidence_files/");
-			zipOut.putNextEntry(root);
-			zipOut.closeEntry();
-		}
-		Map<String, List<ExpenseListEntity>> expensesByDate = expenses.stream()
-			.filter(e -> e.getAccrualDate() != null && StringUtils.hasText(e.getReceiptPath()))
-			.collect(Collectors.groupingBy(e -> e.getAccrualDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"))));
-		for (Map.Entry<String, List<ExpenseListEntity>> entry : expensesByDate.entrySet()) {
-			String dateFolder = entry.getKey();
-			List<ExpenseListEntity> daily = entry.getValue();
-			String dateDir = StringUtils.hasText(yearMonthFolder)
-				? String.format("evidence_files/%s/%s/", yearMonthFolder, dateFolder)
-				: String.format("evidence_files/%s/", dateFolder);
-			ZipEntry dateEntry = new ZipEntry(dateDir);
-			zipOut.putNextEntry(dateEntry);
-			zipOut.closeEntry();
-			System.out.println("[ZIP] Creating date dir: " + dateDir + " (items: " + daily.size() + ")");
-			for (ExpenseListEntity expense : daily) {
-				addSingleEvidenceFile(zipOut, expense, yearMonthFolder, dateFolder, baseFolder);
+//		String yearMonthFolder = expenses.stream()
+//			.filter(e -> e.getAccrualDate() != null)
+//			.findFirst()
+//			.map(e -> e.getAccrualDate().format(DateTimeFormatter.ofPattern("yyyyMM")))
+//			.orElse("");
+		Map<String, List<ExpenseListEntity>> byYearMonth = expenses.stream()
+		        .filter(e -> e.getAccrualDate() != null)
+		        .collect(Collectors.groupingBy(
+		            e -> e.getAccrualDate().format(DateTimeFormatter.ofPattern("yyyyMM"))
+		        ));
+		for (Map.Entry<String, List<ExpenseListEntity>> ymEntry : byYearMonth.entrySet()) {
+			String yearMonthFolder = ymEntry.getKey();
+	        List<ExpenseListEntity> monthExpenses = ymEntry.getValue();
+
+			if (StringUtils.hasText(yearMonthFolder)) {
+				ZipEntry ymEntryZip  = new ZipEntry(String.format("evidence_files/%s/", yearMonthFolder));
+				zipOut.putNextEntry(ymEntryZip );
+				zipOut.closeEntry();
+			} else {
+				ZipEntry root = new ZipEntry("evidence_files/");
+				zipOut.putNextEntry(root);
+				zipOut.closeEntry();
+			}
+			//Map<String, List<ExpenseListEntity>> expensesByDate = expenses.stream()
+			Map<String, List<ExpenseListEntity>> expensesByDate = monthExpenses.stream()
+				.filter(e -> e.getAccrualDate() != null && StringUtils.hasText(e.getReceiptPath()))
+				.collect(Collectors.groupingBy(e -> e.getAccrualDate().format(DateTimeFormatter.ofPattern("yyyyMMdd"))));
+			for (Map.Entry<String, List<ExpenseListEntity>> entry : expensesByDate.entrySet()) {
+				String dateFolder = entry.getKey();
+				List<ExpenseListEntity> daily = entry.getValue();
+				String dateDir = StringUtils.hasText(yearMonthFolder)
+					? String.format("evidence_files/%s/%s/", yearMonthFolder, dateFolder)
+					: String.format("evidence_files/%s/", dateFolder);
+				ZipEntry dateEntry = new ZipEntry(dateDir);
+				zipOut.putNextEntry(dateEntry);
+				zipOut.closeEntry();
+				System.out.println("[ZIP] Creating date dir: " + dateDir + " (items: " + daily.size() + ")");
+				for (ExpenseListEntity expense : daily) {
+					addSingleEvidenceFile(zipOut, expense, yearMonthFolder, dateFolder, baseFolder);
+				}
 			}
 		}
 	}

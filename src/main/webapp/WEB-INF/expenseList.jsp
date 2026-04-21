@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -82,23 +83,62 @@ tr:nth-child(even) {
 	<div class="table-container">
 		<h1>経費管理</h1>
 
+		<c:if test="${not empty errorMessage}">
+		    <div style="color:red; margin-bottom:10px;">
+		        ${errorMessage}
+		    </div>
+		</c:if>
+
+		<div id="errorBox" style="color:red; margin-bottom:10px;"></div>
+
 		<!-- 検索フォーム -->
 		<form action="${pageContext.request.contextPath}/expenseList/search"
-			method="get">
+			method="get"
+			onsubmit="return validateSearchPeriod();">
 			<div class="form-group">
-				<label for="year">年度:</label> <select name="year" id="year">
-					<c:forEach var="yearItem" items="${yearList}">
-						<option value="${yearItem}"
-							<c:if test="${yearItem eq currentYear}">selected</c:if>>
-							${yearItem}年</option>
-					</c:forEach>
-				</select> <label for="month">月度:</label> <select name="month" id="month">
-					<option value="" <c:if test="${empty currentMonth}">selected</c:if>>-</option>
-					<c:forEach var="monthItem" items="${monthList}">
-						<option value="${monthItem}"
-							<c:if test="${monthItem eq currentMonth}">selected</c:if>>
-							${monthItem}月</option>
-					</c:forEach>
+				<label>期間:</label>
+				<label for="fromYear">From</label>
+				<select name="fromYear" id="fromYear">
+				    <option value="">-</option>
+				    <c:forEach var="yearItem" items="${yearList}">
+				        <option value="${yearItem}"
+				            <c:if test="${yearItem eq currentFromYear}">selected</c:if>>
+				            ${yearItem}年
+				        </option>
+				    </c:forEach>
+				</select>
+
+				<select name="fromMonth" id="fromMonth">
+				    <option value="">-</option>
+				    <c:forEach var="monthItem" items="${monthList}">
+				        <option value="${monthItem}"
+				            <c:if test="${monthItem eq currentFromMonth}">selected</c:if>>
+				            ${monthItem}月
+				        </option>
+				    </c:forEach>
+				</select>
+
+				<span>～</span>
+
+				<label for="toYear">To</label>
+				<select name="toYear" id="toYear">
+				    <option value="">-</option>
+				    <c:forEach var="yearItem" items="${yearList}">
+				        <option value="${yearItem}"
+				            <c:if test="${yearItem eq currentToYear}">selected</c:if>>
+				            ${yearItem}年
+				        </option>
+				    </c:forEach>
+				</select>
+
+				<select name="toMonth" id="toMonth">
+				    <option value="">-</option>
+				    <c:forEach var="monthItem" items="${monthList}">
+				        <option value="${monthItem}"
+				            <c:if test="${monthItem eq currentToMonth}">selected</c:if>>
+				            ${monthItem}月
+				        </option>
+				    </c:forEach>
 				</select>
 				<label for="tantouName">担当者:</label>
 					<select name="tantouName" id="tantouName">
@@ -139,7 +179,7 @@ tr:nth-child(even) {
 		</form>
 
 		<!-- データ一覧テーブル -->
-		<table>
+		<table id="expenseTable">
 			<thead>
 				<tr>
 					<th>経費種別</th>
@@ -151,6 +191,8 @@ tr:nth-child(even) {
 					<th>精算日付</th>
 					<th>精算種別</th>
 					<th>証跡</th>
+					<th>作成日</th>
+    				<th>更新日</th>
 					<th>編集</th>
 					<th>削除</th>
 				</tr>
@@ -206,6 +248,29 @@ tr:nth-child(even) {
 												ダウンロード</button>
 										</c:otherwise>
 									</c:choose></td>
+								<!-- 作成日 -->
+								<td>
+								    <c:choose>
+								        <c:when test="${not empty expense.insertDate}">
+								            ${fn:substring(expense.insertDate,0,4)} -
+								            ${fn:substring(expense.insertDate,4,6)} -
+								            ${fn:substring(expense.insertDate,6,8)}
+								        </c:when>
+								        <c:otherwise>ー</c:otherwise>
+								    </c:choose>
+								</td>
+								<!-- 更新日 -->
+								<td>
+								    <c:choose>
+								        <c:when test="${not empty expense.updateDate}">
+								            ${fn:substring(expense.updateDate,0,4)} -
+								            ${fn:substring(expense.updateDate,4,6)} -
+								            ${fn:substring(expense.updateDate,6,8)}
+								        </c:when>
+								        <c:otherwise>ー</c:otherwise>
+								    </c:choose>
+								</td>
+
 								<!-- 編集ボタン -->
 								<td class="col-edit"><c:choose>
 										<c:when
@@ -238,12 +303,12 @@ tr:nth-child(even) {
 									合計: <fmt:formatNumber value="${totalCost}" pattern="#,###"/> 円
 								</strong>
 							</td>
-							<td colspan="7"></td>
+							<td colspan="9"></td>
 						</tr>
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="11">データがありません。</td>
+							<td colspan="13">データがありません。</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -267,6 +332,46 @@ tr:nth-child(even) {
 			]<c:if test="${!status.last}">,</c:if>
 		</c:forEach>
 	};
+
+	<!-- エラーメッセージ表示処理 -->
+	function showError(msg) {
+	    document.getElementById("errorBox").innerText = msg;
+	}
+
+	<!-- 検索期間の入力チェック処理 -->
+	function validateSearchPeriod() {
+		const errorBox = document.getElementById("errorBox");
+		errorBox.innerText = "";
+	    const fromYear = document.getElementById("fromYear").value;
+	    const fromMonth = document.getElementById("fromMonth").value;
+	    const toYear = document.getElementById("toYear").value;
+	    const toMonth = document.getElementById("toMonth").value;
+
+	    const fromFilled = fromYear !== "" || fromMonth !== "";
+	    const toFilled = toYear !== "" || toMonth !== "";
+
+	    if ((fromYear === "" && fromMonth !== "") || (fromYear !== "" && fromMonth === "")) {
+	    	showError("Fromは年・月をセットで選択してください。");
+	        return false;
+	    }
+
+	    if ((toYear === "" && toMonth !== "") || (toYear !== "" && toMonth === "")) {
+	    	showError("Toは年・月をセットで選択してください。");
+	        return false;
+	    }
+
+	    // From <= To
+	    if (fromFilled && toFilled) {
+	        const fromVal = parseInt(fromYear) * 100 + parseInt(fromMonth);
+	        const toVal = parseInt(toYear) * 100 + parseInt(toMonth);
+	        if (fromVal > toVal) {
+	        	showError("FromはTo以前を選択してください。");
+	            return false;
+	        }
+	    }
+
+	    return true;
+	}
 
 	/**
 	* 経費種別が変更されたときに経費名称のオプションを更新する
@@ -657,10 +762,19 @@ tr:nth-child(even) {
 	}
 
 	function downloadCurrentFilter() {
+		const rows = document.querySelectorAll("#expenseTable tbody tr");
+
+		if (rows.length === 1 && rows[0].innerText.includes("データがありません")) {
+	        alert("該当データがありません。");
+	        return;
+	    }
 		// 現在表示されている年月を取得（フォームから）
 	    const params = new URLSearchParams({
-	        year: '${currentYear}',
-	        month: '${currentMonth}',
+	    	fromYear: '${currentFromYear != null ? currentFromYear : ""}',
+	        fromMonth: '${currentFromMonth != null ? currentFromMonth : ""}',
+	        toYear: '${currentToYear != null ? currentToYear : ""}',
+	        toMonth: '${currentToMonth != null ? currentToMonth : ""}',
+
 	        tantouName: '${currentTantouName != null ? currentTantouName : ""}',
 	        expensesType: '${currentExpensesType != null ? currentExpensesType : ""}',
 	        settlementStatus: '${currentSettlementStatus != null ? currentSettlementStatus : ""}'
@@ -669,6 +783,7 @@ tr:nth-child(even) {
 	 	// ダウンロード実行
 	    location.href = `${pageContext.request.contextPath}/expenseList/downloadZip?` + params.toString();
 	}
+
     </script>
 </body>
 </html>

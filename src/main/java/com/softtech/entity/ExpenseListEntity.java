@@ -26,6 +26,8 @@ public class ExpenseListEntity {
 	private Integer mexpensesId; // 経費種別明細ID（m_expensesのid）
     private String expensesTypeName; // 経費種別名称（表示用）
     private String expenseNameText; // 経費名称（表示用）
+    private String insertDate; // 作成日 yyyyMMdd
+    private String updateDate; // 更新日 yyyyMMdd
 
 	// ------------------ Getter / Setter ------------------
 	public String getExpensesID() {
@@ -99,7 +101,7 @@ public class ExpenseListEntity {
 	public void setHappenAddress(String happenAddress) {
 		this.happenAddress = happenAddress;
 	}
-	
+
     public String getReceiptPath() {
         return receiptPath;
     }
@@ -107,7 +109,7 @@ public class ExpenseListEntity {
     public void setReceiptPath(String receiptPath) {
         this.receiptPath = receiptPath;
     }
-    
+
     public Integer getmexpensesId() {
         return mexpensesId;
     }
@@ -130,6 +132,22 @@ public class ExpenseListEntity {
 
     public void setExpenseNameText(String expenseNameText) {
         this.expenseNameText = expenseNameText;
+    }
+
+    public String getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(String insertDate) {
+        this.insertDate = insertDate;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
     }
 
 }

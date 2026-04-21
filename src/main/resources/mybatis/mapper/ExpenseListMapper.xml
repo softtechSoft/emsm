@@ -20,14 +20,18 @@
             e.deleteFlg,
             e.receiptPath,
             e.m_expenses_id as mexpensesId,
+            e.insertDate,
+			e.updateDate,
             m.expensesTypeName,
             m.expenseName as expenseNameText
         FROM ems.expenses e
         LEFT JOIN ems.m_expenses m ON e.m_expenses_id = m.id
         WHERE e.deleteFlg = '0'
-          AND YEAR(e.accrualDate) = #{year}
-          <if test="month != null">
-		    AND MONTH(e.accrualDate) = #{month}
+		  <if test="fromDate != null">
+		    AND e.accrualDate &gt;= #{fromDate}
+		  </if>
+		  <if test="toDate != null">
+		    AND e.accrualDate &lt;= #{toDate}
 		  </if>
 		  <if test="tantouName != null and tantouName != ''">
 			AND e.tantouName = #{tantouName}
@@ -78,6 +82,8 @@
             e.deleteFlg,
             e.receiptPath,
             e.m_expenses_id as mexpensesId,
+            e.insertDate,
+			e.updateDate,
             m.expensesTypeName,
             m.expenseName as expenseNameText
         FROM ems.expenses e
@@ -105,7 +111,8 @@
             expensesType  = #{expensesType},
             happenAddress = #{happenAddress},
             receiptPath   = #{receiptPath},
-            m_expenses_id = #{mexpensesId}
+            m_expenses_id = #{mexpensesId},
+            updateDate = #{updateDate}
         WHERE expensesID = #{expensesID}
           AND deleteFlg = '0'
     </update>
@@ -124,7 +131,9 @@
             happenAddress,
             deleteFlg,
             receiptPath,
-            m_expenses_id
+            m_expenses_id,
+            insertDate,
+			updateDate
         )
         VALUES (
         	#{expensesID},
@@ -137,7 +146,9 @@
             #{happenAddress},
             '0',
             #{receiptPath},
-            #{mexpensesId}
+            #{mexpensesId},
+            #{insertDate},
+    		#{updateDate}
         )
     </insert>
 

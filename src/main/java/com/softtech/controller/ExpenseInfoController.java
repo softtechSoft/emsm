@@ -1,5 +1,7 @@
 package com.softtech.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +89,13 @@ public class ExpenseInfoController {
 
 	       // 論理削除フラグの初期設定
 	       expense.setDeleteFlg("0");
+
+	       //作成日・更新日の設定
+	       LocalDate today = LocalDate.now();
+	       String todayStr = today.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+	       expense.setInsertDate(todayStr);
+	       expense.setUpdateDate(todayStr);
 
 	       // 経費データと領収書の保存
 	       expenseInfoService.addExpenseWithReceipt(expense, receiptFile);
