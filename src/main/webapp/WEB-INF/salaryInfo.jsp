@@ -223,7 +223,11 @@ function doCalc(calType){
 			<td><input id="remark"name="remark" type="text"  value="${salaryInfoBean.remark}"></td>
 			</tr>
 			<tr>
-			<td></td>
+			<td style="text-align: left;">
+		        <button type="submit" formaction="${pageContext.request.contextPath}/backToSalaryList">
+		            戻る
+		        </button>
+		    </td>
 			<td style="text-align: right;">
 			<input type="button" id="Registration" name="Registration" value="登録"  onclick="doRegist()" /></td>
 			</tr>

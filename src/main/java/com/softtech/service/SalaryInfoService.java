@@ -673,7 +673,7 @@ public class SalaryInfoService {
 		////////基本給から厚生計算//////////////
 		//厚生マスタを取る
 		//厚生保険料情報
-		WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+		WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary,year);
 
 		//厚生年金控除個人
 		float wfPensionSelf =
@@ -713,7 +713,7 @@ public class SalaryInfoService {
 
 		//基本給66万5千超えた場合の厚生年金再計算
 		if (Float.parseFloat(basesalary) >= 665000) {
-		    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
+		    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000",year);
 
 			//厚生年金控除個人
 			wfPensionSelf =
@@ -952,7 +952,7 @@ public class SalaryInfoService {
 
 		 //厚生マスタを取る
 		 //⑤厚生保険料を取得
-		 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+		 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary,year);
 
 		//厚生年金控除個人
 		float wfPensionSelf =
@@ -993,7 +993,7 @@ public class SalaryInfoService {
         //////////再計算/////////////
 		//最大段階の厚生年金再計算
 		if (Float.parseFloat(basesalary) >= 665000) {
-		    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
+		    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000",year);
 
 			//厚生年金控除個人
 			wfPensionSelf =

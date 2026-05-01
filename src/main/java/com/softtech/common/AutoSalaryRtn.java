@@ -1,5 +1,8 @@
 package com.softtech.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AutoSalaryRtn {
 	 // 対象社員
 	 private String emplyeeName;
@@ -10,6 +13,8 @@ public class AutoSalaryRtn {
 	// 対象年月
 	private String yearMonth;
 
+	// エラーメッセージ一覧
+	private List<String> errorMessages = new ArrayList<>();
 	// 結果
 	// 0:成功
 	// 99:データ新規エラー
@@ -85,5 +90,18 @@ public class AutoSalaryRtn {
 	 */
 	public void setRtn(String rtn) {
 		this.rtn = rtn;
+	}
+
+	public List<String> getErrorMessages() {
+	    return errorMessages;
+	}
+
+	public void setErrorMessages(List<String> errorMessages) {
+	    this.errorMessages = errorMessages;
+	}
+
+	// エラーメッセージ追加
+	public void addErrorMessage(String message) {
+	    this.errorMessages.add(message);
 	}
 }

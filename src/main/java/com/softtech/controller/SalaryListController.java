@@ -108,6 +108,7 @@ public class SalaryListController {
 			// 初期モードに設定
 			//salaryInfoBean.setGamenMode("1");
 			model.addAttribute("salaryInfoBean",salaryInfoBean);
+			model.addAttribute("backMonth", salarylistBean2.getMonth());
 
 		    return "salaryInfo";
 		 }
@@ -129,50 +130,65 @@ public class SalaryListController {
 	        // 給料自動作成
 	        AutoSalaryRtn rtn = salarylistService.autoCreate(newMonth);
 
-	        if (!"0".equals(rtn.getRtn())) {
-	            // エラーメッセージを表示する
-	            List<FieldError> lst = new ArrayList<FieldError>();
+	        // 複数エラー表示
+	        if (!rtn.getErrorMessages().isEmpty()) {
+	            List<FieldError> lst = new ArrayList<>();
 
-	            switch (rtn.getRtn()) {
-	                case "1":
-	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年度】年度の基本給のデータが足りません。"));
-	                    break;
-	                case "2":
-	                    lst.add(new FieldError("", "", rtn.getYear() + "の【対象年度】年度の厚生保険料のデータが足りません。"));
-	                    break;
-	                case "3":
-	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象社員】勤怠情報のデータが足りません。"));
-	                    break;
-	                case "4":
-	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象月】の交通情報のデータが足りません。"));
-	                    break;
-	                case "5":
-	                    lst.add(new FieldError("", "", rtn.getYear() + "の【対象年度】年度の雇用保険率データがありません。"));
-	                    break;
-	                case "6":
-	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年月】住民税住宅のデータがありません。"));
-	                    break;
-	                case "7":
-	                    lst.add(new FieldError("", "", rtn.getYear() + "のマスタ_厚生子育徴収率データが存在していません。"));
-	                    break;
-	                case "8":
-	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年月】所得税のデータがありません。"));
-	                case "99":
-	                    lst.add(new FieldError("", "", "給料テーブルに新規追加エラー。"));
-	                    break;
-	                default:
-	                    lst.add(new FieldError("", "", "不明なエラーが発生しました。"));
-	                    break;
+	            for (String msg : rtn.getErrorMessages()) {
+	                lst.add(new FieldError("", "", msg));
 	            }
 
 	            model.addAttribute("errors", lst);
-	        } else {
-	            model.addAttribute("month", newMonth);
-	            // DBから給料情報を取得
-	            List<SalaryInfoEntity> sl = salarylistService.querySalarylist(newMonth);
-	            model.addAttribute("list", sl);
-	            return "salarylist";
 	        }
+	        model.addAttribute("month", newMonth);
+
+	        List<SalaryInfoEntity> sl = salarylistService.querySalarylist(newMonth);
+	        model.addAttribute("list", sl);
+
+//	        if (!"0".equals(rtn.getRtn())) {
+//	            // エラーメッセージを表示する
+//	            List<FieldError> lst = new ArrayList<FieldError>();
+//
+//	            switch (rtn.getRtn()) {
+//	                case "1":
+//	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年度】年度の基本給のデータが足りません。"));
+//	                    break;
+//	                case "2":
+//	                    lst.add(new FieldError("", "", rtn.getYear() + "の【対象年度】年度の厚生保険料のデータが足りません。"));
+//	                    break;
+//	                case "3":
+//	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象社員】勤怠情報のデータが足りません。"));
+//	                    break;
+//	                case "4":
+//	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象月】の交通情報のデータが足りません。"));
+//	                    break;
+//	                case "5":
+//	                    lst.add(new FieldError("", "", rtn.getYear() + "の【対象年度】年度の雇用保険率データがありません。"));
+//	                    break;
+//	                case "6":
+//	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年月】住民税住宅のデータがありません。"));
+//	                    break;
+//	                case "7":
+//	                    lst.add(new FieldError("", "", rtn.getYear() + "のマスタ_厚生子育徴収率データが存在していません。"));
+//	                    break;
+//	                case "8":
+//	                    lst.add(new FieldError("", "", rtn.getEmplyeeName() + "の【対象年月】所得税のデータがありません。"));
+//	                case "99":
+//	                    lst.add(new FieldError("", "", "給料テーブルに新規追加エラー。"));
+//	                    break;
+//	                default:
+//	                    lst.add(new FieldError("", "", "不明なエラーが発生しました。"));
+//	                    break;
+//	            }
+//
+//	            model.addAttribute("errors", lst);
+//	        } else {
+//	            model.addAttribute("month", newMonth);
+//	            // DBから給料情報を取得
+//	            List<SalaryInfoEntity> sl = salarylistService.querySalarylist(newMonth);
+//	            model.addAttribute("list", sl);
+//	            return "salarylist";
+//	        }
 	    } catch (ParseException e) {
 	        model.addAttribute("errors", "作成に失敗しました。" + e.getMessage());
 	    }

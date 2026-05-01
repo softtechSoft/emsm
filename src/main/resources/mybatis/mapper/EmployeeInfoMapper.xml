@@ -89,5 +89,12 @@
 	    FROM ems.employee
 	    WHERE UPPER(employeeID) LIKE 'E%';
 	</select>
+
+	<select id="countSalaryTargetEmployees" resultType="int">
+	    SELECT COUNT(*)
+	    FROM employee
+	    WHERE status = '0'
+	      AND IFNULL(salaryFlg, '1') = '1'
+	</select>
 </mapper>
 

@@ -35,5 +35,7 @@ public interface EmployeeInfoMapper {
      void save(EmployeeInfoEntity employeeInfoEntity);
      //update
 	void update(EmployeeInfoEntity employeeInfoEntity);
+	// 給与対象社員数を取得
+	int countSalaryTargetEmployees();
 
 }

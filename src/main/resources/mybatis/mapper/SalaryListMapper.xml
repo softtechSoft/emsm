@@ -22,6 +22,7 @@
 
  <select id="getBaseSalary" parameterType="String" resultType="com.softtech.entity.BaseSalaryInfoEntity">
  	select * from m_basesalary where employeeID=#{employeeID} AND year=#{year}
+ 		AND m_basesalary.status = '1'
 </select>
 <!-- 基本給所属段階の標準報酬を取得 -->
 <!--<select id="getStandSalary" parameterType="String" resultType="com.softtech.entity.WelfarefeeInfoEntity">-->
@@ -36,7 +37,7 @@
  	 SELECT w.workTime FROM workinfo w
  	INNER JOIN contract c ON c.contractID = w.contractID
 	INNER JOIN employee e ON e.employeeID = c.employeeID
-	WHERE c.employeeID = #{employeeID} AND w.workmonth = #{month}
+	WHERE c.employeeID = #{employeeID} AND w.workmonth = #{month} AND c.status = '1'
  </select>
 
 
@@ -53,6 +54,7 @@
  	where m_welfarefee.status = '1'
  	AND #{basesalary} >= salaryFrom
  	AND salaryTo > #{basesalary}
+ 	AND m_welfarefee.year = #{year}
 
 </select>
 
@@ -73,11 +75,13 @@
 <select id="getEmplyinsrate"  parameterType="String" resultType="com.softtech.entity.EmplyinsrateInfoEntity">
 	SELECT *
 	From m_emplyinsrate where year=#{year}
+		AND m_emplyinsrate.status = '1'
 </select>
 
 <select id="getTax" parameterType="String" resultType="com.softtech.entity.IncomeTaxInfoEntity">
 	SELECT *
 	From m_incometax where employeeID=#{employeeID} AND year=#{year}
+		AND m_incometax.status = '1'
 </select>
 
 <select id="getDate" parameterType="String" resultType="com.softtech.entity.SalaryInfoEntity">
@@ -118,6 +122,20 @@
 
 <select id="getHoldingTax" parameterType="String" resultType="com.softtech.entity.HoldingTaxInfoEntity">
 	SELECT * From m_holdingtax where employeeID=#{employeeID} AND year=#{year}
+		AND m_holdingtax.status = '1'
+</select>
+
+<select id="countSalaryByMonth" resultType="int">
+    SELECT COUNT(*)
+    FROM salaryinfo
+    WHERE month = #{month}
+</select>
+
+<select id="existsSalary" resultType="int">
+    SELECT COUNT(*)
+    FROM salaryinfo
+    WHERE employeeID = #{employeeID}
+      AND month = #{month}
 </select>
 
 </mapper>

@@ -80,9 +80,18 @@ public class SalaryListService {
 	        return DateUtil.chgMonthToYM(currentMonth);
 	    }
 
-		//最大年月の次の年月を取得
-		String nextMonth=DateUtil.monthplus(maxMonth);
-		return nextMonth;
+		// 給与対象社員数を取得
+		int empCount = employeeInfoMapper.countSalaryTargetEmployees();
+
+	    // 当月の給料作成済件数を取得
+	    int salaryCount = salarylistMapper.countSalaryByMonth(maxMonth);
+
+	    // 未作成の社員がいる場合、当月を返す（再作成）
+	    if (salaryCount < empCount) {
+	        return maxMonth;
+	    }
+
+	    return DateUtil.monthplus(maxMonth);
 	}
 
 	/*
@@ -124,6 +133,12 @@ public class SalaryListService {
 				continue;
 			}
 
+			// 既に当月データが存在する場合、スキップ
+			int exists = salarylistMapper.existsSalary(employeeID, nextMonth);
+			if (exists > 0) {
+			    continue;
+			}
+
 			//給料明細新規
 			SalaryInfoEntity salaryInfoEntity= new SalaryInfoEntity();
 
@@ -139,10 +154,16 @@ public class SalaryListService {
 			 //④基本給を取得
 			 BaseSalaryInfoEntity baseSalaryInfoEntity=salarylistMapper.getBaseSalary(employeeID,year);
 			 if( baseSalaryInfoEntity == null ||  baseSalaryInfoEntity.getBaseSalary() == null || baseSalaryInfoEntity.getBaseSalary().length()==0) {
-				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-				 autoSalaryRtn.setYearMonth(nextMonth);
-				 autoSalaryRtn.setRtn("1");
-				 return autoSalaryRtn;
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("1");
+				 autoSalaryRtn.addErrorMessage(
+						 employeeIDName.getEmployeeName()
+						 + "の【"
+						 + year
+						 + "年度】基本給データが不足しています。"
+						 );
+				 continue;
 			 }
 
 			 String basesalary = baseSalaryInfoEntity.getBaseSalary();
@@ -152,10 +173,16 @@ public class SalaryListService {
 			 //⑥勤怠情報を取得
 			 WorkInfo workInfo=salarylistMapper.getWkTime(employeeID,nextMonth);
 			 if( workInfo == null ) {
-				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-				 autoSalaryRtn.setYearMonth(nextMonth);
-				 autoSalaryRtn.setRtn("3");
-				 return autoSalaryRtn;
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("3");
+				 autoSalaryRtn.addErrorMessage(
+						 employeeIDName.getEmployeeName()
+					      + "の【"
+					      + nextMonth
+					      + "】勤怠情報データが不足しています。"
+					    );
+				 continue;
 			 }
 
 			 // 稼働時間-稼働時間TO
@@ -188,10 +215,16 @@ public class SalaryListService {
 			 //⑦交通情報を取得
 			 TransportEntity transportEntity=salarylistMapper.getTransportExpense(employeeID, nextMonth);
 			 if( transportEntity == null ||  transportEntity.getTransportExpense() == null || transportEntity.getTransportExpense().length()==0) {
-				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-				 autoSalaryRtn.setYearMonth(nextMonth);
-				 autoSalaryRtn.setRtn("4");
-				 return autoSalaryRtn;
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("4");
+				 autoSalaryRtn.addErrorMessage(
+					      employeeIDName.getEmployeeName()
+					      + "の【"
+					      + nextMonth
+					      + "】交通情報データが不足しています。"
+					    );
+				 continue;
 			 }
 
 			 float transportExpense =transportEntity.getTransport() + Float.parseFloat(transportEntity.getBusinessTrip());
@@ -232,11 +265,17 @@ public class SalaryListService {
 
 				 //厚生マスタを取る
 				 //⑤厚生保険料を取得
-				 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary);
+				 WelfarefeeInfoEntity welfarefeeInfoEntity = salarylistMapper.getWfPension(basesalary,year);
 				 if( welfarefeeInfoEntity == null) {
-					 autoSalaryRtn.setYear(year);
-					 autoSalaryRtn.setRtn("2");
-					 return autoSalaryRtn;
+//					 autoSalaryRtn.setYear(year);
+//					 autoSalaryRtn.setRtn("2");
+					 autoSalaryRtn.addErrorMessage(
+						      employeeIDName.getEmployeeName()
+						      + "の【"
+						      + year
+						      + "年度】厚生保険料データが不足しています。"
+						    );
+					 continue;
 				 }
 
 				//厚生年金控除個人
@@ -281,12 +320,18 @@ public class SalaryListService {
 	             //////////再計算/////////////
 				//最大段階の厚生年金再計算
 				if (Float.parseFloat(basesalary) >= 665000) {
-				    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000");
+				    welfarefeeInfoEntity = salarylistMapper.getWfPension("664000",year);
 				    if( welfarefeeInfoEntity == null) {
 						 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-						 autoSalaryRtn.setYear(year);
-						 autoSalaryRtn.setRtn("2");
-						 return autoSalaryRtn;
+//						 autoSalaryRtn.setYear(year);
+//						 autoSalaryRtn.setRtn("2");
+				    	autoSalaryRtn.addErrorMessage(
+							      employeeIDName.getEmployeeName()
+							      + "の【"
+							      + year
+							      + "年度】厚生保険料データが不足しています。"
+							    );
+						 continue;
 					 }
 
 					//厚生年金控除個人
@@ -329,9 +374,15 @@ public class SalaryListService {
 				 EmplyinsrateInfoEntity emplyinsrateInfoEntity = salarylistMapper.getEmplyinsrate(year) ;
 				 if( emplyinsrateInfoEntity == null ) {
 					 //autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-					 autoSalaryRtn.setYear(nextMonth);
-					 autoSalaryRtn.setRtn("5");
-					 return autoSalaryRtn;
+//					 autoSalaryRtn.setYear(nextMonth);
+//					 autoSalaryRtn.setRtn("5");
+					 autoSalaryRtn.addErrorMessage(
+						      employeeIDName.getEmployeeName()
+						      + "の【"
+						      + year
+						      + "年度】雇用保険率データが不足しています。"
+						    );
+					 continue;
 				 }
 				 //役職を取得
 				 String postion = emp.getPosition();
@@ -374,19 +425,31 @@ public class SalaryListService {
 			 //所得税と住民税を取得
 			 IncomeTaxInfoEntity incomeTaxInfoEntity = salarylistMapper.getTax(employeeID, year);
 			 if( incomeTaxInfoEntity == null) {
-				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-				 autoSalaryRtn.setYearMonth(nextMonth);
-				 autoSalaryRtn.setRtn("6");
-				 return autoSalaryRtn;
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("6");
+				 autoSalaryRtn.addErrorMessage(
+					      employeeIDName.getEmployeeName()
+					      + "の【"
+					      + nextMonth
+					      + "】住民税・住宅データが不足しています。"
+					    );
+				 continue;
 			 }
 
 			 //源泉控除
 			 HoldingTaxInfoEntity holdingTaxInfoEntity = salarylistMapper.getHoldingTax(employeeID, year);
 			 if( holdingTaxInfoEntity == null) {
-				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
-				 autoSalaryRtn.setYearMonth(nextMonth);
-				 autoSalaryRtn.setRtn("8");
-				 return autoSalaryRtn;
+//				 autoSalaryRtn.setEmplyeeName(employeeIDName.getEmployeeName());
+//				 autoSalaryRtn.setYearMonth(nextMonth);
+//				 autoSalaryRtn.setRtn("8");
+				 autoSalaryRtn.addErrorMessage(
+					      employeeIDName.getEmployeeName()
+					      + "の【"
+					      + nextMonth
+					      + "】所得税データが不足しています。"
+					    );
+				 continue;
 			 }
 
 			 String month = nextMonth.substring(4, 6);
@@ -625,7 +688,14 @@ public class SalaryListService {
 
 			 int insert= salarylistMapper.insertSalaryList(salaryInfoEntity);
 		     if(insert != 1) {
-		    	 autoSalaryRtn.setRtn("99");
+//		    	 autoSalaryRtn.setRtn("99");
+		    	 autoSalaryRtn.addErrorMessage(
+		    		      employeeIDName.getEmployeeName()
+		    		      + "の【"
+		    		      + nextMonth
+		    		      + "】給料データ登録に失敗しました。"
+		    		    );
+		    	continue;
 		     }
 
 		}

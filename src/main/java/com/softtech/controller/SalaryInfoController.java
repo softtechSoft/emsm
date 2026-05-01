@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.softtech.actionForm.SalaryInfoBean;
+import com.softtech.entity.SalaryInfoEntity;
 import com.softtech.service.SalaryInfoService;
+import com.softtech.service.SalaryListService;
 import com.softtech.service.WelfareListService;
 
 /**
@@ -31,6 +33,8 @@ public class SalaryInfoController {
 	SalaryInfoService salaryInfoService;
 	@Autowired
 	WelfareListService welfareListService;
+	@Autowired
+	SalaryListService salaryListService;
 	/*
 	 * 機能概要： 給料データの作成処理。
 	 *
@@ -100,5 +104,17 @@ public class SalaryInfoController {
 		}
 
 		return "salaryInfo";
+	}
+
+	// 給料詳細画面から一覧画面へ戻る処理
+	@RequestMapping(value = "backToSalaryList", method = RequestMethod.POST)
+	public String backToSalaryList(String month, Model model) {
+
+	    model.addAttribute("month", month);
+
+	    List<SalaryInfoEntity> sl = salaryListService.querySalarylist(month);
+	    model.addAttribute("list", sl);
+
+	    return "salarylist";
 	}
 }

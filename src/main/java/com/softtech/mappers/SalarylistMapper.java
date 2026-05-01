@@ -33,7 +33,11 @@ public interface SalarylistMapper {
 
 	TransportEntity getTransportExpense(@Param("employeeID") String employeeID,@Param("month") String month) ;
 
-	WelfarefeeInfoEntity getWfPension (String basesalary);
+//	WelfarefeeInfoEntity getWfPension (String basesalary);
+	WelfarefeeInfoEntity getWfPension(
+		@Param("basesalary") String basesalary,
+		@Param("year") String year
+	);
 
 	String getAge(String employeeID);
 
@@ -54,5 +58,9 @@ public interface SalarylistMapper {
 	HoldingTaxInfoEntity getHoldingTax(@Param("employeeID") String employeeID , @Param("year")String Year ) ;
 
 //	WelfarefeeInfoEntity getStandSalary(String basesalary);
+
+	int countSalaryByMonth(@Param("month") String month);
+
+	int existsSalary(@Param("employeeID") String employeeID, @Param("month") String month);
 
 }
