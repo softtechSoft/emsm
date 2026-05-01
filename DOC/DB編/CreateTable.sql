@@ -956,4 +956,7 @@ ALTER TABLE ems.employee ADD COLUMN koyoFlg VARCHAR(1) NOT NULL DEFAULT '1' COMM
 ALTER TABLE ems.employee ADD COLUMN koseiFlg VARCHAR(1) NOT NULL DEFAULT '1' COMMENT '厚生対象フラグ';
 ALTER TABLE ems.employee ADD COLUMN nenmatsuFlg VARCHAR(1) NOT NULL DEFAULT '1' COMMENT '年末調整対象フラグ';
 
-
+--経費管理作成日・更新日追加--
+ALTER TABLE ems.expenses
+ADD COLUMN insertDate VARCHAR(8) COMMENT '作成日',
+ADD COLUMN updateDate VARCHAR(8) COMMENT '更新日';
